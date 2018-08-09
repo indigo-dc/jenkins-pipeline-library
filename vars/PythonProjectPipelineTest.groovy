@@ -1,19 +1,17 @@
 def call(body) {
-    def pipelineParams= [:]
+    def params= [:]
     body.resolveStrategy = Closure.DELEGATE_FIRST
-    body.delegate = pipelineParams
+    body.delegate = params
     body()
 
-    if (pipelineParams.buildNumber == 0) {
-        def file = new File('/tmp/requirements.txt')
-        file << 'Simple file writing with groovy.\n'
-    }
     pipeline {
         agent any
         stages {
-            stage('Unit test') {
+            stage('Environment setup') {
                 steps {
-                    sh 'cat /tmp/requirements.txt'
+					PipRequirements(params.pip_test_reqs, 'test-requirements.txt')
+                	PipRequirements(params.pip_reqs, 'requirements.txt')
+                	ToxConfig(params.tox_envs)
                 }
             }
         }
