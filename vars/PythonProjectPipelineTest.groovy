@@ -13,6 +13,11 @@ def call(body) {
                 	PipRequirements(params.pip_reqs, 'requirements.txt')
                 	ToxConfig(params.tox_envs)
                 }
+                post {
+                    always {
+                        archiveArtifacts artifacts: '*.requirements.txt,*.tox.*ini'
+                    }
+                }
             }
 
             stage('Style analysis') {
