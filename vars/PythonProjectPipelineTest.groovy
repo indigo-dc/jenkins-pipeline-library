@@ -15,7 +15,7 @@ def call(body) {
                 }
                 post {
                     always {
-                        archiveArtifacts artifacts: '*.requirements.txt,*.tox.*ini'
+                        archiveArtifacts artifacts: '*requirements.txt,*tox*.ini'
                     }
                 }
             }
