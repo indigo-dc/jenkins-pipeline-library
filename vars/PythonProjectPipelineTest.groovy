@@ -12,41 +12,54 @@ def call(body) {
         stages {
             stage('Code fetching') {
                 steps {
-                    checkout scm
+                    //checkout scm
+                    sh 'git clone https://github.com/indigo-dc/im'
                 }
             }
 
             stage('Environment setup') {
                 steps {
-	    			PipRequirements(params.pip_test_reqs, 'test-requirements.txt')
-                	PipRequirements(params.pip_reqs, 'requirements.txt')
-                	ToxConfig(params.tox_envs)
+                    dir("$WORKSPACE/im") {
+	    			    PipRequirements(params.pip_test_reqs, 'test-requirements.txt')
+                	    PipRequirements(params.pip_reqs, 'requirements.txt')
+                	    ToxConfig(params.tox_envs)
+                    }
                 }
                 post {
                     always {
-                        archiveArtifacts artifacts: '*requirements.txt,*tox*.ini'
+                        dir("$WORKSPACE/im") {
+                            archiveArtifacts artifacts: '*requirements.txt,*tox*.ini'
+                        }
                     }
                 }
             }
 
             stage('Style analysis') {
                 steps {
-                    ToxEnvRun('pep8')
+                    dir("$WORKSPACE/im") {
+                        ToxEnvRun('pep8')
+                    }
                 }
                 post {
                     always {
-                        WarningsReport('pep8')
+                        dir("$WORKSPACE/im") {
+                            WarningsReport('pep8')
+                        }
                     }
                 }
             }
 
             stage('Unit testing coverage') {
                 steps {
-                    ToxEnvRun('unit')
+                    dir("$WORKSPACE/im") {
+                        ToxEnvRun('unit')
+                    }
                 }
                 post {
                     success {
-                        CoberturaReport()
+                        dir("$WORKSPACE/im") {
+                            CoberturaReport()
+                        }
                     }
                 }
             }
