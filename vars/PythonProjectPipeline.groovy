@@ -1,3 +1,9 @@
+def call(body) {
+    def pipelineParams= [:]
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = pipelineParams
+    body()
+
 pipeline {
     agent {
         label 'python'
@@ -142,3 +148,5 @@ commands = bandit -r IM -f html -o bandit/index.html'''
         } // security stage
     } // stages
 } // pipeline
+
+}
