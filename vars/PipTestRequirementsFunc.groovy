@@ -1,4 +1,4 @@
 #!/usr/bin/groovy
-def call(content) {
-  	writeFile file: '/tmp/test-requirements.txt', text: content
+def call(content, filename='test-requirements.txt') {
+  	writeFile file: filename, text: content
 }
