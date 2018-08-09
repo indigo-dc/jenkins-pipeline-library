@@ -1,4 +1,4 @@
 #!/usr/bin/groovy
 def call(testenv) {
-    sh 'tox -e ${testenv}'	
+    sh(script: 'tox -e'+testenv)
 }
