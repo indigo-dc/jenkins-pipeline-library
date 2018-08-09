@@ -63,6 +63,30 @@ def call(body) {
                     }
                 }
             }
+
+            stage('Functional testing') {
+                steps {
+                    dir("$WORKSPACE/im") {
+                        ToxEnvRun('functional')
+                    }
+                }
+            }
+
+            stage('Security scanner') {
+                steps {
+                    dir("$WORKSPACE/im") {
+                        ToxEnvRun('bandit')
+                        script {
+                            if (currentBuild.result == 'FAILURE') {
+                                currentBuild.result = 'UNSTABLE'
+                            }
+                        }
+                    }
+                }
+                post {
+                    HTMLReport('bandit', 'index.html', 'Bandit report')
+                }
+            }
         }
     }
 }
