@@ -14,6 +14,17 @@ def call(body) {
                 	ToxConfig(params.tox_envs)
                 }
             }
+
+            stage('Style analysis') {
+                steps {
+                    ToxEnvRun('pep8')
+                }
+                post {
+                    always {
+                        WarningsReport('pep8')
+                    }
+                }
+            }
         }
     }
 }
