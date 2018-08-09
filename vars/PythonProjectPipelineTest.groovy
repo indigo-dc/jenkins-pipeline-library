@@ -5,11 +5,20 @@ def call(body) {
     body()
 
     pipeline {
-        agent any
+        agent {
+            label 'python'
+        }
+        
         stages {
+            stage('Code fetching') {
+                steps {
+                    checkout scm
+                }
+            }
+
             stage('Environment setup') {
                 steps {
-					PipRequirements(params.pip_test_reqs, 'test-requirements.txt')
+	    			PipRequirements(params.pip_test_reqs, 'test-requirements.txt')
                 	PipRequirements(params.pip_reqs, 'requirements.txt')
                 	ToxConfig(params.tox_envs)
                 }
@@ -27,6 +36,17 @@ def call(body) {
                 post {
                     always {
                         WarningsReport('pep8')
+                    }
+                }
+            }
+
+            stage('Unit testing coverage') {
+                steps {
+                    ToxEnvRun('unit')
+                }
+                post {
+                    success {
+                        CoberturaReport()
                     }
                 }
             }
