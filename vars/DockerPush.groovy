@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
-def call(image_id) {
+def call(image) {
     withDockerRegistry([credentialsId: 'indigobot', url: '']) {
-        sh "docker push $image_id"
+        sh "docker push $image"
     }
 }
