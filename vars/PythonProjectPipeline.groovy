@@ -36,7 +36,7 @@ def call(body) {
                 }
                 post {
                     always {
-                        WarningsReport('pep8')
+                        WarningsReport('Pep8')
                     }
                 }
             }
