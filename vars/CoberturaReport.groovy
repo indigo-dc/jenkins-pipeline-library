@@ -1,3 +1,4 @@
+#!/usr/bin/groovy
 def call(report='**/coverage_unit.xml') {
     cobertura autoUpdateHealth: false,
               autoUpdateStability: false,

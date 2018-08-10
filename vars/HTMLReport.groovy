@@ -1,3 +1,4 @@
+#!/usr/bin/groovy
 def call(dir, index, title) {
     publishHTML([allowMissing: false,
                  alwaysLinkToLastBuild: false,

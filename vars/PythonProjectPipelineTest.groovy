@@ -1,3 +1,4 @@
+#!/usr/bin/groovy
 def call(body) {
     def params= [:]
     body.resolveStrategy = Closure.DELEGATE_FIRST
@@ -89,6 +90,42 @@ def call(body) {
                     }
                 }
             }
+
+            stage('DockerHub delivery') {
+                /*
+                when {
+                    anyOf {
+                        branch 'master'
+                        buildingTag()
+                    }
+                }*/
+                agent {
+                    label 'docker-build'
+                }
+                steps {
+                    //checkout scm
+                    sh 'git clone https://github.com/indigo-dc/DEEPaaS'
+                    dir("$WORKSPACE/DEEPaaS") {
+                        DockerBuild() 
+                    }
+                }
+                post {
+                    success {
+                        echo "Pushing Docker image ${IMAGE_ID}.."
+                        withDockerServer([credentialsId: '', uri: "tcp://127.0.0.1:2376"]) {
+                            withDockerRegistry([credentialsId: 'indigobot', url: '']) {
+                                sh "${docker_alias} push $IMAGE_ID"
+                            }
+                        }
+                    }
+                    failure {
+                        echo 'Docker image building failed, removing dangling images..'
+                        sh '${docker_alias} rmi \$(\${docker_alias} images -f "dangling=true" -q)'
+                    }
+                    always {
+                        cleanWs()
+                    }
+                }
         }
     }
 }
