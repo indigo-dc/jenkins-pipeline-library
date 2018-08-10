@@ -10,5 +10,5 @@ def call() {
     IMAGE_ID = env.docker_repo + ':latest'
     
     sh "docker build --force-rm -t $IMAGE_ID ."
-    return $IMAGE_ID
+    return IMAGE_ID
 }
