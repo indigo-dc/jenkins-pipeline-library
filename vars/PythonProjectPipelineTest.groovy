@@ -13,74 +13,57 @@ def call(body) {
         stages {
             stage('Code fetching') {
                 steps {
-                    //checkout scm
-                    sh 'git clone https://github.com/indigo-dc/im'
+                    checkout scm
                 }
             }
 
             stage('Environment setup') {
                 steps {
-                    dir("$WORKSPACE/im") {
-	    			    PipRequirements(params.pip_test_reqs, 'test-requirements.txt')
-                	    PipRequirements(params.pip_reqs, 'requirements.txt')
-                	    ToxConfig(params.tox_envs)
-                    }
+                    PipRequirements(params.pip_test_reqs, 'test-requirements.txt')
+                    PipRequirements(params.pip_reqs, 'requirements.txt')
+                    ToxConfig(params.tox_envs)
                 }
                 post {
                     always {
-                        dir("$WORKSPACE/im") {
-                            archiveArtifacts artifacts: '*requirements.txt,*tox*.ini'
-                        }
+                        archiveArtifacts artifacts: '*requirements.txt,*tox*.ini'
                     }
                 }
             }
 
             stage('Style analysis') {
                 steps {
-                    dir("$WORKSPACE/im") {
-                        ToxEnvRun('pep8')
-                    }
+                    ToxEnvRun('pep8')
                 }
                 post {
                     always {
-                        dir("$WORKSPACE/im") {
-                            WarningsReport('pep8')
-                        }
+                        WarningsReport('pep8')
                     }
                 }
             }
 
             stage('Unit testing coverage') {
                 steps {
-                    dir("$WORKSPACE/im") {
-                        ToxEnvRun('unit')
-                    }
+                    ToxEnvRun('unit')
                 }
                 post {
                     success {
-                        dir("$WORKSPACE/im") {
-                            CoberturaReport()
-                        }
+                        CoberturaReport()
                     }
                 }
             }
 
             stage('Functional testing') {
                 steps {
-                    dir("$WORKSPACE/im") {
-                        ToxEnvRun('functional')
-                    }
+                    ToxEnvRun('functional')
                 }
             }
 
             stage('Security scanner') {
                 steps {
-                    dir("$WORKSPACE/im") {
-                        ToxEnvRun('bandit')
-                        script {
-                            if (currentBuild.result == 'FAILURE') {
-                                currentBuild.result = 'UNSTABLE'
-                            }
+                    ToxEnvRun('bandit')
+                    script {
+                        if (currentBuild.result == 'FAILURE') {
+                            currentBuild.result = 'UNSTABLE'
                         }
                     }
                 }
@@ -92,40 +75,35 @@ def call(body) {
             }
 
             stage('DockerHub delivery') {
-                /*
                 when {
                     anyOf {
                         branch 'master'
                         buildingTag()
                     }
-                }*/
+                }
                 agent {
                     label 'docker-build'
                 }
                 steps {
-                    //checkout scm
-                    sh 'git clone https://github.com/indigo-dc/DEEPaaS'
-                    dir("$WORKSPACE/DEEPaaS") {
-                        DockerBuild() 
+                    checkout scm
+                    script {
+                        image_id = DockerBuild(dockerhub_repo, env.BRANCH_NAME)
                     }
                 }
                 post {
                     success {
-                        echo "Pushing Docker image ${IMAGE_ID}.."
-                        withDockerServer([credentialsId: '', uri: "tcp://127.0.0.1:2376"]) {
-                            withDockerRegistry([credentialsId: 'indigobot', url: '']) {
-                                sh "${docker_alias} push $IMAGE_ID"
-                            }
-                        }
+                        echo "Pushing Docker image ${image_id}.."
+                        DockerPush(image_id)
                     }
                     failure {
                         echo 'Docker image building failed, removing dangling images..'
-                        sh '${docker_alias} rmi \$(\${docker_alias} images -f "dangling=true" -q)'
+                        DockerClean()
                     }
                     always {
                         cleanWs()
                     }
                 }
+            }
         }
     }
 }
