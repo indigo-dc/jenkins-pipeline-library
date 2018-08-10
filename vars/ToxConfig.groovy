@@ -10,7 +10,7 @@ setenv =
 deps = -r{toxinidir}/test-requirements.txt
        -r{toxinidir}/requirements.txt'''
 
-    if (fileExists filename) {
+    if (fileExists(filename)) {
         def readContent = readFile filename
         writeFile file: filename, text: readContent+'\n'+content
     }
