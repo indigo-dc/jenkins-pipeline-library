@@ -3,7 +3,7 @@ def call(format) {
     warnings canComputeNew: false,
              canResolveRelativePaths: false,
              categoriesPattern: '',
-             consoleParsers: [[parserName: 'Pep8']],
+             consoleParsers: [[parserName: format]],
              defaultEncoding: '',
              excludePattern: '',
              healthy: '',
