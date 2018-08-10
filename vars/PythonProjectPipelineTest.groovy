@@ -85,7 +85,7 @@ def call(body) {
                 }
                 post {
                     always {
-                        HTMLReport("**/bandit", 'index.html', 'Bandit report')
+                        HTMLReport("/tmp/bandit", 'index.html', 'Bandit report')
                     }
                 }
             }
