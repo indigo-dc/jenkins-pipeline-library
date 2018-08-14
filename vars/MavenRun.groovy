@@ -1,5 +1,6 @@
 #!/usr/bin/groovy
 def call(goal) {
+    options = []
     if (goal == 'checkstyle') {
         options = [
             '-Dcheckstyle.failOnViolation=true', 
