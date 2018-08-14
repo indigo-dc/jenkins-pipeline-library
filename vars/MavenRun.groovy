@@ -1,7 +1,4 @@
 #!/usr/bin/groovy
-
-call('checkstyle')
-
 def call(goal) {
     if (goal == 'checkstyle') {
         options = [
