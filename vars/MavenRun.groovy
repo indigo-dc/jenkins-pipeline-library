@@ -9,6 +9,12 @@ def call(goal) {
         ]
         goal = 'checkstyle:check'
     }
+    else if (goal == 'cobertura') {
+        options = [
+            '-Dcobertura.report.format=xml'
+        ]
+        goal = 'cobertura:cobertura'
+    }
     l_cmd = ['mvn ', options.join(' '), goal]
     cmd = l_cmd.join(' ')
     sh(script: cmd)
