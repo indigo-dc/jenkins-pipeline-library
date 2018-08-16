@@ -8,13 +8,14 @@ install_command = pip install -U {opts} {packages}
 setenv =
    VIRTUAL_ENV={envdir}
 deps = -r{toxinidir}/test-requirements.txt
-       -r{toxinidir}/requirements.txt'''
-
-    if (fileExists(filename)) {
-        def readContent = readFile filename
-        writeFile file: filename, text: readContent+'\n'+content
+       -r{toxinidir}/requirements.txt
+'''
+    content_all = testenv_content+content
+    if (filename == 'tox.ini') {
+        if (fileExists(filename)) {
+            def readContent = readFile filename
+            content_all = readContent+'\n'+content
+        }
     }
-    else {
-        writeFile file: filename, text: testenv_content+content
-    }
+    writeFile file: filename, text: content_all
 }
