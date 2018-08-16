@@ -1,14 +1,18 @@
 #!/usr/bin/groovy
-def call(repository, scm_branch) {
-    if (scm_branch == 'master') {
-        IMAGE_ID = repository + ':latest'
+
+def call(repository, scm_branch, image_id=null) {
+    if (image_id != null) {
+        id = image_id
     }
     else {
-        IMAGE_ID = repository + ':' + scm_branch
+        if (scm_branch == 'master') {
+            id = repository + ':latest'
+        }
+        else {
+            id = repository + ':' + scm_branch
+        }
     }
-    // OJO AQUI, hardcoded
-    IMAGE_ID = repository + ':latest'
     
-    sh "docker build --force-rm -t $IMAGE_ID ."
-    return IMAGE_ID
+    sh "docker build --force-rm -t $id ."
+    return id
 }
