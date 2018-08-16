@@ -1,4 +1,4 @@
 #!/usr/bin/groovy
 def call() {
-    sh "docker rmi \$(docker images -f 'dangling=true' -q)"
+    sh "docker rmi --force \$(docker images -f 'dangling=true' -q)"
 }
