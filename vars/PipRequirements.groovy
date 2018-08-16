@@ -1,7 +1,5 @@
 #!/usr/bin/groovy
 
-call("guachuguei", "")
-
 def call(packages, filename) {
     if (packages instanceof List) {
         package_str = packages.join('\n')
