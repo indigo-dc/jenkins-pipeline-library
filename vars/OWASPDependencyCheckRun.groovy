@@ -12,7 +12,7 @@ def call(src_path, project="My Project") {
 	dir("$src_path") {
 		timeout(time: 10, unit: "MINUTES") {
 			withDockerContainer(image: 'owasp/dependency-check', args: "--entrypoint '' --volume $src_path:/src --volume $OWASP_DATA_DIR:/usr/share/dependency-check/data --volume $OWASP_REPORT_DIR:/report") {
-				sh "/usr/share/dependency-check/bin/dependency-check.sh --project 'OWASP Dependency Check for $project' --scan /src --format 'ALL'"
+				sh "/usr/share/dependency-check/bin/dependency-check.sh --project 'OWASP Dependency Check for $project' --scan /src --format 'ALL' --enableExperimental"
 			}
 		}
 	}
