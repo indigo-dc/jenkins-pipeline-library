@@ -1,7 +1,8 @@
 #!/usr/bin/groovy
+
 def call(goal) {
     options = []
-    if (goal == 'checkstyle') {
+    if (goal.startsWith('checkstyle')) {
         options = [
             '-Dcheckstyle.failOnViolation=true', 
             '-Dcheckstyle.console=true', 
