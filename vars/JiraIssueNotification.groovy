@@ -1,12 +1,16 @@
 #!/usr/bin/groovy
 
 def create_issue(site, project_id, summary, description, label, issue_type, assignee) {
+    if (!label instanceof List) {
+        label = [label]
+    }
+
 	def testIssue = [fields: [ 
 		project: [id: "${project_id}"],
 		summary: "${summary}",
 		description: "${description}",
 		issuetype: [name: "${issue_type}"],
-		labels: ["${label}"],
+		labels: "${label}",
         assignee: [name: "${assignee}"]]]
     
     response = jiraNewIssue issue: testIssue, site: "${site}"
