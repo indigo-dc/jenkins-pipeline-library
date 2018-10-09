@@ -10,7 +10,7 @@ def create_issue(site, project_id, summary, description, label, issue_type, assi
 		summary: "${summary}",
 		description: "${description}",
 		issuetype: [name: "${issue_type}"],
-		labels: "${label}",
+		labels: label,
         assignee: [name: "${assignee}"]]]
     
     response = jiraNewIssue issue: testIssue, site: "${site}"
