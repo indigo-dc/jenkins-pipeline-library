@@ -11,7 +11,7 @@ def call(goal) {
         ]
         goal = 'checkstyle:check'
     }
-    else if (goal == 'cobertura') {
+    else if (goal.startsWith('cobertura')) {
         options = [
             '-Dcobertura.report.format=xml'
         ]
