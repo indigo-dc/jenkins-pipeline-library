@@ -46,6 +46,6 @@ def call(site, project_name, project_id, summary, description, label, issue_type
         issues.data.issues.each {
             key_list.push(it.key)    
         }
-        comment_issue(site, key_list, "New build of tag vX.Y.Z")
+        comment_issue(site, key_list, description)
     }
 }
