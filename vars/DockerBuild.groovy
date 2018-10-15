@@ -5,7 +5,7 @@ def call(repository, scm_branch, image_id=null) {
         id = image_id
     }
     else {
-        if (scm_branch == 'master') {
+        if (scm_branch in ['master', 'null']) {
             id = repository + ':latest'
         }
         else {
