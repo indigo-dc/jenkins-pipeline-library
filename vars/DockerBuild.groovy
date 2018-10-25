@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
 
-def call(repository, scm_branch, image_id=null) {
+def call(repository, scm_branch, dockerfile_dir='.', image_id=null) {
     if (image_id != null) {
         id = image_id
     }
@@ -13,6 +13,9 @@ def call(repository, scm_branch, image_id=null) {
         }
     }
     
-    sh "docker build --force-rm -t $id ."
+    dir(dockerfile_dir) {
+        sh "docker build --force-rm -t $id ."
+    }
+
     return id
 }
