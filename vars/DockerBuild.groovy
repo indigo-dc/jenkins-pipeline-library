@@ -1,7 +1,7 @@
 #!/usr/bin/groovy
 
 def call(repository, scm_branch, dockerfile_dir='.') {
-    if (scm_branch in ['master', 'null']) {
+    if (scm_branch in ['master', 'null', null]) {
         id = repository + ':latest'
     }
     else {
