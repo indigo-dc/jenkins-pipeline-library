@@ -1,16 +1,11 @@
 #!/usr/bin/groovy
 
-def call(repository, scm_branch, dockerfile_dir='.', image_id=null) {
-    if (image_id != null) {
-        id = image_id
+def call(repository, scm_branch, dockerfile_dir='.') {
+    if (scm_branch in ['master', 'null']) {
+        id = repository + ':latest'
     }
     else {
-        if (scm_branch in ['master', 'null']) {
-            id = repository + ':latest'
-        }
-        else {
-            id = repository + ':' + scm_branch
-        }
+        id = repository + ':' + scm_branch
     }
     
     dir(dockerfile_dir) {
