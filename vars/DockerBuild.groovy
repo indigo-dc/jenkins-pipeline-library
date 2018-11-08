@@ -9,7 +9,7 @@ def call(repository, scm_branch, dockerfile_dir='.') {
     }
     
     dir(dockerfile_dir) {
-        sh "docker build --force-rm -t $id ."
+        sh "docker build --no-cache --force-rm -t $id ."
     }
 
     return id
