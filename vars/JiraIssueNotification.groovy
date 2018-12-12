@@ -11,12 +11,15 @@ def create_issue(site, project_id, summary, description, label, issue_type, assi
 		description: "${description}",
 		issuetype: [name: "${issue_type}"],
 		labels: label,
-        assignee: [name: "${assignee}"]]]
+        assignee: [name: "${assignee}"],
+    ]]
     
     response = jiraNewIssue issue: testIssue, site: "${site}"
 
 	echo response.successful.toString()
 	echo response.data.toString()
+
+    return response.data
 }
 
 def search_issue(project_name, label, site) {
@@ -30,22 +33,26 @@ def search_issue(project_name, label, site) {
 	jiraJqlSearch jql: "PROJECT = ${project_name} and LABELS = ${label_str}", site: "${site}", failOnError: true
 }
 
-def comment_issue(site, key_list, comment) {
-    key_list.each {
-        jiraAddComment site: site, idOrKey: it, comment: comment
+def comment_issue(site, key_id, comment) {
+    jiraAddComment site: site, idOrKey: key_id, comment: comment
+}
+
+def add_watchers(site, key_id, user_list) {
+    user_list.each {
+        jiraAddWatcher site: site, idOrKey: key_id, userName: it
     }
 }
 
-def call(site, project_name, project_id, summary, description, label, issue_type, assignee) {
+def call(site, project_name, project_id, summary, description, label, issue_type, assignee, watchers) {
     def issues = search_issue(project_name, label, site)
     if (issues.data.issues == []) {
-        create_issue(site, project_id, summary, description, label, issue_type, assignee)
+        def issue_id = create_issue(site, project_id, summary, description, label, issue_type, assignee)
+        add_watchers(site, issue_id.key, watchers)
     }
     else {
-        key_list = []
         issues.data.issues.each {
-            key_list.push(it.key)    
+            comment_issue(site, it.key, description)
+            add_watchers(site, it.key, watchers)
         }
-        comment_issue(site, key_list, description)
     }
 }
