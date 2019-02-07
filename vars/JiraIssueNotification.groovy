@@ -38,12 +38,14 @@ def comment_issue(site, key_id, comment) {
 }
 
 def add_watchers(site, key_id, user_list) {
-    user_list.each {
-        jiraAddWatcher site: site, idOrKey: key_id, userName: it
+    if (user_list != null) {
+        user_list.each {
+            jiraAddWatcher site: site, idOrKey: key_id, userName: it
+        }
     }
 }
 
-def call(site, project_name, project_id, summary, description, label, issue_type, assignee, watchers) {
+def call(site, project_name, project_id, summary, description, label, issue_type, assignee, watchers=null) {
     def issues = search_issue(project_name, label, site)
     if (issues.data.issues == []) {
         def issue_id = create_issue(site, project_id, summary, description, label, issue_type, assignee)
