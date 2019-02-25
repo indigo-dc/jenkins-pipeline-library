@@ -9,7 +9,8 @@ Please note the following aspects when sending us your contribution.
     * Releases will be done periodically on `master` branch.
  * We expect that your contributions:
     * Are done through pull requests.
-    * Use the convention `feature/<feature-branch>` name for branching.
+    * Use the convention `feature/<branch>` name for new features.
+    * Use the convention `bugfix/<branch>` name for bug fixes.
  * Compliant with [The Apache Groovy programming language - Style
  guide](http://groovy-lang.org/style-guide.html)
 
