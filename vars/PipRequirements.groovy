@@ -1,5 +1,11 @@
 #!/usr/bin/groovy
 
+/**
+ * Creates a pip requirement file.
+ *
+ * @param packages List of required packages [mandatory]
+ * @param report Target file [mandatory]
+ */
 def call(List packages, String filename) {
     package_str = packages.join('\n')
 

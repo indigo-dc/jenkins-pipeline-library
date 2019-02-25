@@ -1,5 +1,10 @@
 #!/usr/bin/groovy
 
+/**
+ * Collects Cobertura report.
+ *
+ * @param report Report location [default]
+ */
 def call(String report='**/coverage_unit.xml') {
     cobertura autoUpdateHealth: false,
               autoUpdateStability: false,
