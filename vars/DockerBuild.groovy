@@ -4,17 +4,17 @@
  * Builds a Docker image.
  *
  * @param repository Docker registry's repository name
- * @param scm_branch Tag for the Docker image (aligned with SCM branch)
+ * @param docker_tag Tag for the Docker image (aligned with SCM branch)
  * @param dockerfile_args Build args for Docker image creation
  * @param dockerfile_dir Dockerfile location
  * @return Docker image ID
  */
-def call(repository, scm_branch, dockerfile_args=[], dockerfile_dir='.') {
-    if (scm_branch in ['master', 'latest', 'null', null]) {
+def call(repository, docker_tag, dockerfile_args=[], dockerfile_dir='.') {
+    if (docker_tag in ['master', 'latest', 'null', null]) {
         id = repository + ':latest'
     }
     else {
-        id = repository + ':' + scm_branch
+        id = repository + ':' + docker_tag
     }
     id = id.toLowerCase()
     
