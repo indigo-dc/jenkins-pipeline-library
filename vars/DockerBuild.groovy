@@ -1,5 +1,14 @@
 #!/usr/bin/groovy
 
+/**
+ * Builds a Docker image.
+ *
+ * @param repository Docker registry's repository name
+ * @param scm_branch Tag for the Docker image (aligned with SCM branch)
+ * @param dockerfile_args Build args for Docker image creation
+ * @param dockerfile_dir Dockerfile location
+ * @return Docker image ID
+ */
 def call(repository, scm_branch, dockerfile_args=[], dockerfile_dir='.') {
     if (scm_branch in ['master', 'null', null]) {
         id = repository + ':latest'
