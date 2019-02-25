@@ -1,5 +1,11 @@
 #!/usr/bin/groovy
 
+/**
+ * Collects multiple types of reports.
+ *
+ * @param format Report format [mandatory]
+ * @see https://plugins.jenkins.io/warnings
+ */
 def call(String format) {
     warnings canComputeNew: false,
              canResolveRelativePaths: false,

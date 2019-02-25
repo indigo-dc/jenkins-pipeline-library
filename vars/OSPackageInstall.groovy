@@ -1,5 +1,11 @@
 #!/usr/bin/groovy
 
+/**
+ * Uses APT/YUM package managers to install packages.
+ *
+ * @param packages List of required packages [mandatory]
+ * @param report Target file [mandatory]
+ */
 def call(List packages, String package_manager) {
     package_str = packages.join(' ')
 

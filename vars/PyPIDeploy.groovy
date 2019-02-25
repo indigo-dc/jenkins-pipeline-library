@@ -7,6 +7,7 @@ import java.nio.file.Paths
  *
  * @param credential_id Jenkins credential identifier 
  * @return Jenkins credential object
+ * @see https://plugins.jenkins.io/credentials
  */
 def get_creds(String credential_id) {
 	def creds = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(

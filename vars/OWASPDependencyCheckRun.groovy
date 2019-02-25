@@ -1,5 +1,12 @@
 #!/usr/bin/groovy
 
+/**
+ * Runs OWASP dependency checker.
+ *
+ * @param packages List of required packages [mandatory]
+ * @param report Target file [mandatory]
+ * @see https://plugins.jenkins.io/dependency-check-jenkins-plugin
+ */
 def call(String src_path, String project="My Project") {
 	def OWASP_DIR=[env.WORKSPACE, 'OWASP'].join('/')
 	def OWASP_DATA_DIR=[env.WORKSPACE, 'OWASP', 'data'].join('/')

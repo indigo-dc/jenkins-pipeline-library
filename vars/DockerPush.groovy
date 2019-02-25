@@ -5,6 +5,7 @@
  *
  * @param image Image ID [mandatory]
  * @param url Docker registry URL [default]
+ * @see https://plugins.jenkins.io/docker-workflow
  */
 def call(String image, String url='') {
     withDockerRegistry([credentialsId: 'indigobot', url: url]) {

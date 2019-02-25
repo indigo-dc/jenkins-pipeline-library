@@ -10,6 +10,7 @@
  * @param label Labels that feature the issue [mandatory]
  * @param issue_type Type of issue [mandatory]
  * @param assignee Person in charge of the issue [mandatory]
+ * @see https://plugins.jenkins.io/jira-steps
  */
 def create_issue(String site,
                  String project_id,
@@ -41,6 +42,7 @@ def create_issue(String site,
  * @param site Site name for the JIRA backend, as defined in Jenkins [mandatory]
  * @param label Labels that feature the issue, to filter the search [mandatory]
  * @param project_name Project's name [mandatory]
+ * @see https://plugins.jenkins.io/jira-steps
  */
 def search_issue(String site,
                  List label,
@@ -57,6 +59,7 @@ def search_issue(String site,
  * @param site Site name for the JIRA backend, as defined in Jenkins [mandatory]
  * @param key_id Issue ID [mandatory]
  * @param comment Text to add to the issue [mandatory]
+ * @see https://plugins.jenkins.io/jira-steps
  */
 def comment_issue(String site,
                   String key_id,
@@ -70,6 +73,7 @@ def comment_issue(String site,
  * @param site Site name for the JIRA backend, as defined in Jenkins [mandatory]
  * @param key_id Issue ID [mandatory]
  * @param watchers List of users that will be added as watchers for the issue [mandatory]
+ * @see https://plugins.jenkins.io/jira-steps
  */
 def add_watchers(String site, String key_id, List watchers) {
     if (watchers != null) {
