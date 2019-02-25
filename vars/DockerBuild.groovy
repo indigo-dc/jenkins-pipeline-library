@@ -10,7 +10,7 @@
  * @return Docker image ID
  */
 def call(repository, scm_branch, dockerfile_args=[], dockerfile_dir='.') {
-    if (scm_branch in ['master', 'null', null]) {
+    if (scm_branch in ['master', 'latest', 'null', null]) {
         id = repository + ':latest'
     }
     else {
