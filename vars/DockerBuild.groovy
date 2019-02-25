@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
 
-def call(repository, scm_branch, dockerfile_dir='.') {
+def call(repository, scm_branch, dockerfile_args=[], dockerfile_dir='.') {
     if (scm_branch in ['master', 'null', null]) {
         id = repository + ':latest'
     }
@@ -9,8 +9,16 @@ def call(repository, scm_branch, dockerfile_dir='.') {
     }
     id = id.toLowerCase()
     
+    build_args = ''
+    dockerfile_args.each {
+        build_args += "--build-arg tag=${it} "
+    }
+
+    cmd = "docker build --no-cache --force-rm -t $id $build_args"
+    cmd = cmd.trim()
+
     dir(dockerfile_dir) {
-        sh "docker build --no-cache --force-rm -t $id ."
+        sh "$cmd ."
     }
 
     return id
