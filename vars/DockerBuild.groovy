@@ -9,7 +9,7 @@
  * @param build_dir Dockerfile location [named, optional]
  * @return Docker image ID
  */
-def call(Map docker, String repository) {
+def call(Map docker=[:], String repository) {
     if (docker.tag in ['master', 'latest', 'null', null]) {
         id = repository + ':latest'
     }
@@ -26,8 +26,11 @@ def call(Map docker, String repository) {
     cmd = "docker build --no-cache --force-rm -t $id $build_args"
     cmd = cmd.trim()
 
+    if (docker.build_dir == null) {
+        docker.build_dir = "."
+    }
     dir(docker.build_dir) {
-        sh "$cmd ."
+        sh "$cmd $docker.build_dir"
     }
 
     return id
