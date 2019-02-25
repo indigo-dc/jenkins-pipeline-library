@@ -11,7 +11,7 @@ import java.net.URLEncoder
  * @param subject Ticket's subject in RT
  * @return reponse object
  */
-def call(url, creds, queue, subject) {
+def call(String url, String creds, String queue, String subject) {
     def content = [
         "id: ticket/new",
         "Queue: ${queue}",
@@ -20,11 +20,13 @@ def call(url, creds, queue, subject) {
 
     def content_utf8 = URLEncoder.encode(content, "UTF-8")
 	def response = httpRequest authentication: "${creds}",
-                               customHeaders: [[maskValue: false, name: 'Content-type', value: 'text/plain; charset=utf-8']], 
-                               httpMode: 'POST',
-                               responseHandle: 'NONE',
-                               url: "${url}/REST/1.0/ticket/new?content=${content_utf8}",
-                               consoleLogResponseBody: true
+                   customHeaders: [[maskValue: false,
+                                    name: 'Content-type',
+                                    value: 'text/plain; charset=utf-8']], 
+                   httpMode: 'POST',
+                   responseHandle: 'NONE',
+                   url: "${url}/REST/1.0/ticket/new?content=${content_utf8}",
+                   consoleLogResponseBody: true
 }
 /*
 def encode() {

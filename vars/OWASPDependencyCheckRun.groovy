@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
 
-def call(src_path, project="My Project") {
+def call(String src_path, String project="My Project") {
 	def OWASP_DIR=[env.WORKSPACE, 'OWASP'].join('/')
 	def OWASP_DATA_DIR=[env.WORKSPACE, 'OWASP', 'data'].join('/')
 	def OWASP_REPORT_DIR=[env.WORKSPACE, 'OWASP', 'report'].join('/')

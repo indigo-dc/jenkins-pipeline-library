@@ -1,5 +1,6 @@
 #!/usr/bin/groovy
-def call(subject, body, to_address) {
+
+def call(String subject, String body, String to_address) {
 	emailext body: "${body}",
 			 recipientProviders: [culprits(), requestor(), developers()],
 			 subject: "${subject}",

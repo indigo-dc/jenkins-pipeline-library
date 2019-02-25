@@ -1,12 +1,7 @@
 #!/usr/bin/groovy
 
-def call(packages, package_manager) {
-    if (packages instanceof List) {
-        package_str = packages.join(' ')
-    }
-    else { // assume String
-        package_str = packages
-    }
+def call(List packages, String package_manager) {
+    package_str = packages.join(' ')
 
     if (package_manager.toLowerCase() == 'yum') {
         cmd_prefix = 'yum -y install'

@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
 
-def call(testenv, filename=null) {
+def call(String testenv, String filename=null) {
     opts = ['-e '+testenv]
     if (filename) {
         opts += '-c '+filename

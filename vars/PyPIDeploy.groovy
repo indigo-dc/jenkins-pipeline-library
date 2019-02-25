@@ -8,7 +8,7 @@ import java.nio.file.Paths
  * @param credential_id Jenkins credential identifier 
  * @return Jenkins credential object
  */
-def get_creds(credential_id) {
+def get_creds(String credential_id) {
 	def creds = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
 		com.cloudbees.plugins.credentials.Credentials.class,
         Jenkins.instance,
@@ -36,7 +36,7 @@ def build() {
  *
  * @param module_name Name of the Python application, matching the module to be imported
  */
-def test(module_name) {
+def test(String module_name) {
     ["whl", "tar.gz"].each { ext ->
 		def cnt = 0
         files = findFiles(glob: "**/dist/*.${ext}")
@@ -61,7 +61,7 @@ def test(module_name) {
  * @param pypi_user User of PyPI account
  * @param pypi_pass Password of PyPI account 
  */
-def publish(pypi_user, pypi_pass) {
+def publish(String pypi_user, String pypi_pass) {
     content = """
 [distutils]
 index-servers =
@@ -88,7 +88,7 @@ password: ${pypi_pass}"""
  * @param module_name Name of the Python application, matching the module to be imported
  * @param credential_id Jenkins credential identifier 
  */
-def call(module_name, credential_id) {
+def call(String module_name, String credential_id) {
 	creds = get_creds(credential_id)
     build()
     test(module_name)

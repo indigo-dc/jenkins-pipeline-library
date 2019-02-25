@@ -1,5 +1,6 @@
 #!/usr/bin/groovy
-def call(report='**/target/checkstyle-result.xml') {
+
+def call(String report='**/target/checkstyle-result.xml') {
 	checkstyle canComputeNew: false,
 			   defaultEncoding: '',
 			   healthy: '',

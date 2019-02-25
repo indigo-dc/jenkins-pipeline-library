@@ -1,5 +1,6 @@
 #!/usr/bin/groovy
-def call(dir, index, title) {
+
+def call(String dir, String index, String title) {
     publishHTML([allowMissing: false,
                  alwaysLinkToLastBuild: false,
                  keepAll: true,

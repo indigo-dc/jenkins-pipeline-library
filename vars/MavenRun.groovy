@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
 
-def call(goal) {
+def call(String goal) {
     options = []
     if (goal.startsWith('checkstyle')) {
         options = [

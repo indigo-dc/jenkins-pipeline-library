@@ -1,5 +1,6 @@
 #!/usr/bin/groovy
-def call(format) {
+
+def call(String format) {
     warnings canComputeNew: false,
              canResolveRelativePaths: false,
              categoriesPattern: '',

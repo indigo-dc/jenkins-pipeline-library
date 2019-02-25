@@ -1,5 +1,6 @@
 #!/usr/bin/groovy
-def call(location) {
+
+def call(String location) {
     build job: "${location}", 
     propagate: true, 
     wait: true
