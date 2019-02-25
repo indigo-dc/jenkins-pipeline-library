@@ -1,12 +1,13 @@
 #!/usr/bin/groovy
 
-def call(packages, filename) {
-    if (packages instanceof List) {
-        package_str = packages.join('\n')
-    }
-    else { // assume String
-        package_str = packages
-    }
+/**
+ * Creates a pip requirement file.
+ *
+ * @param packages List of required packages [mandatory]
+ * @param report Target file [mandatory]
+ */
+def call(List packages, String filename) {
+    package_str = packages.join('\n')
 
     if (fileExists(filename)) {
         def readContent = readFile filename

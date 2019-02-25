@@ -1,5 +1,12 @@
 #!/usr/bin/groovy
-def call(report='**/target/checkstyle-result.xml') {
+
+/**
+ * Collects CheckStyle report.
+ *
+ * @param report Report location [default]
+ * @see https://plugins.jenkins.io/checkstyle
+ */
+def call(String report='**/target/checkstyle-result.xml') {
 	checkstyle canComputeNew: false,
 			   defaultEncoding: '',
 			   healthy: '',

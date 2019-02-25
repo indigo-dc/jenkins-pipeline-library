@@ -1,5 +1,12 @@
 #!/usr/bin/groovy
-def call(report='**/coverage_unit.xml') {
+
+/**
+ * Collects Cobertura report.
+ *
+ * @param report Report location [default]
+ * @see https://plugins.jenkins.io/cobertura
+ */
+def call(String report='**/coverage_unit.xml') {
     cobertura autoUpdateHealth: false,
               autoUpdateStability: false,
               coberturaReportFile: report,

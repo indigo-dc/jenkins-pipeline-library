@@ -1,10 +1,24 @@
 #!/usr/bin/groovy
 
-def create_issue(site, project_id, summary, description, label, issue_type, assignee) {
-    if (!label instanceof List) {
-        label = [label]
-    }
-
+/**
+ * Creates a JIRA issue.
+ *
+ * @param site Site name for the JIRA backend, as defined in Jenkins [mandatory]
+ * @param project_id Project identification [mandatory]
+ * @param summary Issue summary [mandatory]
+ * @param description Issue description [mandatory]
+ * @param label Labels that feature the issue [mandatory]
+ * @param issue_type Type of issue [mandatory]
+ * @param assignee Person in charge of the issue [mandatory]
+ * @see https://plugins.jenkins.io/jira-steps
+ */
+def create_issue(String site,
+                 String project_id,
+                 String summary,
+                 String description,
+                 List label,
+                 String issue_type,
+                 String assignee) {
 	def testIssue = [fields: [ 
 		project: [id: "${project_id}"],
 		summary: "${summary}",
@@ -22,33 +36,84 @@ def create_issue(site, project_id, summary, description, label, issue_type, assi
     return response.data
 }
 
-def search_issue(project_name, label, site) {
-	label_str = ''
-    if (label instanceof List) {
-        label_str += label.join(' and LABELS = ')
-    }
-    else {
-        label_str += label
-    }
-	jiraJqlSearch jql: "PROJECT = ${project_name} and LABELS = ${label_str}", site: "${site}", failOnError: true
+/**
+ * Searches for a JIRA issue.
+ *
+ * @param site Site name for the JIRA backend, as defined in Jenkins [mandatory]
+ * @param label Labels that feature the issue, to filter the search [mandatory]
+ * @param project_name Project's name [mandatory]
+ * @see https://plugins.jenkins.io/jira-steps
+ */
+def search_issue(String site,
+                 List label,
+                 String project_name) {
+    label_str += label.join(' and LABELS = ')
+	jiraJqlSearch jql: "PROJECT = ${project_name} and LABELS = ${label_str}",
+                  site: "${site}",
+                  failOnError: true
 }
 
-def comment_issue(site, key_id, comment) {
+/**
+ * Comment JIRA issue.
+ *
+ * @param site Site name for the JIRA backend, as defined in Jenkins [mandatory]
+ * @param key_id Issue ID [mandatory]
+ * @param comment Text to add to the issue [mandatory]
+ * @see https://plugins.jenkins.io/jira-steps
+ */
+def comment_issue(String site,
+                  String key_id,
+                  String comment) {
     jiraAddComment site: site, idOrKey: key_id, comment: comment
 }
 
-def add_watchers(site, key_id, user_list) {
-    if (user_list != null) {
-        user_list.each {
+/**
+ * Add watchers to an existing JIRA issue.
+ *
+ * @param site Site name for the JIRA backend, as defined in Jenkins [mandatory]
+ * @param key_id Issue ID [mandatory]
+ * @param watchers List of users that will be added as watchers for the issue [mandatory]
+ * @see https://plugins.jenkins.io/jira-steps
+ */
+def add_watchers(String site, String key_id, List watchers) {
+    if (watchers != null) {
+        watchers.each {
             jiraAddWatcher site: site, idOrKey: key_id, userName: it
         }
     }
 }
 
-def call(site, project_name, project_id, summary, description, label, issue_type, assignee, watchers=null) {
+/**
+ * Creates a JIRA issue or updates an existing one.
+ *
+ * @param site Site name for the JIRA backend, as defined in Jenkins [mandatory]
+ * @param project_name Project's name [mandatory]
+ * @param project_id Project identification [mandatory]
+ * @param summary Issue summary [mandatory]
+ * @param description Issue description [mandatory]
+ * @param label Labels that feature the issue [mandatory]
+ * @param issue_type Type of issue [mandatory]
+ * @param assignee Person in charge of the issue [mandatory]
+ * @param watchers List of users that will be added as watchers for the issue [default]
+ */
+def call(String site,
+         String project_name,
+         String project_id,
+         String summary,
+         String description,
+         List label,
+         String issue_type,
+         String assignee,
+         List watchers=[]) {
     def issues = search_issue(project_name, label, site)
     if (issues.data.issues == []) {
-        def issue_id = create_issue(site, project_id, summary, description, label, issue_type, assignee)
+        def issue_id = create_issue(site,
+                                    project_id,
+                                    summary,
+                                    description,
+                                    label,
+                                    issue_type,
+                                    assignee)
         add_watchers(site, issue_id.key, watchers)
     }
     else {

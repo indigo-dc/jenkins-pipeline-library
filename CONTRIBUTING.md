@@ -3,7 +3,13 @@
 Please note the following aspects when sending us your contribution.
 
 ## Code contributions
- * Done through pull requests.
+ * We use the [Git Flow](https://nvie.com/posts/a-successful-git-branching-model/)
+   convention:
+    * The `develop` branch contains the last features being added.
+    * Releases will be done periodically on `master` branch.
+ * We expect that your contributions:
+    * Are done through pull requests.
+    * Use the convention `feature/<feature-branch>` name for branching.
  * Compliant with [The Apache Groovy programming language - Style
  guide](http://groovy-lang.org/style-guide.html)
 

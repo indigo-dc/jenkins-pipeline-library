@@ -1,6 +1,12 @@
 #!/usr/bin/groovy
 
-def call(goal) {
+/**
+ * Runs either Checkstyle or Cobertura maven goals.
+ *
+ * @param report Report location [default]
+ * @see https://plugins.jenkins.io/cobertura
+ */
+def call(String goal) {
     options = []
     if (goal.startsWith('checkstyle')) {
         options = [

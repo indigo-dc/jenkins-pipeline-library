@@ -1,5 +1,10 @@
 #!/usr/bin/groovy
-def call(content, filename='tox.ini') {
+
+/**
+ * Creates a Tox configuration file for py27.
+ *
+ */
+def call(String content, String filename='tox.ini') {
     testenv_content = '''[tox]
 envlist = py27
 [testenv]
