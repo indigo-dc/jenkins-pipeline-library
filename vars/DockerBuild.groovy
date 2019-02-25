@@ -20,7 +20,7 @@ def call(Map docker=[:], String repository) {
     
     build_args = ''
     docker.build_args.each {
-        build_args += "--build-arg tag=${it} "
+        build_args += "--build-arg ${it} "
     }
 
     cmd = "docker build --no-cache --force-rm -t $id $build_args"
