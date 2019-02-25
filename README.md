@@ -27,6 +27,12 @@ Just import the library at the beginning of your Jenkinsfile:
 @Library(['github.com/indigo-dc/jenkins-pipeline-library']) _
 ```
 
+or use a specific version of the library:
+```
+@Library(['github.com/indigo-dc/jenkins-pipeline-library@1.0.0']) _
+```
+
+
 ## Contributing
 
 Jenkins CI/CD pipelines are often similar in the type of actions that are
