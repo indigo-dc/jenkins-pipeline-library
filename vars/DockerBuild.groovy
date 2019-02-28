@@ -6,7 +6,8 @@
  * @param repository Docker registry's repository name [mandatory]
  * @param tag Tag for the Docker image (aligned with SCM branch) [List, String] [named, optional]
  * @param build_args Build args for Docker image creation [List] [named, optional]
- * @param build_dir Dockerfile location [String] [named, optional]
+ * @param build_dir Directory containing the context files for the build [String] [named, optional]
+ * @param dockerfile_path Dockerfile location (defaults to $build_dir/Dockerfile) [String] [named, optional]
  * @return Docker image ID
  */
 def call(Map docker=[:], String repository) {
@@ -29,7 +30,12 @@ def call(Map docker=[:], String repository) {
         build_args += "--build-arg ${it} "
     }
 
-    cmd = "docker build --no-cache --force-rm -t $id_str $build_args"
+    dockerfile_path = ''
+    if (docker.dockerfile_path) {
+        dockerfile_path += "-f ${docker.dockerfile_path}"
+    }
+
+    cmd = "docker build --no-cache --force-rm -t $id_str $build_args $dockerfile_path"
     cmd = cmd.trim()
 
     if (docker.build_dir == null) {
