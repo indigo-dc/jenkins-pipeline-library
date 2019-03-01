@@ -8,7 +8,7 @@
  * @param build_args Build args for Docker image creation [List] [named, optional]
  * @param build_dir Directory containing the context files for the build [String] [named, optional]
  * @param dockerfile_path Dockerfile location (defaults to $build_dir/Dockerfile) [String] [named, optional]
- * @return Docker image ID
+ * @return List of Docker image IDs being built
  */
 def call(Map docker=[:], String repository) {
     ids = [] 
@@ -45,5 +45,5 @@ def call(Map docker=[:], String repository) {
         sh "$cmd $docker.build_dir"
     }
 
-    return id
+    return ids
 }
