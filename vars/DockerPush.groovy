@@ -7,10 +7,17 @@
  * @param url Docker registry URL [default]
  * @see https://plugins.jenkins.io/docker-workflow
  */
-def call(List image_ids, String url='') {
+def push_docker_images(List image_ids, String url='') {
     withDockerRegistry([credentialsId: 'indigobot', url: url]) {
         image_ids.each {
             sh "docker push ${it}"
         }
     }
+}
+
+def call(String image_id, String url='') {
+    push_docker_images([image_id], url) 
+}
+def call(List image_id, String url='') {
+    push_docker_images(image_id, url)
 }
