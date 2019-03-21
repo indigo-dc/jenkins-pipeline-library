@@ -106,7 +106,7 @@ def call(String site,
          String issue_type,
          String assignee,
          List watchers=[]) {
-    def issues = search_issue(project_name, label, site)
+    def issues = search_issue(site, label, project_name)
     if (issues.data.issues == []) {
         def issue_id = create_issue(site,
                                     project_id,
