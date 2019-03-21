@@ -27,7 +27,7 @@ def create_issue(String site,
 		labels: label,
         assignee: [name: "${assignee}"],
     ]]
-    
+
     response = jiraNewIssue issue: testIssue, site: "${site}"
 
 	echo response.successful.toString()
@@ -47,6 +47,7 @@ def create_issue(String site,
 def search_issue(String site,
                  List label,
                  String project_name) {
+    label_str = ''
     label_str += label.join(' and LABELS = ')
 	jiraJqlSearch jql: "PROJECT = ${project_name} and LABELS = ${label_str}",
                   site: "${site}",
