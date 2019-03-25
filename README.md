@@ -32,6 +32,9 @@ or use a specific version of the library:
 @Library(['github.com/indigo-dc/jenkins-pipeline-library@1.0.0']) _
 ```
 
+__Documentation in groovydoc format is available
+[here](https://indigo-dc.github.io/jenkins-pipeline-library/) for each
+supported version.__
 
 ## Contributing
 
