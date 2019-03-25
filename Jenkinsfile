@@ -24,6 +24,7 @@ pipeline {
                 sh('groovydoc -d docs vars/*.groovy')
                 withCredentials([string(credentialsId: "indigobot-github-token",
                                  variable: "GITHUB_TOKEN")]) {
+                    sh('git config -l')
                     prepareGit()
                     sh('gh-pages-multi deploy')
                 }
@@ -50,6 +51,6 @@ pipeline {
 
 void prepareGit() {
     sh('git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"')
-    sh('sudo git config --global user.name "indigobot"')
-    sh('sudo git config --global user.email "<>"')
+    //sh('git config --global user.name "indigobot"')
+    //sh('git config --global user.email "<>"')
 }

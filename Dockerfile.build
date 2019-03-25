@@ -9,3 +9,11 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN npm i -g @koumoul/gh-pages-multi
+RUN git config --global user.name 'indigobot'
+RUN git config --global user.email '<>'
+
+# Standard SSH port
+EXPOSE 22
+
+# Default command
+CMD ["/usr/sbin/sshd", "-D"]
