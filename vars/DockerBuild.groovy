@@ -41,9 +41,7 @@ def call(Map docker=[:], String repository) {
     if (docker.build_dir == null) {
         docker.build_dir = "."
     }
-    dir(docker.build_dir) {
-        sh "$cmd $docker.build_dir"
-    }
+    sh "$cmd $docker.build_dir"
 
     return ids
 }
