@@ -62,7 +62,7 @@ def test(String module_name) {
  * @param pypi_user User of PyPI account
  * @param pypi_pass Password of PyPI account 
  */
-def publish(String pypi_user, String pypi_pass) {
+def publish(String pypi_user, hudson.util.Secret pypi_pass) {
     content = """
 [distutils]
 index-servers =
