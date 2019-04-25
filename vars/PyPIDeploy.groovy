@@ -93,5 +93,5 @@ def call(String module_name, String credential_id) {
 	creds = get_creds(credential_id)
     build()
     test(module_name)
-    publish(creds.id, creds.password)
+    publish(creds.username, creds.password)
 }
