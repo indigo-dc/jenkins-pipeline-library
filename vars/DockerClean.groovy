@@ -11,6 +11,7 @@ def call(String image_id) {
 		script: "docker images -f 'dangling=true' -q"
 	)
     if (dangling_images) {
+        dangling_images = dangling_images.replace('\n', ' ')
         sh(script: "docker rmi --force $dangling_images")
     }
     sh(script: "docker rmi --force $image_id")
