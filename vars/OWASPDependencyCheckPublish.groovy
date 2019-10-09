@@ -7,9 +7,5 @@
  * @see https://plugins.jenkins.io/dependency-check-jenkins-plugin
  */
 def call(String report='**/dependency-check*.xml') {
-    dependencyCheckPublisher canComputeNew: false,
-                             defaultEncoding: '',
-                             healthy: '',
-                             pattern: report,
-                             unHealthy: ''
+    dependencyCheckPublisher pattern: report
 }
