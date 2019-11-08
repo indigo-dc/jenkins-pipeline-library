@@ -3,7 +3,7 @@
 /**
  * Builds Jenkins jobs from external pipelines in the same Jenkins instance.
  *
- * @param location Jenkins' location of the job [mandatory]
+ * @param  location the location of the job in Jenkins [mandatory]
  * @see https://plugins.jenkins.io/pipeline-build-step
  */
 def call(String location) {
@@ -11,3 +11,4 @@ def call(String location) {
     propagate: true, 
     wait: true
 }
+

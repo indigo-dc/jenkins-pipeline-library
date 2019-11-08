@@ -1,15 +1,15 @@
 #!/usr/bin/groovy
 
 /**
- * Dangling Docker image pruning.
+ * Prunes a dangling Docker image.
  *
- * @param image_id Docker image ID [mandatory]
+ * @param  image_id Docker image ID [mandatory]
  */
 def call(String image_id) {
     def dangling_images = sh(
-		returnStdout: true,
-		script: "docker images -f 'dangling=true' -q"
-	)
+        returnStdout: true,
+        script: "docker images -f 'dangling=true' -q"
+    )
     if (dangling_images) {
         dangling_images = dangling_images.replace('\n', ' ')
         sh(script: "docker rmi --force $dangling_images")
@@ -18,3 +18,4 @@ def call(String image_id) {
         sh(script: "docker rmi --force $image_id")
     }
 }
+
