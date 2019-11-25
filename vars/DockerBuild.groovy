@@ -2,12 +2,15 @@
 
 /**
  * Builds a Docker image.
+ * 
+ * Takes as first argument a Map of optional parameters that can contain the following named ones:
+ *  - tag Tag for the Docker image (aligned with SCM branch) [List, String] [named, optional]
+ *  - build_args Build args for Docker image creation [List] [named, optional]
+ *  - build_dir Directory containing the context files for the build [String] [named, optional]
+ *  - dockerfile_path Dockerfile location (defaults to $build_dir/Dockerfile) [String] [named, optional]
  *
- * @param repository Docker registry's repository name [mandatory]
- * @param tag Tag for the Docker image (aligned with SCM branch) [List, String] [named, optional]
- * @param build_args Build args for Docker image creation [List] [named, optional]
- * @param build_dir Directory containing the context files for the build [String] [named, optional]
- * @param dockerfile_path Dockerfile location (defaults to $build_dir/Dockerfile) [String] [named, optional]
+ * @param  docker a Map of optional parameters for  building the image
+ * @param  repository Docker registry's repository name [mandatory]
  * @return List of Docker image IDs being built
  */
 def call(Map docker=[:], String repository) {
@@ -45,3 +48,4 @@ def call(Map docker=[:], String repository) {
 
     return ids
 }
+

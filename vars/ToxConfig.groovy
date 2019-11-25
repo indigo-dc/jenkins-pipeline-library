@@ -3,6 +3,8 @@
 /**
  * Creates a Tox configuration file for py27.
  *
+ *@param  content Additional configuration content.
+ *@param  filename The base Tox configuration file, defaults to tox.ini
  */
 def call(String content, String filename='tox.ini') {
     testenv_content = '''[tox]
@@ -24,3 +26,4 @@ deps = -r{toxinidir}/test-requirements.txt
     }
     writeFile file: filename, text: content_all
 }
+
