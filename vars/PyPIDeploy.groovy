@@ -45,7 +45,7 @@ def test(String module_name) {
             println(file.name)
             sh """
             [ -d "venv-${ext}-${cnt}" ] && rm -rf venv-${ext}-${cnt}
-            virtualenv "venv-${ext}-${cnt}"
+            python -m venv "venv-${ext}-${cnt}"
             . venv-${ext}-${cnt}/bin/activate
             pip install dist/${file.name}
             venv-${ext}-${cnt}/bin/python -c 'import ${module_name}; print(${module_name}.__version__)'
