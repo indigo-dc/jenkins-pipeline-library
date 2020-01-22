@@ -62,7 +62,7 @@ def test(String module_name) {
  * @param pypi_user User of PyPI account
  * @param pypi_pass Password of PyPI account 
  */
-def publish(String pypi_user, hudson.util.Secret pypi_pass) {
+def publish(String pypi_user, hudson.util.Secret pypi_pass, boolean skip_testpypi=false) {
     content = """
 [distutils]
 index-servers =
@@ -79,7 +79,9 @@ repository: https://upload.pypi.org/legacy/
 username: ${pypi_user}
 password: ${pypi_pass}"""
     writeFile file: '/tmp/.pypirc', text: content
-    //sh 'twine upload --config-file /tmp/.pypirc --repository testpypi --skip-existing "dist/*"'
+    if (skip_testpypi == false) {
+        sh 'twine upload --config-file /tmp/.pypirc --repository testpypi --skip-existing "dist/*"'
+    }
     sh 'twine upload --config-file /tmp/.pypirc --repository pypi --skip-existing "dist/*"'
 }
 
