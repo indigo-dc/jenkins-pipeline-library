@@ -48,23 +48,31 @@ def composeDown(Boolean purge=false) {
 
 /**
  * Run the pipeline within Docker Compose
+ * This call defines a step that returns a stage
+ *
+ * @param stage_name Stage name for docker compose wrapper
+ * @param seqStages Defined stages to run inside docker environment
+ * Other parameters are already defined in above functions
  */
-def call(String service_ids, String compose_file='', String registry_url='https://hub.docker.com/', Boolean purge=true, Closure seqStages) {
-    stages {
-        stage('Docker Compose UP') {
-            steps {
-                composeUp(service_ids, compose_file, registry_url)
+def call(String stage_name, String service_ids, String compose_file='', String registry_url='https://hub.docker.com/', Boolean purge=true, Closure seqStages) {
+    def composedStage = steps.stage(stage_name) {
+        stages {
+            stage('Docker Compose UP') {
+                steps {
+                    composeUp(service_ids, compose_file, registry_url)
+                }
             }
-        }
 
-        stage('Pipeline inside Docker Compose') {
-            seqStages.call()
-        }
+            stage('Pipeline inside Docker Compose') {
+                seqStages.call()
+            }
 
-        stage('Docker Compose DOWN') {
-            steps {
-                composeDown(purge)
+            stage('Docker Compose DOWN') {
+                steps {
+                    composeDown(purge)
+                }
             }
         }
     }
+    return composedStage
 }
