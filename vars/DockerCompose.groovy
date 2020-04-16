@@ -47,7 +47,7 @@ def composeDown(Boolean purge=false) {
 }
 
 /**
- * Run the pipeline
+ * Run the pipeline within Docker Compose
  */
 def call(String service_id, String compose_file='', String registry_url='https://hub.docker.com/', Boolean purge=true, Closure stages) {
     stages {
@@ -63,7 +63,7 @@ def call(String service_id, String compose_file='', String registry_url='https:/
 
         stage('Docker Compose DOWN') {
             steps {
-                composeDown()
+                composeDown(purge)
             }
         }
     }
