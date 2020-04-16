@@ -49,16 +49,16 @@ def composeDown(Boolean purge=false) {
 /**
  * Run the pipeline within Docker Compose
  */
-def call(String service_id, String compose_file='', String registry_url='https://hub.docker.com/', Boolean purge=true, Closure stages) {
+def call(String service_ids, String compose_file='', String registry_url='https://hub.docker.com/', Boolean purge=true, Closure seqStages) {
     stages {
         stage('Docker Compose UP') {
             steps {
-                composeUp(service_id, compose_file, registry_url)
+                composeUp(service_ids, compose_file, registry_url)
             }
         }
 
         stage('Pipeline inside Docker Compose') {
-            stages.call()
+            seqStages.call()
         }
 
         stage('Docker Compose DOWN') {
