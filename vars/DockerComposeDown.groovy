@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
 
-import static eu.eoscsynergy.DockerCompose.composeDown
+import static eu.indigo.DockerCompose.composeDown
 
 /**
  * Run the pipeline within Docker Compose

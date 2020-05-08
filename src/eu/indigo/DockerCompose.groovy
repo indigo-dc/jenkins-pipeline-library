@@ -1,12 +1,16 @@
 #!/usr/bin/groovy
-package eu.eoscsynergy
+package eu.indigo
 
 /**
  * Definitions for Docker Compose integration in Jenkins
  * @see: https://docs.docker.com/compose/compose-file/
  */
 @CompileDynamic
-class DockerCompose {
+@groovy.transform.InheritConstructors
+class DockerCompose extends JenkinsDefinitions implements Serializable {
+
+    private static final long serialVersionUID = 0L
+
     /**
     * Parameters static strings for command parser
     */
@@ -85,5 +89,37 @@ class DockerCompose {
         else {
             sh 'docker-compose $cmd down -v'
         }
+    }
+
+    /**
+    * Copy file or directory into docker container
+    *
+    * @param service Service name
+    * @param src_path copies the contents of source path
+    * @param dest_path copies the contents to the destination path
+    * @param compose_file Docker compose file to override the default docker-compose.yml
+    * @see https://docs.docker.com/engine/reference/commandline/cp/
+    * @see https://blog.dcycle.com/blog/ae67284c/docker-compose-cp
+    * @see https://docs.docker.com/compose/reference/ps/
+    */
+    def composeCP(String service, String src_path, String dest_path, String compose_file='', String workdir='') {
+        sh "docker cp $src_path \"\$(docker-compose " + \
+            parseParam(new Tuple2(_f, compose_file)) + " ps -q $service)\":$dest_path"
+    }
+
+    /**
+    * Run docker compose exec
+    *
+    * @param service Service name
+    * @param command Command with arguments to run inside container
+    * @param compose_file Docker compose file to override the default docker-compose.yml
+    * @param workdir Path to workdir directory for this command
+    * @see https://docs.docker.com/compose/reference/exec/
+    */
+    def composeToxRun(String service, String command, String compose_file='', String workdir='') {
+        cmd = parseParam(new Tuple2(_f, compose_file)) + ' exec ' + \
+                parseParam(new Tuple2(_w, workdir)) + " $service $command"
+
+        sh "docker-compose $cmd"
     }
 }
