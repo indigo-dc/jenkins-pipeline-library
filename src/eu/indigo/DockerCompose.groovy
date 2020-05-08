@@ -1,4 +1,3 @@
-#!/usr/bin/groovy
 package eu.indigo
 
 /**
