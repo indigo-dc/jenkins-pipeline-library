@@ -1,5 +1,4 @@
-#!/usr/bin/groovy
-
+@Library('indigo')
 import static eu.indigo.Tox.config
 
 /**

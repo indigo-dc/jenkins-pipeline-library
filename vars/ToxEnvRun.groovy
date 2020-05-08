@@ -1,5 +1,4 @@
-#!/usr/bin/groovy
-
+@Library(['github.com:WORSICA/jenkins-pipeline-library@docker-compose'])
 import static eu.indigo.Tox.envRun
 
 /**
