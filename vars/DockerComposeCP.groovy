@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
 
-import static eu.indigo.DockerCompose.composeExec
+import static eu.indigo.DockerCompose.composeCP
 
 /**
  * Run the pipeline within Docker Compose
@@ -9,5 +9,5 @@ import static eu.indigo.DockerCompose.composeExec
  * Parameters are already defined in function definition
  */
 def call(String service, String command, String compose_file='', String workdir='') {
-    composeExec(service, command, compose_file, workdir)
+    composeCP(service, command, compose_file, workdir)
 }
