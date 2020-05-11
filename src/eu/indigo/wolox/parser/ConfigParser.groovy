@@ -1,50 +1,50 @@
-package com.wolox.parser;
+package eu.indigo.wolox.parser
 
-import com.wolox.ProjectConfiguration;
-import com.wolox.docker.DockerConfiguration;
-import com.wolox.services.*;
-import com.wolox.steps.*;
+import eu.indigo.wolox.ProjectConfiguration
+import eu.indigo.wolox.docker.DockerConfiguration
+import eu.indigo.wolox.services.*
+import eu.indigo.wolox.steps.*
 
-class ConfigParser {
+class ConfigParser implements Serializable {
 
-    private static String LATEST = 'latest';
-    private static Integer DEFAULT_TIMEOUT = 600;   // 600 seconds
+    private static String LATEST = 'latest'
+    private static Integer DEFAULT_TIMEOUT = 600   // 600 seconds
 
     static ProjectConfiguration parse(def yaml, def env) {
-        ProjectConfiguration projectConfiguration = new ProjectConfiguration();
+        ProjectConfiguration projectConfiguration = new ProjectConfiguration()
 
-        projectConfiguration.buildNumber = env.BUILD_ID;
+        projectConfiguration.buildNumber = env.BUILD_ID
 
         // parse the environment variables
-        projectConfiguration.environment    = parseEnvironment(yaml.environment);
+        projectConfiguration.environment    = parseEnvironment(yaml.environment)
 
         // parse the execution steps
-        projectConfiguration.steps          = parseSteps(yaml.steps);
+        projectConfiguration.steps          = parseSteps(yaml.steps)
 
         // parse the necessary services
-        projectConfiguration.services   = parseServices(yaml.services);
+        projectConfiguration.services   = parseServices(yaml.services)
 
         // load the dockefile
-        projectConfiguration.dockerfile = parseDockerfile(yaml.config);
+        projectConfiguration.dockerfile = parseDockerfile(yaml.config)
 
         // load the project name
-        projectConfiguration.projectName = parseProjectName(yaml.config);
+        projectConfiguration.projectName = parseProjectName(yaml.config)
 
-        projectConfiguration.env = env;
+        projectConfiguration.env = env
 
-        projectConfiguration.dockerConfiguration = new DockerConfiguration(projectConfiguration: projectConfiguration);
+        projectConfiguration.dockerConfiguration = new DockerConfiguration(projectConfiguration: projectConfiguration)
 
-        projectConfiguration.timeout = yaml.timeout ?: DEFAULT_TIMEOUT;
+        projectConfiguration.timeout = yaml.timeout ?: DEFAULT_TIMEOUT
 
-        return projectConfiguration;
+        return projectConfiguration
     }
 
     static def parseEnvironment(def environment) {
         if (!environment) {
-            return "";
+            return ""
         }
 
-        return environment.collect { k, v -> "${k}=${v}"};
+        return environment.collect { k, v -> "${k}=${v}"}
     }
 
     static def parseSteps(def yamlSteps) {
@@ -53,15 +53,15 @@ class ConfigParser {
 
             // a step can have one or more commands to execute
             v.each {
-                step.commands.add(it);
+                step.commands.add(it)
             }
             return step
         }
-        return new Steps(steps: steps);
+        return new Steps(steps: steps)
     }
 
     static def parseServices(def steps) {
-        def services = [];
+        def services = []
 
         steps.each {
             def service = it.tokenize(':')
@@ -69,9 +69,9 @@ class ConfigParser {
             def instance = getServiceClass(service.get(0).capitalize())?.newInstance()
 
             services.add([service: instance, version: version])
-        };
+        }
 
-        services.add([service: new Base(), version: LATEST]);
+        services.add([service: new Base(), version: LATEST])
 
         return services
     }
@@ -105,17 +105,17 @@ class ConfigParser {
 
     static def parseDockerfile(def config) {
         if (!config || !config["dockerfile"]) {
-            return "Dockerfile";
+            return "Dockerfile"
         }
 
-        return config["dockerfile"];
+        return config["dockerfile"]
     }
 
     static def parseProjectName(def config) {
         if (!config || !config["project_name"]) {
-            return "woloxci-project";
+            return "woloxci-project"
         }
 
-        return config["project_name"];
+        return config["project_name"]
     }
 }
