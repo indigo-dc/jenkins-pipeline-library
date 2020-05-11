@@ -5,7 +5,8 @@ package eu.indigo
  * @see: https://tox.readthedocs.io/en/latest/
  */
 @CompileDynamic
-class Tox implements Serializable {
+@groovy.transform.InheritConstructors
+class Tox extends JenkinsDefinitions implements Serializable {
 
     private static final long serialVersionUID = 0L
 
@@ -33,7 +34,7 @@ class Tox implements Serializable {
             opts += '-c '+filename
         }
         cmd = ['tox'] + opts
-        sh(script: cmd.join(' '))
+        steps.sh(script: cmd.join(' '))
     }
 
     /**
@@ -45,7 +46,7 @@ class Tox implements Serializable {
             opts += '-c '+filename
         }
         cmd = ['tox'] + opts
-        sh(script: cmd.join(' '))
+        steps.sh(script: cmd.join(' '))
     }
 
 }

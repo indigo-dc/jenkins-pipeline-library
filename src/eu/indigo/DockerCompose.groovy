@@ -52,7 +52,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         cmd = parseParam(new Tuple2(_f, compose_file)) + ' exec ' + \
                 parseParam(new Tuple2(_w, workdir)) + " $service $command"
 
-        sh "docker-compose $cmd"
+        steps.sh "docker-compose $cmd"
     }
 
     /**
@@ -68,7 +68,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         cmd = parseParam(new Tuple2(_f, compose_file)) + " up $service_ids"
 
         docker.withRegistry(registry_url) {
-            sh "docker-compose $cmd"
+            steps.sh "docker-compose $cmd"
         }
     }
 
@@ -83,10 +83,10 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         cmd = parseParam(new Tuple2(_f, compose_file))
 
         if (purge) {
-            sh 'docker-compose $cmd down -v --rmi all --remove-orphans'
+            steps.sh 'docker-compose $cmd down -v --rmi all --remove-orphans'
         }
         else {
-            sh 'docker-compose $cmd down -v'
+            steps.sh 'docker-compose $cmd down -v'
         }
     }
 
@@ -102,7 +102,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/ps/
     */
     def composeCP(String service, String src_path, String dest_path, String compose_file='', String workdir='') {
-        sh "docker cp $src_path \"\$(docker-compose " + \
+        steps.sh "docker cp $src_path \"\$(docker-compose " + \
             parseParam(new Tuple2(_f, compose_file)) + " ps -q $service)\":$dest_path"
     }
 
@@ -119,6 +119,6 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         cmd = parseParam(new Tuple2(_f, compose_file)) + ' exec ' + \
                 parseParam(new Tuple2(_w, workdir)) + " $service $command"
 
-        sh "docker-compose $cmd"
+        steps.sh "docker-compose $cmd"
     }
 }

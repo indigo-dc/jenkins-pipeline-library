@@ -1,16 +1,16 @@
-package com.wolox;
+package eu.indigo.wolox
 
-import com.wolox.docker.DockerConfiguration;
-import com.wolox.steps.Steps;
+import eu.indigo.wolox.docker.DockerConfiguration
+import eu.indigo.wolox.steps.Steps
 
-class ProjectConfiguration {
-    def environment;
-    def services;
-    Steps steps;
-    def dockerfile;
-    def projectName;
-    def buildNumber;
-    DockerConfiguration dockerConfiguration;
-    def env;
-    def timeout;
+class ProjectConfiguration implements Serializable {
+    def node_agent
+    def environment
+    def services
+    Steps steps
+    def projectName
+    def buildNumber
+    DockerConfiguration dockerConfiguration
+    def env
+    def timeout
 }
