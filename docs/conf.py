@@ -262,7 +262,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'jenkins-pipeline-library.tex', 'jenkins-pipeline-library Documentation',
-     'Pablo Orviz Fernández', 'manual'),
+     'EOSC-Synergy project', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
