@@ -5,18 +5,18 @@
 
 Welcome to jenkins-pipeline-library's documentation!
 ====================================================
-
-Contents:
+The jenkins-pipeline-library provides an easy means to compose Jenkins 
+code pipelines (aka Jenkinsfiles) that put into practice the principles 
+defined in the `Software Quality Assurance (SQA) baseline 
+<https://github.com/indigo-dc/sqa-baseline>`_, to conduct the software
+development life cycle.
 
 .. toctree::
    :maxdepth: 2
 
+.. toctree::
+   :maxdepth: 1
+   :glob:
+   :caption: Tutorial
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
+   user/tutorial
