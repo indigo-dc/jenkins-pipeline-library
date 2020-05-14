@@ -60,7 +60,7 @@ Here you can define the generic parameters, such as the workspace and execution
 agents.
 
 :Type: ``map``
-:Options: ``node_agent``, ``deploy_template``, ``project_repos``
+:Parameters: ``node_agent``, ``deploy_template``, ``project_repos``
 :Required: ``true``
 
 Example:
@@ -76,6 +76,75 @@ Example:
          branch: master
          dockerhub: worsica/worsica-processing
          dockertag: $branch
+
+node_agent
+``````````
+
+The type of agent to drive the execution of the dynamic stages.
+
+:Type: ``string``
+:Options: ``docker-compose``
+:Default: ``docker-compose``
+
+deploy_template
+```````````````
+
+Path to the template containing the agent definition.
+
+:Type: ``path``
+:Required: ``true``
+
+project_repos
+`````````````
+
+Describes the code repositories that the pipeline will deal with.
+
+:Type: ``map``
+:Required: ``true``
+
+Example:
+
+.. code-block:: yaml
+
+   config:
+     project_repos:
+       worsica-processing:
+         repo: 'https://github.com/WORSICA/worsica-processing.git'
+         branch: master
+         dockerhub: worsica/worsica-processing
+         dockertag: $branch
+
+The set of allowed parameters for the definition of the code repository's
+description within the ``project_repos`` setting are herein described:
+
+**repo**
+
+URL pointing to the root path of the code repository.
+
+:Type: ``url``
+:Required: ``true``
+
+**branch**
+
+Branch name to be checked out.
+
+:Type: ``string``
+:Default: ``master``
+
+**dockerhub**
+
+Repository name within the Docker Hub registry where the Docker images
+produced by the pipeline will be pushed.
+
+:Type: ``string``
+:Required: ``true``
+
+**dockertag**
+
+Tag name to be used for labeling the resultant Docker image.
+
+:Type: ``string``
+:Default: ``latest``
 
 sqa_criteria
 ~~~~~~~~~~~~
