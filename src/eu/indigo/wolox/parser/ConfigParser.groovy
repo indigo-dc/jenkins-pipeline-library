@@ -5,7 +5,13 @@ import eu.indigo.wolox.docker.DockerConfiguration
 import eu.indigo.wolox.services.*
 import eu.indigo.wolox.steps.*
 
+/**
+ * Configuration Parser
+ */
+@CompileDynamic
 class ConfigParser implements Serializable {
+
+    private static final long serialVersionUID = 0L
 
     private static String LATEST = 'latest'
     private static Integer DEFAULT_TIMEOUT = 600   // 600 seconds

@@ -2,7 +2,7 @@
 import eu.indigo.wolox.ProjectConfiguration
 import eu.indigo.wolox.steps.Step
 
-def call(ProjectConfiguration projectConfig) {
+call(ProjectConfiguration projectConfig) {
     def stagesMap = projectConfig.stagesMap
 
     stagesList.each { stageLabel, commands ->

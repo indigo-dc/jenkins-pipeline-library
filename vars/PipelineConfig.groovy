@@ -2,7 +2,7 @@
 import eu.indigo.parser.ConfigParser
 import eu.indigo.wolox.*
 
-def call(String yamlName) {
+call(String yamlName) {
     def yaml = readYaml file: yamlName
 
     def buildNumber = Integer.parseInt(env.BUILD_ID)
