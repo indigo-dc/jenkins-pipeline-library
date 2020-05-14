@@ -1,2 +1,11 @@
 # Sphinx documentation
 docs/_build/
+
+# vim
+*~
+*.swp
+*.swo
+
+# python-virtualenv
+.venv
+venv
