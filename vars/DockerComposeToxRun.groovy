@@ -7,6 +7,6 @@ import static eu.indigo.DockerCompose.composeToxRun
  *
  * Parameters are already defined in function definition
  */
-def call(String service, String command, String compose_file='', String workdir='') {
+call(String service, String command, String compose_file='', String workdir='') {
     composeToxRun(service, command, compose_file, workdir)
 }

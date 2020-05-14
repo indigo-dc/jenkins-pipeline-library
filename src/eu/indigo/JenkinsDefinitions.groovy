@@ -9,12 +9,14 @@ class JenkinsDefinitions implements Serializable {
 
     private static final long serialVersionUID = 0L
 
+    def steps
+
     /**
     * Define constructor to import definitions from Jenkins context
     * @see https://www.jenkins.io/doc/book/pipeline/shared-libraries/#accessing-steps
     */
-    def steps
-    JenkinsDefinitions(steps) {
+    JenkinsDefinitions(def steps) {
         this.steps = steps
     }
+
 }
