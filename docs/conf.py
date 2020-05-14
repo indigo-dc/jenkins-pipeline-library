@@ -50,8 +50,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'jenkins-pipeline-library'
-copyright = '2020, Pablo Orviz Fernández'
-author = 'Pablo Orviz Fernández'
+copyright = '2020, EOSC-Synergy project'
+author = 'EOSC-Synergy project collaboration'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
