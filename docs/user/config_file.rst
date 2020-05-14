@@ -154,7 +154,7 @@ Each requirement has a unique identifier and an associated set of mandatory and
 optional attributes.
 
 :Type: ``map``
-:Options: ``qc-style``, ``qc-functional``, ``qc-coverage``, ``qc-security``, ``qc-doc`` 
+:Parameters: ``qc-style``, ``qc-functional``, ``qc-coverage``, ``qc-security``, ``qc-doc`` 
 :Required: ``true``
 
 Example:
@@ -173,6 +173,68 @@ Example:
    The ``sqa_criteria`` setting is the most relevant section of the
    ``.sqa/config.yml`` as it defines the different stages that will be
    dynamically added to the pipeline.
+
+The relationship between the identifiers used in the definition of the
+``sqa_criteria`` (see *Options* above) and the ones used in the SQA criteria
+is summarized as follows:
+
++-----------------+-----------------------+
+| sqa_criteria ID | SQA baseline category |
++=================+=======================+
+| qc-style        | QC.Sty                |
++-----------------+-----------------------+
+| qc-coverage     | QC.Uni                |
++-----------------+-----------------------+
+| qc-functional   | QC.Fun                |
++-----------------+-----------------------+
+| qc-security     | QC.Sec                |
++-----------------+-----------------------+
+| qc-doc          | QC.Doc                |
++-----------------+-----------------------+
+
+The current set of criteria supported from the SQA baseline (check *Options*
+above) share the same available settings. They all fall into a code repository
+categorization, through the use of the ``repos`` map setting.
+
+.. note:
+   The repositories used under ``repos`` must be previously defined in the 
+   ``config:project_repos`` setting. They are referred by the identifiers
+   used there.
+
+Next, we will describe the available settings that can be defined for each 
+repository associated with a given criteria:
+
+container
+`````````
+
+Allows to specify the Docker container where the given criteria assessment will
+take place. It using docker-compose, the value could be any of the services 
+defined in the docker-compose.yml.
+
+:Type: ``string``
+:Required: ``true``
+
+tox
+```
+
+Built-in support tox application. It is only applicable for Python environments.
+
+:Type: ``map``
+:Parameters: ``testenv``, ``tox_file``
+
+**testenv**
+
+Identifier of the test environment that tox shall use.
+
+:Type: ``string``
+:Required: ``true``
+
+**tox_file**
+
+Specifies the path to the tox configuration file.
+
+:Type: ``path``
+:Default: ``tox.ini``
 
 environment
 ~~~~~~~~~~~
