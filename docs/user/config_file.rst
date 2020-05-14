@@ -236,6 +236,78 @@ Specifies the path to the tox configuration file.
 :Type: ``path``
 :Default: ``tox.ini``
 
+*Examples:*
+    .. tabs::
+
+        .. tab:: qc-style
+
+           .. code-block:: yaml
+              
+              sqa_criteria:
+                qc-style:
+                  repos:
+                    worsica-processing:
+                      container: processing
+                      tox:
+                        testenv: stylecheck
+
+        .. tab:: qc-coverage
+
+           .. code-block:: yaml
+
+              sqa_criteria:
+              qc-functional:
+                repos:
+                  worsica-processing:
+                    container: processing
+                    tox:
+                      testenv: coverage
+                  worsica-portal:
+                    container: celery
+                    tox:
+                      testenv: functional
+
+        .. tab:: qc-functional
+
+           .. code-block:: yaml
+
+              sqa_criteria:
+                qc-functional:
+                  repos:
+                    worsica-processing:
+                      container: processing
+                      tox:
+                        testenv: unittest
+                    worsica-portal:
+                      container: celery
+                      tox:
+                        testenv: functional
+
+        .. tab:: qc-security
+
+           .. code-block:: yaml
+
+              sqa_criteria:
+                qc-security:
+                  repos:
+                    worsica-processing:
+                      container: processing
+                      tox:
+                        testenv: security
+
+        .. tab:: qc-doc
+
+           .. code-block:: yaml
+
+              sqa_criteria:
+                qc-doc:
+                  repos:
+                    worsica-cicd:
+                      container: processing
+                      commands:
+                        - python setup.py build_sphinx
+
+
 environment
 ~~~~~~~~~~~
 Contains the environment variables required to execute the previouos SQA 
