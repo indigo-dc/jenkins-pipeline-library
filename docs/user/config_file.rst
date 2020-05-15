@@ -84,6 +84,7 @@ is used by default.
 :Type: ``string``
 :Options: ``docker-compose``
 :Default: ``docker-compose``
+:Location: ``config:node_agent``
 
 deploy_template
 ```````````````
@@ -93,6 +94,7 @@ Path to the template containing the definition of the services for the
 
 :Type: ``path``
 :Default: ``.sqa/docker-compose.yml``
+:Location: ``config:deploy_template``
 
 project_repos
 `````````````
@@ -101,6 +103,7 @@ Describes the code repositories that the pipeline will deal with.
 
 :Type: ``map``
 :Required: ``true``
+:Location: ``config:project_repos``
 
 Example:
 
@@ -123,6 +126,7 @@ URL pointing to the root path of the code repository.
 
 :Type: ``url``
 :Required: ``true``
+:Location: ``config:project_repos:repo``
 
 **branch**
 
@@ -130,6 +134,7 @@ Branch name to be checked out.
 
 :Type: ``string``
 :Default: ``master``
+:Location: ``config:project_repos:branch``
 
 **dockerhub**
 
@@ -138,6 +143,7 @@ produced by the pipeline will be pushed.
 
 :Type: ``string``
 :Required: ``true``
+:Location: ``config:project_repos:dockerhub``
 
 **dockertag**
 
@@ -145,6 +151,7 @@ Tag name to be used for labeling the resultant Docker image.
 
 :Type: ``string``
 :Default: ``latest``
+:Location: ``config:project_repos:dockertag``
 
 sqa_criteria
 ~~~~~~~~~~~~
@@ -213,6 +220,7 @@ defined in the docker-compose.yml.
 
 :Type: ``string``
 :Required: ``true``
+:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:container``
 
 tox
 ```
@@ -221,6 +229,7 @@ Built-in support tox application. It is only applicable for Python environments.
 
 :Type: ``map``
 :Parameters: ``testenv``, ``tox_file``
+:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox``
 
 **testenv**
 
@@ -228,6 +237,7 @@ Identifier of the test environment that tox shall use.
 
 :Type: ``string``
 :Required: ``true``
+:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox:testenv``
 
 **tox_file**
 
@@ -235,6 +245,7 @@ Specifies the path to the tox configuration file.
 
 :Type: ``path``
 :Default: ``tox.ini``
+:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox:tox_file``
 
 *Examples:*
     .. tabs::
