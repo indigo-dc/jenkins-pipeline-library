@@ -55,5 +55,10 @@ of:
    buildStages(projectConfig)
 
 .. note::
-   The library expects the presence of the configuration file in 
-   ``.sqa/config.yml``. This behaviour is not configurable.
+   The library expects by default the presence of the configuration file in
+   ``.sqa/config.yml``. This behaviour can be changed by passing the path of
+   the file using the ``config_file`` optional argument:
+
+   .. code-block::
+
+      projectConfig = pipelineConfig(config_file=<alternative_path>)
