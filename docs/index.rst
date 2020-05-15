@@ -30,29 +30,6 @@ code analysis and testing to its final delivery, with a particular focus on
 research software. The latest version of the SQA criteria can be found in 
 `<https://indigo-dc.github.io/sqa-baseline>`_.
 
-.. The Software Quality Assurance baseline
-.. ---------------------------------------
-.. The SQA criteria collects a comprehensive set of good practices meant to 
-.. improve the quality of the resultant software. The criteria is governed by the
-.. DevOps culture and covers the whole software development life cycle, from the 
-.. code analysis and testing to its final delivery, with a particular focus on 
-.. research software. The latest version of the SQA criteria can be found in 
-.. `<https://indigo-dc.github.io/sqa-baseline>`_.
-.. 
-.. The jenkins-library-pipeline
-.. ----------------------------
-.. The jenkins-pipeline-library implements the aforementioned requirements from 
-.. the SQA baseline in order to simplify the task of developing quality software
-.. in research. To this end, the library relies on the Jenkins' Pipeline-as-Code 
-.. capabilities to dinamically compose customized workflows --aka pipelines or 
-.. ``Jenkinsfile``-- that are executed for every change in the source code.
-.. 
-.. Consequently, the jenkins-pipeline-library hides the complexity of the 
-.. domain-specific language (DSL) syntax used in the Jenkisfiles, providing the 
-.. users with the possibility of describing the relevant information --needed to
-.. analyze, build, deploy, test and deliver the application-- through a YAML-based
-.. file.
-
 .. toctree::
    :maxdepth: 1
    :hidden:
