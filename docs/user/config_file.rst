@@ -16,8 +16,6 @@ Below is an example YAML file which shows the most common configuration options:
 	
     # generic configuration: workspace, agents
     config:
-      node_agent: 'docker-compose'
-      deploy_template: '.sqa/docker-compose.yml'
       project_repos:
         worsica-processing:
           repo: 'https://github.com/WORSICA/worsica-processing.git'
@@ -82,6 +80,13 @@ is used by default.
 :Default: ``docker-compose``
 :Location: ``config:node_agent``
 
+Example:
+
+.. code-block:: yaml
+
+    config:
+      node_agent: 'docker-compose'
+
 .. _config-deploy_template-setting:
 
 deploy_template
@@ -93,6 +98,13 @@ Path to the template containing the definition of the services for the
 :Type: ``path``
 :Default: ``.sqa/docker-compose.yml``
 :Location: ``config:deploy_template``
+
+Example:
+
+.. code-block:: yaml
+
+    config:
+      deploy_template: '.sqa/docker-compose.yml'
 
 project_repos
 `````````````
