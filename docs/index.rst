@@ -35,4 +35,13 @@ research software. The latest version of the SQA criteria can be found in
    :hidden:
    :caption: Getting started
 
+   /user/layout
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Configuration files
+
    /user/config_file
+   /user/docker_compose
+   /user/jenkinsfile

@@ -1,5 +1,5 @@
-Configuration File
-==================
+The configuration file: config.yml
+==================================
 
 jenkins-pipeline-library relies on a YAML file in order to compose dinamically
 the stages that tackle the fulfillment of a requirement or good practice as 
