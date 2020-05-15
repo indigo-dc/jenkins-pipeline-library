@@ -32,10 +32,6 @@ Below is an example YAML file which shows the most common configuration options:
             container: processing
             tox:
               testenv: stylecheck
-            environment:
-              GIT_COMMITTER_NAME: Person2
-              GIT_COMMITTER_EMAIL: person2@example.org
-              LANG: en_US.UTF-8
     
     environment:
       GIT_COMMITTER_NAME: Person1
