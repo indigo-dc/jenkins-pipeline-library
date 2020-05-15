@@ -68,8 +68,6 @@ Example:
 .. code-block:: yaml
 
    config:
-     node_agent: 'docker-compose'
-     deploy_template: '.sqa/docker-compose.yml'
      project_repos:
        worsica-processing:
          repo: 'https://github.com/WORSICA/worsica-processing.git'
@@ -80,7 +78,8 @@ Example:
 node_agent
 ``````````
 
-The type of agent to drive the execution of the dynamic stages.
+The type of agent to drive the execution of the dynamic stages. Docker Compose
+is used by default.
 
 :Type: ``string``
 :Options: ``docker-compose``
@@ -89,10 +88,11 @@ The type of agent to drive the execution of the dynamic stages.
 deploy_template
 ```````````````
 
-Path to the template containing the agent definition.
+Path to the template containing the definition of the services for the 
+``node_agent`` in use.
 
 :Type: ``path``
-:Required: ``true``
+:Default: ``.sqa/docker-compose.yml``
 
 project_repos
 `````````````
