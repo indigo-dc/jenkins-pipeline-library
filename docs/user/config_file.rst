@@ -86,6 +86,8 @@ is used by default.
 :Default: ``docker-compose``
 :Location: ``config:node_agent``
 
+.. _config-deploy_template-setting:
+
 deploy_template
 ```````````````
 
@@ -267,16 +269,16 @@ Specifies the path to the tox configuration file.
            .. code-block:: yaml
 
               sqa_criteria:
-              qc-functional:
-                repos:
-                  worsica-processing:
-                    container: processing
-                    tox:
-                      testenv: coverage
-                  worsica-portal:
-                    container: celery
-                    tox:
-                      testenv: functional
+                qc-coverage:
+                  repos:
+                    worsica-processing:
+                      container: processing
+                      tox:
+                        testenv: coverage
+                    worsica-portal:
+                      container: celery
+                      tox:
+                        testenv: coverage
 
         .. tab:: qc-functional
 
