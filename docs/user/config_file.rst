@@ -229,13 +229,13 @@ take place. It using docker-compose, the value could be any of the services
 defined in the docker-compose.yml.
 
 :Type: ``string``
-:Required: ``true``
 :Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:container``
 
 tox
 ```
 
-Built-in support tox application. It is only applicable for Python environments.
+Built-in support tox application. It is only applicable for Python
+environments.
 
 :Type: ``map``
 :Parameters: ``testenv``, ``tox_file``
@@ -256,6 +256,36 @@ Specifies the path to the tox configuration file.
 :Type: ``path``
 :Default: ``tox.ini``
 :Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox:tox_file``
+
+.. note:
+   If using ``tox`` withouth ``container``, the jenkins-pipeline-library will
+   automatically select an appropriate Docker container for running the tool.
+
+commands
+````````
+
+Allows to include a list of commands. This is helpful whenever there is no 
+built-in support for the tool you use for building purposes.
+
+:Type: ``list``
+:Default: ``[]``
+:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:commands``
+
+Example:
+
+.. code-block:: yaml
+
+   sqa_criteria:
+     qc-sec:
+       repos:
+        worsica-processing:
+          commands:
+            - bundle exec brakeman --exit-on-error
+
+.. note:
+   ``commands`` requires the presence of the ``container`` setting, which must
+   have available all the tools --and dependencies-- used by the list of 
+   commands.
 
 *Examples:*
     .. tabs::
