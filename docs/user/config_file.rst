@@ -296,6 +296,8 @@ Next, we will describe those available settings, some of them used in the
 previous examples, that can be defined for each repository associated with the
 former criteria:
 
+.. _config-container-setting:
+
 container
 `````````
 
