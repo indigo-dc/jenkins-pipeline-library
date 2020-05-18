@@ -209,83 +209,16 @@ is summarized as follows:
 | qc-doc          | QC.Doc                |
 +-----------------+-----------------------+
 
-The current set of criteria supported from the SQA baseline (check *Options*
-above) share the same available settings. They all fall into a code repository
-categorization, through the use of the ``repos`` map setting.
+The previous table lists the set of criteria that is currently supported by 
+the current version of the jenkins-pipeline-library. The settings described in
+this section are common to all, which are applicable and defined 
+per-repository, and thus, they must be used within the ``repos`` map setting, 
+as showed in the following examples.
 
 .. note:
    The repositories used under ``repos`` must be previously defined in the 
    ``config:project_repos`` setting. They are referred by the identifiers
    used there.
-
-Next, we will describe the available settings that can be defined for each 
-repository associated with a given criteria:
-
-container
-`````````
-
-Allows to specify the Docker container where the given criteria assessment will
-take place. It using docker-compose, the value could be any of the services 
-defined in the docker-compose.yml.
-
-:Type: ``string``
-:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:container``
-
-tox
-```
-
-Built-in support tox application. It is only applicable for Python
-environments.
-
-:Type: ``map``
-:Parameters: ``testenv``, ``tox_file``
-:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox``
-
-**testenv**
-
-Identifier of the test environment that tox shall use.
-
-:Type: ``string``
-:Required: ``true``
-:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox:testenv``
-
-**tox_file**
-
-Specifies the path to the tox configuration file.
-
-:Type: ``path``
-:Default: ``tox.ini``
-:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox:tox_file``
-
-.. note:
-   If using ``tox`` withouth ``container``, the jenkins-pipeline-library will
-   automatically select an appropriate Docker container for running the tool.
-
-commands
-````````
-
-Allows to include a list of commands. This is helpful whenever there is no 
-built-in support for the tool you use for building purposes.
-
-:Type: ``list``
-:Default: ``[]``
-:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:commands``
-
-Example:
-
-.. code-block:: yaml
-
-   sqa_criteria:
-     qc-sec:
-       repos:
-        worsica-processing:
-          commands:
-            - bundle exec brakeman --exit-on-error
-
-.. note:
-   ``commands`` requires the presence of the ``container`` setting, which must
-   have available all the tools --and dependencies-- used by the list of 
-   commands.
 
 *Examples:*
     .. tabs::
@@ -358,6 +291,76 @@ Example:
                       commands:
                         - python setup.py build_sphinx
 
+
+Next, we will describe those available settings, some of them used in the 
+previous examples, that can be defined for each repository associated with the
+former criteria:
+
+container
+`````````
+
+Allows to specify the Docker container where the given criteria assessment will
+take place. It using docker-compose, the value could be any of the services 
+defined in the docker-compose.yml.
+
+:Type: ``string``
+:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:container``
+
+tox
+```
+
+Built-in support tox application. It is only applicable for Python
+environments.
+
+:Type: ``map``
+:Parameters: ``testenv``, ``tox_file``
+:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox``
+
+**testenv**
+
+Identifier of the test environment that tox shall use.
+
+:Type: ``string``
+:Required: ``true``
+:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox:testenv``
+
+**tox_file**
+
+Specifies the path to the tox configuration file.
+
+:Type: ``path``
+:Default: ``tox.ini``
+:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox:tox_file``
+
+.. note:
+   If using ``tox`` withouth ``container``, the jenkins-pipeline-library will
+   automatically select an appropriate Docker container for running the tool.
+
+commands
+````````
+
+Allows to include a list of commands. This is helpful whenever there is no 
+built-in support for the tool you use for building purposes.
+
+:Type: ``list``
+:Default: ``[]``
+:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:commands``
+
+Example:
+
+.. code-block:: yaml
+
+   sqa_criteria:
+     qc-sec:
+       repos:
+        worsica-processing:
+          commands:
+            - bundle exec brakeman --exit-on-error
+
+.. note:
+   ``commands`` requires the presence of the ``container`` setting, which must
+   have available all the tools --and dependencies-- used by the list of 
+   commands.
 
 environment
 ~~~~~~~~~~~
