@@ -1,5 +1,5 @@
 @Library(['github.com:WORSICA/jenkins-pipeline-library@docker-compose'])
-import eu.indigo.wolox.ProjectConfiguration
+import eu.indigo.compose.ProjectConfiguration
 import eu.indigo.DockerCompose
 
 call(ProjectConfiguration projectConfig) {

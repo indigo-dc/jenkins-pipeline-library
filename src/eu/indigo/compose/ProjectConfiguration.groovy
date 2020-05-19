@@ -1,7 +1,7 @@
-package eu.indigo.wolox
+package eu.indigo.compose
 
-import eu.indigo.wolox.docker.DockerConfiguration
-import eu.indigo.wolox.steps.Steps
+import eu.indigo.compose.docker.DockerConfiguration
+import eu.indigo.compose.steps.Steps
 
 /**
  * Project configuration

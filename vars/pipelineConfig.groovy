@@ -1,6 +1,6 @@
 @Library(['github.com:WORSICA/jenkins-pipeline-library@docker-compose'])
 import eu.indigo.parser.ConfigParser
-import eu.indigo.wolox.*
+import eu.indigo.compose.*
 
 call(String yamlName) {
     def yaml = readYaml file: yamlName
