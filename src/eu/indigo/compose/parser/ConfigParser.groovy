@@ -1,9 +1,9 @@
-package eu.indigo.wolox.parser
+package eu.indigo.compose.parser
 
-import eu.indigo.wolox.ProjectConfiguration
-import eu.indigo.wolox.docker.DockerConfiguration
-import eu.indigo.wolox.services.*
-import eu.indigo.wolox.steps.*
+import eu.indigo.compose.ProjectConfiguration
+import eu.indigo.compose.docker.DockerConfiguration
+import eu.indigo.compose.services.*
+import eu.indigo.compose.steps.*
 
 /**
  * Configuration Parser
@@ -119,7 +119,7 @@ class ConfigParser implements Serializable {
 
     static def parseProjectName(def config) {
         if (!config || !config["project_name"]) {
-            return "woloxci-project"
+            return "composeci-project"
         }
 
         return config["project_name"]

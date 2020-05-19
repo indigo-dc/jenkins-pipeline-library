@@ -1,6 +1,6 @@
-package com.wolox.docker
+package com.compose.docker
 
-import com.wolox.ProjectConfiguration
+import com.compose.ProjectConfiguration
 
 /**
  * Docker configuration
