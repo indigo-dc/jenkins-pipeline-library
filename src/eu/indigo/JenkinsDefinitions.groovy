@@ -15,7 +15,7 @@ class JenkinsDefinitions implements Serializable {
     * Define constructor to import definitions from Jenkins context
     * @see https://www.jenkins.io/doc/book/pipeline/shared-libraries/#accessing-steps
     */
-    JenkinsDefinitions(def steps) {
+    JenkinsDefinitions(steps) {
         this.steps = steps
     }
 

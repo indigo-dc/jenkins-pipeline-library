@@ -64,7 +64,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/up/
     * @see https://docs.docker.com/compose/reference/overview/
     */
-    def composeUp(String service_ids, String compose_file='', String registry_url='https://hub.docker.com/') {
+    def composeUp(String service_ids='', String compose_file='', String registry_url='https://hub.docker.com/') {
         cmd = parseParam(new Tuple2(_f, compose_file)) + " up $service_ids"
 
         docker.withRegistry(registry_url) {
@@ -121,4 +121,23 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
 
         steps.sh "docker-compose $cmd"
     }
+
+    /**
+     * Process stages from config.yml
+     */
+    def processStages(def stagesMap) {
+        stagesMap.each { stageLabel, commands ->
+            stage(stageLabel) {
+                commands.each { container, command ->
+                    switch (projectConfig.node_agent) {
+                        case 'docker-compose':
+                            run = new DockerCompose(steps)
+                            run.composeExec(container, command)
+                            break
+                    }
+                }
+            }
+        }
+    }
+
 }
