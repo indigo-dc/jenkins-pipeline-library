@@ -152,7 +152,6 @@ Repository name within the Docker Hub registry where the Docker images
 produced by the pipeline will be pushed.
 
 :Type: ``string``
-:Required: ``true``
 :Location: ``config:project_repos:dockerhub``
 
 **dockertag**
