@@ -12,6 +12,7 @@ config:
       jenkins-pipeline-library:
         container: ci_java
         when:
+        -
           branch: master
           withCredentials:
             credentialsId: "indigobot-github-token"
@@ -21,8 +22,8 @@ config:
             - 'git config -l'
             - 'git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
             - 'gh-pages-multi deploy'
-        when:
-          building: tag
+        -
+          branch: '.*tag.*'
           withCredentials:
             credentialsId: "indigobot-github-token"
             variable: "GITHUB_TOKEN"
