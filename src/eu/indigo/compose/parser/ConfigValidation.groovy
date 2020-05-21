@@ -31,7 +31,7 @@ class ConfigValidation extends JenkinsDefinitions implements Serializable {
                 .objectMapper(objMapper).build()
 
         Set invalidMessages = factory.getSchema(schema)
-                .validate(objMapper.readTree(yaml))
+                .validate(objMapper.readTree(yml))
                 .message
         if (!invalidMessages.empty) {
             invalidMessages.each { println it }
