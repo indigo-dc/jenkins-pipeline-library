@@ -1,5 +1,7 @@
 package eu.indigo
 
+import eu.indigo.JenkinsDefinitions
+
 /**
  * Definitions for Tox automation project
  * @see: https://tox.readthedocs.io/en/latest/

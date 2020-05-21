@@ -1,9 +1,6 @@
 package eu.indigo.compose.parser
 
 import eu.indigo.compose.ProjectConfiguration
-import eu.indigo.compose.docker.DockerConfiguration
-import eu.indigo.compose.services.*
-import eu.indigo.compose.steps.*
 
 /**
  * Configuration Parser
@@ -17,6 +14,7 @@ class ConfigParser implements Serializable {
     private static Integer DEFAULT_TIMEOUT = 600   // 600 seconds
 
     static ProjectConfiguration parse(def yaml, def env) {
+
         ProjectConfiguration projectConfiguration = new ProjectConfiguration()
 
         projectConfiguration.buildNumber = env.BUILD_ID
