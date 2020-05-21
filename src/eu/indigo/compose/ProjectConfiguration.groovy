@@ -1,8 +1,5 @@
 package eu.indigo.compose
 
-import eu.indigo.compose.docker.DockerConfiguration
-import eu.indigo.compose.steps.Steps
-
 /**
  * Project configuration
  */
@@ -14,10 +11,8 @@ class ProjectConfiguration implements Serializable {
     def node_agent
     def environment
     def services
-    Steps steps
     def projectName
     def buildNumber
-    DockerConfiguration dockerConfiguration
     def env
     def timeout
 

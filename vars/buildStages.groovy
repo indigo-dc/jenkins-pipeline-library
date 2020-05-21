@@ -2,11 +2,11 @@
 import eu.indigo.compose.ProjectConfiguration
 import eu.indigo.DockerCompose
 
-call(ProjectConfiguration projectConfig) {
+def call(ProjectConfiguration projectConfig) {
 
     switch (projectConfig.node_agent) {
         case 'docker-compose':
-            run = new DockerCompose(steps)
+            run = new DockerCompose(this)
             run.composeUp()
             run.processStages(projectConfig.stagesMap)
             run.composeDown()
