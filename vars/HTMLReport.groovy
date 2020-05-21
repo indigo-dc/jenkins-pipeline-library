@@ -3,17 +3,18 @@
 /**
  * Publishes HTML reports.
  *
- * @param dir Path to HTML files [mandatory]
- * @param index Main index file [mandatory]
- * @param title Report title [mandatory]
+ * @param  dir Path to HTML files [mandatory]
+ * @param  index Main index file [mandatory]
+ * @param  title Report title [mandatory]
  * @see https://plugins.jenkins.io/htmlpublisher
  */
 def call(String dir, String index, String title) {
     publishHTML([allowMissing: false,
-                 alwaysLinkToLastBuild: false,
-                 keepAll: true,
-                 reportDir: dir,
-                 reportFiles: index,
-                 reportName: title,
-                 reportTitles: ''])
+            alwaysLinkToLastBuild: false,
+            keepAll: true,
+            reportDir: dir,
+            reportFiles: index,
+            reportName: title,
+            reportTitles: ''])
 }
+

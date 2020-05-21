@@ -3,7 +3,7 @@
 /**
  * Runs either Checkstyle or Cobertura maven goals.
  *
- * @param report Report location [default]
+ * @param  report Report location [default]
  * @see https://plugins.jenkins.io/cobertura
  */
 def call(String goal) {

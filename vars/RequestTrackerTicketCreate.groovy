@@ -5,10 +5,10 @@ import java.net.URLEncoder
 /**
  * Creates a new ticket in RT.
  *
- * @param url RT server URL
- * @param creds credential's ID in Jenkins
- * @param queue Queue name in RT
- * @param subject Ticket's subject in RT
+ * @param  url RT server URL
+ * @param  creds credential's ID in Jenkins
+ * @param  queue Queue name in RT
+ * @param  subject Ticket's subject in RT
  * @return reponse object
  */
 def call(String url, String creds, String queue, String subject) {
@@ -19,14 +19,14 @@ def call(String url, String creds, String queue, String subject) {
     ].join('\n')
 
     def content_utf8 = URLEncoder.encode(content, "UTF-8")
-	def response = httpRequest authentication: "${creds}",
-                   customHeaders: [[maskValue: false,
-                                    name: 'Content-type',
-                                    value: 'text/plain; charset=utf-8']], 
-                   httpMode: 'POST',
-                   responseHandle: 'NONE',
-                   url: "${url}/REST/1.0/ticket/new?content=${content_utf8}",
-                   consoleLogResponseBody: true
+    def response = httpRequest authentication: "${creds}",
+    customHeaders: [[maskValue: false,
+            name: 'Content-type',
+            value: 'text/plain; charset=utf-8']], 
+    httpMode: 'POST',
+    responseHandle: 'NONE',
+    url: "${url}/REST/1.0/ticket/new?content=${content_utf8}",
+    consoleLogResponseBody: true
 }
 /*
 def encode() {
@@ -42,10 +42,11 @@ def content = [
 //    "Text: text text",
 //    "Attachment: dummy-file",
 //    "attachment_1: /tmp/dummy-file.txt",
-    ].join('\n')
+].join('\n')
 def content_utf8 = URLEncoder.encode(content, "UTF-8")
 println(content_utf8)
 }
 
 encode()
-*/
+ */
+

@@ -3,8 +3,8 @@
 /**
  * Uses APT/YUM package managers to install packages.
  *
- * @param packages List of required packages [mandatory]
- * @param report Target file [mandatory]
+ * @param  packages List of required packages [mandatory]
+ * @param  package_manager Name of the package manager to be used [mandatory]
  */
 def call(List packages, String package_manager) {
     package_str = packages.join(' ')
