@@ -1,16 +1,14 @@
 #!/usr/bin/groovy
 import groovy.json.JsonSlurper 
 
-def boolean isPathInRepository(String owner,String repository,String path)
-{
-    String GITHUB_API = 'https://api.github.com/repos'
-    String url = "${GITHUB_API}/${owner}/${repository}/contents/${path}"
-    def code = new URL(url).openConnection().with {
-    requestMethod = 'GET'
-    connect()
-    responseCode
-   }
-   return code == 200
+    
+ def boolean isPathInRepository(String owner,String repository,String path){
+      String repository_url = 'https://api.github.com/repos'
+      URL url = "${repository_url}/${owner}/${repository}/contents/${path}".toURL()
+      def connection = (HttpURLConnection)url.openConnection()
+      connection.setRequestMethod("GET")
+      connection.connect()
+      return connection.getResponseCode() == 200
 }
 
 def call(String owner, String repository) {
