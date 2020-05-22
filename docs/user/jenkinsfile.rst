@@ -57,8 +57,8 @@ of:
 .. note::
    The library expects by default the presence of the configuration file in
    ``.sqa/config.yml``. This behaviour can be changed by passing the path of
-   the file using the ``config_file`` optional argument:
+   the file using the ``configFile`` optional argument:
 
    .. code-block::
 
-      projectConfig = pipelineConfig(config_file=<alternative_path>)
+      projectConfig = pipelineConfig(configFile=<alternative_path>)
