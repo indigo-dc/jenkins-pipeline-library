@@ -1,0 +1,111 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "config_repo_settings": {
+            "type": "object",
+            "properties": {
+                "repo": { "type": "string", "format": "uri" },
+                "branch": { "type": "string" },
+                "dockerhub": { "type": "string" },
+                "dockertag": { "type": "string" }
+            },
+            "required": ["repo"]
+        },
+        "config_repo": {
+            "type": "object",
+            "minProperties": 1,
+            "patternProperties": {
+                "[a-z0-9_-]*": { "$ref": "#/definitions/config_repo_settings" }
+            }
+        },
+        "tox": {
+            "type": "object",
+            "properties": {
+                "testenv": { 
+                    "anyOf": [
+                        { "type": "string" },
+                        { "type": "array" }
+                    ]
+                },
+                "tox_file": { "type": "string" }
+            },
+            "required": ["testenv"],
+            "additionalProperties": false
+        },
+        "repo_settings": {
+            "type": "object",
+            "properties": {
+                "container": { "type": "string" },
+                "commands": { "type": "array" },
+                "tox": { "$ref": "#/definitions/tox" }
+            },
+            "oneOf":[
+                { "required": [ "commands" ]},
+                { "required": [ "tox" ]}
+            ],
+            "additionalProperties": false,
+            "dependencies": {
+                "commands": ["container"]
+            }
+        },
+        "sqa_criterion_repo": {
+            "type": "object",
+            "minProperties": 1,
+            "patternProperties": {
+                "[a-z0-9_-]*": { "$ref": "#/definitions/repo_settings" }
+            }
+        },
+        "sqa_criterion": {
+            "type": "object",
+            "minProperties": 1,
+            "properties": {
+                "repos": { "$ref": "#/definitions/sqa_criterion_repo" }
+            },
+            "required": ["repos"],
+            "additionalProperties": false
+        }
+    },
+    "type": "object",
+    "properties": {
+        "config": {
+            "description": "Definition of the generic parameters to be used by the subsequent settings",
+            "type": "object",
+            "properties": {
+                "node_agent": { "type": "string" },
+                "deploy_template": { "type": "string" },
+                "project_repos": { "$ref": "#/definitions/config_repo" }
+            },
+            "required": ["project_repos"]
+        },
+        "sqa-criteria": {
+            "description": "Contains all the required SQA baseline's criteria definitions",
+            "type": "object",
+            "minProperties": 1,
+            "properties": {
+                "qc-style": { "$ref": "#/definitions/sqa_criterion" },
+                "qc-coverage": { "$ref": "#/definitions/sqa_criterion" },
+                "qc-functional": { "$ref": "#/definitions/sqa_criterion" },
+                "qc-security": { "$ref": "#/definitions/sqa_criterion" },
+                "qc-doc": { "$ref": "#/definitions/sqa_criterion" }
+            },
+            "additionalProperties": false
+        },
+        "environment": {
+            "description": "Sets the environment variables required to execute the previouos SQA criteria blocks",
+            "type": "object",
+            "propertyNames": {
+                "pattern": "^[A-Z]{1}[A-Z0-9_]*"
+            }
+        },
+        "timeout": {
+            "description": "Sets the timeout for the pipeline execution",
+            "type": "integer",
+            minimum: 0
+        },
+        "required": [
+            "config",
+            "sqa-criteria"
+        ],
+        "additionalProperties": false
+    }
+}
