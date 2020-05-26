@@ -45,3 +45,10 @@ research software. The latest version of the SQA criteria can be found in
    /user/config_file
    /user/docker_compose
    /user/jenkinsfile
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Step-by-step guide
+
+   /user/step_by_step
