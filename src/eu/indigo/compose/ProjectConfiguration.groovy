@@ -9,7 +9,6 @@ class ProjectConfiguration implements Serializable {
 
     def nodeAgent
     def config = [
-        node_agent: 'docker-compose',
         deploy_template: '.sqa/docker-compose.yml',
         project_repos: [
             [
