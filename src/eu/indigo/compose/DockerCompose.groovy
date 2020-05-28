@@ -1,10 +1,9 @@
-package eu.indigo
+package eu.indigo.compose
 
 /**
  * Definitions for Docker Compose integration in Jenkins
  * @see: https://docs.docker.com/compose/compose-file/
  */
-@CompileDynamic
 @groovy.transform.InheritConstructors
 class DockerCompose extends JenkinsDefinitions implements Serializable {
 
@@ -111,13 +110,14 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     *
     * @param service Service name
     * @param command Command with arguments to run inside container
-    * @param compose_file Docker compose file to override the default docker-compose.yml
+    * @param compose_file configuration file to override the default docker-compose.yml
+    * @param tox_file Tox configuration file to override the default tox.ini
     * @param workdir Path to workdir directory for this command
     * @see https://docs.docker.com/compose/reference/exec/
     */
-    def composeToxRun(String service, String command, String compose_file='', String workdir='') {
-        cmd = parseParam(new Tuple2(_f, compose_file)) + ' exec ' + \
-                parseParam(new Tuple2(_w, workdir)) + " $service $command"
+    def composeToxRun(Map args, String service, String command) {
+        cmd = parseParam(new Tuple2(_f, args.compose_file)) + ' exec ' + \
+                parseParam(new Tuple2(_w, args.workdir)) + " $service $command"
 
         steps.sh "docker-compose $cmd"
     }
@@ -125,9 +125,21 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     /**
      * Process stages from config.yml
      */
-    def processStages(def stagesMap) {
-        stagesMap.each { stageLabel, commands ->
-            stage(stageLabel) {
+    def processStages(stagesList) {
+        stagesList.each { stageMap ->
+            stage(stageMap.stage) {
+                if (stageMap.tox) {
+                    if (stageMap.tox.toxFile) {
+                        stageMap.tox.testenv.each { testenv ->
+                            composeToxRun(stageMap.container, testenv, stageMap.tox.toxFile)
+                        }
+                    }
+                }
+                if (stageMap.commands) {
+                    stageMap.commands.each { command ->
+                        steps.sh "$command"
+                    }
+                }
                 commands.each { container, command ->
                     switch (projectConfig.node_agent) {
                         case 'docker-compose':

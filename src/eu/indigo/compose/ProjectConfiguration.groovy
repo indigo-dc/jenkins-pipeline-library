@@ -3,17 +3,41 @@ package eu.indigo.compose
 /**
  * Project configuration
  */
-@CompileDynamic
 class ProjectConfiguration implements Serializable {
 
     private static final long serialVersionUID = 0L
 
-    def node_agent
+    def nodeAgent
+    def config
+    def stagesList = [
+        [
+            stage: 'qc-style deepaas',
+            repo: 'deepaas',
+            container: 'deepaas',
+            tox: [
+                testenv: ['pep8']
+            ]
+        ],
+        [
+            stage: 'qc-coverage deepaas',
+            repo: 'deepaas',
+            container: 'deepaas',
+            tox: [
+                testenv: ['cover', 'cobertura']
+            ]
+        ],
+        [
+            stage: 'qc-security deepaas',
+            repo: 'deepaas',
+            container: 'deepaas',
+            tox: [
+                testenv: ['bandit']
+            ]
+        ]
+    ]
     def environment
-    def services
     def projectName
     def buildNumber
-    def env
     def timeout
 
 }

@@ -16,9 +16,7 @@ import com.networknt.schema.JsonSchema
  * Configuration validation for yaml provided file
  * @see: https://docs.docker.com/compose/compose-file/
  */
-@CompileDynamic
-@groovy.transform.InheritConstructors
-class ConfigValidation extends JenkinsDefinitions implements Serializable {
+class ConfigValidation implements Serializable {
 
     private static final long serialVersionUID = 0L
 
