@@ -9,6 +9,9 @@ class ConfigParser implements Serializable {
 
     private static final long serialVersionUID = 0L
 
+    // Constant literals for this Class
+    _repos = 'repos'
+
     private static String LATEST = 'latest'
     private static Integer DEFAULT_TIMEOUT = 600   // 600 seconds
     static List supportedBuildTools = [
@@ -17,16 +20,15 @@ class ConfigParser implements Serializable {
 
     static ProjectConfiguration parse(def yaml, def env) {
 
-        ProjectConfiguration projectConfiguration = new ProjectConfiguration()
-        
-        projectConfiguration.nodeAgent = yaml.config.nodeAgent
-        projectConfiguration.config = getConfigSetting(yaml.config)
-        projectConfiguration.stagesList = formatStages(getSQASetting(yaml['sqa-criteria']))
-
-        projectConfiguration.buildNumber = env.BUILD_ID
-        projectConfiguration.environment = parseEnvironment(yaml.environment)
-        projectConfiguration.projectName = parseProjectName(yaml.config)
-        projectConfiguration.timeout = yaml.timeout ?: DEFAULT_TIMEOUT
+        ProjectConfiguration projectConfiguration = new ProjectConfiguration().tap {
+            nodeAgent = yaml.config.nodeAgent
+            config = getConfigSetting(yaml.config)
+            stagesList = formatStages(getSQASetting(yaml['sqa-criteria']))
+            buildNumber = env.BUILD_ID
+            environment = parseEnvironment(yaml.environment)
+            projectName = parseProjectName(yaml.config)
+            timeout = yaml.timeout ?: DEFAULT_TIMEOUT
+        }
 
         return projectConfiguration
     }
@@ -42,7 +44,7 @@ class ConfigParser implements Serializable {
             result
         }
     }
-    
+
     static Map getDefaultValue(String setting) {
         def result = [:]
         switch(setting) {
@@ -69,7 +71,7 @@ class ConfigParser implements Serializable {
         }
         return result
     }
-    
+
     static Map getConfigSetting(Map config) {
         def configBase = merge(getDefaultValue('config'), config)
         def configRepos = [
@@ -80,24 +82,24 @@ class ConfigParser implements Serializable {
         ]
         return merge(configRepos, configBase)
     }
-    
+
     static Map getSQASetting(Map criteria) {
         def sqaCriteria = criteria.each { criterion, data ->
             supportedBuildTools.each { tool ->
-                def repoData = data['repos'].collectEntries { id, params ->
+                def repoData = data[_repos].collectEntries { id, params ->
                     params.containsKey(tool) ? [id, merge(getDefaultValue(tool), params)] : null
                 }
-                data['repos'] = repoData
+                data[_repos] = repoData
             }
         }
         return sqaCriteria
     }
-    
+
     static List formatStages(Map criteria) {
         def stagesList = []
         criteria.each { criterion, data ->
             def stageMap = [:]
-            data['repos'].each { repo, params ->
+            data[_repos].each { repo, params ->
                 stageMap['stage'] = "${criterion} ${repo}"
                 stageMap['repo'] = repo
                 params.each { k, v ->
@@ -108,10 +110,10 @@ class ConfigParser implements Serializable {
         }
         return stagesList
     }
-    
+
     static def parseEnvironment(def environment) {
         if (!environment) {
-            return ""
+            return ''
         }
 
         return environment.collect { k, v -> "${k}=${v}"}
@@ -124,4 +126,5 @@ class ConfigParser implements Serializable {
 
         return config["project_name"]
     }
+
 }
