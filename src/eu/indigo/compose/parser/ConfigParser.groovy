@@ -80,7 +80,18 @@ class ConfigParser implements Serializable {
         }
         return result
     }
-
+    
+    static Map getConfigSetting(Map config) {
+        def configBase = merge(getDefaultValue('config'), config)
+        def configRepos = [
+            project_repos: configBase['project_repos']
+                .collectEntries { id, repo ->
+                    [id, merge(getDefaultValue('config_repo'), repo)]
+                }
+        ]
+        return merge(configRepos, configBase)
+    }
+    
     static def parseEnvironment(def environment) {
         if (!environment) {
             return ""
