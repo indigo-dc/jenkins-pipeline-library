@@ -18,13 +18,14 @@ class ConfigParser implements Serializable {
     static ProjectConfiguration parse(def yaml, def env) {
 
         ProjectConfiguration projectConfiguration = new ProjectConfiguration()
+        
+        projectConfiguration.nodeAgent = yaml.config.nodeAgent
+        projectConfiguration.config = getConfigSetting(yaml.config)
+        projectConfiguration.stagesList = formatStages(getSQASetting(yaml['sqa-criteria']))
 
         projectConfiguration.buildNumber = env.BUILD_ID
-
         projectConfiguration.environment = parseEnvironment(yaml.environment)
-
         projectConfiguration.projectName = parseProjectName(yaml.config)
-
         projectConfiguration.timeout = yaml.timeout ?: DEFAULT_TIMEOUT
 
         return projectConfiguration
