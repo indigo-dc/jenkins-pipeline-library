@@ -1,6 +1,5 @@
 import eu.indigo.compose.ProjectConfiguration
 import eu.indigo.compose.ComposeFactory
-import eu.indigo.compose.
 
 def call(ProjectConfiguration projectConfig) {
 
