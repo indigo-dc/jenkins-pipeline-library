@@ -14,6 +14,29 @@ class ConfigParser implements Serializable {
 
     static ProjectConfiguration parse(def yaml, def env) {
 
+        def getDefaultValue = { String key ->
+            def result
+            switch(key) {
+                case 'config':
+                    result = [
+                        deploy_template: '.sqa/docker-compose.yml']
+                    break
+                case 'config_repo':
+                    result = [
+                        branch: 'master',
+                        dockertag: 'latest' ]
+                    break
+                case 'tox':
+                    result = [
+                        container: 'tox',
+                        tox: [
+                            toxfile: 'tox.ini',
+                            testenv: '']]
+                    break
+            }
+            return result
+        }
+
         ProjectConfiguration projectConfiguration = new ProjectConfiguration()
 
         projectConfiguration.buildNumber = env.BUILD_ID
