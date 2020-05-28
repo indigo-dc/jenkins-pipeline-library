@@ -11,6 +11,9 @@ class ConfigParser implements Serializable {
 
     private static String LATEST = 'latest'
     private static Integer DEFAULT_TIMEOUT = 600   // 600 seconds
+    static List supportedBuildTools = [
+        'tox'
+    ]
 
     static ProjectConfiguration parse(def yaml, def env) {
 
@@ -94,7 +97,7 @@ class ConfigParser implements Serializable {
     
     static Map getSQASetting(Map criteria) {
         def sqaCriteria = criteria.each { criterion, data ->
-            ['tox'].each { tool ->
+            supportedBuildTools.each { tool ->
                 def repoData = data['repos'].collectEntries { id, params ->
                     params.containsKey(tool) ? [id, merge(getDefaultValue(tool), params)] : null
                 }
