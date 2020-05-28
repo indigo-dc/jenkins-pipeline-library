@@ -92,6 +92,18 @@ class ConfigParser implements Serializable {
         return merge(configRepos, configBase)
     }
     
+    static Map getSQASetting(Map criteria) {
+        def sqaCriteria = criteria.each { criterion, data ->
+            ['tox'].each { tool ->
+                def repoData = data['repos'].collectEntries { id, params ->
+                    params.containsKey(tool) ? [id, merge(getDefaultValue(tool), params)] : null
+                }
+                data['repos'] = repoData
+            }
+        }
+        return sqaCriteria
+    }
+    
     static def parseEnvironment(def environment) {
         if (!environment) {
             return ""
