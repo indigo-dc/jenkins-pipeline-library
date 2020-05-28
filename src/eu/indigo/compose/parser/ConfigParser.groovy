@@ -107,6 +107,22 @@ class ConfigParser implements Serializable {
         return sqaCriteria
     }
     
+    static List formatStages(Map criteria) {
+        def stagesList = []
+        criteria.each { criterion, data ->
+            def stageMap = [:]
+            data['repos'].each { repo, params ->
+                stageMap['stage'] = "${criterion} ${repo}"
+                stageMap['repo'] = repo
+                params.each { k, v ->
+                    stageMap[k] = v
+                }
+            }
+            stagesList.add(stageMap)
+        }
+        return stagesList
+    }
+    
     static def parseEnvironment(def environment) {
         if (!environment) {
             return ""
