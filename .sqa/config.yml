@@ -1,5 +1,6 @@
 config:
   node_agent: 'docker-compose'
+  deploy_template: '.sqa/docker-compose.yml'
   project_repos:
     jenkins-pipeline-library:
       repo: 'https://github.com/WORSICA/jenkins-pipeline-library.git'

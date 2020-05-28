@@ -6,7 +6,6 @@ import eu.indigo.JenkinsDefinitions
  * Definitions for Tox automation project
  * @see: https://tox.readthedocs.io/en/latest/
  */
-@CompileDynamic
 @groovy.transform.InheritConstructors
 class Tox extends JenkinsDefinitions implements Serializable {
 

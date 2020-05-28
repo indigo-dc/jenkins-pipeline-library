@@ -1,19 +1,16 @@
-@Library(['github.com:WORSICA/jenkins-pipeline-library@docker-compose'])
 import eu.indigo.compose.ProjectConfiguration
-import eu.indigo.DockerCompose
+import eu.indigo.compose.ComposeFactory
+import eu.indigo.compose.
 
 def call(ProjectConfiguration projectConfig) {
 
-    switch (projectConfig.node_agent) {
-        case 'docker-compose':
-            run = new DockerCompose(this)
-            run.composeUp()
-            run.processStages(projectConfig.stagesMap)
-            run.composeDown()
-            break
-        default:
-            println('BuildStages: Node agent not defined')
-            break
+    if (projectConfig.timeout) {
+        timeout(time: projectConfig.timeout, activity: true, unit: 'SECONDS') {
+            projectConfig.nodeAgent.processStages(projectConfig.stagesList)
+        }
+    }
+    else {
+        projectConfig.nodeAgent.processStages(projectConfig.stagesList)
     }
 
 }

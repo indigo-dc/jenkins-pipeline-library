@@ -5,7 +5,6 @@ import eu.indigo.compose.ProjectConfiguration
 /**
  * Configuration Parser
  */
-@CompileDynamic
 class ConfigParser implements Serializable {
 
     private static final long serialVersionUID = 0L
