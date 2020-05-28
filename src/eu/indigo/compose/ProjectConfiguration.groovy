@@ -8,7 +8,17 @@ class ProjectConfiguration implements Serializable {
     private static final long serialVersionUID = 0L
 
     def nodeAgent
-    def config
+    def config = [
+        node_agent: 'docker-compose',
+        deploy_template: '.sqa/docker-compose.yml',
+        project_repos: [
+            [
+                deepaas: [
+                    repo: 'https://github.com/indigo-dc/DEEPaaS'
+                ]
+            ]
+        ]
+    ]
     def stagesList = [
         [
             stage: 'qc-style deepaas',
