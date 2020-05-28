@@ -65,6 +65,18 @@ class ConfigParser implements Serializable {
         return projectConfiguration
     }
 
+    static Map merge(Map[] sources) {
+        if (sources.length == 0) return [:]
+        if (sources.length == 1) return sources[0]
+
+        sources.inject([:]) { result, source ->
+            source.each { k, v ->
+                result[k] = result[k] instanceof Map ? merge(result[k], v) : v
+            }
+            result
+        }
+    }
+
     static def parseEnvironment(def environment) {
         if (!environment) {
             return ""
