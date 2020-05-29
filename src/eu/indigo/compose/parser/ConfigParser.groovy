@@ -50,6 +50,7 @@ class ConfigParser implements Serializable {
         switch(setting) {
             case 'config':
                 result = [
+                    node_agent: 'docker-compose'
                     deploy_template: '.sqa/docker-compose.yml'
                 ]
                 break
@@ -63,7 +64,7 @@ class ConfigParser implements Serializable {
                 result = [
                     container: 'tox',
                     tox: [
-                        toxfile: 'tox.ini',
+                        tox_file: 'tox.ini',
                         testenv: ''
                     ]
                 ]
