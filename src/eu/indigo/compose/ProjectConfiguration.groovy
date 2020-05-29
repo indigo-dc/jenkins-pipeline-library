@@ -11,10 +11,11 @@ class ProjectConfiguration implements Serializable {
     def config = [
         deploy_template: '.sqa/docker-compose.yml',
         project_repos: [
-            [
-                deepaas: [
-                    repo: 'https://github.com/indigo-dc/DEEPaaS'
-                ]
+            deepaas: [
+                repo: 'https://github.com/indigo-dc/DEEPaaS.git',
+                branch: 'master',
+                dockerhub: 'DEEPAAS/test',
+                dockertag: 'latest'
             ]
         ]
     ]
@@ -24,7 +25,8 @@ class ProjectConfiguration implements Serializable {
             repo: 'deepaas',
             container: 'deepaas',
             tox: [
-                testenv: ['pep8']
+                testenv: ['pep8'],
+                tox_file: './tox.ini'
             ]
         ],
         [
@@ -32,7 +34,8 @@ class ProjectConfiguration implements Serializable {
             repo: 'deepaas',
             container: 'deepaas',
             tox: [
-                testenv: ['cover', 'cobertura']
+                testenv: ['cover', 'cobertura'],
+                tox_file: './tox.ini'
             ]
         ],
         [
@@ -40,7 +43,8 @@ class ProjectConfiguration implements Serializable {
             repo: 'deepaas',
             container: 'deepaas',
             tox: [
-                testenv: ['bandit']
+                testenv: ['bandit'],
+                tox_file: './tox.ini'
             ]
         ]
     ]

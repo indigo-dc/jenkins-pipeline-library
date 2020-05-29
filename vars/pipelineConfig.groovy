@@ -3,6 +3,7 @@ import eu.indigo.compose.ProjectConfiguration
 import eu.indigo.compose.parser.ConfigValidation
 import eu.indigo.compose.ComposeFactory
 import eu.indigo.compose.DockerCompose
+import eu.indigo.Tox
 
 def call(String configFile='./.sqa/config.yml') {
     def yamlContent = readFile file: yamlFile
@@ -17,7 +18,10 @@ def call(String configFile='./.sqa/config.yml') {
     validator.validate(yamlContent, schema)
     projectConfig = ConfigParser.parse(yaml, env, this.nodeAgent)
     try {
-        projectConfig.nodeAgent = ComposeFactory.setFactory(this.getClass().classLoader.loadClass(this.nodeAgent?, true, false)?.newInstance(this))
+        projectConfig.nodeAgent = new ComposeFactory().tap {
+            factory = this.getClass().classLoader.loadClass(this.nodeAgent?, true, false)?.newInstance(this))
+            tox = new Tox(this)
+        }
     } catch (ClassNotFoundException | CompilationFailedException e) {
         error 'BuildStages: Node agent not defined'
     }
