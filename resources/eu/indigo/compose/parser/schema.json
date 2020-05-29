@@ -7,7 +7,12 @@
                 "repo": { "type": "string", "format": "uri" },
                 "branch": { "type": "string" },
                 "dockerhub": { "type": "string" },
-                "dockertag": { "type": "string" }
+                "dockertag": {
+                    "anyOf": [
+                        { "type": "string" },
+                        { "type": "array" }
+                    ]
+                }
             },
             "required": ["repo"]
         },
