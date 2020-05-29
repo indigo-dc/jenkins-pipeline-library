@@ -100,7 +100,7 @@
         "timeout": {
             "description": "Sets the timeout for the pipeline execution",
             "type": "integer",
-            minimum: 0
+            minimum: 1
         },
         "required": [
             "config",
