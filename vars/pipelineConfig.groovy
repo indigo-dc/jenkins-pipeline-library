@@ -6,7 +6,7 @@ import eu.indigo.compose.DockerCompose
 import eu.indigo.Tox
 
 def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
-    def yamlContent = readFile file: yamlFile
+    def yamlContent = readFile file: configFile
     def yaml = readYaml file: configFile
     def schema = libraryResource('eu/indigo/compose/parser/schema.json')
     def buildNumber = Integer.parseInt(env.BUILD_ID)
