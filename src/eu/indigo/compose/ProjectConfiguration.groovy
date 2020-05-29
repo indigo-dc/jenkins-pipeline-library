@@ -13,9 +13,7 @@ class ProjectConfiguration implements Serializable {
         project_repos: [
             deepaas: [
                 repo: 'https://github.com/indigo-dc/DEEPaaS.git',
-                branch: 'master',
-                dockerhub: 'DEEPAAS/test',
-                dockertag: 'latest'
+                branch: 'master'
             ]
         ]
     ]
