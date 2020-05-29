@@ -140,7 +140,10 @@ URL pointing to the root path of the code repository.
 
 **branch**
 
-Branch name to be checked out.
+Branch name to be checked out. Additionally, the provided value can contain any
+of the possible forms that are allowed by the 
+`Pipeline: SCM Step <jenkins.io/doc/pipeline/steps/workflow-scm-step/ plugin>`_ 
+plugin .
 
 :Type: ``string``
 :Default: ``master``
