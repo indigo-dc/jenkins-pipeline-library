@@ -8,6 +8,7 @@ class ProjectConfiguration implements Serializable {
     private static final long serialVersionUID = 0L
 
     def nodeAgent
+    def nodeAgentAux
     def config = [
         deploy_template: '.sqa/docker-compose.yml',
         project_repos: [
