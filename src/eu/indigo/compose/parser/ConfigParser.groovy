@@ -10,7 +10,7 @@ class ConfigParser implements Serializable {
     private static final long serialVersionUID = 0L
 
     // Constant literals for this Class
-    _repos = 'repos'
+    String _repos = 'repos'
 
     private static String LATEST = 'latest'
     private static Integer DEFAULT_TIMEOUT = 600   // 600 seconds

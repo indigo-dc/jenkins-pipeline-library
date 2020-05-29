@@ -15,8 +15,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     /**
     * Parameters static strings for command parser
     */
-    _f = '-f'
-    _w = '-w'
+    def _f = '-f'
+    def _w = '-w'
 
     /**
     * Test if argument is not an empty string
