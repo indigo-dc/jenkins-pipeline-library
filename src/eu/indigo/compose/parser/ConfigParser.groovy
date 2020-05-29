@@ -53,7 +53,7 @@ class ConfigParser implements Serializable {
         switch(setting) {
             case 'config':
                 result = [
-                    node_agent: 'docker-compose'
+                    node_agent: 'docker-compose',
                     deploy_template: '.sqa/docker-compose.yml'
                 ]
                 break
