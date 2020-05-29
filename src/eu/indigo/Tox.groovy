@@ -14,7 +14,7 @@ class Tox extends JenkinsDefinitions implements Serializable {
     /**
     * Run Tox's test environment.
     */
-    def envRun(String testenv, String filename=null) {
+    def runTest(String testenv, String filename=null) {
         opts = ['-e ' + testenv]
         if (filename) {
             opts += '-c '+filename
