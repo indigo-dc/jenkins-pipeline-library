@@ -166,7 +166,7 @@ provided when in the need of pushing multiple tags.
 :Default: ``latest``
 :Location: ``config:project_repos:dockertag``
 
-sqa_criteria
+sqa-criteria
 ~~~~~~~~~~~~
 
 This setting allows to define the criteria from the SQA baseline to be checked.
@@ -190,16 +190,16 @@ Example:
              testenv: stylecheck
 
 .. note::
-   The ``sqa_criteria`` setting is the most relevant section of the
+   The ``sqa-criteria`` setting is the most relevant section of the
    ``.sqa/config.yml`` as it defines the different stages that will be
    dynamically added to the pipeline.
 
 The relationship between the identifiers used in the definition of the
-``sqa_criteria`` (see *Options* above) and the ones used in the SQA criteria
+``sqa-criteria`` (see *Options* above) and the ones used in the SQA criteria
 is summarized as follows:
 
 +-----------------+-----------------------+
-| sqa_criteria ID | SQA baseline category |
+| sqa-criteria ID | SQA baseline category |
 +=================+=======================+
 | qc-style        | QC.Sty                |
 +-----------------+-----------------------+
@@ -230,7 +230,7 @@ as showed in the following examples.
 
            .. code-block:: yaml
               
-              sqa_criteria:
+              sqa-criteria:
                 qc-style:
                   repos:
                     worsica-processing:
@@ -242,7 +242,7 @@ as showed in the following examples.
 
            .. code-block:: yaml
 
-              sqa_criteria:
+              sqa-criteria:
                 qc-coverage:
                   repos:
                     worsica-processing:
@@ -258,7 +258,7 @@ as showed in the following examples.
 
            .. code-block:: yaml
 
-              sqa_criteria:
+              sqa-criteria:
                 qc-functional:
                   repos:
                     worsica-processing:
@@ -274,7 +274,7 @@ as showed in the following examples.
 
            .. code-block:: yaml
 
-              sqa_criteria:
+              sqa-criteria:
                 qc-security:
                   repos:
                     worsica-processing:
@@ -286,7 +286,7 @@ as showed in the following examples.
 
            .. code-block:: yaml
 
-              sqa_criteria:
+              sqa-criteria:
                 qc-doc:
                   repos:
                     worsica-cicd:
@@ -309,7 +309,7 @@ take place. It using docker-compose, the value could be any of the services
 defined in the docker-compose.yml.
 
 :Type: ``string``
-:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:container``
+:Location: ``sqa-criteria:<qc-xxx>:repos:<repo>:container``
 
 tox
 ```
@@ -319,7 +319,7 @@ environments.
 
 :Type: ``map``
 :Parameters: ``testenv``, ``tox_file``
-:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox``
+:Location: ``sqa-criteria:<qc-xxx>:repos:<repo>:tox``
 
 **testenv**
 
@@ -327,7 +327,7 @@ Identifier of the test environment that tox shall use.
 
 :Type: ``string``
 :Required: ``true``
-:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox:testenv``
+:Location: ``sqa-criteria:<qc-xxx>:repos:<repo>:tox:testenv``
 
 **tox_file**
 
@@ -335,7 +335,7 @@ Specifies the path to the tox configuration file.
 
 :Type: ``path``
 :Default: ``tox.ini``
-:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox:tox_file``
+:Location: ``sqa-criteria:<qc-xxx>:repos:<repo>:tox:tox_file``
 
 .. note:
    If using ``tox`` withouth ``container``, the jenkins-pipeline-library will
@@ -349,13 +349,13 @@ built-in support for the tool you use for building purposes.
 
 :Type: ``list``
 :Default: ``[]``
-:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:commands``
+:Location: ``sqa-criteria:<qc-xxx>:repos:<repo>:commands``
 
 Example:
 
 .. code-block:: yaml
 
-   sqa_criteria:
+   sqa-criteria:
      qc-sec:
        repos:
         worsica-processing:
