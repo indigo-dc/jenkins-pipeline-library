@@ -6,15 +6,14 @@ import eu.indigo.compose.DockerCompose
 import eu.indigo.Tox
 
 def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
-    def yamlContent = readFile file: configFile
+    checkoutRepository(baseRepository)
     def yaml = readYaml file: configFile
     def schema = libraryResource('eu/indigo/compose/parser/schema.json')
     def buildNumber = Integer.parseInt(env.BUILD_ID)
     ProjectConfiguration projectConfig = null
 
-    checkoutRepository(baseRepository)
     validator = new ConfigValidation()
-    invalidMessages = validator.validate(yamlContent, schema)
+    invalidMessages = validator.validate(yaml, schema)
     if (invalidMessages) {
         error(invalidMessages.join('\n'))
     }
