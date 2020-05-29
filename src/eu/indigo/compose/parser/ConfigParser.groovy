@@ -14,6 +14,9 @@ class ConfigParser implements Serializable {
 
     private static String LATEST = 'latest'
     private static Integer DEFAULT_TIMEOUT = 600   // 600 seconds
+    static Map configToClass = [
+        'docker-compose': 'DockerCompose'
+    ]
     static List supportedBuildTools = [
         'tox'
     ]
@@ -21,7 +24,7 @@ class ConfigParser implements Serializable {
     static ProjectConfiguration parse(yaml, env) {
 
         ProjectConfiguration projectConfiguration = new ProjectConfiguration().tap {
-            nodeAgentAux = yaml.config.nodeAgent
+            nodeAgentAux = configToClass[yaml.config.node_agent]
             config = getConfigSetting(yaml.config)
             stagesList = formatStages(getSQASetting(yaml['sqa-criteria']))
             buildNumber = env.BUILD_ID
