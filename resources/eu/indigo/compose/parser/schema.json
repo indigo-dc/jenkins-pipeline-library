@@ -76,7 +76,10 @@
             "description": "Definition of the generic parameters to be used by the subsequent settings",
             "type": "object",
             "properties": {
-                "node_agent": { "type": "string" },
+                "node_agent": { 
+                    "type": "string",
+                    "enum": ["docker-compose"]
+                },
                 "deploy_template": { "type": "string" },
                 "project_repos": { "$ref": "#/definitions/config_repo" }
             },
