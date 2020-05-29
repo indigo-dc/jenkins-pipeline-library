@@ -9,6 +9,7 @@ class ComposeFactory implements Serializable {
     private static final long serialVersionUID = 0L
 
     def static factory
-    def static processStages(stagesList) { return factory.processStages(stagesList) }
+    def static tox
+    def static processStages(projectConfig) { return factory.processStages(projectConfig) }
 
 }

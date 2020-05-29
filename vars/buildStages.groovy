@@ -5,11 +5,11 @@ def call(ProjectConfiguration projectConfig) {
 
     if (projectConfig.timeout) {
         timeout(time: projectConfig.timeout, activity: true, unit: 'SECONDS') {
-            projectConfig.nodeAgent.processStages(projectConfig.stagesList)
+            projectConfig.nodeAgent.processStages(projectConfig)
         }
     }
     else {
-        projectConfig.nodeAgent.processStages(projectConfig.stagesList)
+        projectConfig.nodeAgent.processStages(projectConfig)
     }
 
 }

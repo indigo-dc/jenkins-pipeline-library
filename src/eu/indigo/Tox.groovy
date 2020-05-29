@@ -12,21 +12,6 @@ class Tox extends JenkinsDefinitions implements Serializable {
     private static final long serialVersionUID = 0L
 
     /**
-    * Creates a Tox configuration file for py27.
-    */
-    def config(String content, String filename='tox.ini') {
-        testenv_content = libraryResource 'eu/indigo/tox.ini'
-        content_all = testenv_content + content
-        if (filename == 'tox.ini') {
-            if (fileExists(filename)) {
-                readContent = readFile(filename)
-                content_all = readContent + '\n' + content
-            }
-        }
-        writeFile(file: filename, text: content_all)
-    }
-
-    /**
     * Run Tox's test environment.
     */
     def envRun(String testenv, String filename=null) {
@@ -39,15 +24,13 @@ class Tox extends JenkinsDefinitions implements Serializable {
     }
 
     /**
-     * Run Tox inside a container
+     * Run Tox environment
+     *
+     * @param toxFile Tox configuration file to override the default tox.ini
+     * @param testenv Test environment to run with tox
      */
-    def composeToxRun(String testenv, String filename=null) {
-        opts = ['-e ' + testenv]
-        if (filename) {
-            opts += '-c '+filename
-        }
-        cmd = ['tox'] + opts
-        steps.sh(script: cmd.join(' '))
+    def runEnv(Map args, String testenv) {
+        return "tox -c $args.toxFile -e $testenv"
     }
 
 }

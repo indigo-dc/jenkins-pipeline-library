@@ -1,5 +1,8 @@
 package eu.indigo.compose
 
+import eu.indigo.JenkinsDefinitions
+import eu.indigo.compose.ProjectConfiguration
+
 /**
  * Definitions for Docker Compose integration in Jenkins
  * @see: https://docs.docker.com/compose/compose-file/
@@ -43,13 +46,13 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     *
     * @param service Service name
     * @param command Command with arguments to run inside container
-    * @param compose_file Docker compose file to override the default docker-compose.yml
+    * @param composeFile Docker compose file to override the default docker-compose.yml
     * @param workdir Path to workdir directory for this command
     * @see https://docs.docker.com/compose/reference/exec/
     */
-    def composeExec(String service, String command, String compose_file='', String workdir='') {
-        cmd = parseParam(new Tuple2(_f, compose_file)) + ' exec ' + \
-                parseParam(new Tuple2(_w, workdir)) + " $service $command"
+    def composeExec(Map args, String service, String command) {
+        cmd = parseParam(new Tuple2(_f, args.composeFile)) + ' exec ' + \
+                parseParam(new Tuple2(_w, args.workdir)) + " $service $command"
 
         steps.sh "docker-compose $cmd"
     }
@@ -57,29 +60,27 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     /**
     * Run docker compose up
     *
-    * @param service_ids String with list of Service names separated by spaces to start [default]
-    * @param compose_file Docker compose file to override the default docker-compose.yml [default]
-    * @param registry_url Docker registry URL [default]
+    * @param serviceIds String with list of Service names separated by spaces to start [default]
+    * @param composeFile Docker compose file to override the default docker-compose.yml [default]
     * @see https://docs.docker.com/compose/reference/up/
     * @see https://docs.docker.com/compose/reference/overview/
     */
-    def composeUp(String service_ids='', String compose_file='', String registry_url='https://hub.docker.com/') {
-        cmd = parseParam(new Tuple2(_f, compose_file)) + " up $service_ids"
+    def composeUp(Map args, String serviceIds='') {
+        cmd = parseParam(new Tuple2(_f, args.composeFile)) + " up $serviceIds"
 
-        docker.withRegistry(registry_url) {
-            steps.sh "docker-compose $cmd"
-        }
+        steps.sh "docker-compose $cmd"
     }
 
     /**
     * Run docker compose down
     *
     * @param purge Boolean value. If true docker compose will erase all images and containers.
+    * @param composeFile Docker compose file to override the default docker-compose.yml [default]
     * @see https://docs.docker.com/compose/reference/down/
     * @see https://vsupalov.com/cleaning-up-after-docker/
     */
-    def composeDown(Boolean purge=false, String compose_file='') {
-        cmd = parseParam(new Tuple2(_f, compose_file))
+    def composeDown(Map args, Boolean purge=false) {
+        cmd = parseParam(new Tuple2(_f, args.composeFile))
 
         if (purge) {
             steps.sh 'docker-compose $cmd down -v --rmi all --remove-orphans'
@@ -93,31 +94,33 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * Copy file or directory into docker container
     *
     * @param service Service name
-    * @param src_path copies the contents of source path
-    * @param dest_path copies the contents to the destination path
-    * @param compose_file Docker compose file to override the default docker-compose.yml
+    * @param srcPath copies the contents of source path
+    * @param destPath copies the contents to the destination path
+    * @param composeFile Docker compose file to override the default docker-compose.yml
     * @see https://docs.docker.com/engine/reference/commandline/cp/
     * @see https://blog.dcycle.com/blog/ae67284c/docker-compose-cp
     * @see https://docs.docker.com/compose/reference/ps/
     */
-    def composeCP(String service, String src_path, String dest_path, String compose_file='', String workdir='') {
-        steps.sh "docker cp $src_path \"\$(docker-compose " + \
-            parseParam(new Tuple2(_f, compose_file)) + " ps -q $service)\":$dest_path"
+    def composeCP(Map args, String service, String srcPath, String destPath) {
+        steps.sh "docker cp $srcPath \"\$(docker-compose " + \
+            parseParam(new Tuple2(_f, args.composeFile)) + " ps -q $service)\":$destPath"
     }
 
     /**
     * Run docker compose exec
     *
     * @param service Service name
-    * @param command Command with arguments to run inside container
-    * @param compose_file configuration file to override the default docker-compose.yml
-    * @param tox_file Tox configuration file to override the default tox.ini
+    * @param testenv Test environment to run with tox
+    * @param composeFile configuration file to override the default docker-compose.yml
+    * @param tox Tox object with implementations for python virtenv orquestration
+    * @param toxFile Tox configuration file to override the default tox.ini
     * @param workdir Path to workdir directory for this command
     * @see https://docs.docker.com/compose/reference/exec/
     */
-    def composeToxRun(Map args, String service, String command) {
-        cmd = parseParam(new Tuple2(_f, args.compose_file)) + ' exec ' + \
-                parseParam(new Tuple2(_w, args.workdir)) + " $service $command"
+    def composeToxRun(Map args, String service, String testenv, Tox tox) {
+        cmd = parseParam(new Tuple2(_f, args.composeFile)) + ' exec ' + \
+                parseParam(new Tuple2(_w, args.workdir)) + \
+                " $service " + tox.cmd(testenv, toxFile: args.toxFile)
 
         steps.sh "docker-compose $cmd"
     }
@@ -125,30 +128,45 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     /**
      * Process stages from config.yml
      */
-    def processStages(stagesList) {
-        stagesList.each { stageMap ->
+    def processStages(projectConfig) {
+        // Environment setup
+        stage("Environment Setup") {
+            // Checkout repositories to workspace with defined repository name
+            projectConfig.config.project_repos.each { repo_name, repo_confs ->
+                steps.checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: repo_confs.repo]], \
+                               branches: [[name: repo_confs.branch]], \
+                               extensions: [[$class: 'CleanCheckout', deleteUntrackedNestedRepositories: true], \
+                                            [$class: 'GitLFSPull'], \
+                                            [$class: 'RelativeTargetDirectory', relativeTargetDir: repo_name], \
+                                            [$class: 'ScmName', name: repo_name]] ], \
+                               changelog: false, poll: false
+            }
+
+            // Deploy the environment services using docker-compose
+            composeUp(composeFile: projectConfig.config.deploy_template)
+        }
+
+        // Run SQA stages
+        projectConfig.stagesList.each { stageMap ->
             stage(stageMap.stage) {
                 if (stageMap.tox) {
-                    if (stageMap.tox.toxFile) {
-                        stageMap.tox.testenv.each { testenv ->
-                            composeToxRun(stageMap.container, testenv, stageMap.tox.toxFile)
-                        }
+                    stageMap.tox.testenv.each { testenv ->
+                        composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox, workdir: stageMap.repo \
+                                      composeFile: projectConfig.config.deploy_template, toxFile: stageMap.tox.tox_file)
                     }
                 }
                 if (stageMap.commands) {
                     stageMap.commands.each { command ->
-                        steps.sh "$command"
-                    }
-                }
-                commands.each { container, command ->
-                    switch (projectConfig.node_agent) {
-                        case 'docker-compose':
-                            run = new DockerCompose(steps)
-                            run.composeExec(container, command)
-                            break
+                        composeExec(stageMap.container, command, \
+                                    workdir: stageMap.repo, composeFile: projectConfig.config.deploy_template)
                     }
                 }
             }
+        }
+
+        // Clean docker-compose deployed environment
+        stage("Docker Compose cleanup") {
+            composeDown(composeFile: projectConfig.config.deploy_template)
         }
     }
 
