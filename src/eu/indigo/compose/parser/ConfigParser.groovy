@@ -18,10 +18,10 @@ class ConfigParser implements Serializable {
         'tox'
     ]
 
-    static ProjectConfiguration parse(def yaml, def env) {
+    static ProjectConfiguration parse(yaml, env) {
 
         ProjectConfiguration projectConfiguration = new ProjectConfiguration().tap {
-            nodeAgent = yaml.config.nodeAgent
+            nodeAgentAux = yaml.config.nodeAgent
             config = getConfigSetting(yaml.config)
             stagesList = formatStages(getSQASetting(yaml['sqa-criteria']))
             buildNumber = env.BUILD_ID

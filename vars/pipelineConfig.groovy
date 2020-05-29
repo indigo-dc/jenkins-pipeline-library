@@ -10,16 +10,15 @@ def call(String configFile='./.sqa/config.yml') {
     def yaml = readYaml file: configFile
     def schema = libraryResource('eu/indigo/compose/parser/schema.json')
     def buildNumber = Integer.parseInt(env.BUILD_ID)
-    def nodeAgent = null
     ProjectConfiguration projectConfig = null
 
     // validate config.yml
     validator = new ConfigValidation()
     validator.validate(yamlContent, schema)
-    projectConfig = ConfigParser.parse(yaml, env, this.nodeAgent)
+    projectConfig = ConfigParser.parse(yaml, env)
     try {
         projectConfig.nodeAgent = new ComposeFactory().tap {
-            factory = this.getClass().classLoader.loadClass(this.nodeAgent?, true, false)?.newInstance(this))
+            factory = this.getClass().classLoader.loadClass(projectConfig.nodeAgentAux?, true, false)?.newInstance(this))
             tox = new Tox(this)
         }
     } catch (ClassNotFoundException | CompilationFailedException e) {
