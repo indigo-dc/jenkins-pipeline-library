@@ -31,9 +31,7 @@ class ConfigValidation implements Serializable {
         Set invalidMessages = factory.getSchema(schema)
                 .validate(objMapper.readTree(yml))
                 .message
-        if (!invalidMessages.empty) {
-            invalidMessages.each { println it }
-        }
+        return invalidMessages
     }
 
 }

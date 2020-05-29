@@ -14,7 +14,10 @@ def call(String configFile='./.sqa/config.yml') {
 
     // validate config.yml
     validator = new ConfigValidation()
-    validator.validate(yamlContent, schema)
+    invalidMessages = validator.validate(yamlContent, schema)
+    if (invalidMessages) {
+        error(invalidMessages.join('\n'))
+    }
     projectConfig = ConfigParser.parse(yaml, env)
     try {
         projectConfig.nodeAgent = new ComposeFactory().tap {
