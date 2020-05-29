@@ -156,9 +156,10 @@ produced by the pipeline will be pushed.
 
 **dockertag**
 
-Tag name to be used for labeling the resultant Docker image.
+Tag name to be used for labeling the resultant Docker image. A list can be
+provided when in the need of pushing multiple tags.
 
-:Type: ``string``
+:Type: ``string`` or ``list``
 :Default: ``latest``
 :Location: ``config:project_repos:dockertag``
 
