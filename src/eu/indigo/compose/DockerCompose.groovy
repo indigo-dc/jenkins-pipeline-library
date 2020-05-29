@@ -2,6 +2,7 @@ package eu.indigo.compose
 
 import eu.indigo.JenkinsDefinitions
 import eu.indigo.compose.ProjectConfiguration
+import eu.indigo.Tox
 
 /**
  * Definitions for Docker Compose integration in Jenkins
