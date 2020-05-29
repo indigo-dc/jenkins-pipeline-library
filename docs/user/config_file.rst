@@ -21,7 +21,7 @@ Below is an example YAML file which shows the most common configuration options:
           repo: 'https://github.com/WORSICA/worsica-processing.git'
           branch: master
           dockerhub: worsica/worsica-processing
-          dockertag: $branch
+          dockertag: rc1
     
     sqa-criteria:
       qc-style:
@@ -67,7 +67,7 @@ Example:
          repo: 'https://github.com/WORSICA/worsica-processing.git'
          branch: master
          dockerhub: worsica/worsica-processing
-         dockertag: $branch
+         dockertag: rc1
 
 node_agent
 ``````````
@@ -125,7 +125,7 @@ Example:
          repo: 'https://github.com/WORSICA/worsica-processing.git'
          branch: master
          dockerhub: worsica/worsica-processing
-         dockertag: $branch
+         dockertag: rc1
 
 The set of allowed parameters for the definition of the code repository's
 description within the ``project_repos`` setting are herein described:
