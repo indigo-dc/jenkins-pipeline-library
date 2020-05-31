@@ -13,8 +13,12 @@ def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
     def buildNumber = Integer.parseInt(env.BUILD_ID)
     ProjectConfiguration projectConfig = null
 
-    validator = new ConfigValidation()
-    invalidMessages = validator.validate(yaml, schema)
+    try {
+        validator = new ConfigValidation()
+        invalidMessages = validator.validate(yaml, schema)
+    } catch (GroovyRuntimeException e) {
+        error 'ConfigValidation have a runtime exception with the following traceback:\n' + e
+    }
     if (invalidMessages) {
         error(invalidMessages.join('\n'))
     }
