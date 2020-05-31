@@ -1,4 +1,5 @@
 import org.codehaus.groovy.control.CompilationFailedException
+import org.codehaus.groovy.runtime.StackTraceUtils
 import eu.indigo.compose.parser.ConfigParser
 import eu.indigo.compose.ProjectConfiguration
 import eu.indigo.compose.parser.ConfigValidation
@@ -17,7 +18,9 @@ def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
         validator = new ConfigValidation()
         invalidMessages = validator.validate(yaml, schema)
     } catch (GroovyRuntimeException e) {
-        error 'ConfigValidation have a runtime exception with the following traceback:\n' + e
+        error 'ConfigValidation have a runtime exception with status:\n' + e \
+        + '\nThe complete stack trace is the following:\n' \
+        + StackTraceUtils.sanitize(e).printStackTrace()
     }
     if (invalidMessages) {
         error(invalidMessages.join('\n'))
