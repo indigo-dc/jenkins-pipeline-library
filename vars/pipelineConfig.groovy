@@ -20,7 +20,7 @@ def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
     } catch (GroovyRuntimeException e) {
         error 'ConfigValidation have a runtime exception with status:\n' + e \
         + '\nThe complete stack trace is the following:\n' \
-        + StackTraceUtils.sanitize(e).printStackTrace()
+        + StackTraceUtils.sanitize(new Exception(e)).printStackTrace()
     }
     if (invalidMessages) {
         error(invalidMessages.join('\n'))
