@@ -1,3 +1,4 @@
+import org.codehaus.groovy.control.CompilationFailedException
 import eu.indigo.compose.parser.ConfigParser
 import eu.indigo.compose.ProjectConfiguration
 import eu.indigo.compose.parser.ConfigValidation
