@@ -42,7 +42,7 @@ class ConfigParser implements Serializable {
 
         sources.inject([:]) { result, source ->
             source.each { k, v ->
-                result[k] = result[k] instanceof Map ? merge(result[k], v) : v
+                result[k] = result[k] instanceof Map ? (result[k] << v) : v
             }
             result
         }
