@@ -1,15 +1,5 @@
 import org.codehaus.groovy.control.CompilationFailedException
 
-@Grab('com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.1')
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
-
-@Grab('com.networknt:json-schema-validator:1.0.29')
-import com.networknt.schema.JsonSchemaFactory
-import com.networknt.schema.SpecVersion
-import com.networknt.schema.JsonSchema
-
 import eu.indigo.compose.parser.ConfigParser
 import eu.indigo.compose.ProjectConfiguration
 import eu.indigo.compose.parser.ConfigValidation
