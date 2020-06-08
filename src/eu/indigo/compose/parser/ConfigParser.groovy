@@ -23,7 +23,8 @@ class ConfigParser implements Serializable {
 
     static ProjectConfiguration parse(yaml, env) {
 
-        ProjectConfiguration projectConfiguration = new ProjectConfiguration().getBuilder()
+        ProjectConfiguration projectConfiguration = new ProjectConfiguration()
+        projectConfiguration.getBuilder(projectConfiguration)
             .setNodeAgentAux(configToClass[yaml.config.node_agent])
             .setConfig(getConfigSetting(yaml.config))
             .setStagesList(formatStages(getSQASetting(yaml['sqa-criteria'])))
@@ -32,8 +33,6 @@ class ConfigParser implements Serializable {
             .setProjectName(parseProjectName(yaml.config))
             .setTimeout(yaml.timeout ?: DEFAULT_TIMEOUT)
             .build()
-
-        return projectConfiguration
     }
 
     static Map merge(Map[] sources) {

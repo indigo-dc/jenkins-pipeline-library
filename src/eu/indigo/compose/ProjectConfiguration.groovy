@@ -109,8 +109,8 @@ class ProjectConfiguration implements Serializable {
 
     }
 
-    Builder getBuilder() {
-        return new Builder(this, "ProjectConfigurationBuilder")
+    Builder getBuilder(instance) {
+        return new Builder(instance, 'ProjectConfigurationBuilder')
     }
 
 }
