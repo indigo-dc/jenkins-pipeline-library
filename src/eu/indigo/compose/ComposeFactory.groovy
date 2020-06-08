@@ -12,7 +12,7 @@ class ComposeFactory implements Serializable {
     def static tox
     def static processStages(projectConfig) { return factory.processStages(projectConfig) }
 
-    static class ComposeFactoryBuilder {
+    static class Builder {
         def factory
         def tox
 
@@ -31,6 +31,10 @@ class ComposeFactory implements Serializable {
                                tox: this.tox)
         }
 
+    }
+
+    Builder getBuilder() {
+        return new Builder(this)
     }
 
 }

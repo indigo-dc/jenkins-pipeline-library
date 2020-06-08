@@ -52,7 +52,7 @@ class ProjectConfiguration implements Serializable {
     def buildNumber
     def timeout
 
-    static class ProjectConfigurationBuilder {
+    static class Builder {
 
         def nodeAgentAux
         def config
@@ -107,6 +107,10 @@ class ProjectConfiguration implements Serializable {
                                      timeout: this.timeout)
         }
 
+    }
+
+    Builder getBuilder() {
+        return new Builder(this)
     }
 
 }
