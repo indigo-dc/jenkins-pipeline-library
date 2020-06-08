@@ -26,7 +26,7 @@ def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
         error("Validation exit code): $invalidMessages")
     }
     projectConfig = new ConfigParser().parse(yaml, env)
-    echo projectConfig
+    println(projectConfig)
     try {
         projectConfig.nodeAgent = new ComposeFactoryBuilder()
             .setFactory(this.getClass()?.classLoader?.loadClass(projectConfig.nodeAgentAux, true, false)?.newInstance(this))

@@ -63,8 +63,4 @@ buildNumber: ${this.buildNumber}\n\
 timeout: ${this.timeout}\n"
     }
 
-    def echo() {
-        echo this.toString()
-    }
-
 }
