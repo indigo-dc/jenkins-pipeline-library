@@ -13,16 +13,16 @@ class ConfigParser implements Serializable {
     // Constant literals for this Class
     String _repos = 'repos'
 
-    private static String LATEST = 'latest'
-    private static Integer DEFAULT_TIMEOUT = 600   // 600 seconds
-    static Map configToClass = [
+    private String LATEST = 'latest'
+    private Integer DEFAULT_TIMEOUT = 600   // 600 seconds
+    Map configToClass = [
         'docker-compose': 'DockerCompose'
     ]
-    static List supportedBuildTools = [
+    List supportedBuildTools = [
         'tox'
     ]
 
-    static ProjectConfiguration parse(yaml, env) {
+    ProjectConfiguration parse(yaml, env) {
 
         new ProjectConfigurationBuilder()
             .setNodeAgentAux(configToClass[yaml.config.node_agent])
@@ -35,7 +35,7 @@ class ConfigParser implements Serializable {
             .build()
     }
 
-    static Map merge(Map[] sources) {
+    Map merge(Map[] sources) {
         if (sources.length == 0) return [:]
         if (sources.length == 1) return sources[0]
 
@@ -47,9 +47,9 @@ class ConfigParser implements Serializable {
         }
     }
 
-    static Map getDefaultValue(String setting) {
+    Map getDefaultValue(String setting) {
         def result = [:]
-        switch(setting) {
+        switch (setting) {
             case 'config':
                 result = [
                     node_agent: 'docker-compose',
@@ -75,7 +75,7 @@ class ConfigParser implements Serializable {
         return result
     }
 
-    static Map getConfigSetting(Map config) {
+    Map getConfigSetting(Map config) {
         def configBase = merge(getDefaultValue('config'), config)
         def configRepos = [
             project_repos: configBase['project_repos']
@@ -86,23 +86,23 @@ class ConfigParser implements Serializable {
         return merge(configRepos, configBase)
     }
 
-    static Map getSQASetting(Map criteria) {
+    Map getSQASetting(Map criteria) {
         def sqaCriteria = criteria.each { criterion, data ->
             supportedBuildTools.each { tool ->
-                def repoData = data[this._repos].collectEntries { id, params ->
+                def repoData = data[_repos].collectEntries { id, params ->
                     params.containsKey(tool) ? [id, merge(getDefaultValue(tool), params)] : null
                 }
-                data[this._repos] = repoData
+                data[_repos] = repoData
             }
         }
         return sqaCriteria
     }
 
-    static List formatStages(Map criteria) {
+    List formatStages(Map criteria) {
         def stagesList = []
         criteria.each { criterion, data ->
             def stageMap = [:]
-            data[this._repos].each { repo, params ->
+            data[_repos].each { repo, params ->
                 stageMap['stage'] = "${criterion} ${repo}"
                 stageMap['repo'] = repo
                 params.each { k, v ->
@@ -114,7 +114,7 @@ class ConfigParser implements Serializable {
         return stagesList
     }
 
-    static def parseEnvironment(def environment) {
+    def parseEnvironment(def environment) {
         if (!environment) {
             return ''
         }
@@ -122,7 +122,7 @@ class ConfigParser implements Serializable {
         return environment.collect { k, v -> "${k}=${v}"}
     }
 
-    static def parseProjectName(def config) {
+    def parseProjectName(def config) {
         if (!config || !config["project_name"]) {
             return "composeci-project"
         }
