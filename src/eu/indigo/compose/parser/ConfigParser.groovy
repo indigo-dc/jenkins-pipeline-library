@@ -89,10 +89,10 @@ class ConfigParser implements Serializable {
     static Map getSQASetting(Map criteria) {
         def sqaCriteria = criteria.each { criterion, data ->
             supportedBuildTools.each { tool ->
-                def repoData = data[_repos].collectEntries { id, params ->
+                def repoData = data[this._repos].collectEntries { id, params ->
                     params.containsKey(tool) ? [id, merge(getDefaultValue(tool), params)] : null
                 }
-                data[_repos] = repoData
+                data[this._repos] = repoData
             }
         }
         return sqaCriteria
@@ -102,7 +102,7 @@ class ConfigParser implements Serializable {
         def stagesList = []
         criteria.each { criterion, data ->
             def stageMap = [:]
-            data[_repos].each { repo, params ->
+            data[this._repos].each { repo, params ->
                 stageMap['stage'] = "${criterion} ${repo}"
                 stageMap['repo'] = repo
                 params.each { k, v ->
