@@ -24,7 +24,7 @@ class ConfigParser implements Serializable {
     static ProjectConfiguration parse(yaml, env) {
 
         ProjectConfiguration projectConfiguration = new ProjectConfiguration()
-        new Builder(projectConfiguration, 'ProjectConfigurationBuilder')
+        new ProjectConfigurationBuilder(projectConfiguration, 'ProjectConfigurationBuilder')
             .setNodeAgentAux(configToClass[yaml.config.node_agent])
             .setConfig(getConfigSetting(yaml.config))
             .setStagesList(formatStages(getSQASetting(yaml['sqa-criteria'])))
