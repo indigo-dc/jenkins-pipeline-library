@@ -23,16 +23,15 @@ class ConfigParser implements Serializable {
 
     static ProjectConfiguration parse(yaml, env) {
 
-        ProjectConfiguration projectConfiguration = new ProjectConfiguration().with {
-            nodeAgentAux = configToClass[yaml.config.node_agent]
-            config = getConfigSetting(yaml.config)
-            stagesList = formatStages(getSQASetting(yaml['sqa-criteria']))
-            buildNumber = env.BUILD_ID
-            environment = parseEnvironment(yaml.environment)
-            projectName = parseProjectName(yaml.config)
-            timeout = yaml.timeout ?: DEFAULT_TIMEOUT
-            it
-        }
+        ProjectConfiguration projectConfiguration = new ProjectConfiguration.Builder()
+            .setNodeAgentAux(configToClass[yaml.config.node_agent])
+            .setConfig(getConfigSetting(yaml.config))
+            .setStagesList(formatStages(getSQASetting(yaml['sqa-criteria']))
+            .setBuildNumber(env.BUILD_ID)
+            .setEnvironment(parseEnvironment(yaml.environment))
+            .setProjectName(parseProjectName(yaml.config))
+            .setTimeout(yaml.timeout ?: DEFAULT_TIMEOUT)
+            .build()
 
         return projectConfiguration
     }
