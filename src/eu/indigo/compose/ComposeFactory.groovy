@@ -12,7 +12,7 @@ class ComposeFactory implements Serializable {
     def static tox
     def static processStages(projectConfig) { return factory.processStages(projectConfig) }
 
-    static class Builder {
+    static class ComposeFactoryBuilder {
         def factory
         def tox
 

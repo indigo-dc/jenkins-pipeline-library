@@ -52,7 +52,7 @@ class ProjectConfiguration implements Serializable {
     def buildNumber
     def timeout
 
-    static class Builder {
+    static class ProjectConfigurationBuilder {
 
         def nodeAgentAux
         def config
