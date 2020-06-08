@@ -3,7 +3,7 @@ package eu.indigo.compose
 /**
  * Project configuration
  */
-static class ProjectConfigurationBuilder {
+class ProjectConfigurationBuilder implements Serializable {
 
     def nodeAgentAux
     def config
