@@ -1,6 +1,7 @@
 package eu.indigo.compose.parser
 
 import eu.indigo.compose.ProjectConfiguration
+import eu.indigo.compose.ProjectConfigurationBuilder
 
 /**
  * Configuration Parser
