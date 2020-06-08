@@ -5,6 +5,8 @@ package eu.indigo.compose
  */
 class ProjectConfigurationBuilder implements Serializable {
 
+    private static final long serialVersionUID = 0L
+
     def nodeAgentAux
     def config
     def stagesList
