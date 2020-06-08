@@ -54,13 +54,13 @@ class ProjectConfiguration implements Serializable {
 
     @Override
     String toString() {
-"nodeAgent: $this.nodeAgent\n\
-nodeAgentAux: $this.nodeAgentAux\n\
-config: $this.config\n\
-stagesList: $this.stagesList\n\
-environment: $this.environment\n\
-buildNumber: $this.buildNumber\n\
-timeout: $this.timeout\n"
+"nodeAgent: ${this.nodeAgent}\n\
+nodeAgentAux: ${this.nodeAgentAux}\n\
+config: ${this.config}\n\
+stagesList: ${this.stagesList}\n\
+environment: ${this.environment}\n\
+buildNumber: ${this.buildNumber}\n\
+timeout: ${this.timeout}\n"
     }
 
 }
