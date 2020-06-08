@@ -1,5 +1,7 @@
 package eu.indigo.compose
 
+import groovy.transform.ToString
+
 /**
  * Project configuration
  */
