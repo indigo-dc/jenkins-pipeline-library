@@ -26,7 +26,7 @@ def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
     }
     projectConfig = ConfigParser.parse(yaml, env)
     try {
-        projectConfig.nodeAgent = new ComposeFactoryBuilder()
+        projectConfig.nodeAgent = new ComposeFactory().getBuilder()
             .setFactory(this.getClass().classLoader.loadClass(projectConfig.nodeAgentAux, true, false)?.newInstance(this))
             .setTox(new Tox(this))
             .build()
