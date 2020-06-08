@@ -26,9 +26,10 @@ def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
     }
     projectConfig = ConfigParser.parse(yaml, env)
     try {
-        projectConfig.nodeAgent = new ComposeFactory().with(true) {
+        projectConfig.nodeAgent = new ComposeFactory().with {
             factory = this.getClass().classLoader.loadClass(projectConfig.nodeAgentAux, true, false)?.newInstance(this)
             tox = new Tox(this)
+            it
         }
     } catch (ClassNotFoundException | CompilationFailedException e) {
         error 'BuildStages: Node agent not defined'
