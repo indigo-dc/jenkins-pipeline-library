@@ -2,7 +2,6 @@ import org.codehaus.groovy.control.CompilationFailedException
 
 import eu.indigo.compose.parser.ConfigParser
 import eu.indigo.compose.ProjectConfiguration
-import eu.indigo.compose.parser.ConfigValidation
 import eu.indigo.compose.ComposeFactory
 import eu.indigo.compose.DockerCompose
 import eu.indigo.Tox
@@ -10,20 +9,20 @@ import eu.indigo.Tox
 def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
     checkoutRepository(baseRepository)
     def yaml = readYaml file: configFile
-    def schema = libraryResource('eu/indigo/compose/parser/schema.json')
+    //def schema = libraryResource('eu/indigo/compose/parser/schema.json')
     def buildNumber = Integer.parseInt(env.BUILD_ID)
     ProjectConfiguration projectConfig = null
 
     try {
-        validator = new ConfigValidation()
-        invalidMessages = validator.validate(yaml, schema)
+        invalidMessages = validate(configFile)
     } catch (GroovyRuntimeException e) {
         error 'ConfigValidation have a runtime exception with status:\n' + e \
         + '\nThe complete stack trace is the following:\n' \
         + e.getStackTrace()
     }
     if (invalidMessages) {
-        error(invalidMessages.join('\n'))
+        //error(invalidMessages.join('\n'))
+        error("Validation exit code): $invalidMessages")
     }
     projectConfig = ConfigParser.parse(yaml, env)
     try {
@@ -35,6 +34,12 @@ def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
         error 'BuildStages: Node agent not defined'
     }
     return projectConfig
+}
+
+def validate(String configFile) {
+    def validatorDockerImage = 'eoscsynergy/jpl-validator:1.0.0'
+    def cmd = 'docker run --rm -v "$PWD:/sqa" ' + "$validatorDockerImage /sqa/${configFile}"
+    return sh(returnStatus: true, script: cmd)
 }
 
 def checkoutRepository(String repository) {
