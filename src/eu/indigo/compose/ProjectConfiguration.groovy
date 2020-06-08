@@ -1,11 +1,8 @@
 package eu.indigo.compose
 
-import groovy.transform.ToString
-
 /**
  * Project configuration
  */
-@ToString
 class ProjectConfiguration implements Serializable {
 
     private static final long serialVersionUID = 0L
@@ -54,5 +51,16 @@ class ProjectConfiguration implements Serializable {
     def projectName
     def buildNumber
     def timeout
+
+    @Override
+    String toString() {
+"nodeAgent: $this.nodeAgent\n\
+nodeAgentAux: $this.nodeAgentAux\n\
+config: $this.config\n\
+stagesList: $this.stagesList\n\
+environment: $this.environment\n\
+buildNumber: $this.buildNumber\n\
+timeout: $this.timeout\n"
+    }
 
 }
