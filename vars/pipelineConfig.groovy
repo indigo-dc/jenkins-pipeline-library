@@ -3,6 +3,7 @@ import org.codehaus.groovy.control.CompilationFailedException
 import eu.indigo.compose.parser.ConfigParser
 import eu.indigo.compose.ProjectConfiguration
 import eu.indigo.compose.ComposeFactory
+import eu.indigo.compose.ComposeFactoryBuilder
 import eu.indigo.compose.DockerCompose
 import eu.indigo.Tox
 
@@ -26,7 +27,7 @@ def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
     }
     projectConfig = ConfigParser.parse(yaml, env)
     try {
-        projectConfig.nodeAgent = new ComposeFactory().getBuilder()
+        projectConfig.nodeAgent = new ComposeFactoryBuilder()
             .setFactory(this.getClass().classLoader.loadClass(projectConfig.nodeAgentAux, true, false)?.newInstance(this))
             .setTox(new Tox(this))
             .build()
