@@ -38,7 +38,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
             .build()
     }
 
-    Map merge(Map args, preset, sources) {
+    Map merge(preset, sources) {
         sources ?: preset
 
         preset << sources
