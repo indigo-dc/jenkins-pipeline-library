@@ -38,10 +38,10 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
             .build()
     }
 
-    Map merge(Map args, default, sources) {
-        (sources == null) ? return default
+    Map merge(Map args, preset, sources) {
+        sources ?: preset
 
-        default << sources
+        preset << sources
     }
 
     Map getDefaultValue(String setting) {
