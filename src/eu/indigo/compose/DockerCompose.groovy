@@ -131,7 +131,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
      */
     def processStages(projectConfig) {
         // Environment setup
-        stage("Environment Setup") {
+        steps.stage("Environment Setup") {
             // Checkout repositories to workspace with defined repository name
             projectConfig.config.project_repos.each { repo_name, repo_confs ->
                 steps.checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: repo_confs.repo]], \
@@ -149,7 +149,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
 
         // Run SQA stages
         projectConfig.stagesList.each { stageMap ->
-            stage(stageMap.stage) {
+            steps.stage(stageMap.stage) {
                 if (stageMap.tox) {
                     stageMap.tox.testenv.each { testenv ->
                         composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox, workdir: stageMap.repo, \
@@ -166,7 +166,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         }
 
         // Clean docker-compose deployed environment
-        stage("Docker Compose cleanup") {
+        steps.stage("Docker Compose cleanup") {
             composeDown(composeFile: projectConfig.config.deploy_template)
         }
     }
