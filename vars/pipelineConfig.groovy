@@ -29,7 +29,8 @@ def call(
         //error(invalidMessages.join('\n'))
         error("Validation exit code): $invalidMessages")
     }
-    projectConfig = new ConfigParser().parse(yaml, env)
+    //projectConfig = new ConfigParser().parse(yaml, env)
+    projectConfig = new ConfigParser(this).parse(yaml, env)
     echo projectConfig.toString()
     switch (projectConfig.nodeAgentAux) {
         case 'DockerCompose':

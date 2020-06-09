@@ -3,10 +3,11 @@ package eu.indigo.compose.parser
 import eu.indigo.compose.ProjectConfiguration
 import eu.indigo.compose.ProjectConfigurationBuilder
 
+import eu.indigo.JenkinsDefinitions
 /**
  * Configuration Parser
  */
-class ConfigParser implements Serializable {
+class ConfigParser extends JenkinsDefinitions implements Serializable {
 
     private static final long serialVersionUID = 0L
 
@@ -48,6 +49,7 @@ class ConfigParser implements Serializable {
     }
 
     Map getDefaultValue(String setting) {
+        steps.echo"** getDefaultValue(): ${setting}**"
         def result = [:]
         switch (setting) {
             case 'config':
@@ -76,6 +78,7 @@ class ConfigParser implements Serializable {
     }
 
     Map getConfigSetting(Map config) {
+        steps.echo "** getConfigSetting() **"
         def configBase = merge(getDefaultValue('config'), config)
         def configRepos = [
             project_repos: configBase['project_repos']
@@ -83,10 +86,12 @@ class ConfigParser implements Serializable {
                     [id, merge(getDefaultValue('config_repo'), repo)]
                 }
         ]
+        //println(configRepos)
         return merge(configRepos, configBase)
     }
 
     Map getSQASetting(Map criteria) {
+        steps.echo "** getSQASetting() **"
         def sqaCriteria = criteria.each { criterion, data ->
             supportedBuildTools.each { tool ->
                 def repoData = data[_repos].collectEntries { id, params ->
