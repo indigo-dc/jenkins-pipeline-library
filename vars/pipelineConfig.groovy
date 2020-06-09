@@ -30,7 +30,7 @@ def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
     switch (projectConfig.nodeAgentAux) {
         case 'DockerCompose':
             projectConfig.nodeAgent = new ComposeFactoryBuilder()
-                .setFactory(new DockerCompose())
+                .setFactory(new DockerCompose(this))
                 .setTox(new Tox(this))
                 .build()
             break
