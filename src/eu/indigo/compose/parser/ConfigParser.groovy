@@ -84,7 +84,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         ]
         steps.echo 'configRepos:\n' + configRepos.toString()
         steps.echo 'configBase:\n' + configBase.toString()
-        return merge(configRepos, configBase)
+        return merge(configBase, configRepos)
     }
 
     Map getSQASetting(Map criteria) {
