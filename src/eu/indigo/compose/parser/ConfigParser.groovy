@@ -47,7 +47,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
             steps.echo "Checking value before merge:\n $v"
             result[k] = result[k] instanceof Map ? (result[k] << v) : v
             steps.echo "At result for key $k:"
-            steps.echo result[k].toString
+            steps.echo result[k].toString()
         }
 
         return result
