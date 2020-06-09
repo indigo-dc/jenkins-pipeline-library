@@ -33,7 +33,7 @@ def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
             .setTox(new Tox(this))
             .build()
     } catch (ClassNotFoundException | CompilationFailedException e) {
-        error 'pipelineConfig: Node agent not defined' + e
+        error 'pipelineConfig: Node agent not defined\n' + e
     }
     return projectConfig
 }
