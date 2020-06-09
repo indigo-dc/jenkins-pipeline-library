@@ -53,7 +53,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/exec/
     */
     def composeExec(Map args, String service, String command) {
-        cmd = parseParam(_f, args.composeFile) + ' exec ' + \
+        String cmd = parseParam(_f, args.composeFile) + ' exec ' + \
                 parseParam(_w, args.workdir) + " $service $command"
 
         steps.sh "docker-compose $cmd"
@@ -68,7 +68,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/overview/
     */
     def composeUp(Map args, String serviceIds='') {
-        cmd = parseParam(_f, args.composeFile) + " up $serviceIds"
+        String cmd = parseParam(_f, args.composeFile) + " up $serviceIds"
 
         steps.sh "docker-compose $cmd"
     }
@@ -82,7 +82,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://vsupalov.com/cleaning-up-after-docker/
     */
     def composeDown(Map args, Boolean purge=false) {
-        cmd = parseParam(_f, args.composeFile)
+        String cmd = parseParam(_f, args.composeFile)
 
         if (purge) {
             steps.sh 'docker-compose $cmd down -v --rmi all --remove-orphans'
@@ -120,7 +120,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/exec/
     */
     def composeToxRun(Map args, String service, String testenv, Tox tox) {
-        cmd = parseParam(_f, args.composeFile) + ' exec ' + \
+        String cmd = parseParam(_f, args.composeFile) + ' exec ' + \
                 parseParam(_w, args.workdir) + \
                 " $service " + tox.cmd(testenv, toxFile: args.toxFile)
 
