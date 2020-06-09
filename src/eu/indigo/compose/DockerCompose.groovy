@@ -34,7 +34,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @param param Tuple with the flag and value to test
     */
     def parseParam(Tuple2 param) {
-        if(testString(param.second)) {
+        if(testString(param.getV2())) {
             return param.getV1() + ' ' + param.getV2()
         }
         else {
