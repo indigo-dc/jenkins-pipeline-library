@@ -42,12 +42,13 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         if (sources.length == 0) return [:]
         if (sources.length == 1) return sources[0]
 
-        sources.inject([:]) { result, source ->
-            source.each { k, v ->
-                result[k] = result[k] instanceof Map ? (result[k] << v) : v
-            }
-            result
+        sources.inject([:]) { result, k, v ->
+            result[k] = result[k] instanceof Map ? (result[k] << v) : v
+            steps.echo "At result for key $k:"
+            steps.echo result[k].toString
         }
+
+        return result
     }
 
     Map getDefaultValue(String setting) {
