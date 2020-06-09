@@ -45,7 +45,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         sources.inject([:]) { result, k, v ->
             result[k] = result[k] instanceof Map ? (result[k] << v) : v
             steps.echo "At result for key $k:"
-            steps.echo result[k].toString
+            steps.echo result[k].toString()
         }
 
         return result
