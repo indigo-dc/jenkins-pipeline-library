@@ -7,8 +7,12 @@ import eu.indigo.compose.ComposeFactoryBuilder
 import eu.indigo.compose.DockerCompose
 import eu.indigo.Tox
 
-def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
-    checkoutRepository(baseRepository)
+def call(
+    String configFile='./.sqa/config.yml',
+    String baseRepository=null,
+    String baseBranch=null) {
+
+    checkoutRepository(baseRepository, baseBranch)
     def yaml = readYaml file: configFile
     //def schema = libraryResource('eu/indigo/compose/parser/schema.json')
     def buildNumber = Integer.parseInt(env.BUILD_ID)
@@ -47,10 +51,11 @@ def validate(String configFile) {
     return sh(returnStatus: true, script: cmd)
 }
 
-def checkoutRepository(String repository) {
+def checkoutRepository(String repository, String branch='master') {
     if (repository) {
         checkout([
             $class: 'GitSCM',
+            branches: [[name: "*/${branch}"]],
             userRemoteConfigs: [[url: repository]]])
     }
     else {
