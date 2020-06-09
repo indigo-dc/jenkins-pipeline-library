@@ -136,10 +136,10 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             projectConfig.config.project_repos.each { repo_name, repo_confs ->
                 steps.checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: repo_confs.repo]], \
                                branches: [[name: repo_confs.branch]] ], \
-                               //extensions: [[$class: 'CleanCheckout', deleteUntrackedNestedRepositories: true], \
-                               //             [$class: 'GitLFSPull'], \
-                               //             [$class: 'RelativeTargetDirectory', relativeTargetDir: repo_name], \
-                               //             [$class: 'ScmName', name: repo_name]] ], \
+                               extensions: [[$class: 'CleanCheckout', deleteUntrackedNestedRepositories: true], \
+                                            [$class: 'GitLFSPull'], \
+                                            [$class: 'RelativeTargetDirectory', relativeTargetDir: repo_name], \
+                                            [$class: 'ScmName', name: repo_name]] ], \
                                changelog: false, poll: false
             }
 
