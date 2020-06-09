@@ -76,16 +76,15 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     Map getConfigSetting(Map config) {
         steps.echo "** getConfigSetting() **"
         def configBase = merge(getDefaultValue('config'), config)
-        /*def configRepos = [
+        def configRepos = [
             project_repos: configBase['project_repos']
                 .collectEntries { id, repo ->
                     [id, merge(getDefaultValue('config_repo'), repo)]
                 }
         ]
-        steps.echo configRepos.toString()*/
-        steps.echo configBase.toString()
-        //return merge(configRepos, configBase)
-        return configBase
+        steps.echo 'configRepos:\n' + configRepos.toString()
+        steps.echo 'configBase:\n' + configBase.toString()
+        return merge(configRepos, configBase)
     }
 
     Map getSQASetting(Map criteria) {
