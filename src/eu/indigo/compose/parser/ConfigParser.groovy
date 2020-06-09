@@ -88,7 +88,9 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
                     [id, merge(getDefaultValue('config_repo'), repo)]
                 }
         ]
-        //println(configRepos)
+        steps.echo configRepos.toString()
+        steps.echo configBase.toString()
+        steps.echo merge(configRepos, configBase).toString()
         return merge(configRepos, configBase)
     }
 
