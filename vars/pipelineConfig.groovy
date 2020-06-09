@@ -29,11 +29,11 @@ def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
     echo projectConfig.toString()
     try {
         projectConfig.nodeAgent = new ComposeFactoryBuilder()
-            .setFactory(this.getClass()?.classLoader?.loadClass(projectConfig.nodeAgentAux, true, false)?.newInstance(this))
+            .setFactory(this.getClass().classLoader.loadClass(projectConfig.nodeAgentAux, true, false)?.newInstance(this))
             .setTox(new Tox(this))
             .build()
     } catch (ClassNotFoundException | CompilationFailedException e) {
-        error 'BuildStages: Node agent not defined'
+        error 'pipelineConfig: Node agent not defined' + e
     }
     return projectConfig
 }
