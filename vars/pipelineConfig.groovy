@@ -27,13 +27,16 @@ def call(String configFile='./.sqa/config.yml', String baseRepository=null) {
     }
     projectConfig = new ConfigParser().parse(yaml, env)
     echo projectConfig.toString()
-    try {
-        projectConfig.nodeAgent = new ComposeFactoryBuilder()
-            .setFactory(this.getClass().classLoader.loadClass(projectConfig.nodeAgentAux, true, false)?.newInstance(this))
-            .setTox(new Tox(this))
-            .build()
-    } catch (ClassNotFoundException | CompilationFailedException e) {
-        error 'pipelineConfig: Node agent not defined\n' + e
+    switch (projectConfig.nodeAgentAux) {
+        case 'DockerCompose':
+            projectConfig.nodeAgent = new ComposeFactoryBuilder()
+                .setFactory(new DockerCompose())
+                .setTox(new Tox(this))
+                .build()
+            break
+        default:
+            error "pipelineConfig: Node agent ${projectConfig.nodeAgentAux} not defined!"
+            break
     }
     return projectConfig
 }
