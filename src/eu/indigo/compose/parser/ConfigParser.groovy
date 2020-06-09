@@ -4,9 +4,11 @@ import eu.indigo.compose.ProjectConfiguration
 import eu.indigo.compose.ProjectConfigurationBuilder
 
 import eu.indigo.JenkinsDefinitions
+
 /**
  * Configuration Parser
  */
+@groovy.transform.InheritConstructors
 class ConfigParser extends JenkinsDefinitions implements Serializable {
 
     private static final long serialVersionUID = 0L
