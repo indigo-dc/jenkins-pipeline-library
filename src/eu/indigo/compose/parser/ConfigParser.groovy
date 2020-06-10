@@ -65,7 +65,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
                     container: 'tox',
                     tox: [
                         tox_file: 'tox.ini',
-                        testenv: ''
+                        testenv: []
                     ]
                 ]
                 break
