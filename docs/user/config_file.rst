@@ -21,7 +21,7 @@ Below is an example YAML file which shows the most common configuration options:
           repo: 'https://github.com/WORSICA/worsica-processing.git'
           branch: master
           dockerhub: worsica/worsica-processing
-          dockertag: rc1
+          dockertag: $branch
     
     sqa-criteria:
       qc-style:
@@ -29,7 +29,8 @@ Below is an example YAML file which shows the most common configuration options:
           worsica-processing:
             container: processing
             tox:
-              testenv: stylecheck
+              testenv:
+                - stylecheck
     
     environment:
       GIT_COMMITTER_NAME: Person1
@@ -67,7 +68,7 @@ Example:
          repo: 'https://github.com/WORSICA/worsica-processing.git'
          branch: master
          dockerhub: worsica/worsica-processing
-         dockertag: rc1
+         dockertag: $branch
 
 node_agent
 ``````````
@@ -125,7 +126,7 @@ Example:
          repo: 'https://github.com/WORSICA/worsica-processing.git'
          branch: master
          dockerhub: worsica/worsica-processing
-         dockertag: rc1
+         dockertag: $branch
 
 The set of allowed parameters for the definition of the code repository's
 description within the ``project_repos`` setting are herein described:
@@ -140,10 +141,7 @@ URL pointing to the root path of the code repository.
 
 **branch**
 
-Branch name to be checked out. Additionally, the provided value can contain any
-of the possible forms that are allowed by the 
-`Pipeline: SCM Step <jenkins.io/doc/pipeline/steps/workflow-scm-step/ plugin>`_ 
-plugin .
+Branch name to be checked out.
 
 :Type: ``string``
 :Default: ``master``
@@ -155,18 +153,18 @@ Repository name within the Docker Hub registry where the Docker images
 produced by the pipeline will be pushed.
 
 :Type: ``string``
+:Required: ``true``
 :Location: ``config:project_repos:dockerhub``
 
 **dockertag**
 
-Tag name to be used for labeling the resultant Docker image. A list can be
-provided when in the need of pushing multiple tags.
+Tag name to be used for labeling the resultant Docker image.
 
-:Type: ``string`` or ``list``
+:Type: ``string``
 :Default: ``latest``
 :Location: ``config:project_repos:dockertag``
 
-sqa-criteria
+sqa_criteria
 ~~~~~~~~~~~~
 
 This setting allows to define the criteria from the SQA baseline to be checked.
@@ -187,19 +185,20 @@ Example:
          worsica-processing:
            container: processing
            tox:
-             testenv: stylecheck
+             testenv:
+                - stylecheck
 
 .. note::
-   The ``sqa-criteria`` setting is the most relevant section of the
+   The ``sqa_criteria`` setting is the most relevant section of the
    ``.sqa/config.yml`` as it defines the different stages that will be
    dynamically added to the pipeline.
 
 The relationship between the identifiers used in the definition of the
-``sqa-criteria`` (see *Options* above) and the ones used in the SQA criteria
+``sqa_criteria`` (see *Options* above) and the ones used in the SQA criteria
 is summarized as follows:
 
 +-----------------+-----------------------+
-| sqa-criteria ID | SQA baseline category |
+| sqa_criteria ID | SQA baseline category |
 +=================+=======================+
 | qc-style        | QC.Sty                |
 +-----------------+-----------------------+
@@ -230,63 +229,69 @@ as showed in the following examples.
 
            .. code-block:: yaml
               
-              sqa-criteria:
+              sqa_criteria:
                 qc-style:
                   repos:
                     worsica-processing:
                       container: processing
                       tox:
-                        testenv: stylecheck
+                        testenv:
+                            - stylecheck
 
         .. tab:: qc-coverage
 
            .. code-block:: yaml
 
-              sqa-criteria:
+              sqa_criteria:
                 qc-coverage:
                   repos:
                     worsica-processing:
                       container: processing
                       tox:
-                        testenv: coverage
+                        testenv:
+                            - coverage
                     worsica-portal:
                       container: celery
                       tox:
-                        testenv: coverage
+                        testenv:
+                            - coverage
 
         .. tab:: qc-functional
 
            .. code-block:: yaml
 
-              sqa-criteria:
+              sqa_criteria:
                 qc-functional:
                   repos:
                     worsica-processing:
                       container: processing
                       tox:
-                        testenv: unittest
+                        testenv:
+                            - unittest
                     worsica-portal:
                       container: celery
                       tox:
-                        testenv: functional
+                        testenv:
+                            - functional
 
         .. tab:: qc-security
 
            .. code-block:: yaml
 
-              sqa-criteria:
+              sqa_criteria:
                 qc-security:
                   repos:
                     worsica-processing:
                       container: processing
                       tox:
-                        testenv: security
+                        testenv:
+                            - security
 
         .. tab:: qc-doc
 
            .. code-block:: yaml
 
-              sqa-criteria:
+              sqa_criteria:
                 qc-doc:
                   repos:
                     worsica-cicd:
@@ -309,7 +314,7 @@ take place. It using docker-compose, the value could be any of the services
 defined in the docker-compose.yml.
 
 :Type: ``string``
-:Location: ``sqa-criteria:<qc-xxx>:repos:<repo>:container``
+:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:container``
 
 tox
 ```
@@ -319,15 +324,15 @@ environments.
 
 :Type: ``map``
 :Parameters: ``testenv``, ``tox_file``
-:Location: ``sqa-criteria:<qc-xxx>:repos:<repo>:tox``
+:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox``
 
 **testenv**
 
 Identifier of the test environment that tox shall use.
 
-:Type: ``string``
+:Type: ``list``
 :Required: ``true``
-:Location: ``sqa-criteria:<qc-xxx>:repos:<repo>:tox:testenv``
+:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox:testenv``
 
 **tox_file**
 
@@ -335,7 +340,7 @@ Specifies the path to the tox configuration file.
 
 :Type: ``path``
 :Default: ``tox.ini``
-:Location: ``sqa-criteria:<qc-xxx>:repos:<repo>:tox:tox_file``
+:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox:tox_file``
 
 .. note:
    If using ``tox`` withouth ``container``, the jenkins-pipeline-library will
@@ -349,13 +354,13 @@ built-in support for the tool you use for building purposes.
 
 :Type: ``list``
 :Default: ``[]``
-:Location: ``sqa-criteria:<qc-xxx>:repos:<repo>:commands``
+:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:commands``
 
 Example:
 
 .. code-block:: yaml
 
-   sqa-criteria:
+   sqa_criteria:
      qc-sec:
        repos:
         worsica-processing:
