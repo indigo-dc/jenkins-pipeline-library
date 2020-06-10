@@ -85,10 +85,10 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         String cmd = parseParam(_f, args.composeFile)
 
         if (purge) {
-            steps.sh 'docker-compose $cmd down -v --rmi all --remove-orphans'
+            steps.sh "docker-compose $cmd down -v --rmi all --remove-orphans"
         }
         else {
-            steps.sh 'docker-compose $cmd down -v'
+            steps.sh "docker-compose $cmd down -v"
         }
     }
 
