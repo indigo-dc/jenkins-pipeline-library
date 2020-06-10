@@ -37,11 +37,18 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
             .setTimeout(yaml.timeout ?: DEFAULT_TIMEOUT)
             .build()
     }
+    
+    // from https://gist.github.com/robhruska/4612278
+    Map merge(Map[] sources) {
+        if (sources.length == 0) return [:]
+        if (sources.length == 1) return sources[0]
 
-    Map merge(preset, sources) {
-        sources ?: preset
-
-        preset << sources
+        sources.inject([:]) { result, source ->
+            source.each { k, v ->
+                result[k] = result[k] instanceof Map ? merge(result[k], v) : v
+            }
+            result
+        }
     }
 
     Map getDefaultValue(String setting) {
