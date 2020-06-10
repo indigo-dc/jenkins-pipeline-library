@@ -148,27 +148,31 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             composeUp(composeFile: projectConfig.config.deploy_template)
         }
 
-        // Run SQA stages
-        projectConfig.stagesList.each { stageMap ->
-            steps.stage(stageMap.stage) {
-                if (stageMap.tox) {
-                    stageMap.tox.testenv.each { testenv ->
-                        composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox, workdir: stageMap.repo, \
-                                      composeFile: projectConfig.config.deploy_template, toxFile: stageMap.tox.tox_file)
+        try {
+            // Run SQA stages
+            projectConfig.stagesList.each { stageMap ->
+                steps.stage(stageMap.stage) {
+                    if (stageMap.tox) {
+                        stageMap.tox.testenv.each { testenv ->
+                            composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox, workdir: stageMap.repo, \
+                                          composeFile: projectConfig.config.deploy_template, toxFile: stageMap.tox.tox_file)
+                        }
                     }
-                }
-                if (stageMap.commands) {
-                    stageMap.commands.each { command ->
-                        composeExec(stageMap.container, command, \
-                                    workdir: stageMap.repo, composeFile: projectConfig.config.deploy_template)
+                    if (stageMap.commands) {
+                        stageMap.commands.each { command ->
+                            composeExec(stageMap.container, command, \
+                                        workdir: stageMap.repo, composeFile: projectConfig.config.deploy_template)
+                        }
                     }
                 }
             }
-        }
-
-        // Clean docker-compose deployed environment
-        steps.stage("Docker Compose cleanup") {
-            composeDown(composeFile: projectConfig.config.deploy_template)
+        } catch (all) {
+            throw new Exception("Error while building dynamic stages")
+        } finally {
+            // Clean docker-compose deployed environment
+            steps.stage("Docker Compose cleanup") {
+                composeDown(composeFile: projectConfig.config.deploy_template)
+            }
         }
     }
 
