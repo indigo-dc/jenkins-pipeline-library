@@ -68,9 +68,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/overview/
     */
     def composeUp(Map args, String serviceIds='') {
-        String cmd = parseParam(_f, args.composeFile) + " up $serviceIds"
+        String cmd = parseParam(_f, args.composeFile) + " up -d $serviceIds"
 
-        steps.sh "docker-compose $cmd --detach"
+        steps.sh "docker-compose $cmd"
     }
 
     /**
