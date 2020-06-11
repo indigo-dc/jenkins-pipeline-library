@@ -130,7 +130,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
      */
     def processStages(projectConfig) {
         String workspace = steps.env.WORKSPACE + '/'
-        echo "workspace path: $workspace"
+        steps.echo "workspace path: $workspace"
 
         // Environment setup
         steps.stage("Environment Setup") {
