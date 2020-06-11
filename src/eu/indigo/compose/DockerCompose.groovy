@@ -53,7 +53,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/exec/
     */
     def composeExec(Map args, String service, String command) {
-        String cmd = parseParam(_f, args.composeFile) + ' exec ' + " $service $command"
+        String cmd = parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir) + ' exec ' + " $service $command"
         steps.sh "docker-compose $cmd"
     }
 
@@ -77,11 +77,12 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     *
     * @param purge Boolean value. If true docker compose will erase all images and containers.
     * @param composeFile Docker compose file to override the default docker-compose.yml [default]
+    * @param workdir Path to workdir directory for this command
     * @see https://docs.docker.com/compose/reference/down/
     * @see https://vsupalov.com/cleaning-up-after-docker/
     */
     def composeDown(Map args, Boolean purge=false) {
-        String cmd = parseParam(_f, args.composeFile)
+        String cmd = parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir)
 
         if (purge) {
             steps.sh "docker-compose $cmd down -v --rmi all --remove-orphans"
@@ -98,13 +99,14 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @param srcPath copies the contents of source path
     * @param destPath copies the contents to the destination path
     * @param composeFile Docker compose file to override the default docker-compose.yml
+    * @param workdir Path to workdir directory for this command
     * @see https://docs.docker.com/engine/reference/commandline/cp/
     * @see https://blog.dcycle.com/blog/ae67284c/docker-compose-cp
     * @see https://docs.docker.com/compose/reference/ps/
     */
     def composeCP(Map args, String service, String srcPath, String destPath) {
         steps.sh "docker cp $srcPath \"\$(docker-compose " + \
-            parseParam(_f, args.composeFile) + " ps -q $service)\":$destPath"
+            parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir) + " ps -q $service)\":$destPath"
     }
 
     /**
@@ -119,7 +121,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/exec/
     */
     def composeToxRun(Map args, String service, String testenv, Tox tox) {
-        String cmd = parseParam(_f, args.composeFile) + ' exec ' + \
+        String cmd = parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir) + ' exec ' + \
                 parseParam(_w, args.workdir) + \
                 " $service " + tox.runEnv(testenv, toxFile: args.toxFile)
 
@@ -157,13 +159,13 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                     if (stageMap.tox) {
                         stageMap.tox.testenv.each { testenv ->
                             composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox, \
-                                          composeFile: projectConfig.config.deploy_template, toxFile: stageMap.tox.tox_file)
+                                          composeFile: projectConfig.config.deploy_template, toxFile: stageMap.tox.tox_file, workdir: workspace)
                         }
                     }
                     if (stageMap.commands) {
                         stageMap.commands.each { command ->
                             composeExec(stageMap.container, command, \
-                                        stageMap.repo, composeFile: projectConfig.config.deploy_template)
+                                        stageMap.repo, composeFile: projectConfig.config.deploy_template, workdir: workspace)
                         }
                     }
                 }
@@ -173,7 +175,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         } finally {
             // Clean docker-compose deployed environment
             steps.stage("Docker Compose cleanup") {
-                composeDown(composeFile: projectConfig.config.deploy_template)
+                composeDown(composeFile: projectConfig.config.deploy_template, workdir: workspace)
             }
         }
     }
