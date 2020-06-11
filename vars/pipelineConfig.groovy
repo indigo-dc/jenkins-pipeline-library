@@ -58,6 +58,7 @@ def checkoutRepository(String repository, String branch='master') {
         checkout([
             $class: 'GitSCM',
             branches: [[name: "*/${branch}"]],
+            extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '.']],
             userRemoteConfigs: [[url: repository]]])
     }
     else {
