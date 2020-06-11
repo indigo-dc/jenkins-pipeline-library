@@ -17,7 +17,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * Parameters static strings for command parser
     */
     String _f = '-f'
-    String _w = '-w'
+    String _w = '--project-directory'
 
     /**
     * Test if argument is not an empty string
@@ -62,13 +62,14 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     *
     * @param serviceIds String with list of Service names separated by spaces to start [default]
     * @param composeFile Docker compose file to override the default docker-compose.yml [default]
+    * @param workdir Path to workdir directory for this command
     * @see https://docs.docker.com/compose/reference/up/
     * @see https://docs.docker.com/compose/reference/overview/
     */
     def composeUp(Map args, String serviceIds='') {
-        String cmd = parseParam(_f, args.composeFile) + " up -d $serviceIds"
+        String cmd = parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir) + " up -d $serviceIds"
 
-        steps.sh "cd ${args.workdir} && docker-compose $cmd"
+        steps.sh "docker-compose  $cmd"
     }
 
     /**
