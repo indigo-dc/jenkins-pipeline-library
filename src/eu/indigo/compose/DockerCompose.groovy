@@ -53,8 +53,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/exec/
     */
     def composeExec(Map args, String service, String command) {
-        String cmd = parseParam(_f, args.composeFile) + ' exec ' + \
-                parseParam(_w, args.workdir) + " $service $command"
+        String cmd = parseParam(_f, args.composeFile) + ' exec ' + " $service $command"
         steps.sh "docker-compose $cmd"
     }
 
@@ -69,7 +68,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     def composeUp(Map args, String serviceIds='') {
         String cmd = parseParam(_f, args.composeFile) + " up -d $serviceIds"
 
-        steps.sh "docker-compose $cmd"
+        steps.sh "cd ${args.workdir} && docker-compose $cmd"
     }
 
     /**
@@ -147,7 +146,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             }
 
             // Deploy the environment services using docker-compose
-            composeUp(composeFile: projectConfig.config.deploy_template)
+            composeUp(composeFile: projectConfig.config.deploy_template, workdir: workspace)
         }
 
         try {
@@ -156,14 +155,14 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                 steps.stage(stageMap.stage) {
                     if (stageMap.tox) {
                         stageMap.tox.testenv.each { testenv ->
-                            composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox, workdir: workspace + stageMap.repo, \
+                            composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox, \
                                           composeFile: projectConfig.config.deploy_template, toxFile: stageMap.tox.tox_file)
                         }
                     }
                     if (stageMap.commands) {
                         stageMap.commands.each { command ->
                             composeExec(stageMap.container, command, \
-                                        workdir: workspace + stageMap.repo, composeFile: projectConfig.config.deploy_template)
+                                        stageMap.repo, composeFile: projectConfig.config.deploy_template)
                         }
                     }
                 }
