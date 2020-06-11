@@ -120,7 +120,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     def composeToxRun(Map args, String service, String testenv, Tox tox) {
         String cmd = parseParam(_f, args.composeFile) + ' exec ' + \
-                //parseParam(_w, args.workdir) + \
+                parseParam(_w, args.workdir) + \
                 " $service " + tox.runEnv(testenv, toxFile: args.toxFile)
 
         steps.sh "docker-compose $cmd"
@@ -130,6 +130,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
      * Process stages from config.yml
      */
     def processStages(projectConfig) {
+        String workspace = env.WORKSPACE + '/'
+
         // Environment setup
         steps.stage("Environment Setup") {
             // Checkout repositories to workspace with defined repository name
@@ -153,14 +155,14 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                 steps.stage(stageMap.stage) {
                     if (stageMap.tox) {
                         stageMap.tox.testenv.each { testenv ->
-                            composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox, workdir: stageMap.repo, \
+                            composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox, workdir: workspace + stageMap.repo, \
                                           composeFile: projectConfig.config.deploy_template, toxFile: stageMap.tox.tox_file)
                         }
                     }
                     if (stageMap.commands) {
                         stageMap.commands.each { command ->
                             composeExec(stageMap.container, command, \
-                                        workdir: stageMap.repo, composeFile: projectConfig.config.deploy_template)
+                                        workdir: workspace + stageMap.repo, composeFile: projectConfig.config.deploy_template)
                         }
                     }
                 }
