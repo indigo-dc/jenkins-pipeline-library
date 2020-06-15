@@ -65,8 +65,8 @@ required steps to set up the layout would imply the following steps:
       
       $ mkdir .sqa
 
-   3.2. Create the initial content of the main configuration file, ``config.yml``,
-   with the description of your repository:
+   3.2. Create the initial content of the main configuration file, 
+   ``.sqa/config.yml``, with the description of your repository:
    
    .. code:: bash
       
@@ -76,8 +76,16 @@ required steps to set up the layout would imply the following steps:
           myrepo:
             repo: 'https://github.com/myorg/myrepo'
       EOF
+
+    See :ref:`The configuration file: config.yml` for further information.
+
+   3.3. Create the ``.sqa/docker-compose.yml``.
+
+    See :ref:`The services: docker-compose.yml` for further information.
    
-   3.3. Create the Jenkisfile in the root path of the code repository:
+   3.4. In the *root path of the code repository*, create the ``Jenkisfile``, 
+   file required by Jenkins. In order to make it work with the 
+   jenkins-pipeline-library, at least the following content must be present:
    
    .. code:: bash
       
@@ -106,6 +114,8 @@ required steps to set up the layout would imply the following steps:
           }
       }
       EOF
+
+    See :ref:`The pipeline: Jenkinsfile` for further information.
 
 4. Commit & push the layout files:
 
