@@ -21,17 +21,12 @@ def call(
     try {
         invalidMessages = validate(configFile)
     } catch (GroovyRuntimeException e) {
-        error 'ConfigValidation have a runtime exception with status:\n' + e \
-        + '\nThe complete stack trace is the following:\n' \
-        + e.getStackTrace()
+        error "ConfigValidation have a runtime exception with status:\n$e"
     }
     if (invalidMessages) {
-        //error(invalidMessages.join('\n'))
         error("Validation exit code): $invalidMessages")
     }
-    //projectConfig = new ConfigParser().parse(yaml, env)
     projectConfig = new ConfigParser(this).parse(yaml, env)
-    echo projectConfig.toString()
     switch (projectConfig.nodeAgentAux) {
         case 'DockerCompose':
             projectConfig.nodeAgent = new ComposeFactoryBuilder()
