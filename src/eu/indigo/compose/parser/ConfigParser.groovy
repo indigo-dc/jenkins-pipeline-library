@@ -50,7 +50,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
 
         (sources[0].entrySet() + sources[1].entrySet()).each { entry ->
             steps.echo "result = $result\nkey = ${entry.key}\nvalue = ${entry.value}"
-            result[entry.key] = result.containsKey(entry.key) && result[entry.key].getClass == Map ?
+            result[entry.key] = result.containsKey(entry.key) && result[entry.key].getClass() == Map ?
                 [:] << result[entry.key] << entry.value
                 : entry.value
         }
