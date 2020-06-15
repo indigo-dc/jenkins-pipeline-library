@@ -41,35 +41,19 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
             .build()
     }
 
-    @TailRecursive
     Map merge(Map[] sources) {
         switch (sources.length) {
             case 0:
                 return [:]
             case 1:
                 return sources[0]
-            case 3:
-                result[sources[1]] = sources[2]
-                return merge(result[sources[1]], sources[2])
+        }
+        Map result = [:]
+
+        (sources[0].entrySet() + sources[1].entrySet()).each { entry ->
+            result[entry.key] = result.containsKey(entry.key) ? [:] << result[entry.key] << entry.value : entry.value
         }
 
-        sources.inject([:]) { result, k, v ->
-            return merge(result, k, v)
-        }
-    }
-
-    Map merge(Map result, Integer key, Integer source) {
-        result[key] = source
-        return result
-    }
-
-    Map merge(Map result, String key, String source) {
-        result[key] = source
-        return result
-    }
-
-    Map merge(Map result, String[] key, String[] source) {
-        result[key] = source
         return result
     }
 
