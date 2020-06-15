@@ -24,7 +24,7 @@ Step-by-step guide
    `QC.Uni <https://indigo-dc.github.io/sqa-baseline/#unit-testing-qc.uni>`_,
    `QC.Fun <https://indigo-dc.github.io/sqa-baseline/#functional-testing-qc.fun>`_
    and
-   `QC.Int <https://indigo-dc.github.io/sqa-baseline/#integration-testing-qc.int>`.
+   `QC.Int <https://indigo-dc.github.io/sqa-baseline/#integration-testing-qc.int>`_.
    You have got familiar with the unit testing libraries available in
    Python and started writing a few test cases. For the time being, you just
    want to cover the QC.Uni category.of the baseline.
