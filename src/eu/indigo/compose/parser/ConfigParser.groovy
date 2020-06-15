@@ -1,7 +1,5 @@
 package eu.indigo.compose.parser
 
-import groovy.transform.TailRecursive
-
 import eu.indigo.compose.ProjectConfiguration
 import eu.indigo.compose.ProjectConfigurationBuilder
 
