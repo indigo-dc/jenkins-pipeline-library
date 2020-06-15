@@ -139,7 +139,7 @@ the checks that comprise the quality criteria. The criteria currently supported
 is documented in :ref:`sqa_criteria`, but in short it is currently reduced to:
 
 +-----------------------------+------------------------------------------------------------------------+
-| ``sqa-criteria`` ID         | What does it cover?                                                    |
+| ``sqa-criteria`` setting    | What does it cover?                                                    |
 +=============================+========================================================================+
 | ``qc-style``                | Make your code compliant with a style standard                         |
 +-----------------------------+------------------------------------------------------------------------+
@@ -151,3 +151,74 @@ is documented in :ref:`sqa_criteria`, but in short it is currently reduced to:
 +-----------------------------+------------------------------------------------------------------------+
 | ``qc-doc``                  | Generate the documentation                                             |
 +-----------------------------+------------------------------------------------------------------------+
+
+Hereinafter we will provide examples for each of the previous ``sqa-criteria``
+settings. Whenever applicable, the example will include all the supported
+(built-in) tools.
+
+.. note::
+   The library supports the ``commands`` setting to add a list of commands to
+   be executed by the pipeline. However, the use of built-in tools, such as 
+   ``tox`` is recommended as it is more customizable. See section
+   :ref:`sqa_criteria` for all the available options.
+
+1. Add the ``qc-style`` definition. We will present two examples, in order to
+   cover Python and Java-based applications:
+
+   1.1 Python:
+
+    .. tabs::
+
+        .. tab:: config.yml
+
+           .. code-block:: yaml
+             config:
+               project_repos:
+                 myrepo:
+                   repo: 'https://github.com/myorg/myrepo'
+              
+              sqa_criteria:
+                qc-style:
+                  repos:
+                    my-repo:
+                      container: python-build-tools
+                      tox:
+                        testenv: stylecheck
+
+        .. tab:: docker-compose.yml
+
+           .. code-block:: yaml
+             version: "3.6"
+
+   1.2. Java:
+
+   .. tabs::
+
+        .. tab:: config.yml
+
+           .. code-block:: yaml
+             config:
+               project_repos:
+                 myrepo:
+                   repo: 'https://github.com/myorg/myrepo'
+              
+              sqa_criteria:
+                qc-coverage:
+                  repos:
+                    my-repo:
+                      container: java-build-tools
+                      commands:
+                        - mvn checkstyle:checkstyle
+
+        .. tab:: docker-compose.yml
+
+           .. code-block:: yaml
+             version: "3.6"
+
+2. Add the ``qc-coverage`` definition:
+   
+3. Add the ``qc-functional`` definition:
+
+4. Add the ``qc-security`` definition:
+
+5. Add the ``qc-doc`` definition:
