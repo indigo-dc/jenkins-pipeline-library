@@ -46,8 +46,8 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
             case 1:
                 return sources[0]
             case 3:
-                result[key] = source
-                return merge(result[key], source)
+                result[sources[1]] = sources[2]
+                return merge(result[sources[1]], sources[2])
         }
 
         sources.inject([:]) { result, k, v ->
