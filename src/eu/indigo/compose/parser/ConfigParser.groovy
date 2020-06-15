@@ -40,17 +40,19 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     }
 
     Map merge(Map[] sources) {
-        if (sources.length == 0) return [:]
-        if (sources.length == 1) return sources[0]
+        switch (sources.length) {
+            case 0:
+                return [:]
+            case 1:
+                return sources[0]
+            case 3:
+                result[key] = source
+                return merge(result[key], source)
+        }
 
         sources.inject([:]) { result, k, v ->
             return merge(result, k, v)
         }
-    }
-
-    Map merge(Map result, Map key, Map source) {
-        result[key] = source
-        return merge(result[key], source)
     }
 
     Map merge(Map result, Integer key, Integer source) {
