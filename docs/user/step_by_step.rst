@@ -79,7 +79,15 @@ required steps to set up the layout would imply the following steps:
 
     See :ref:`The configuration file: config.yml` for further information.
 
-   3.3. Create the ``.sqa/docker-compose.yml``.
+   3.3. Create the ``.sqa/docker-compose.yml``. For the time being, we will
+   only specify the version required by the library (i.e. ``3.6``), later on
+   we will add the service definitions:
+
+   .. code:: bash
+      
+      $ cat <<EOF > .sqa/config.yml
+      version: "3.6"
+      EOF
 
     See :ref:`The services: docker-compose.yml` for further information.
    
