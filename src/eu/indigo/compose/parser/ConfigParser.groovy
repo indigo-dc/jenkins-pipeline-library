@@ -49,7 +49,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         Map result = [:]
 
         (sources[0].entrySet() + sources[1].entrySet()).each { entry ->
-            steps.echo "result = $result\nkey = ${entry.key}\nvalue = ${entry.value}"
+            _DEBUG_ ? steps.echo "result = $result\nkey = ${entry.key}\nvalue = ${entry.value}"
             result[entry.key] = result.containsKey(entry.key) && result[entry.key].getClass() == Map ?
                 [:] << result[entry.key] << entry.value
                 : entry.value
@@ -59,7 +59,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     }
 
     Map getDefaultValue(String setting) {
-        steps.echo"** getDefaultValue(): ${setting}**"
+        _DEBUG_ ? steps.echo"** getDefaultValue(): ${setting}**"
         def result = [:]
         switch (setting) {
             case 'config':
@@ -88,12 +88,12 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     }
 
     def getNodeAgent(yaml) {
-        steps.echo "** getNodeAgent() **"
+        _DEBUG_ ? steps.echo "** getNodeAgent() **"
         configToClass[(yaml.config.node_agent == null) ? DEFAULT_AGENT : yaml.config.node_agent]
     }
 
     Map getConfigSetting(Map config) {
-        steps.echo "** getConfigSetting() **"
+        _DEBUG_ ? steps.echo "** getConfigSetting() **"
         def configBase = merge(getDefaultValue('config'), config)
         def configRepos = [
             project_repos: configBase['project_repos']
@@ -101,13 +101,13 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
                     [id, merge(getDefaultValue('config_repo'), repo)]
                 }
         ]
-        steps.echo 'configRepos:\n' + configRepos.toString()
-        steps.echo 'configBase:\n' + configBase.toString()
+        _DEBUG_ ? steps.echo 'configRepos:\n' + configRepos.toString()
+        _DEBUG_ ? steps.echo 'configBase:\n' + configBase.toString()
         return merge(configBase, configRepos)
     }
 
     Map getSQASetting(Map criteria) {
-        steps.echo "** getSQASetting() **"
+        _DEBUG_ ? steps.echo "** getSQASetting() **"
         def sqaCriteria = criteria.each { criterion, data ->
             supportedBuildTools.each { tool ->
                 def repoData = data[_repos].collectEntries { id, params ->

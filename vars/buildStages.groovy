@@ -11,7 +11,7 @@ def call(ProjectConfiguration projectConfig) {
         else {
             projectConfig.nodeAgent.processStages(projectConfig)
         }
-    } catch(Exception e) {
+    } catch (Exception e) {
         error("Exception on buildStages(): ${e}")
     }
 }
