@@ -152,73 +152,145 @@ is documented in :ref:`sqa_criteria`, but in short it is currently reduced to:
 | ``qc-doc``                  | Generate the documentation                                             |
 +-----------------------------+------------------------------------------------------------------------+
 
-Hereinafter we will provide examples for each of the previous ``sqa-criteria``
-settings. Whenever applicable, the example will include all the supported
-(built-in) tools.
+The definition of the ``sqa-criteria`` settings in the ``.sqa/config.yml`` file
+follow a similar approach. As such, the following examples will only cover the
+``qc-style`` setting, but the others can be implemented in a similar fashion.
+Check out the previously referrenced :ref:`sqa_criteria` sections for the 
+specific parameters within each setting.
 
-.. note::
-   The library supports the ``commands`` setting to add a list of commands to
-   be executed by the pipeline. However, the use of built-in tools, such as 
-   ``tox`` is recommended as it is more customizable. See section
-   :ref:`sqa_criteria` for all the available options.
+The current version of the library supports both ``commands`` and ``tox`` (only
+for Python-based applications) to run the validaton checks. The examples present
+working ``config.yml`` definitions, both for Python and Java programming 
+languages, covering all the use cases --i.e. Java & Python with and without 
+tox--, as well as the associated ``docker-compose.yml`` services (``tox.ini``
+are also available when applicable).
 
-1. Add the ``qc-style`` definition. We will present two examples, in order to
+All the dd the ``qc-style`` definition. We will present two examples, in order to
    cover Python and Java-based applications:
 
-   1.1 Python:
+   1.1 Python with ``tox``:
 
-    .. tabs::
+       .. tabs::
 
-        .. tab:: config.yml
+           .. tab:: config.yml
 
-           .. code-block:: yaml
-             config:
-               project_repos:
-                 myrepo:
-                   repo: 'https://github.com/myorg/myrepo'
-              
-              sqa_criteria:
-                qc-style:
-                  repos:
-                    my-repo:
-                      container: python-build-tools
-                      tox:
-                        testenv: stylecheck
+              .. code-block:: yaml
 
-        .. tab:: docker-compose.yml
+                 config:
+                   project_repos:
+                     myrepo:
+                       repo: 'https://github.com/myorg/myrepo'
+                  
+                  sqa_criteria:
+                    qc-style:
+                      repos:
+                        my-repo:
+                          container: myrepo-testing
+                          tox:
+                            testenv: stylecheck
 
-           .. code-block:: yaml
-             version: "3.6"
+           .. tab:: docker-compose.yml
 
-   1.2. Java:
+              .. code-block:: yaml
+
+                 version: "3.6"
+
+                 services:
+                   myrepo-testing:
+                     image: "indigodatacloud/ci-images:python3.6"
+                     hostname: "myrepo-testing-host"
+                     volumes:
+                      - type: bind
+                        source: ./myrepo
+                        target: /myrepo-testing  
+
+           .. tab:: tox.ini
+
+              .. code-block:: ini
+
+                 [tox]
+                 minversion = 2.1
+                 envlist = py{36,37},stylecheck
+                 skipsdist = True
+
+                 [testenv]
+                 usedevelop = True
+                 basepython = python3
+
+                 [testenv:stylecheck]
+                 envdir = {toxworkdir}/shared
+                 commands =
+                   flake8
+
+
+   1.2. Python with ``commands``:
 
    .. tabs::
 
         .. tab:: config.yml
 
            .. code-block:: yaml
-             config:
-               project_repos:
-                 myrepo:
-                   repo: 'https://github.com/myorg/myrepo'
-              
-              sqa_criteria:
-                qc-coverage:
-                  repos:
-                    my-repo:
-                      container: java-build-tools
-                      commands:
-                        - mvn checkstyle:checkstyle
+
+              config:
+                project_repos:
+                  myrepo:
+                    repo: 'https://github.com/myorg/myrepo'
+               
+               sqa_criteria:
+                 qc-coverage:
+                   repos:
+                     my-repo:
+                       container: myrepo-testing
+                       commands:
+                         - flake8
 
         .. tab:: docker-compose.yml
 
            .. code-block:: yaml
-             version: "3.6"
 
-2. Add the ``qc-coverage`` definition:
-   
-3. Add the ``qc-functional`` definition:
+              version: "3.6"
 
-4. Add the ``qc-security`` definition:
+                 services:
+                   myrepo-testing-java:
+                     image: "indigodatacloud/ci-images:java"
+                     hostname: "myrepo-testing-host"
+                     volumes:
+                      - type: bind
+                        source: ./myrepo
+                        target: /myrepo-testing 
 
-5. Add the ``qc-doc`` definition:
+   1.3. Java with ``commands``:
+
+   .. tabs::
+
+        .. tab:: config.yml
+
+           .. code-block:: yaml
+
+              config:
+                project_repos:
+                  myrepo:
+                    repo: 'https://github.com/myorg/myrepo'
+               
+               sqa_criteria:
+                 qc-coverage:
+                   repos:
+                     my-repo:
+                       container: myrepo-testing-java
+                       commands:
+                         - mvn checkstyle:checkstyle
+
+        .. tab:: docker-compose.yml
+
+           .. code-block:: yaml
+
+              version: "3.6"
+
+                 services:
+                   myrepo-testing-java:
+                     image: "indigodatacloud/ci-images:java"
+                     hostname: "myrepo-testing-host"
+                     volumes:
+                      - type: bind
+                        source: ./myrepo
+                        target: /myrepo-testing 
