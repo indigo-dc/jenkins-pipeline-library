@@ -51,26 +51,22 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         }
     }
 
-    @Overload
     @TailRecursive
     Map merge(Map result, Map key, Map source) {
         result[key] = source
         return merge(result[key], source)
     }
 
-    @Overload
     Map merge(Map result, Integer key, Integer source) {
         result[key] = source
         return result
     }
 
-    @Overload
     Map merge(Map result, String key, String source) {
         result[key] = source
         return result
     }
 
-    @Overload
     Map merge(Map result, String[] key, String[] source) {
         result[key] = source
         return result
