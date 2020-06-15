@@ -36,7 +36,7 @@ So, let's see how to set it up.
 
 The Layout
 ----------
-We will use the ficitonal repository *https://github.com/myorg/myrepo*. The 
+We will use the fictional repository *https://github.com/myorg/myrepo*. The 
 required steps to set up the layout would imply the following steps:
 
 1. Clone the repo
@@ -47,7 +47,8 @@ required steps to set up the layout would imply the following steps:
    $ git clone $MY_REPO
 
 2. A good practice is to add the changes herein described in an individual
-   branch, so not directly in the production --usually ``master``-- branch:
+   branch, so not directly in the production --usually ``master``-- branch. In
+   this example we will use ``setup_jenkins-pipeline-library`` as follows:
 
 .. code:: bash
    
@@ -55,56 +56,58 @@ required steps to set up the layout would imply the following steps:
    $ git checkout -b setup_jenkins-pipeline-library
 
 
-2. Create the folder for handling the configuration required by the
-   jenkins-pipeline-library:
+3. We will now create the directory structure required by the
+   jenkins-pipeline-library.
 
-.. code:: bash
-   
-   $ mkdir .sqa
+   3.1. Main folder:
 
-3. Create the initial content of the main configuration file, ``config.yml``,
+   .. code:: bash
+      
+      $ mkdir .sqa
+
+   3.2. Create the initial content of the main configuration file, ``config.yml``,
    with the description of your repository:
+   
+   .. code:: bash
+      
+      $ cat <<EOF > .sqa/config.yml
+      config:
+        project_repos:
+          myrepo:
+            repo: 'https://github.com/myorg/myrepo'
+      EOF
+   
+   3.3. Create the Jenkisfile in the root path of the code repository:
+   
+   .. code:: bash
+      
+      $ cat <<EOF > Jenkinsfile
+      @Library(['github.com:indigo-dc/jenkins-pipeline-library@2.0.0']) _
+      
+      def projectConfig
+      
+      pipeline {
+          agent any
+      
+          stages {
+              stage('SQA baseline dynamic stages') {
+                  steps {
+                      script {
+                          projectConfig = pipelineConfig()
+                          buildStages(projectConfig)
+                      }
+                  }
+                  post {
+                      cleanup {
+                          cleanWs()
+                      }
+                  }
+              }
+          }
+      }
+      EOF
 
-.. code:: bash
-   
-   $ cat <<EOF > .sqa/config.yml
-   config:
-     project_repos:
-       myrepo:
-         repo: 'https://github.com/myorg/myrepo'
-   EOF
-
-4. Create the Jenkisfile in the root path of the code repository:
-
-.. code:: bash
-   
-   $ cat <<EOF > Jenkinsfile
-   @Library(['github.com:indigo-dc/jenkins-pipeline-library@2.0.0']) _
-   
-   def projectConfig
-   
-   pipeline {
-       agent any
-   
-       stages {
-           stage('SQA baseline dynamic stages') {
-               steps {
-                   script {
-                       projectConfig = pipelineConfig()
-                       buildStages(projectConfig)
-                   }
-               }
-               post {
-                   cleanup {
-                       cleanWs()
-                   }
-               }
-           }
-       }
-   }
-   EOF
-
-5. Commit & push the layout files:
+4. Commit & push the layout files:
 
 .. code:: bash
 
