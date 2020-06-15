@@ -1,5 +1,7 @@
 package eu.indigo.compose.parser
 
+import groovy.transform.TailRecursive
+
 import eu.indigo.compose.ProjectConfiguration
 import eu.indigo.compose.ProjectConfigurationBuilder
 
@@ -41,8 +43,8 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
 
     @TailRecursive
     Map merge(Map[] sources) {
-        sources ?: return [:]
-        sources[1] ?: return sources[0]
+        if (sources.length == 0) return [:]
+        if (sources.length == 1) return sources[0]
 
         sources.inject([:]) { result, k, v ->
             return merge(result, k, v)
