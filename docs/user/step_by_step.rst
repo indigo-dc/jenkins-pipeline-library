@@ -130,3 +130,24 @@ required steps to set up the layout would imply the following steps:
     $ git add .sqa Jenkinsfile
     $ git commit -m "Initial setup of jenkins-pipeline-library files"
     $ git push origin setup_jenkins-pipeline-library
+
+The SQA criteria
+----------------
+In this section we will cover the ``sqa-criteria`` setting, which represents
+the fundamental part of the configuration since it contains the definitions of
+the checks that comprise the quality criteria. The criteria currently supported
+is documented in :ref:`sqa_criteria`, but in short it is currently reduced to:
+
++-----------------------------+------------------------------------------------------------------------+
+| ``sqa-criteria`` ID         | What does it cover?                                                    |
++=============================+========================================================================+
+| ``qc-style``                | Make your code compliant with a style standard                         |
++-----------------------------+------------------------------------------------------------------------+
+| ``qc-coverage``             | Calculate the unit testing coverage of your code                       |
++-----------------------------+------------------------------------------------------------------------+
+| ``qc-functional``           | Test the main features of your software                                |
++-----------------------------+------------------------------------------------------------------------+
+| ``qc-security``             | Assess the security (uncover vulnerabilities & bad security practices) |
++-----------------------------+------------------------------------------------------------------------+
+| ``qc-doc``                  | Generate the documentation                                             |
++-----------------------------+------------------------------------------------------------------------+
