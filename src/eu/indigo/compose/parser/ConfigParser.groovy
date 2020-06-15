@@ -16,8 +16,9 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     // Constant literals for this Class
     String _repos = 'repos'
 
-    private String LATEST = 'latest'
-    private Integer DEFAULT_TIMEOUT = 600   // 600 seconds
+    private final String LATEST = 'latest'
+    private final Integer DEFAULT_TIMEOUT = 600   // 600 seconds
+    private final String DEFAULT_AGENT = 'docker-compose'
     Map configToClass = [
         'docker-compose': 'DockerCompose'
     ]
@@ -28,7 +29,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     ProjectConfiguration parse(yaml, env) {
 
         new ProjectConfigurationBuilder()
-            .setNodeAgentAux(configToClass[(yaml.config.node_agent == null) ? 'docker-compose' : yaml.config.node_agent])
+            .setNodeAgentAux(getNodeAgent(yaml))
             .setConfig(getConfigSetting(yaml.config))
             .setStagesList(formatStages(getSQASetting(yaml['sqa-criteria'])))
             .setBuildNumber(env.BUILD_ID)
@@ -37,18 +38,40 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
             .setTimeout(yaml.timeout ?: DEFAULT_TIMEOUT)
             .build()
     }
-    
-    // from https://gist.github.com/robhruska/4612278
-    Map merge(Map[] sources) {
-        if (sources.length == 0) return [:]
-        if (sources.length == 1) return sources[0]
 
-        sources.inject([:]) { result, source ->
-            source.each { k, v ->
-                result[k] = result[k] instanceof Map ? merge(result[k], v) : v
-            }
-            result
+    @TailRecursive
+    Map merge(Map[] sources) {
+        sources ?: return [:]
+        sources[1] ?: return sources[0]
+
+        sources.inject([:]) { result, k, v ->
+            return merge(result, k, v)
         }
+    }
+
+    @Overload
+    @TailRecursive
+    Map merge(Map result, Map key, Map source) {
+        result[key] = source
+        return merge(result[key], source)
+    }
+
+    @Overload
+    Map merge(Map result, Integer key, Integer source) {
+        result[key] = source
+        return result
+    }
+
+    @Overload
+    Map merge(Map result, String key, String source) {
+        result[key] = source
+        return result
+    }
+
+    @Overload
+    Map merge(Map result, String[] key, String[] source) {
+        result[key] = source
+        return result
     }
 
     Map getDefaultValue(String setting) {
@@ -57,7 +80,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         switch (setting) {
             case 'config':
                 result = [
-                    node_agent: 'docker-compose',
+                    node_agent: DEFAULT_AGENT,
                     deploy_template: '.sqa/docker-compose.yml'
                 ]
                 break
@@ -78,6 +101,11 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
                 break
         }
         return result
+    }
+
+    def getNodeAgent(yaml) {
+        steps.echo "** getNodeAgent() **"
+        configToClass[(yaml.config.node_agent == null) ? DEFAULT_AGENT : yaml.config.node_agent]
     }
 
     Map getConfigSetting(Map config) {
