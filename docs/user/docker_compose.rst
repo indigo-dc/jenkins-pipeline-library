@@ -18,7 +18,7 @@ Compose specification:
 
 .. code-block::
 
-   version: 3
+   version: "3.6"
 
    services:
      processing:
