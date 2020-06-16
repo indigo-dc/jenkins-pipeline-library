@@ -266,6 +266,14 @@ them, the following requirements must be considered:
        the *flake8* style tool, and thus, it can be used as the value for
        tox's ``testenv`` [CONFIG].
 
+.. tip:
+   We recommend the use of `Tox tool <https://tox.readthedocs.io/en/latest/>`_
+   in the case of Python applications, as it is the most accurate way of
+   defining and running all your tests. Hence, each test is executed in an
+   individual Python virtual environment (virtualenv). The use of Tox in this
+   example is extremelly simple and does not take advantage of the full
+   benefits of the tool.
+
 Python with ``commands``
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
