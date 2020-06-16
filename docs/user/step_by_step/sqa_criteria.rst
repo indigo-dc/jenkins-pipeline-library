@@ -1,142 +1,11 @@
-Step-by-step guide
-==================
-
- * You have a Python-based software project whose source code is openly
-   available in the GitHub platform.
- * You want to enhance the quality of this software, and in particular,
-   you would like to improve:
-   1. The readability of the code since you start a new research collaboration
-   that will imply external contributions to that code, or you have
-   received positive feedback about the software and you would like to
-   guarantee its long-term sustainability.
-   2. The reliability and deterministic behaviour of the software, as you have
-   detected unexpected behaviours when running this software.
- * You have read the
-   `SQA baseline <https://indigo-dc.github.io/sqa-baseline>`_, so you know
-   that:
-   1. The readability is aligned with the good practices in the
-   `QC.Sty <https://indigo-dc.github.io/sqa-baseline/#code-style-qc.sty>`_
-   category. You have decided that the Python's `PEP8
-   <https://www.python.org/dev/peps/pep-0008/>`_ standard is the most
-   suitable for your goals.
-   2. The reliability of the software is improved by considering the practices
-   in the
-   `QC.Uni <https://indigo-dc.github.io/sqa-baseline/#unit-testing-qc.uni>`_,
-   `QC.Fun <https://indigo-dc.github.io/sqa-baseline/#functional-testing-qc.fun>`_
-   and
-   `QC.Int <https://indigo-dc.github.io/sqa-baseline/#integration-testing-qc.int>`_.
-   You have got familiar with the unit testing libraries available in
-   Python and started writing a few test cases. For the time being, you just
-   want to cover the QC.Uni category.of the baseline.
- * You want to execute the previous checks in an automated fashion for every
-   change in your source code. You heard about the jenkins-pipeline-library
-   (that's why you are reading this) and want to start using it.
-
-So, let's see how to set it up.
-
-Minimal configuration
----------------------
-We will use the fictional repository *https://github.com/myorg/myrepo*. The
-required steps to set up the layout would imply the following steps:
-
-1. Clone the repo
-
-.. code:: bash
-
-   $ export MY_REPO=https://github.com/myorg/myrepo
-   $ git clone $MY_REPO
-
-2. A good practice is to add the changes herein described in an individual
-   branch, so not directly in the production --usually ``master``-- branch. In
-   this example we will use ``setup_jenkins-pipeline-library`` as follows:
-
-.. code:: bash
-
-   $ cd $MY_REPO
-   $ git checkout -b setup_jenkins-pipeline-library
-
-
-3. We will now create the directory structure required by the
-   jenkins-pipeline-library, *as introduced in section*
-   :ref:`Layout`.
-
-   3.1. Main folder:
-
-   .. code:: bash
-
-      $ mkdir .sqa
-
-   3.2. Create the initial content of the main configuration file,
-   ``.sqa/config.yml``, with the description of your repository (see
-   :ref:`The configuration file: config.yml` section):
-
-   .. code:: bash
-
-      $ cat <<EOF > .sqa/config.yml
-      config:
-        project_repos:
-          myrepo:
-            repo: 'https://github.com/myorg/myrepo'
-      EOF
-
-   3.3. Create the ``.sqa/docker-compose.yml``. For the time being, we will
-   only specify the version required by the library (i.e. ``3.6``), later on
-   we will add the service definitions (see
-   :ref:`The services: docker-compose.yml` section):
-
-   .. code:: bash
-
-      $ cat <<EOF > .sqa/config.yml
-      version: "3.6"
-      EOF
-
-   3.4. In the *root path of the code repository*, create the ``Jenkisfile``,
-   file required by Jenkins. In order to make it work with the
-   jenkins-pipeline-library, at least the following content must be present
-   (see :ref:`The pipeline: Jenkinsfile` section):
-
-   .. code:: bash
-
-      $ cat <<EOF > Jenkinsfile
-      @Library(['github.com:indigo-dc/jenkins-pipeline-library@2.0.0']) _
-
-      def projectConfig
-
-      pipeline {
-          agent any
-
-          stages {
-              stage('SQA baseline dynamic stages') {
-                  steps {
-                      script {
-                          projectConfig = pipelineConfig()
-                          buildStages(projectConfig)
-                      }
-                  }
-                  post {
-                      cleanup {
-                          cleanWs()
-                      }
-                  }
-              }
-          }
-      }
-      EOF
-
-4. Commit & push the layout files:
-
-.. code:: bash
-
-    $ git add .sqa Jenkinsfile
-    $ git commit -m "Initial setup of jenkins-pipeline-library files"
-    $ git push origin setup_jenkins-pipeline-library
-
-The SQA criteria
-----------------
+The ``sqa-criteria`` setting
+============================
 In this section we will cover the ``sqa-criteria`` setting, which represents
 the fundamental part of the configuration since it contains the definitions of
-the checks that comprise the quality criteria. The criteria currently supported
-is documented in :ref:`sqa_criteria`, but in short it is currently reduced to:
+the checks that comprise the quality criteria. 
+
+The full set of criteria currently supported in the library is summarized in
+the following table and can be found in the :ref:`sqa_criteria` section.
 
 +-----------------------------+------------------------------------------------------------------------+
 | ``sqa-criteria`` setting    | What does it cover?                                                    |
@@ -152,18 +21,16 @@ is documented in :ref:`sqa_criteria`, but in short it is currently reduced to:
 | ``qc-doc``                  | Generate the documentation                                             |
 +-----------------------------+------------------------------------------------------------------------+
 
-The definition of the ``sqa-criteria`` settings in the ``.sqa/config.yml`` file
-follow a similar approach. As such, the following examples will only cover the
-``qc-style`` setting, but the others can be implemented in a similar fashion.
-Check out the previously referrenced :ref:`sqa_criteria` sections for the
-specific parameters within each setting.
+Python and Java examples
+------------------------
+The best way to learn the basics about the library is through examples. In the
+next subsections we will working configurations for Python and Java
+applications.
 
-The current version of the library supports both ``commands`` and ``tox`` (only
-for Python-based applications) to run the validaton checks. The examples present
-working ``config.yml`` definitions, both for Python and Java programming
-languages, covering all the use cases --i.e. Java & Python with and without
-tox--, as well as the associated ``docker-compose.yml`` services (``tox.ini``
-are also available when applicable).
+Since the current version of the library supports both ``commands`` and ``tox``
+(this last only available for Python-based applications) to execute the checks,
+the examples below cover the three possible use cases, i.e. Python (with and
+without Tox) and Java.
 
 Python with ``tox``
 ^^^^^^^^^^^^^^^^^^^
@@ -224,7 +91,7 @@ Python with ``tox``
 As it can be seen, the three files are linked together. In order to compose
 them, the following requirements must be considered: 
 
-… ``docker-compose.yml`` (DC)
+``docker-compose.yml`` (DC)
     1. Minimum ``version: 3.6`` [DC] is required, otherwise bind
        volume definitions are not correctly supported.
     2. There are 3 main parameters that must be defined in DC file, i.e.:
@@ -232,17 +99,23 @@ them, the following requirements must be considered:
        * ``hostname``: sets the hostname of the Docker container. This
          parameter is useful when communicating with other services.
        * ``image``: points to the Docker image that will be used by the 
-         container. **When using this parameter, the image must be previously
-         available in Docker Hub registry**. Additionally, DC allows the image
-         to be built in runtime by providing a Dockerfile. In this case, the 
-         ``build`` parameter must be used (check out
-         `DC's build parameter documentation <https://docs.docker.com/compose/compose-file/#build>`_).
+         container.
+
+         * When using this parameter, **the image must be previously
+           available in Docker Hub registry**. Additionally, DC allows the
+           image to be built in runtime by providing a Dockerfile. In this
+           case, the ``build`` parameter must be used (check out
+           `DC's build parameter documentation <https://docs.docker.com/compose/compose-file/#build>`_).
+         * Note that **all the tools required to run the tests must be
+           deployed in the Docker image**. In this example, the 
+           *indigodatacloud/ci-images:python3.6* image already contains the
+           tools needed to execute the subsequent tox commands.
        * ``volumes``: identifies the volume where the repository (*myrepo* in 
          this example) content will be accessible. **The** ``type: bind`` **is 
          required and only the values for** ``source`` **and** ``target`` 
          **parameters must be provided**.
 
-… ``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
+``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
     1. The value for the ``container`` setting [CONFIG] must correspond to a
        service definition in the DC file. In the example above, the service
        *myrepo-testing* is defined under *services* inside DC file.
@@ -254,7 +127,7 @@ them, the following requirements must be considered:
        *myrepo* as the ID so the correct value for ``source`` [DC file] is 
        *./myrepo*.
 
-… ``tox.ini`` (TOX), ``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
+``tox.ini`` (TOX), ``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
     1. The value for ``tox_file`` [CONFIG] must be the absolute path to the
        TOX file. **To obtain the full path to the TOX file,** ``target`` 
        **[DC file] must be prepended**, as it is the folder where the
@@ -266,7 +139,7 @@ them, the following requirements must be considered:
        the *flake8* style tool, and thus, it can be used as the value for
        tox's ``testenv`` [CONFIG].
 
-.. tip:
+.. note:
    We recommend the use of `Tox tool <https://tox.readthedocs.io/en/latest/>`_
    in the case of Python applications, as it is the most accurate way of
    defining and running all your tests. Hence, each test is executed in an
@@ -311,6 +184,10 @@ Python with ``commands``
                      source: ./myrepo
                      target: /myrepo-testing
 
+In this example, the only difference with respect to the previuos example is 
+the use of ``commands`` [CONFIG]. Here, we will obtain the same output as in
+the previous Python-with-tox example since *flake8* tool is executed.
+
 Java with ``commands``
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -347,3 +224,22 @@ Java with ``commands``
                    - type: bind
                      source: ./myrepo
                      target: /myrepo-testing
+
+
+Don't forget to commit
+----------------------
+Once you have added one of the former definitions in the ``sqa-criteria``
+setting, it is time to commit our work. Following our example:
+
+.. code:: bash
+
+    $ git commit -m "Add sqa-criteria setting & associated docker-compose services"
+
+Lastly, proceed to push our changes to the remote repository:
+
+.. code:: bash
+
+    $ git push origin setup_jenkins-pipeline-library
+
+In the next section, we will provide the last steps to make all this work being
+executed in Jenkins.

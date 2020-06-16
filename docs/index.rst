@@ -47,8 +47,8 @@ research software. The latest version of the SQA criteria can be found in
    /user/jenkinsfile
 
 .. toctree::
-   :maxdepth: 1
-   :hidden:
    :caption: Step-by-step guide
 
-   /user/step_by_step
+   /user/step_by_step/intro
+   /user/step_by_step/min_configuration
+   /user/step_by_step/sqa_criteria
