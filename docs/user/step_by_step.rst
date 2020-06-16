@@ -185,6 +185,7 @@ Python with ``tox``
                  myrepo:
                    container: myrepo-testing
                    tox:
+                     tox_file: /myrepo-testing/tox.ini
                      testenv: stylecheck
 
     .. tab:: docker-compose.yml
@@ -220,6 +221,49 @@ Python with ``tox``
           commands =
             flake8
 
+As it can be seen, the ``config.yml`` file uses definitions from the two other
+files, i.e. *services* from the ``docker-compose.yml`` file and 
+*tox environments* from the ``tox.ini`` file. The following considerations must
+be taken into account:
+
+… ``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
+    1. Minimum ``version: 3.6`` [DC] is required, otherwise bind
+       volume definitions are not correctly supported.
+    2. The value for the ``container`` setting [CONFIG] must correspond to a
+       service definition in the DC file. In the example above, the service
+       *myrepo-testing* is defined under *services* inside DC file.
+    3. There are 3 main parameters that must be defined in DC file, i.e.:
+
+       * ``hostname``: sets the hostname of the Docker container. This
+         parameter is useful when communicating with other services.
+       * ``image``: points to the Docker image that will be used by the 
+         container. **When using this parameter, the image must be previously
+         available in Docker Hub registry**. Additionally, DC allows the image
+         to be built in runtime by providing a Dockerfile. In this case, the 
+         ``build`` parameter must be used (check out
+         `DC's build parameter documentation <https://docs.docker.com/compose/compose-file/#build>`_).
+       * ``volumes``: identifies the volume where the repository (*myrepo* in 
+         this example) content will be accessible. **The** ``type: bind`` **is 
+         required and only the values for** ``source`` **and** ``target`` 
+         **parameters must be provided**.
+    4. The ``source`` parameter [DC file] corresponds to the ID/name used to
+       identify the current repository, i.e. the ID used in the 
+       ``config:project_repos`` definition [CONFIG]. Due to some limitations
+       found in the DC file specification, the ``source`` **[DC file] value
+       must always be prefixed by** ``./``. In our example, we have set
+       *myrepo* as the ID so the correct value for ``source`` [DC file] is 
+       *./myrepo*.
+    5. The value for ``tox_file`` [CONFIG] must be the absolute path to the
+       *tox.ini* file. **To obtain the full path to tox's configuration file,**
+       ``target`` **[DC file] must be prepended**, as it is the folder where the
+       repository has been checked out. In the example above, *myrepo* has the
+       *tox.ini* file available in the root path of the repository, therefore
+       */myrepo-testing/tox.ini* is the correct location for the tox's
+       configuration file.
+    6. The value for ``testenv`` [CONFIG] must correspond to any of the test
+       environments defined in the tox's configuration file. In our example,
+       *stylecheck* testenv executes the *flake8* style tool, and thus, it can
+       be used as the value for tox's ``testenv`` [CONFIG].
 
 Python with ``commands``
 ^^^^^^^^^^^^^^^^^^^^^^^^
