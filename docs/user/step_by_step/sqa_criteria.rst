@@ -139,7 +139,7 @@ them, the following requirements must be considered:
        the *flake8* style tool, and thus, it can be used as the value for
        tox's ``testenv`` [CONFIG].
 
-.. note:
+.. tip::
    We recommend the use of `Tox tool <https://tox.readthedocs.io/en/latest/>`_
    in the case of Python applications, as it is the most accurate way of
    defining and running all your tests. Hence, each test is executed in an
@@ -229,17 +229,12 @@ Java with ``commands``
 Don't forget to commit
 ----------------------
 Once you have added one of the former definitions in the ``sqa-criteria``
-setting, it is time to commit our work. Following our example:
+setting, it is time to commit our work. Following up with the example of
+previous section:
 
 .. code:: bash
 
     $ git commit -m "Add sqa-criteria setting & associated docker-compose services"
-
-Lastly, proceed to push our changes to the remote repository:
-
-.. code:: bash
-
-    $ git push origin setup_jenkins-pipeline-library
 
 In the next section, we will provide the last steps to make all this work being
 executed in Jenkins.
