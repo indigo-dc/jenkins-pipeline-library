@@ -24,13 +24,14 @@ the following table and can be found in the :ref:`sqa_criteria` section.
 Python and Java examples
 ------------------------
 The best way to learn the basics about the library is through examples. In the
-next subsections we will working configurations for Python and Java
-applications.
+next subsections we will show how to fulfill the ``qc-style`` criterion for 
+Python and Java applications. Working configurations are provided so you can
+readily test them.
 
-Since the current version of the library supports both ``commands`` and ``tox``
-(this last only available for Python-based applications) to execute the checks,
-the examples below cover the three possible use cases, i.e. Python (with and
-without Tox) and Java.
+The current version of the library supports both ``commands`` and ``tox``
+(this last only available for Python-based applications) environments to
+execute the checks, hence the examples below cover the three possible use cases,
+i.e. Python (with and without Tox) and Java (with commands).
 
 Python with ``tox``
 ^^^^^^^^^^^^^^^^^^^
