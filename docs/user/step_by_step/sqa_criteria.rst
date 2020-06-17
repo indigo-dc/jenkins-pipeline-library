@@ -98,7 +98,8 @@ Notes on ``docker-compose.yml`` (DC)
     2. There are 3 main parameters that must be defined in DC file, i.e.:
 
        * ``hostname``: sets the hostname of the Docker container. This
-         parameter is useful when communicating with other services.
+         parameter is useful when communicating with other services (Docker
+         containers).
        * ``image``: points to the Docker image that will be used by the
          container.
 
