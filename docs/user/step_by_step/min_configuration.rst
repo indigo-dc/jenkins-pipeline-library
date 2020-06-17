@@ -27,7 +27,7 @@ following steps set up the minimum layout:
    section):
 
    ::
-   
+
        |-- .sqa
        |    |-- config.yml
        |    |-- docker-compose.yml
