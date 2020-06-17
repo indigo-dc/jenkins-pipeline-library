@@ -22,9 +22,15 @@ following steps set up the minimum layout:
    $ git checkout -b setup_jenkins-pipeline-library
 
 
-3. We will now create the directory structure required by the
-   jenkins-pipeline-library, *as introduced in section*
-   :ref:`Layout`.
+3. We will now create the following directory structure required by the library
+   (as taken from section :ref:`Layout`):
+
+   ::
+   
+       |-- .sqa
+       |    |-- config.yml
+       |    |-- docker-compose.yml
+       |-- Jenkinsfile
 
    3.1. Main folder:
 
