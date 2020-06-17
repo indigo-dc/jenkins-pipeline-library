@@ -1,7 +1,7 @@
 A minimal configuration
 =======================
 We will use the fictional repository *https://github.com/myorg/myrepo*. The
-required steps to set up the layout would imply the following steps:
+following steps set up the minimum layout:
 
 1. Clone the repo
 
