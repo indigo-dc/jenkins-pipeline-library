@@ -2,7 +2,7 @@ The ``sqa-criteria`` setting
 ============================
 In this section we will cover the ``sqa-criteria`` setting, which represents
 the fundamental part of the configuration since it contains the definitions of
-the checks that comprise the quality criteria. 
+the checks that comprise the quality criteria.
 
 The full set of criteria currently supported in the library is summarized in
 the following table and can be found in the :ref:`sqa_criteria` section.
@@ -89,7 +89,7 @@ Python with ``tox``
             flake8
 
 As it can be seen, the three files are linked together. In order to compose
-them, the following requirements must be considered: 
+them, the following requirements must be considered:
 
 ``docker-compose.yml`` (DC)
     1. Minimum ``version: 3.6`` [DC] is required, otherwise bind
@@ -98,7 +98,7 @@ them, the following requirements must be considered:
 
        * ``hostname``: sets the hostname of the Docker container. This
          parameter is useful when communicating with other services.
-       * ``image``: points to the Docker image that will be used by the 
+       * ``image``: points to the Docker image that will be used by the
          container.
 
          * When using this parameter, **the image must be previously
@@ -107,12 +107,12 @@ them, the following requirements must be considered:
            case, the ``build`` parameter must be used (check out
            `DC's build parameter documentation <https://docs.docker.com/compose/compose-file/#build>`_).
          * Note that **all the tools required to run the tests must be
-           deployed in the Docker image**. In this example, the 
+           deployed in the Docker image**. In this example, the
            *indigodatacloud/ci-images:python3.6* image already contains the
            tools needed to execute the subsequent tox commands.
-       * ``volumes``: identifies the volume where the repository (*myrepo* in 
-         this example) content will be accessible. **The** ``type: bind`` **is 
-         required and only the values for** ``source`` **and** ``target`` 
+       * ``volumes``: identifies the volume where the repository (*myrepo* in
+         this example) content will be accessible. **The** ``type: bind`` **is
+         required and only the values for** ``source`` **and** ``target``
          **parameters must be provided**.
 
 ``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
@@ -120,16 +120,16 @@ them, the following requirements must be considered:
        service definition in the DC file. In the example above, the service
        *myrepo-testing* is defined under *services* inside DC file.
     2. The ``source`` parameter [DC file] corresponds to the ID/name used to
-       identify the current repository, i.e. the ID used in the 
+       identify the current repository, i.e. the ID used in the
        ``config:project_repos`` definition [CONFIG]. Due to some limitations
        found in the DC file specification, the ``source`` **[DC file] value
        must always be prefixed by** ``./``. In our example, we have set
-       *myrepo* as the ID so the correct value for ``source`` [DC file] is 
+       *myrepo* as the ID so the correct value for ``source`` [DC file] is
        *./myrepo*.
 
 ``tox.ini`` (TOX), ``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
     1. The value for ``tox_file`` [CONFIG] must be the absolute path to the
-       TOX file. **To obtain the full path to the TOX file,** ``target`` 
+       TOX file. **To obtain the full path to the TOX file,** ``target``
        **[DC file] must be prepended**, as it is the folder where the
        repository has been checked out. In the example above, *myrepo* has the
        TOX file available in the root path of the repository, therefore
@@ -142,10 +142,10 @@ them, the following requirements must be considered:
 .. tip::
    We recommend the use of `Tox tool <https://tox.readthedocs.io/en/latest/>`_
    in the case of Python applications, as it is the most accurate way of
-   defining and running all your tests. Hence, each test is executed in an
-   individual Python virtual environment (virtualenv). The use of Tox in this
-   example is extremelly simple and does not take advantage of the full
-   benefits of the tool.
+   defining and running all your tests. Hence, Tox can execute each test in an
+   individual Python virtual environment (virtualenv), so it is isolated from
+   the other tests. Note that the use of Tox in this example is extremelly
+   simple and does not take advantage of the full capabilities of the tool.
 
 Python with ``commands``
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -184,7 +184,7 @@ Python with ``commands``
                      source: ./myrepo
                      target: /myrepo-testing
 
-In this example, the only difference with respect to the previuos example is 
+In this example, the only difference with respect to the previuos example is
 the use of ``commands`` [CONFIG]. Here, we will obtain the same output as in
 the previous Python-with-tox example since *flake8* tool is executed.
 
