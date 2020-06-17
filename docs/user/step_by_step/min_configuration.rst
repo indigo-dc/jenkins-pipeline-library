@@ -10,9 +10,11 @@ following steps set up the minimum layout:
    $ export MY_REPO=https://github.com/myorg/myrepo
    $ git clone $MY_REPO
 
-2. A good practice is to add the changes herein described in an individual
-   branch, so not directly in the production --usually ``master``-- branch. In
-   this example we will use ``setup_jenkins-pipeline-library`` as follows:
+2. A `good practice
+   <https://indigo-dc.github.io/sqa-baseline/#code-workflow-qc.wor>`_ is to add
+   the changes herein described in an individual branch, so not directly in the
+   production --usually ``master``-- branch. In this example we will use
+   ``setup_jenkins-pipeline-library`` as follows:
 
 .. code:: bash
 
