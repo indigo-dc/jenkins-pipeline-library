@@ -132,7 +132,8 @@ Notes on links between ``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
 Notes on links between ``tox.ini`` (TOX), ``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
     1. The value for ``tox_file`` [CONFIG] must be the absolute path to the
        TOX file. **To obtain the full path to the TOX file,** ``target``
-       **[DC file] must be prepended**, as it is the folder where the
+       **[DC file] must be prepended to the relative path of the TOX file 
+       within the code repository**, as it is the folder where the
        repository has been checked out. In the example above, *myrepo* has the
        TOX file available in the root path of the repository, therefore
        */myrepo-testing/tox.ini* is the correct location.
