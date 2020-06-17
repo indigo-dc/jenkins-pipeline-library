@@ -92,7 +92,7 @@ Python with ``tox``
 As it can be seen, the three files are linked together. In order to compose
 them, the following requirements must be considered:
 
-``docker-compose.yml`` (DC)
+Notes on ``docker-compose.yml`` (DC)
     1. Minimum ``version: 3.6`` [DC] is required, otherwise bind
        volume definitions are not correctly supported.
     2. There are 3 main parameters that must be defined in DC file, i.e.:
@@ -116,7 +116,7 @@ them, the following requirements must be considered:
          required and only the values for** ``source`` **and** ``target``
          **parameters must be provided**.
 
-``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
+Notes on links between ``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
     1. The value for the ``container`` setting [CONFIG] must correspond to a
        service definition in the DC file. In the example above, the service
        *myrepo-testing* is defined under *services* inside DC file.
@@ -128,7 +128,7 @@ them, the following requirements must be considered:
        *myrepo* as the ID so the correct value for ``source`` [DC file] is
        *./myrepo*.
 
-``tox.ini`` (TOX), ``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
+Notes on links between ``tox.ini`` (TOX), ``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
     1. The value for ``tox_file`` [CONFIG] must be the absolute path to the
        TOX file. **To obtain the full path to the TOX file,** ``target``
        **[DC file] must be prepended**, as it is the folder where the
