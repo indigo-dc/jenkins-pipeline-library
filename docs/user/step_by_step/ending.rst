@@ -8,6 +8,7 @@ Throughout the guide we have learnt that:
 
  * There are *3 required files* (provided with relative paths to the code
    repository)
+
    * ``.sqa/config.yml``
    * ``.sqa/docker-compose.yml``
    * ``Jenkinsfile``
