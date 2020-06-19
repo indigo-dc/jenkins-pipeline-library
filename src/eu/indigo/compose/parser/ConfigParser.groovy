@@ -108,6 +108,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
 
     Map getSQASetting(Map criteria) {
         if (_DEBUG_) { steps.echo "** getSQASetting() **" }
+        if (_DEBUG_) { steps.echo "criteria:\n$criteria" }
         def sqaCriteria = criteria.each { criterion, data ->
             supportedBuildTools.each { tool ->
                 def repoData = data[_repos].collectEntries { id, params ->
@@ -116,6 +117,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
                 data[_repos] = repoData
             }
         }
+        if (_DEBUG_) { steps.echo "sqaCriteria:\n$sqaCriteria" }
         return sqaCriteria
     }
 
