@@ -27,7 +27,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     ]
 
     ProjectConfiguration parse(yaml, env) {
-        steps.echo "ConfigParser.parse _DEBUG_: $_DEBUG_"
+        if (_DEBUG_) { steps.echo"** parse(): ${setting}**" }
 
         new ProjectConfigurationBuilder()
             .setNodeAgentAux(getNodeAgent(yaml))
@@ -108,7 +108,6 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     }
 
     Map getSQASetting(Map criteria) {
-        steps.echo "print _DEBUG_: $_DEBUG_"
         if (_DEBUG_) { steps.echo "** getSQASetting() **" }
         if (_DEBUG_) { steps.echo "criteria:\n$criteria" }
         def sqaCriteria = criteria.each { criterion, data ->
