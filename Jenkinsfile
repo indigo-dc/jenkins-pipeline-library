@@ -1,4 +1,4 @@
-@Library(['github.com/WORSICA/jenkins-pipeline-library@docker-compose']) _
+@Library(['github.com/WORSICA/jenkins-pipeline-library@release/2.0.0-docs']) _
 
 def projectConfig
 
