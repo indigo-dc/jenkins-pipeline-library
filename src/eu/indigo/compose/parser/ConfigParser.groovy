@@ -27,7 +27,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     ]
 
     ProjectConfiguration parse(yaml, env) {
-        if (_DEBUG_) { steps.echo "** parse(): ${setting}**" }
+        if (super._DEBUG_) { steps.echo "** parse(): ${setting}**" }
 
         new ProjectConfigurationBuilder()
             .setNodeAgentAux(getNodeAgent(yaml))
