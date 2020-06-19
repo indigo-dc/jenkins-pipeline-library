@@ -18,6 +18,8 @@ def call(
     def buildNumber = Integer.parseInt(env.BUILD_ID)
     ProjectConfiguration projectConfig = null
 
+    echo "pipelineConfig1 _DEBUG_: $_DEBUG_"
+    echo "yaml:\n$yaml"
     try {
         invalidMessages = validate(configFile)
     } catch (GroovyRuntimeException e) {
@@ -27,7 +29,7 @@ def call(
         error("Validation exit code): $invalidMessages")
     }
 
-    steps.echo "pipelineConfig _DEBUG_: $_DEBUG_"
+    echo "pipelineConfig2 _DEBUG_: $_DEBUG_"
     projectConfig = new ConfigParser(this).parse(yaml, env)
     switch (projectConfig.nodeAgentAux) {
         case 'DockerCompose':
