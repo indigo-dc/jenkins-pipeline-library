@@ -27,7 +27,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     ]
 
     ProjectConfiguration parse(yaml, env) {
-        if (_DEBUG_) { steps.echo"** parse(): ${setting}**" }
+        if (_DEBUG_) { steps.echo "** parse(): ${setting}**" }
 
         new ProjectConfigurationBuilder()
             .setNodeAgentAux(getNodeAgent(yaml))
@@ -60,7 +60,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     }
 
     Map getDefaultValue(String setting) {
-        if (_DEBUG_) { steps.echo"** getDefaultValue(): ${setting}**" }
+        if (_DEBUG_) { steps.echo "** getDefaultValue(): ${setting}**" }
         def result = [:]
         switch (setting) {
             case 'config':
