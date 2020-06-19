@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  ci_java:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: "worsica/jenkins-pipeline-library:ci_java"
+    container_name: "ci_java"
+    hostname: "ci_java"
+    volumes:
+     - type: bind
+       source: jenkins-pipeline-library
+       target: /home/jenkins-pipeline-library
+
+volumes:
+  jenkins-pipeline-library: ./jenkins-pipeline-library

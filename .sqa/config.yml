@@ -1,0 +1,36 @@
+config:
+  node_agent: 'docker-compose'
+  deploy_template: '.sqa/docker-compose.yml'
+  project_repos:
+    jenkins-pipeline-library:
+      repo: 'https://github.com/WORSICA/jenkins-pipeline-library.git'
+      branch: docker-compose
+      dockerhub: worsica/jenkins-pipeline-library
+      dockertag: latest
+
+  qc-doc:
+    repos:
+      jenkins-pipeline-library:
+        container: ci_java
+        when:
+        -
+          branch: master
+          withCredentials:
+            credentialsId: "indigobot-github-token"
+            variable: "GITHUB_TOKEN"
+          commands:
+            - 'groovydoc -d docs vars/*.groovy'
+            - 'git config -l'
+            - 'git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
+            - 'gh-pages-multi deploy'
+        -
+          branch: '.*tag.*'
+          withCredentials:
+            credentialsId: "indigobot-github-token"
+            variable: "GITHUB_TOKEN"
+          commands:
+            - 'groovydoc -d ${env.GIT_BRANCH} vars/*.groovy'
+            - 'git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
+            - 'gh-pages-multi deploy -s ${env.GIT_BRANCH} -t ${env.GIT_BRANCH}'
+
+timeout: 600
