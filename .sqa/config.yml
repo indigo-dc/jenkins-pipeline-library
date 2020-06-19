@@ -4,7 +4,7 @@ config:
   project_repos:
     jenkins-pipeline-library:
       repo: 'https://github.com/WORSICA/jenkins-pipeline-library.git'
-      branch: docker-compose
+      branch: release/2.0.0-docs
       dockerhub: worsica/jenkins-pipeline-library
       dockertag: latest
 
