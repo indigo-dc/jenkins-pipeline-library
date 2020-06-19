@@ -49,7 +49,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         Map result = [:]
 
         (sources[0].entrySet() + sources[1].entrySet()).each { entry ->
-            if (_DEBUG_) { steps.echo "result = $result\nkey = ${entry.key}\nvalue = ${entry.value}" }
+            if (super._DEBUG_) { steps.echo "result = $result\nkey = ${entry.key}\nvalue = ${entry.value}" }
             result[entry.key] = result.containsKey(entry.key) && result[entry.key].getClass() == Map ?
                 [:] << result[entry.key] << entry.value
                 : entry.value
@@ -59,7 +59,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     }
 
     Map getDefaultValue(String setting) {
-        if (_DEBUG_) { steps.echo"** getDefaultValue(): ${setting}**" }
+        if (super._DEBUG_) { steps.echo"** getDefaultValue(): ${setting}**" }
         def result = [:]
         switch (setting) {
             case 'config':
@@ -88,12 +88,12 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     }
 
     def getNodeAgent(yaml) {
-        if (_DEBUG_) { steps.echo "** getNodeAgent() **" }
+        if (super._DEBUG_) { steps.echo "** getNodeAgent() **" }
         configToClass[(yaml.config.node_agent == null) ? DEFAULT_AGENT : yaml.config.node_agent]
     }
 
     Map getConfigSetting(Map config) {
-        if (_DEBUG_) { steps.echo "** getConfigSetting() **" }
+        if (super._DEBUG_) { steps.echo "** getConfigSetting() **" }
         def configBase = merge(getDefaultValue('config'), config)
         def configRepos = [
             project_repos: configBase['project_repos']
@@ -101,14 +101,14 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
                     [id, merge(getDefaultValue('config_repo'), repo)]
                 }
         ]
-        if (_DEBUG_) { steps.echo 'configRepos:\n' + configRepos.toString() }
-        if (_DEBUG_) { steps.echo 'configBase:\n' + configBase.toString() }
+        if (super._DEBUG_) { steps.echo 'configRepos:\n' + configRepos.toString() }
+        if (super._DEBUG_) { steps.echo 'configBase:\n' + configBase.toString() }
         return merge(configBase, configRepos)
     }
 
     Map getSQASetting(Map criteria) {
-        if (_DEBUG_) { steps.echo "** getSQASetting() **" }
-        if (_DEBUG_) { steps.echo "criteria:\n$criteria" }
+        if (super._DEBUG_) { steps.echo "** getSQASetting() **" }
+        if (super._DEBUG_) { steps.echo "criteria:\n$criteria" }
         def sqaCriteria = criteria.each { criterion, data ->
             supportedBuildTools.each { tool ->
                 def repoData = data[_repos].collectEntries { id, params ->
@@ -117,7 +117,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
                 data[_repos] = repoData
             }
         }
-        if (_DEBUG_) { steps.echo "sqaCriteria:\n$sqaCriteria" }
+        if (super._DEBUG_) { steps.echo "sqaCriteria:\n$sqaCriteria" }
         return sqaCriteria
     }
 
