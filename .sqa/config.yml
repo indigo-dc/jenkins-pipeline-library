@@ -8,6 +8,7 @@ config:
       dockerhub: worsica/jenkins-pipeline-library
       dockertag: latest
 
+sqa-criteria:
   qc-doc:
     repos:
       jenkins-pipeline-library:
