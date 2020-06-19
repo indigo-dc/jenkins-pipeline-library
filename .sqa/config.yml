@@ -4,8 +4,13 @@ config:
   project_repos:
     jenkins-pipeline-library:
       repo: 'https://github.com/WORSICA/jenkins-pipeline-library.git'
-      branch: release/2.0.0-docs
+      branch: master
       dockerhub: worsica/jenkins-pipeline-library
+      dockertag: latest
+    jenkins-pipeline-library-docs:
+      repo: 'https://github.com/WORSICA/jenkins-pipeline-library.git'
+      branch: release/2.0.0-docs
+      dockerhub: worsica/jenkins-pipeline-library-docs
       dockertag: latest
 
 sqa-criteria:
@@ -13,25 +18,23 @@ sqa-criteria:
     repos:
       jenkins-pipeline-library:
         container: ci_java
-        when:
-        -
-          branch: master
-          withCredentials:
+        withCredentials:
+          string:
             credentialsId: "indigobot-github-token"
             variable: "GITHUB_TOKEN"
-          commands:
-            - 'groovydoc -d docs vars/*.groovy'
-            - 'git config -l'
-            - 'git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
-            - 'gh-pages-multi deploy'
-        -
-          branch: '.*tag.*'
-          withCredentials:
+        commands:
+          - 'groovydoc -d docs vars/*.groovy'
+          - 'git config -l'
+          - 'git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
+          - 'gh-pages-multi deploy'
+      jenkins-pipeline-library-docs:
+        withCredentials:
+          string:
             credentialsId: "indigobot-github-token"
             variable: "GITHUB_TOKEN"
-          commands:
-            - 'groovydoc -d ${env.GIT_BRANCH} vars/*.groovy'
-            - 'git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
-            - 'gh-pages-multi deploy -s ${env.GIT_BRANCH} -t ${env.GIT_BRANCH}'
+        commands:
+          - 'groovydoc -d ${env.GIT_BRANCH} vars/*.groovy'
+          - 'git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
+          - 'gh-pages-multi deploy -s ${env.GIT_BRANCH} -t ${env.GIT_BRANCH}'
 
 timeout: 600
