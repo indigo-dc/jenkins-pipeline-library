@@ -10,7 +10,7 @@ class JenkinsDefinitions implements Serializable {
 
     def steps
 
-    protected final Boolean _DEBUG_ = true
+    protected final Boolean DEBUG = true
 
     /**
     * Define constructor to import definitions from Jenkins context
