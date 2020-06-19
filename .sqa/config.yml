@@ -19,14 +19,15 @@ sqa-criteria:
           withCredentials:
             credentialsId: "indigobot-github-token"
             variable: "GITHUB_TOKEN"
-          commands:
-            - 'groovydoc -d docs vars/*.groovy'
-            - 'git config -l'
-            - 'git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
-            - 'gh-pages-multi deploy'
-        -
-          branch: '.*tag.*'
-          withCredentials:
+        commands:
+          - 'groovydoc -d docs vars/*.groovy'
+          - 'git config -l'
+          - 'git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
+          - 'gh-pages-multi deploy'
+      jenkins-pipeline-library-docs:
+        container: ci_java
+        withCredentials:
+          string:
             credentialsId: "indigobot-github-token"
             variable: "GITHUB_TOKEN"
           commands:
