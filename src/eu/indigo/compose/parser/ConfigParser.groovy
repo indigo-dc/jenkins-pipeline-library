@@ -112,7 +112,10 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         if (_DEBUG_) { steps.echo "criteria:\n$criteria" }
         def sqaCriteria = criteria.each { criterion, data ->
             supportedBuildTools.each { tool ->
+                if (_DEBUG_) { steps.echo "tool: $tool" }
+                if (_DEBUG_) { steps.echo "data:\n$data" }
                 def repoData = data[_repos].collectEntries { id, params ->
+                    if (_DEBUG_) { steps.echo "id: $id\nparams:\n$params" }
                     params.containsKey(tool) ? [id, merge(getDefaultValue(tool), params)] : null
                 }
                 data[_repos] = repoData
