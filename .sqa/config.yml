@@ -28,6 +28,7 @@ sqa-criteria:
           - 'git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
           - 'gh-pages-multi deploy'
       jenkins-pipeline-library-docs:
+        container: ci_java
         withCredentials:
           string:
             credentialsId: "indigobot-github-token"
