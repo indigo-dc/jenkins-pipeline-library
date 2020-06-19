@@ -26,6 +26,8 @@ def call(
     if (invalidMessages) {
         error("Validation exit code): $invalidMessages")
     }
+
+    steps.echo "pipelineConfig _DEBUG_: $_DEBUG_"
     projectConfig = new ConfigParser(this).parse(yaml, env)
     switch (projectConfig.nodeAgentAux) {
         case 'DockerCompose':
