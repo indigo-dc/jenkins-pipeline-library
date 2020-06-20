@@ -26,7 +26,7 @@ class Tox extends JenkinsDefinitions implements Serializable {
     /**
      * Run Tox environment
      *
-     * @param toxFile Tox configuration file to override the default tox.ini
+     * @param args.toxFile Tox configuration file to override the default tox.ini
      * @param testenv Test environment to run with tox
      */
     def runEnv(Map args, String testenv) {
