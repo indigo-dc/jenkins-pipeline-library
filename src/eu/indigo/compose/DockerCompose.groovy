@@ -193,8 +193,10 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
      * Run tools and command within the containers
      *
      * @param stageMap Map with all required stages to be run
+     * @param projectConfiguration Complete project configuration source
+     * @param workspace Path to workdir directory for the command
      */
-    def runExecSteps(Map stageMap, ProjectConfiguration projectConfig) {
+    def runExecSteps(Map stageMap, ProjectConfiguration projectConfig, String workspace) {
         steps.stage(stageMap.stage) {
             if (stageMap.tox) {
                 stageMap.tox.testenv.each { testenv ->
@@ -241,7 +243,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             // Run SQA stages
             projectConfig.stagesList.each { stageMap ->
                 withCredentialsClosure(stageMap) {
-                    runExecSteps(stageMap, projectConfig)
+                    runExecSteps(stageMap, projectConfig, workspace)
                 }
             }
         } finally {
