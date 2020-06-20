@@ -163,7 +163,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                     if (stageMap.commands) {
                         stageMap.commands.each { command ->
                             composeExec(stageMap.container, command, \
-                                        stageMap.repo, composeFile: projectConfig.config.deploy_template, workdir: workspace)
+                                        composeFile: projectConfig.config.deploy_template, workdir: workspace)
                         }
                     }
                 }
