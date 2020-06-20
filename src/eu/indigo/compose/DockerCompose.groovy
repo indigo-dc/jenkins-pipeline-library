@@ -169,7 +169,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                 }
             }
         } catch (all) {
-            throw new Exception("Error while building dynamic stages")
+            throw new Exception("Error while building dynamic stages: $all")
         } finally {
             // Clean docker-compose deployed environment
             steps.stage("Docker Compose cleanup") {
