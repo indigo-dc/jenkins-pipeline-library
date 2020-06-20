@@ -126,17 +126,16 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     }
 
     List formatStages(Map criteria) {
-        def stagesList = []
+        if (_DEBUG_) { steps.echo "** formatStages() **" }
+        List stagesList = []
         criteria.each { criterion, data ->
             def stageMap = [:]
             data[_repos].each { repo, params ->
                 stageMap['stage'] = "${criterion} ${repo}"
                 stageMap['repo'] = repo
-                params.each { k, v ->
-                    stageMap[k] = v
-                }
+                stageMap << params
+                stagesList.add(stageMap)
             }
-            stagesList.add(stageMap)
         }
         return stagesList
     }

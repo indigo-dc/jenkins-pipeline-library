@@ -18,7 +18,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     String _f = '-f'
     String _w = '--project-directory'
-    String _e = '-e'
+
 
     /**
     * Test if argument is not an empty string
@@ -159,18 +159,18 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             // Run SQA stages
             projectConfig.stagesList.each { stageMap ->
                 steps.stage(stageMap.stage) {
-                    if (stageMap.tox) {
-                        stageMap.tox.testenv.each { testenv ->
-                            composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox, \
-                                          composeFile: projectConfig.config.deploy_template, toxFile: stageMap.tox.tox_file, workdir: workspace)
-                        }
-                    }
-                    if (stageMap.commands) {
-                        stageMap.commands.each { command ->
-                            composeExec(stageMap.container, command, \
-                                        composeFile: projectConfig.config.deploy_template, workdir: workspace)
-                        }
-                    }
+-                   if (stageMap.tox) {
+-                       stageMap.tox.testenv.each { testenv ->
+-                           composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox, \
+-                                         composeFile: projectConfig.config.deploy_template, toxFile: stageMap.tox.tox_file, workdir: workspace)
+-                        }
+-                    }
+-                    if (stageMap.commands) {
+-                        stageMap.commands.each { command ->
+-                            composeExec(stageMap.container, command, \
+-                                        composeFile: projectConfig.config.deploy_template, workdir: workspace)
+-                        }
+-                    }
                 }
             }
         } catch (all) {
