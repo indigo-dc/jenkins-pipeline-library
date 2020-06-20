@@ -4,7 +4,7 @@ services:
   ci_java:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./Dockerfile.build
     image: "worsica/jenkins-pipeline-library:ci_java"
     container_name: "ci_java"
     hostname: "ci_java"
