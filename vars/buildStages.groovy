@@ -2,7 +2,7 @@ import eu.indigo.compose.ProjectConfiguration
 import eu.indigo.compose.ComposeFactory
 
 def call(ProjectConfiguration projectConfig) {
-    //try {
+    try {
         def timeoutClosure = { Closure block ->
             if (projectConfig.timeout) {
                 timeout(time: projectConfig.timeout, activity: true, unit: 'SECONDS') {
@@ -27,7 +27,7 @@ def call(ProjectConfiguration projectConfig) {
                 projectConfig.nodeAgent.processStages(projectConfig)
             }
         }
-    /*} catch (Exception e) {
-        error("Exception on buildStages(): ${e}")
-    }*/
+    } catch (Exception e) {
+        error("Exception on buildStages():\n${e}")
+    }
 }
