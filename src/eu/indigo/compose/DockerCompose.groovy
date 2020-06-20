@@ -20,8 +20,16 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     String _w = '--project-directory'
     String _e = '-e'
 
+
     /**
     * Closures
+    */
+
+    /**
+    * Apply withCredentials step
+    *
+    * @param stageMap Stages configurations
+    * @param block The expected logical block to be executed
     */
     def withCredentialsClosure = { Map stageMap, Closure block ->
         if (stageMap.withCredentials) {
@@ -38,7 +46,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     *
     * @param credentials A map with the expected argument names and values
     */
-    def credentialsToStep(Map credentials) {
+    def credentialsToStep = { Map credentials ->
         credentials.collect { credType, credConfs ->
             switch (credType) {
                 case 'string':
@@ -70,6 +78,11 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             }
         }
     }
+
+
+    /**
+    * Methods
+    */
 
     /**
     * Test if argument is not an empty string
