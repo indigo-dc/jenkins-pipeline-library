@@ -232,7 +232,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
      *
      * @param stageMap Map with all required stages to be run
      */
-    def runExecSteps(Map stageMap, Map projectConfig) {
+    def runExecSteps(Map stageMap, ProjectConfiguration projectConfig) {
         steps.stage(stageMap.stage) {
             if (stageMap.tox) {
                 stageMap.tox.testenv.each { testenv ->
