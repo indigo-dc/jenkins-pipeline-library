@@ -49,39 +49,41 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     *
     * @param credentials A map with the expected argument names and values
     */
-    def credentialsToStep(Map credentials) {
+    List credentialsToStep(Map credentials) {
         if (_DEBUG_) { steps.echo "** credentialsToStep() **" }
         credentials.collect { credType, credConfs ->
             if (_DEBUG_) { steps.echo "credType: $credType\ncredConfs:\n$credConfs" }
+            def credValue
             switch (credType) {
                 case 'string':
-                    if (_DEBUG_) { steps.echo 'steps.string: ' + steps.string(credentialsId: credConfs.credentialsId, variable: credConfs.variable) }
-                    steps.string(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                    credValue = steps.string(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
                     break
                 case 'file':
-                    steps.file(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                    credValue = steps.file(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
                     break
                 case 'zip':
-                    steps.zip(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                    credValue = steps.zip(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
                     break
                 case 'certificate':
-                    steps.certificate(credentialsId: credConfs.credentialsId,
+                    credValue = steps.certificate(credentialsId: credConfs.credentialsId,
                                 keystoreVariable: credConfs.variable,
                                 aliasVariable: credConfs.aliasVariable,
                                 passwordVariable: credConfs.passwordVariable)
                     break
                 case 'usernamePassword':
-                    steps.usernamePassword(credentialsId: credConfs.credentialsId,
+                    credValue = steps.usernamePassword(credentialsId: credConfs.credentialsId,
                                      usernameVariable: credConfs.usernameVariable,
                                      passwordVariable: credConfs.passwordVariable)
                     break
                 case 'sshUserPrivateKey':
-                    steps.sshUserPrivateKey(credentialsId: credConfs.credentialsId,
+                    credValue = steps.sshUserPrivateKey(credentialsId: credConfs.credentialsId,
                                       keyFileVariable: credConfs.keyFileVariable,
                                       passphraseVariable: credConfs.passphraseVariable,
                                       usernameVariable: credConfs.usernameVariable)
                     break
             }
+            if (_DEBUG_) { steps.echo "credValue: $credValue" }
+            credValue
         }
     }
 
