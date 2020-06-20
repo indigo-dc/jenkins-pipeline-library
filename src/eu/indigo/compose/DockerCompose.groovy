@@ -190,6 +190,30 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     }
 
     /**
+     * Run tools and command within the containers
+     *
+     * @param stageMap Map with all required stages to be run
+     */
+    def runExecSteps(Map stageMap, Map projectConfig) {
+        steps.stage(stageMap.stage) {
+            if (stageMap.tox) {
+                stageMap.tox.testenv.each { testenv ->
+                    composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox,
+                                  environment: stageMap.environment,
+                                  composeFile: projectConfig.config.deploy_template,
+                                  toxFile: stageMap.tox.tox_file, workdir: workspace)
+                }
+            }
+            if (stageMap.commands) {
+                stageMap.commands.each { command ->
+                    composeExec(stageMap.container, command, environment: stageMap.environment,
+                                composeFile: projectConfig.config.deploy_template, workdir: workspace)
+                }
+            }
+        }
+    }
+
+    /**
      * Process stages from config.yml
      */
     def processStages(projectConfig) {
@@ -216,19 +240,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         try {
             // Run SQA stages
             projectConfig.stagesList.each { stageMap ->
-                steps.stage(stageMap.stage) {
--                   if (stageMap.tox) {
--                       stageMap.tox.testenv.each { testenv ->
--                           composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox, \
--                                         composeFile: projectConfig.config.deploy_template, toxFile: stageMap.tox.tox_file, workdir: workspace)
--                        }
--                    }
--                    if (stageMap.commands) {
--                        stageMap.commands.each { command ->
--                            composeExec(stageMap.container, command, \
--                                        composeFile: projectConfig.config.deploy_template, workdir: workspace)
--                        }
--                    }
+                withCredentialsClosure(stageMap) {
+                    runExecSteps(stageMap, projectConfig)
                 }
             }
         } finally {
