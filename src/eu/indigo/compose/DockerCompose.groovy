@@ -31,15 +31,13 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @param stageMap Stages configurations
     * @param block The expected logical block to be executed
     */
-    def withCredentialsClosure(Map stageMap) {
-        { Closure block ->
-            if (stageMap.withCredentials) {
-                steps.withCredentials(credentialsToStep(stageMap.withCredentials)) {
-                    block()
-                }
-            } else {
+    def withCredentialsClosure(Map stageMap, Closure block) {
+        if (stageMap.withCredentials) {
+            steps.withCredentials(credentialsToStep(stageMap.withCredentials)) {
                 block()
             }
+        } else {
+            block()
         }
     }
 
@@ -276,11 +274,11 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                     runExecSteps(stageMap)
                 }
             }
-        } catch (all) {
+        } /*catch (all) {
             throw new Exception("Error while building dynamic stages: $all")
-        } finally {
+        }*/ finally {
             // Clean docker-compose deployed environment
-            steps.stage("Docker Compose cleanup") {
+            steps.stage('Docker Compose cleanup') {
                 composeDown(composeFile: projectConfig.config.deploy_template, workdir: workspace)
             }
         }
