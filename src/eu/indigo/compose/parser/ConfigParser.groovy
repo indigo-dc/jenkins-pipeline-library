@@ -34,7 +34,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
             .setConfig(getConfigSetting(yaml.config))
             .setStagesList(formatStages(getSQASetting(yaml['sqa-criteria'])))
             .setBuildNumber(env.BUILD_ID)
-            .setEnvironment(parseEnvironment(yaml.environment))
+            .setEnvironment(yaml.environment)
             .setProjectName(parseProjectName(yaml.config))
             .setTimeout(yaml.timeout ?: DEFAULT_TIMEOUT)
             .build()
@@ -126,27 +126,19 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     }
 
     List formatStages(Map criteria) {
+        if (_DEBUG_) { steps.echo "** formatStages() **" }
         def stagesList = []
         criteria.each { criterion, data ->
-            def stageMap = [:]
+            Map stageMap = [:]
             data[_repos].each { repo, params ->
                 stageMap['stage'] = "${criterion} ${repo}"
                 stageMap['repo'] = repo
-                params.each { k, v ->
-                    stageMap[k] = v
-                }
+                stageMap << params
             }
             stagesList.add(stageMap)
         }
+        if (_DEBUG_) { steps.echo "stagesList:\n$stagesList" }
         return stagesList
-    }
-
-    def parseEnvironment(def environment) {
-        if (!environment) {
-            return ''
-        }
-
-        return environment.collect { k, v -> "${k}=${v}"}
     }
 
     def parseProjectName(def config) {

@@ -21,12 +21,57 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     String _e = '-e'
 
     /**
+    * Closures
+    */
+    def withCredentialsClosure = { Closure block ->
+        if (stageMap.withCredentials) {
+            steps.withCredentials(credentialsToStep(stageMap.withCredentials)) {
+                block()
+            }
+        } else {
+            block()
+        }
+    }
+
+    /**
+    * Return the expected list of arguments for withCredentials step
+    *
+    * @param credentials A map with the expected argument names and values
+    */
+    def credentialsToStep(Map credentials) {
+        credentials.collect { credType, credConfs ->
+            switch (credType) {
+                case 'string':
+                    string(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                case 'file':
+                    file(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                case 'zip':
+                    zip(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                case 'certificate':
+                    certificate(credentialsId: credConfs.credentialsId,
+                                keystoreVariable: credConfs.variable,
+                                aliasVariable: credConfs.aliasVariable,
+                                passwordVariable: credConfs.passwordVariable)
+                case 'usernamePassword':
+                    usernamePassword(credentialsId: credConfs.credentialsId,
+                                     usernameVariable: credConfs.usernameVariable,
+                                     passwordVariable: credConfs.passwordVariable)
+                case 'sshUserPrivateKey':
+                    sshUserPrivateKey(credentialsId: credConfs.credentialsId,
+                                      keyFileVariable: credConfs.keyFileVariable,
+                                      passphraseVariable: credConfs.passphraseVariable,
+                                      usernameVariable: credConfs.usernameVariable)
+            }
+        }
+    }
+
+    /**
     * Test if argument is not an empty string
     *
     * @param text The variable with the string to test
     */
-    def testString(String text) {
-        return text && !text.allWhitespace
+    String testString(String text) {
+        text && !text.allWhitespace
     }
 
     /**
@@ -35,12 +80,38 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @param first String with the flag
     * @param second String with the value to test
     */
-    def parseParam(String first, String second) {
+    String parseParam(String first, String second) {
         if(testString(second)) {
-            return first + ' ' + second
+            first + ' ' + second
         }
         else {
-            return ''
+            ''
+        }
+    }
+
+    /**
+    * Parse environment variables into a string for docker-compose
+    *
+    * @param env Map with the variable name as key and the expected value
+    */
+    String envToCompose(Map env) {
+        if (env) {
+            env.collect { e, v ->
+                ' ' + parseParam(_e, e) + "=\"$v\""
+            }.join(',')
+        } else {
+            ''
+        }
+    }
+
+    /**
+    * Parse environment variables into a string list for withEnv step
+    *
+    * @param env Map with the variable name as key and the expected value
+    */
+    List<String> envToStep(Map env) {
+        env.collect { e, v ->
+            "$e=\"$v\""
         }
     }
 
@@ -55,11 +126,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/exec/
     */
     def composeExec(Map args, String service, String command) {
-        String env = args.environment.each { e ->
-            env += ' ' + parseParam(_e, e) + "=\$\{$e\}"
-        }
-        String cmd = parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir) + \
-                     ' exec -T ' + " $env $service \"$command\""
+        String env = envToCompose(args.environment)
+        String cmd = parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir) +
+                     ' exec -T ' + envToCompose(args.environment) + " $service \"$command\""
         steps.sh "docker-compose $cmd"
     }
 
@@ -131,9 +200,33 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         String env = args.environment.each { e ->
             env += ' ' + parseParam(_e, e) + "=\$\{$e\}"
         }
-        String cmd = parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir) + ' exec -T ' + \
-                     " $env $service " + tox.runEnv(testenv, toxFile: args.toxFile)
+        String cmd = parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir) + ' exec -T ' +
+                     envToCompose(args.environment) + " $service " + tox.runEnv(testenv, toxFile: args.toxFile)
         steps.sh "docker-compose $cmd"
+    }
+
+    /**
+     * Run tools and command within the containers
+     *
+     * @param stageMap Map with all required stages to be run
+     */
+    def runExecSteps(Map stageMap) {
+        steps.stage(stageMap.stage) {
+            if (stageMap.tox) {
+                stageMap.tox.testenv.each { testenv ->
+                    composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox,
+                                  environment: stageMap.environment,
+                                  composeFile: projectConfig.config.deploy_template,
+                                  toxFile: stageMap.tox.tox_file, workdir: workspace)
+                }
+            }
+            if (stageMap.commands) {
+                stageMap.commands.each { command ->
+                    composeExec(stageMap.container, command, environment: stageMap.environment,
+                                composeFile: projectConfig.config.deploy_template, workdir: workspace)
+                }
+            }
+        }
     }
 
     /**
@@ -147,12 +240,12 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         steps.stage("Environment Setup") {
             // Checkout repositories to workspace with defined repository name
             projectConfig.config.project_repos.each { repo_name, repo_confs ->
-                steps.checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: repo_confs.repo]], \
-                               branches: [[name: repo_confs.branch]], \
-                               extensions: [[$class: 'CleanCheckout', deleteUntrackedNestedRepositories: true], \
-                                            [$class: 'GitLFSPull'], \
-                                            [$class: 'RelativeTargetDirectory', relativeTargetDir: repo_name], \
-                                            [$class: 'ScmName', name: repo_name]] ], \
+                steps.checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: repo_confs.repo]],
+                               branches: [[name: repo_confs.branch]],
+                               extensions: [[$class: 'CleanCheckout', deleteUntrackedNestedRepositories: true],
+                                            [$class: 'GitLFSPull'],
+                                            [$class: 'RelativeTargetDirectory', relativeTargetDir: repo_name],
+                                            [$class: 'ScmName', name: repo_name]] ],
                                changelog: false, poll: false
             }
 
@@ -163,19 +256,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         try {
             // Run SQA stages
             projectConfig.stagesList.each { stageMap ->
-                steps.stage(stageMap.stage) {
-                    if (stageMap.tox) {
-                        stageMap.tox.testenv.each { testenv ->
-                            composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox, environment: stageMap.environment, \
-                                          composeFile: projectConfig.config.deploy_template, toxFile: stageMap.tox.tox_file, workdir: workspace)
-                        }
-                    }
-                    if (stageMap.commands) {
-                        stageMap.commands.each { command ->
-                            composeExec(stageMap.container, command, environment: stageMap.environment, \
-                                        composeFile: projectConfig.config.deploy_template, workdir: workspace)
-                        }
-                    }
+                withCredentialsClosure() {
+                    runExecSteps(stageMap)
                 }
             }
         } catch (all) {
