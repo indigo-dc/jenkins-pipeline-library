@@ -23,8 +23,8 @@ def environmentClosure = { Closure block ->
 
 def call(ProjectConfiguration projectConfig) {
     try {
-        timeoutClosure() {
-            environmentClosure() {
+        timeoutClosure {
+            environmentClosure {
                 projectConfig.nodeAgent.processStages(projectConfig)
             }
         }

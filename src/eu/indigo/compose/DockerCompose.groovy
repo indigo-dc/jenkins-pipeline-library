@@ -256,7 +256,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         try {
             // Run SQA stages
             projectConfig.stagesList.each { stageMap ->
-                withCredentialsClosure() {
+                withCredentialsClosure {
                     runExecSteps(stageMap)
                 }
             }
