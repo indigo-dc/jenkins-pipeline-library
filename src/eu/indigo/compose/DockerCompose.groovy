@@ -54,6 +54,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             if (_DEBUG_) { steps.echo "credType: $credType\ncredConfs:\n$credConfs" }
             switch (credType) {
                 case 'string':
+                    if (_DEBUG_) { steps.echo "steps.string: " + steps.string(credentialsId: credConfs.credentialsId, variable: credConfs.variable) }
                     steps.string(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
                     break
                 case 'file':
