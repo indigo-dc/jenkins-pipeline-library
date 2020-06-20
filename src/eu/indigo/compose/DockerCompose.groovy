@@ -198,7 +198,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     def composeToxRun(Map args, String service, String testenv, Tox tox) {
         String env = args.environment.each { e ->
-            env += ' ' + parseParam(_e, e) + "=\$\{$e\}"
+            env += ' ' + parseParam(_e, e) + "=\${$e}"
         }
         String cmd = parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir) + ' exec -T ' +
                      envToCompose(args.environment) + " $service " + tox.runEnv(testenv, toxFile: args.toxFile)
