@@ -23,7 +23,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     /**
     * Closures
     */
-    def withCredentialsClosure = { Closure block ->
+    def withCredentialsClosure = { Map stageMap, Closure block ->
         if (stageMap.withCredentials) {
             steps.withCredentials(credentialsToStep(stageMap.withCredentials)) {
                 block()
@@ -256,7 +256,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         try {
             // Run SQA stages
             projectConfig.stagesList.each { stageMap ->
-                withCredentialsClosure {
+                withCredentialsClosure(stageMap) {
                     runExecSteps(stageMap)
                 }
             }
