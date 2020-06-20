@@ -31,13 +31,15 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @param stageMap Stages configurations
     * @param block The expected logical block to be executed
     */
-    def withCredentialsClosure(Map stageMap, Closure block) {
-        if (stageMap.withCredentials) {
-            steps.withCredentials(credentialsToStep(stageMap.withCredentials)) {
+    def withCredentialsClosure(Map stageMap) {
+        { Closure block ->
+            if (stageMap.withCredentials) {
+                steps.withCredentials(credentialsToStep(stageMap.withCredentials)) {
+                    block()
+                }
+            } else {
                 block()
             }
-        } else {
-            block()
         }
     }
 
