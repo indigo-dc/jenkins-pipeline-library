@@ -42,22 +42,22 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         credentials.collect { credType, credConfs ->
             switch (credType) {
                 case 'string':
-                    string(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                    steps.string(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
                 case 'file':
-                    file(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                    steps.file(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
                 case 'zip':
-                    zip(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                    steps.zip(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
                 case 'certificate':
-                    certificate(credentialsId: credConfs.credentialsId,
+                    steps.certificate(credentialsId: credConfs.credentialsId,
                                 keystoreVariable: credConfs.variable,
                                 aliasVariable: credConfs.aliasVariable,
                                 passwordVariable: credConfs.passwordVariable)
                 case 'usernamePassword':
-                    usernamePassword(credentialsId: credConfs.credentialsId,
+                    steps.usernamePassword(credentialsId: credConfs.credentialsId,
                                      usernameVariable: credConfs.usernameVariable,
                                      passwordVariable: credConfs.passwordVariable)
                 case 'sshUserPrivateKey':
-                    sshUserPrivateKey(credentialsId: credConfs.credentialsId,
+                    steps.sshUserPrivateKey(credentialsId: credConfs.credentialsId,
                                       keyFileVariable: credConfs.keyFileVariable,
                                       passphraseVariable: credConfs.passphraseVariable,
                                       usernameVariable: credConfs.usernameVariable)
