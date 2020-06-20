@@ -21,6 +21,64 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
 
 
     /**
+    * Methods
+    */
+
+    /**
+    * Apply withCredentials step
+    *
+    * @param stageMap Stages configurations
+    * @param block The expected logical block to be executed
+    */
+    def withCredentialsClosure(Map stageMap, Closure block) {
+        if (stageMap.withCredentials) {
+            steps.withCredentials(credentialsToStep(stageMap.withCredentials)) {
+                block()
+            }
+        } else {
+            block()
+        }
+    }
+
+    /**
+    * Return the expected list of arguments for withCredentials step
+    *
+    * @param credentials A map with the expected argument names and values
+    */
+    def credentialsToStep(Map credentials) {
+        credentials.collect { credType, credConfs ->
+            switch (credType) {
+                case 'string':
+                    steps.string(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                    break
+                case 'file':
+                    steps.file(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                    break
+                case 'zip':
+                    steps.zip(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                    break
+                case 'certificate':
+                    steps.certificate(credentialsId: credConfs.credentialsId,
+                                keystoreVariable: credConfs.variable,
+                                aliasVariable: credConfs.aliasVariable,
+                                passwordVariable: credConfs.passwordVariable)
+                    break
+                case 'usernamePassword':
+                    steps.usernamePassword(credentialsId: credConfs.credentialsId,
+                                     usernameVariable: credConfs.usernameVariable,
+                                     passwordVariable: credConfs.passwordVariable)
+                    break
+                case 'sshUserPrivateKey':
+                    steps.sshUserPrivateKey(credentialsId: credConfs.credentialsId,
+                                      keyFileVariable: credConfs.keyFileVariable,
+                                      passphraseVariable: credConfs.passphraseVariable,
+                                      usernameVariable: credConfs.usernameVariable)
+                    break
+            }
+        }
+    }
+
+    /**
     * Test if argument is not an empty string
     *
     * @param text The variable with the string to test
