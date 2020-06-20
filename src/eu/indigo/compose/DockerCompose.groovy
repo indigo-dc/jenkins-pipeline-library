@@ -22,7 +22,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
 
 
     /**
-    * Closures
+    * Methods
     */
 
     /**
@@ -31,7 +31,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @param stageMap Stages configurations
     * @param block The expected logical block to be executed
     */
-    def withCredentialsClosure = { Map stageMap, Closure block ->
+    def withCredentialsClosure(Map stageMap, Closure block) {
         if (stageMap.withCredentials) {
             steps.withCredentials(credentialsToStep(stageMap.withCredentials)) {
                 block()
@@ -46,7 +46,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     *
     * @param credentials A map with the expected argument names and values
     */
-    def credentialsToStep = { Map credentials ->
+    def credentialsToStep(Map credentials) {
         credentials.collect { credType, credConfs ->
             switch (credType) {
                 case 'string':
@@ -78,11 +78,6 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             }
         }
     }
-
-
-    /**
-    * Methods
-    */
 
     /**
     * Test if argument is not an empty string
