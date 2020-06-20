@@ -20,19 +20,19 @@ sqa-criteria:
             credentialsId: "indigobot-github-token"
             variable: "GITHUB_TOKEN"
         commands:
-          - 'groovydoc -d docs vars/*.groovy'
-          - 'git config -l'
-          - 'git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
-          - 'gh-pages-multi deploy'
+          - 'cd /jenkins-pipeline-library && groovydoc -d docs vars/*.groovy'
+          - 'cd /jenkins-pipeline-library && git config -l'
+          - 'cd /jenkins-pipeline-library && git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
+          - 'cd /jenkins-pipeline-library && gh-pages-multi deploy'
       jenkins-pipeline-library-docs:
         container: ci_java
         withCredentials:
           string:
             credentialsId: "indigobot-github-token"
             variable: "GITHUB_TOKEN"
-          commands:
-            - 'groovydoc -d ${env.GIT_BRANCH} vars/*.groovy'
-            - 'git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
-            - 'gh-pages-multi deploy -s ${env.GIT_BRANCH} -t ${env.GIT_BRANCH}'
+        commands:
+          - 'cd /jenkins-pipeline-library-docs && groovydoc -d ${env.GIT_BRANCH} vars/*.groovy'
+          - 'cd /jenkins-pipeline-library-docs && git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
+          - 'cd /jenkins-pipeline-library-docs && gh-pages-multi deploy -s ${env.GIT_BRANCH} -t ${env.GIT_BRANCH}'
 
 timeout: 600

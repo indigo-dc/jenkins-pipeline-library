@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 
 services:
   ci_java:
@@ -10,8 +10,8 @@ services:
     hostname: "ci_java"
     volumes:
      - type: bind
-       source: jenkins-pipeline-library
-       target: /home/jenkins-pipeline-library
-
-volumes:
-  jenkins-pipeline-library: ./jenkins-pipeline-library
+       source: ./jenkins-pipeline-library
+       target: /jenkins-pipeline-library
+     - type: bind
+       source: ./jenkins-pipeline-library-docs
+       target: /jenkins-pipeline-library-docs
