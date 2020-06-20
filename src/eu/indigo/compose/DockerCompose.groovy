@@ -43,24 +43,30 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             switch (credType) {
                 case 'string':
                     steps.string(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                    break
                 case 'file':
                     steps.file(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                    break
                 case 'zip':
                     steps.zip(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                    break
                 case 'certificate':
                     steps.certificate(credentialsId: credConfs.credentialsId,
                                 keystoreVariable: credConfs.variable,
                                 aliasVariable: credConfs.aliasVariable,
                                 passwordVariable: credConfs.passwordVariable)
+                    break
                 case 'usernamePassword':
                     steps.usernamePassword(credentialsId: credConfs.credentialsId,
                                      usernameVariable: credConfs.usernameVariable,
                                      passwordVariable: credConfs.passwordVariable)
+                    break
                 case 'sshUserPrivateKey':
                     steps.sshUserPrivateKey(credentialsId: credConfs.credentialsId,
                                       keyFileVariable: credConfs.keyFileVariable,
                                       passphraseVariable: credConfs.passphraseVariable,
                                       usernameVariable: credConfs.usernameVariable)
+                    break
             }
         }
     }
