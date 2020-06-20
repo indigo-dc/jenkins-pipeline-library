@@ -13,31 +13,29 @@ sqa-criteria:
     repos:
       jenkins-pipeline-library:
         container: ci_java
-        when:
-        -
-          branch: master
-          withCredentials:
-            credentialsId: "indigobot-github-token"
+        withCredentials:
+          string:
+            credentialsId: "samuelbernardolip-github-token"
             variable: "GITHUB_TOKEN"
         environment:
           - "GITHUB_TOKEN"
         commands:
           - 'cd /jenkins-pipeline-library && groovydoc -d docs vars/*.groovy'
           - 'cd /jenkins-pipeline-library && git config -l'
-          - 'cd /jenkins-pipeline-library && git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
+          - 'cd /jenkins-pipeline-library && git remote set-url origin "https://samuelbernardolip:${GITHUB_TOKEN}@github.com/WORSICA/jenkins-pipeline-library"'
           - 'cd /jenkins-pipeline-library && gh-pages-multi deploy'
       jenkins-pipeline-library-docs:
         container: ci_java
         withCredentials:
           string:
-            credentialsId: "indigobot-github-token"
+            credentialsId: "samuelbernardolip-github-token"
             variable: "GITHUB_TOKEN"
         environment:
           - "GITHUB_TOKEN"
           - "GIT_BRANCH"
         commands:
           - 'cd /jenkins-pipeline-library-docs && groovydoc -d ${GIT_BRANCH} vars/*.groovy'
-          - 'cd /jenkins-pipeline-library-docs && git remote set-url origin "https://indigobot:${GITHUB_TOKEN}@github.com/indigo-dc/jenkins-pipeline-library"'
+          - 'cd /jenkins-pipeline-library-docs && git remote set-url origin "https://samuelbernardolip:${GITHUB_TOKEN}@github.com/WORSICA/jenkins-pipeline-library"'
           - 'cd /jenkins-pipeline-library-docs && gh-pages-multi deploy -s ${GIT_BRANCH} -t ${GIT_BRANCH}'
 
 timeout: 600
