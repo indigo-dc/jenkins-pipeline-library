@@ -68,7 +68,7 @@ Example:
          repo: 'https://github.com/WORSICA/worsica-processing.git'
          branch: master
          dockerhub: worsica/worsica-processing
-         dockertag: $branch
+         dockertag: latest
 
 node_agent
 ``````````
