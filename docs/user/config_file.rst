@@ -126,7 +126,7 @@ Example:
          repo: 'https://github.com/WORSICA/worsica-processing.git'
          branch: master
          dockerhub: worsica/worsica-processing
-         dockertag: $branch
+         dockertag: latest
 
 The set of allowed parameters for the definition of the code repository's
 description within the ``project_repos`` setting are herein described:
