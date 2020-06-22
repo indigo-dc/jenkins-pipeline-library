@@ -392,6 +392,12 @@ Example:
      GIT_COMMITTER_EMAIL: person1@example.org
      LANG: C.UTF-8
 
+.. note:
+   ``environment`` variables are only usable by the deployment (for example
+   with docker-compose) or defined features in current version. This environment
+   will not be available inside the containers. For that, you should use for
+   example, docker-compose.yml environment definitions instead.
+
 timeout
 ~~~~~~~
 Sets the timeout for the pipeline execution.
