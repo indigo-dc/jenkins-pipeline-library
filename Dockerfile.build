@@ -1,0 +1,21 @@
+FROM indigodatacloud/ci-images:java
+MAINTAINER Pablo Orviz <orviz@ifca.unican.es>
+
+RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y groovy \
+                                                  build-essential \
+                                                  nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN npm i -g @koumoul/gh-pages-multi
+RUN git config --global user.name 'indigobot'
+RUN git config --global user.email '<>'
+
+RUN mkdir -p /home/jenkins-pipeline-library
+
+# Standard SSH port
+EXPOSE 22
+
+# Default command
+ENTRYPOINT ["/usr/sbin/sshd", "-D"]
