@@ -310,7 +310,7 @@ container
 `````````
 
 Allows to specify the Docker container where the given criteria assessment will
-take place. It using docker-compose, the value could be any of the services 
+take place. It is using docker-compose, the value could be any of the services 
 defined in the docker-compose.yml.
 
 :Type: ``string``
@@ -370,7 +370,10 @@ Example:
 .. note:
    ``commands`` requires the presence of the ``container`` setting, which must
    have available all the tools --and dependencies-- used by the list of 
-   commands.
+   commands. Also the commands runs relative to the root directory /. As a
+   hacking solution is possible to use an environment variable to define the
+   expected workspace in docker-compose.yml context, as a solution for current
+   release.
 
 environment
 ~~~~~~~~~~~
