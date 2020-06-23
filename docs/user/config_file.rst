@@ -217,7 +217,7 @@ this section are common to all, which are applicable and defined
 per-repository, and thus, they must be used within the ``repos`` map setting, 
 as showed in the following examples.
 
-.. note:
+.. note::
    The repositories used under ``repos`` must be previously defined in the 
    ``config:project_repos`` setting. They are referred by the identifiers
    used there.
@@ -342,8 +342,8 @@ Specifies the path to the tox configuration file.
 :Default: ``tox.ini``
 :Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox:tox_file``
 
-.. note:
-   If using ``tox`` withouth ``container``, the jenkins-pipeline-library will
+.. note::
+   If using ``tox`` without ``container``, the jenkins-pipeline-library will
    automatically select an appropriate Docker container for running the tool.
 
 commands
@@ -367,7 +367,7 @@ Example:
           commands:
             - bundle exec brakeman --exit-on-error
 
-.. note:
+.. note::
    ``commands`` requires the presence of the ``container`` setting, which must
    have available all the tools --and dependencies-- used by the list of 
    commands. Also the commands runs relative to the root directory /. As a
@@ -392,7 +392,7 @@ Example:
      GIT_COMMITTER_EMAIL: person1@example.org
      LANG: C.UTF-8
 
-.. note:
+.. note::
    ``environment`` variables are only usable by the deployment (for example
    with docker-compose) or defined features in current version. This environment
    will not be available inside the containers. For that, you should use for
