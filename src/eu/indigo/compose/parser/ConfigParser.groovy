@@ -18,9 +18,9 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
 
     private final String LATEST = 'latest'
     private final Integer DEFAULT_TIMEOUT = 600   // 600 seconds
-    private final String DEFAULT_AGENT = 'docker-compose'
+    private final String DEFAULT_AGENT = 'docker_compose'
     Map configToClass = [
-        'docker-compose': 'DockerCompose'
+        'docker_compose': 'DockerCompose'
     ]
     List supportedBuildTools = [
         'tox'
@@ -32,7 +32,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         new ProjectConfigurationBuilder()
             .setNodeAgentAux(getNodeAgent(yaml))
             .setConfig(getConfigSetting(yaml.config))
-            .setStagesList(formatStages(getSQASetting(yaml['sqa-criteria'])))
+            .setStagesList(formatStages(getSQASetting(yaml['sqa_criteria'])))
             .setBuildNumber(env.BUILD_ID)
             .setEnvironment(parseEnvironment(yaml.environment))
             .setProjectName(parseProjectName(yaml.config))

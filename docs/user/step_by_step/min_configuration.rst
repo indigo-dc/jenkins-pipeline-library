@@ -105,5 +105,5 @@ following steps set up the minimum layout:
 
 
 Now that we have the skeleton with an initial version of the three relevant
-files, let's add our checks through the ``sqa-criteria`` setting. We will see
+files, let's add our checks through the ``sqa_criteria`` setting. We will see
 how to do that in the next section.

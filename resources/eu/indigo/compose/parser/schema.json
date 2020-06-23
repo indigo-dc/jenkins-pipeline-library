@@ -85,16 +85,16 @@
             },
             "required": ["project_repos"]
         },
-        "sqa-criteria": {
+        "sqa_criteria": {
             "description": "Contains all the required SQA baseline's criteria definitions",
             "type": "object",
             "minProperties": 1,
             "properties": {
-                "qc-style": { "$ref": "#/definitions/sqa_criterion" },
-                "qc-coverage": { "$ref": "#/definitions/sqa_criterion" },
-                "qc-functional": { "$ref": "#/definitions/sqa_criterion" },
-                "qc-security": { "$ref": "#/definitions/sqa_criterion" },
-                "qc-doc": { "$ref": "#/definitions/sqa_criterion" }
+                "qc_style": { "$ref": "#/definitions/sqa_criterion" },
+                "qc_coverage": { "$ref": "#/definitions/sqa_criterion" },
+                "qc_functional": { "$ref": "#/definitions/sqa_criterion" },
+                "qc_security": { "$ref": "#/definitions/sqa_criterion" },
+                "qc_doc": { "$ref": "#/definitions/sqa_criterion" }
             },
             "additionalProperties": false
         },
@@ -112,7 +112,7 @@
         },
         "required": [
             "config",
-            "sqa-criteria"
+            "sqa_criteria"
         ],
         "additionalProperties": false
     }

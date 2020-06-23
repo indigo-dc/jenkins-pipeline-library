@@ -16,7 +16,7 @@ Throughout the guide we have learnt that:
    Apart from those, in the specific case of using Tox tool with Python, we
    also need to consider both the definition of the environments and the
    location of the Tox configuration file.
- * The checks are defined within the ``sqa-criteria`` setting of the
+ * The checks are defined within the ``sqa_criteria`` setting of the
    ``.sqa/config.yml`` file.
  * The services are provided through Docker containers, using Docker Compose
    solution, and must be previously defined in the ``.sqa/docker-compose.yml``

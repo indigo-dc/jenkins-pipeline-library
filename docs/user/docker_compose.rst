@@ -33,7 +33,7 @@ Compose specification:
 The document uses a YAML format and starts by setting the version used. The
 next section, ``services``, is the most relevant for the interests of the 
 jenkins-pipeline-library. Here, all the required services needed for tackling
-the ``sqa-criteria`` requirements are defined. 
+the ``sqa_criteria`` requirements are defined. 
 
 .. note::
    The identifier used in the service definition --``processing`` in the
