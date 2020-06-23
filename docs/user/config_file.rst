@@ -310,8 +310,8 @@ container
 `````````
 
 Allows to specify the Docker container where the given criteria assessment will
-take place. It is using docker-compose, the value could be any of the services 
-defined in the docker-compose.yml.
+take place. If docker-compose, the value could be any of the services defined
+in the docker-compose.yml.
 
 :Type: ``string``
 :Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:container``
