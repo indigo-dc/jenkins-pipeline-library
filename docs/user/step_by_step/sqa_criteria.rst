@@ -1,6 +1,6 @@
-The ``sqa-criteria`` setting
+The ``sqa_criteria`` setting
 ============================
-In this section we will cover the ``sqa-criteria`` setting, which represents
+In this section we will cover the ``sqa_criteria`` setting, which represents
 the fundamental part of the configuration since it contains the definitions of
 the checks that comprise the quality criteria.
 
@@ -8,23 +8,23 @@ The full set of criteria currently supported in the library is summarized in
 the following table and can be found in the :ref:`sqa_criteria` section.
 
 +-----------------------------+------------------------------------------------------------------------+
-| ``sqa-criteria`` setting    | What does it cover?                                                    |
+| ``sqa_criteria`` setting    | What does it cover?                                                    |
 +=============================+========================================================================+
-| ``qc-style``                | Make your code compliant with a style standard                         |
+| ``qc_style``                | Make your code compliant with a style standard                         |
 +-----------------------------+------------------------------------------------------------------------+
-| ``qc-coverage``             | Calculate the unit testing coverage of your code                       |
+| ``qc_coverage``             | Calculate the unit testing coverage of your code                       |
 +-----------------------------+------------------------------------------------------------------------+
-| ``qc-functional``           | Test the main features of your software                                |
+| ``qc_functional``           | Test the main features of your software                                |
 +-----------------------------+------------------------------------------------------------------------+
-| ``qc-security``             | Assess the security (uncover vulnerabilities & bad security practices) |
+| ``qc_security``             | Assess the security (uncover vulnerabilities & bad security practices) |
 +-----------------------------+------------------------------------------------------------------------+
-| ``qc-doc``                  | Generate the documentation                                             |
+| ``qc_doc``                  | Generate the documentation                                             |
 +-----------------------------+------------------------------------------------------------------------+
 
 Python and Java examples
 ------------------------
 The best way to learn the basics about the library is through examples. In the
-next subsections we will show how to fulfill the ``qc-style`` criterion for 
+next subsections we will show how to fulfill the ``qc_style`` criterion for 
 Python and Java applications. Working configurations are provided so you can
 readily test them.
 
@@ -48,7 +48,7 @@ Python with ``tox``
                 repo: 'https://github.com/myorg/myrepo'
 
            sqa_criteria:
-             qc-style:
+             qc_style:
                repos:
                  myrepo:
                    container: myrepo-testing
@@ -165,7 +165,7 @@ Python with ``commands``
                  repo: 'https://github.com/myorg/myrepo'
 
             sqa_criteria:
-              qc-coverage:
+              qc_coverage:
                 repos:
                   myrepo:
                     container: myrepo-testing
@@ -206,7 +206,7 @@ Java with ``commands``
                  repo: 'https://github.com/myorg/myrepo'
 
             sqa_criteria:
-              qc-coverage:
+              qc_coverage:
                 repos:
                   myrepo:
                     container: myrepo-testing-java
@@ -231,13 +231,13 @@ Java with ``commands``
 
 Don't forget to commit
 ----------------------
-Once you have added one of the former definitions in the ``sqa-criteria``
+Once you have added one of the former definitions in the ``sqa_criteria``
 setting, it is time to commit our work. Following up with the example of
 previous section:
 
 .. code:: bash
 
-    $ git commit -m "Add sqa-criteria setting & associated docker-compose services"
+    $ git commit -m "Add sqa_criteria setting & associated docker-compose services"
 
 In the next section, we will provide the last steps to make all this work being
 executed in Jenkins.

@@ -23,8 +23,8 @@ Below is an example YAML file which shows the most common configuration options:
           dockerhub: worsica/worsica-processing
           dockertag: $branch
     
-    sqa-criteria:
-      qc-style:
+    sqa_criteria:
+      qc_style:
         repos:
           worsica-processing:
             container: processing
@@ -77,8 +77,8 @@ The type of agent to drive the execution of the dynamic stages. Docker Compose
 is used by default.
 
 :Type: ``string``
-:Options: ``docker-compose``
-:Default: ``docker-compose``
+:Options: ``docker_compose``
+:Default: ``docker_compose``
 :Location: ``config:node_agent``
 
 Example:
@@ -86,7 +86,7 @@ Example:
 .. code-block:: yaml
 
     config:
-      node_agent: 'docker-compose'
+      node_agent: 'docker_compose'
 
 .. _config-deploy_template-setting:
 
@@ -172,15 +172,15 @@ Each requirement has a unique identifier and an associated set of mandatory and
 optional attributes.
 
 :Type: ``map``
-:Parameters: ``qc-style``, ``qc-functional``, ``qc-coverage``, ``qc-security``, ``qc-doc`` 
+:Parameters: ``qc_style``, ``qc_functional``, ``qc_coverage``, ``qc_security``, ``qc_doc`` 
 :Required: ``true``
 
 Example:
 
 .. code-block:: yaml
 
-   sqa-criteria:
-     qc-style:
+   sqa_criteria:
+     qc_style:
        repos:
          worsica-processing:
            container: processing
@@ -200,15 +200,15 @@ is summarized as follows:
 +-----------------+-----------------------+
 | sqa_criteria ID | SQA baseline category |
 +=================+=======================+
-| qc-style        | QC.Sty                |
+| qc_style        | QC.Sty                |
 +-----------------+-----------------------+
-| qc-coverage     | QC.Uni                |
+| qc_coverage     | QC.Uni                |
 +-----------------+-----------------------+
-| qc-functional   | QC.Fun                |
+| qc_functional   | QC.Fun                |
 +-----------------+-----------------------+
-| qc-security     | QC.Sec                |
+| qc_security     | QC.Sec                |
 +-----------------+-----------------------+
-| qc-doc          | QC.Doc                |
+| qc_doc          | QC.Doc                |
 +-----------------+-----------------------+
 
 The previous table lists the set of criteria that is currently supported by 
@@ -225,12 +225,12 @@ as showed in the following examples.
 *Examples:*
     .. tabs::
 
-        .. tab:: qc-style
+        .. tab:: qc_style
 
            .. code-block:: yaml
               
               sqa_criteria:
-                qc-style:
+                qc_style:
                   repos:
                     worsica-processing:
                       container: processing
@@ -238,12 +238,12 @@ as showed in the following examples.
                         testenv:
                             - stylecheck
 
-        .. tab:: qc-coverage
+        .. tab:: qc_coverage
 
            .. code-block:: yaml
 
               sqa_criteria:
-                qc-coverage:
+                qc_coverage:
                   repos:
                     worsica-processing:
                       container: processing
@@ -256,12 +256,12 @@ as showed in the following examples.
                         testenv:
                             - coverage
 
-        .. tab:: qc-functional
+        .. tab:: qc_functional
 
            .. code-block:: yaml
 
               sqa_criteria:
-                qc-functional:
+                qc_functional:
                   repos:
                     worsica-processing:
                       container: processing
@@ -274,12 +274,12 @@ as showed in the following examples.
                         testenv:
                             - functional
 
-        .. tab:: qc-security
+        .. tab:: qc_security
 
            .. code-block:: yaml
 
               sqa_criteria:
-                qc-security:
+                qc_security:
                   repos:
                     worsica-processing:
                       container: processing
@@ -287,12 +287,12 @@ as showed in the following examples.
                         testenv:
                             - security
 
-        .. tab:: qc-doc
+        .. tab:: qc_doc
 
            .. code-block:: yaml
 
               sqa_criteria:
-                qc-doc:
+                qc_doc:
                   repos:
                     worsica-cicd:
                       container: processing
@@ -310,11 +310,11 @@ container
 `````````
 
 Allows to specify the Docker container where the given criteria assessment will
-take place. If docker-compose, the value could be any of the services defined
-in the docker-compose.yml.
+take place. If using ``docker_compose``, the value could be any of the services
+defined in the docker-compose.yml.
 
 :Type: ``string``
-:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:container``
+:Location: ``sqa_criteria:<qc_xxx>:repos:<repo>:container``
 
 tox
 ```
@@ -324,7 +324,7 @@ environments.
 
 :Type: ``map``
 :Parameters: ``testenv``, ``tox_file``
-:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox``
+:Location: ``sqa_criteria:<qc_xxx>:repos:<repo>:tox``
 
 **testenv**
 
@@ -332,7 +332,7 @@ Identifier of the test environment that tox shall use.
 
 :Type: ``list``
 :Required: ``true``
-:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox:testenv``
+:Location: ``sqa_criteria:<qc_xxx>:repos:<repo>:tox:testenv``
 
 **tox_file**
 
@@ -340,7 +340,7 @@ Specifies the path to the tox configuration file.
 
 :Type: ``path``
 :Default: ``tox.ini``
-:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:tox:tox_file``
+:Location: ``sqa_criteria:<qc_xxx>:repos:<repo>:tox:tox_file``
 
 .. note::
    If using ``tox`` without ``container``, the jenkins-pipeline-library will
@@ -354,14 +354,14 @@ built-in support for the tool you use for building purposes.
 
 :Type: ``list``
 :Default: ``[]``
-:Location: ``sqa_criteria:<qc-xxx>:repos:<repo>:commands``
+:Location: ``sqa_criteria:<qc_xxx>:repos:<repo>:commands``
 
 Example:
 
 .. code-block:: yaml
 
    sqa_criteria:
-     qc-sec:
+     qc_sec:
        repos:
         worsica-processing:
           commands:
@@ -394,7 +394,7 @@ Example:
 
 .. note::
    ``environment`` variables are only usable by the deployment (for example
-   with docker-compose) or defined features in current version. This environment
+   with docker_compose) or defined features in current version. This environment
    will not be available inside the containers. For that, you should use for
    example, docker-compose.yml environment definitions instead.
 
