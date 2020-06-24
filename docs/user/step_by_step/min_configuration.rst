@@ -59,7 +59,7 @@ following steps set up the minimum layout:
 
    .. code:: bash
 
-      $ cat <<EOF > .sqa/config.yml
+      $ cat <<EOF > .sqa/docker-compose.yml
       version: "3.6"
       EOF
 
