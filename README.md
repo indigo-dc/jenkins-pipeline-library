@@ -1,40 +1,44 @@
-# A library for Jenkins pipelines that addresses common checks in SQA environments
+# A library to implement Software Quality Assurance (SQA) checks in Jenkins environments
 
 ## Motivation
-The library contains common functionalities that are needed for the
-implementation of Software Quality Assurance (SQA) requirements in Jenkins
-CI/CD pipelines.
+The v2 series of the present library provide a straightforward way for software projects
+to be compliant with common SQA practices.
 
-## Library content
-The library consists in a set of Groovy scripts that interface with popular
-tools to carry out agile software developement and CI/CD environment setup.
-The Groovy scripts make use of documented Jenkins plugins that need to be
-available beforehand in Jenkins service.
+In particular, the library provides the functionality to cover as much criteria as
+possible from the Software and Service quality baselines below:
 
- * Automated testing (tox, maven)
- * Reporting (checkstyle, cobertura, PEP8, JUnit)
- * Metrics gathering (sloc)
- * Artifact building (Docker, RPM/DEB)
- * Delivery (Docker Hub)
- * Issue tracking (JIRA, RT)
- * Notifications (e-mails)
+ * [A set of Common Software Quality Assurance Baseline Criteria for Research Projects](https://github.com/indigo-dc/sqa-baseline/), [online](https://indigo-dc.github.io/sqa-baseline/) available.
+  * [A set of Common Service Quality Assurance Baseline Criteria for Research Projects](https://github.com/eosc-synergy/service-qa-baseline/), [online](https://eosc-synergy.github.io/service-qa-baseline/) available.
 
-## Usage
 
-Just import the library at the beginning of your Jenkinsfile:
+## Short intro
+The SQA requirements are defined through a YAML-based configuration file that hides the
+complexity of handling directly the Jenkins [Pipeline as Code's](https://www.jenkins.io/solutions/pipeline/)
+features. As a result, the SQA work, as defined in the YAML file `config.yml`, is
+organized according to the criteria code names from the aforementioned baselines.
+
+As an example, ``qc_style`` setting in the YAML is a direct reference to the 
+``QC.Sty`` criteria in the previous software quality baseline, which establishes
+the good practices that the source code shall follow in terms of style. The following
+example runs [flake8](https://pypi.org/project/flake8/) to check style consistency in
+a Python project:
 
 ```
-@Library(['github.com/indigo-dc/jenkins-pipeline-library']) _
+sqa_criteria:
+  qc_style:
+    container: python-test-tools
+    commands:
+      - flake8
 ```
 
-or use a specific version of the library:
-```
-@Library(['github.com/indigo-dc/jenkins-pipeline-library@1.0.0']) _
-```
+As it can be seen in the example, the library provides the ``container`` option as a
+way to specify the agent where the check will run. In the current version, the
+library supports [Docker Compose](https://docs.docker.com/compose/) as the container
+orchestration tool to fire up the required set of services. In this example, the 
+``python-test-tools`` is the identifier of a Docker Compose service. 
 
-__Documentation in groovydoc format is available
-[here](https://indigo-dc.github.io/jenkins-pipeline-library/) for each
-supported version.__
+__In order to get started with the library, please check our
+[documentation](https://indigo-dc.github.io/sqa-baseline).__
 
 ## Contributing
 
@@ -54,9 +58,9 @@ indigo-dc/jenkins-shared-library is licensed under [Apache 2.0](LICENSE)
 
 ## Acknowledgments
 
-The INDIGO-DataCloud, DEEP-Hybrid-DataCloud and eXtreme-DataCloud projects have
-received funding from the European Union’s Horizon 2020 research and innovation
-programme under grant agreement number 653549, 777435 and 777367 respectively.
+The development of the v2 series is taking place under the [EOSC-Synergy's](https://eosc-synergy.eu)
+project that has received funding from the European Union’s Horizon 2020 research 
+and innovation programme under grant agreement number 857647.
 <p align="center">
   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1WF4g5KH3PnQE_Ve10QFRS-gZ0NpCQ7Qr-_km1RqnOCEF1fQt">
 </p>
