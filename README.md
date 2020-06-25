@@ -40,7 +40,9 @@ orchestration tool to fire up the required set of services. In this example, the
 _You can check a full working example [here](https://github.com/EOSC-synergy/DEEPaaS)_
 
 __In order to get started with the library, please check our
-[documentation](https://indigo-dc.github.io/sqa-baseline).__
+[documentation](https://indigo-dc.github.io/jenkins-pipeline-library/stable_2.0.0/).__
+
+
 
 ## Contributing
 
