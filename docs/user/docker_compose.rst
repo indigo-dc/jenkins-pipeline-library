@@ -40,9 +40,15 @@ the ``sqa_criteria`` requirements are defined.
    example above-- will be then used in the ``config.yml`` as part of the
    :ref:`config-container-setting` setting.
 
-Environment variables can be set using `environment label<https://docs.docker.com/compose/environment-variables//>`.
-Is possible to bypass variables defined from config.yml environment
-and set them afterwards inside docker-compose. For example, based on previous examples:
+.. _docker_compose_env:
+
+environment variables
+---------------------
+
+Environment variables can be set using the `environment
+<https://docs.docker.com/compose/environment-variables/>`_ label. It is
+possible to bypass variables defined from config.yml environment and set them
+afterwards inside docker-compose. For example, based on previous examples:
 
 .. code-block::
 
