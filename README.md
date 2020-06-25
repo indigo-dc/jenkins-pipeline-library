@@ -37,6 +37,8 @@ library supports [Docker Compose](https://docs.docker.com/compose/) as the conta
 orchestration tool to fire up the required set of services. In this example, the 
 ``python-test-tools`` is the identifier of a Docker Compose service. 
 
+_You can check a full working example [here](https://github.com/EOSC-synergy/DEEPaaS)_
+
 __In order to get started with the library, please check our
 [documentation](https://indigo-dc.github.io/sqa-baseline).__
 
