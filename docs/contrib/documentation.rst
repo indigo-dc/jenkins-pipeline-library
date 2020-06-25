@@ -23,8 +23,8 @@ virtual environment:
 
 .. code-block:: bash
 
-   $ python3 -m venv jpl_docs
-   $ source jpl_docs/bin/activate
+   $ python3 -m venv .venv
+   $ source .venv/bin/activate
 
 Install the dependencies
 ^^^^^^^^^^^^^^^^^^^^^^^^
