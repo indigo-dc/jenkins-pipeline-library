@@ -123,11 +123,11 @@ Notes on links between ``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
        *myrepo-testing* is defined under *services* inside DC file.
     2. The ``source`` parameter [DC file] corresponds to the ID/name used to
        identify the current repository, i.e. the ID used in the
-       ``config:project_repos`` definition [CONFIG]. Due to some limitations
-       found in the DC file specification, the ``source`` **[DC file] value
-       must always be prefixed by** ``./``. In our example, we have set
-       *myrepo* as the ID so the correct value for ``source`` [DC file] is
-       *./myrepo*.
+       ``config:project_repos`` definition [CONFIG]. Since we are using a
+       relative path in the DC file specification, the ``source`` **[DC file] value
+       must always be prefixed by** ``./`` (DC always expect a path format).
+       In our example, we have set *myrepo* as the ID so the correct value for
+       ``source`` [DC file] is *./myrepo*.
 
 Notes on links between ``tox.ini`` (TOX), ``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
     1. The value for ``tox_file`` [CONFIG] must be the absolute path to the
@@ -211,7 +211,7 @@ Java with ``commands``
                   myrepo:
                     container: myrepo-testing-java
                     commands:
-                      - mvn checkstyle:checkstyle
+                      - mvn -f /myrepo-testing/pom.xml checkstyle:checkstyle
 
      .. tab:: docker-compose.yml
 
