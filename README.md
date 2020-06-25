@@ -8,7 +8,7 @@ In particular, the library provides the functionality to cover as much criteria 
 possible from the Software and Service quality baselines below:
 
  * [A set of Common Software Quality Assurance Baseline Criteria for Research Projects](https://github.com/indigo-dc/sqa-baseline/), [online](https://indigo-dc.github.io/sqa-baseline/) available.
-  * [A set of Common Service Quality Assurance Baseline Criteria for Research Projects](https://github.com/eosc-synergy/service-qa-baseline/), [online](https://eosc-synergy.github.io/service-qa-baseline/) available.
+ * [A set of Common Service Quality Assurance Baseline Criteria for Research Projects](https://github.com/eosc-synergy/service-qa-baseline/), [online](https://eosc-synergy.github.io/service-qa-baseline/) available.
 
 
 ## Short intro
