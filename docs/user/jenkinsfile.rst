@@ -5,7 +5,7 @@ The minimal content for the ``Jenkinsfile`` is as follows:
 
 .. code-block:: 
 
-   @Library(['github.com:indigo-dc/jenkins-pipeline-library@2.0.0']) _
+   @Library(['github.com/indigo-dc/jenkins-pipeline-library@2.0.0']) _
 
    def projectConfig
    
