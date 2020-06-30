@@ -14,7 +14,6 @@ def call(
 
     checkoutRepository(baseRepository, baseBranch)
     def yaml = readYaml file: configFile
-    //def schema = libraryResource('eu/indigo/compose/parser/schema.json')
     def buildNumber = Integer.parseInt(env.BUILD_ID)
     ProjectConfiguration projectConfig = null
 
