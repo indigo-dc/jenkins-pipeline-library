@@ -71,7 +71,7 @@ following steps set up the minimum layout:
    .. code:: bash
 
       $ cat <<EOF > Jenkinsfile
-      @Library(['github.com:indigo-dc/jenkins-pipeline-library@2.0.0']) _
+      @Library(['github.com/indigo-dc/jenkins-pipeline-library@2.0.0']) _
 
       def projectConfig
 
