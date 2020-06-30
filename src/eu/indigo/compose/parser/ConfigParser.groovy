@@ -75,6 +75,12 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
                     dockertag: 'latest'
                 ]
                 break
+            case 'config_credentials':
+                result = [
+                    type: 'string',
+                    variable: 'GIT_TOKEN'
+                ]
+                break
             case 'tox':
                 result = [
                     container: 'tox',
@@ -102,9 +108,21 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
                     [id, merge(getDefaultValue('config_repo'), repo)]
                 }
         ]
-        if (_DEBUG_) { steps.echo 'configRepos:\n' + configRepos.toString() }
+        def configCredentials = [
+            credentials: configBase['credentials'].collect { cred ->
+                merge(getDefaultValue('config_credentials'), cred)
+            }
+        ]
+
+        def configBaseRepos = merge(configBase, configRepos)
+        def configMerged = merge(configBaseRepos, configCredentials)
+
         if (_DEBUG_) { steps.echo 'configBase:\n' + configBase.toString() }
-        return merge(configBase, configRepos)
+        if (_DEBUG_) { steps.echo 'configRepos:\n' + configRepos.toString() }
+        if (_DEBUG_) { steps.echo 'configCredentials:\n' + configCredentials.toString() }
+        if (_DEBUG_) { steps.echo 'configBaseRepos:\n' + configBaseRepos.toString() }
+        if (_DEBUG_) { steps.echo 'configMerged:\n' + configMerged.toString() }
+        return configMerged
     }
 
     Map getSQASetting(Map criteria) {
