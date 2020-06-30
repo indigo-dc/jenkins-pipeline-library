@@ -39,3 +39,32 @@ the ``sqa_criteria`` requirements are defined.
    The identifier used in the service definition --``processing`` in the
    example above-- will be then used in the ``config.yml`` as part of the
    :ref:`config-container-setting` setting.
+
+.. _docker_compose_env:
+
+environment variables
+---------------------
+
+Environment variables can be set using the `environment
+<https://docs.docker.com/compose/environment-variables/>`_ label. It is
+possible to bypass variables defined from config.yml environment and set them
+afterwards inside docker-compose. For example, based on previous examples:
+
+.. code-block::
+
+   version: "3.6"
+
+   services:
+     processing:
+       image: "worsica/worsica-backend:worsica-processing-dev_latest"
+       container_name: "processing"
+       hostname: "processing"
+       volumes:
+        - type: bind
+          source: worsica_web_products
+          target: /usr/local/worsica_web_products
+       environment:
+        - DEBUG=1
+        - GIT_COMMITTER_NAME=${GIT_COMMITTER_NAME}
+        - GIT_COMMITTER_EMAIL=${GIT_COMMITTER_EMAIL}
+        - LANG: ${LANG}

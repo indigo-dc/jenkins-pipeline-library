@@ -36,6 +36,12 @@ displayed. The ``setup_jenkins-pipeline-library`` branch will be eventually
 merged into the production branch (usually ``master``) after the dealing with
 the style standard complaints (if any).
 
+.. note::
+   We provide a `working example <https://github.com/EOSC-synergy/DEEPaaS>`_
+   with Jenkins `build logs
+   <https://jenkins.eosc-synergy.eu/job/eosc-synergy-org/job/DEEPaaS/job/eosc-synergy/>`_
+   available.
+
 .. tip::
    The EOSC-Synergy project provides a Jenkins instance that can be used for
    research software projects using the jenkins-pipeline-library (v2). If you

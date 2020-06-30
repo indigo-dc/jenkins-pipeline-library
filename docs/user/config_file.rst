@@ -21,7 +21,7 @@ Below is an example YAML file which shows the most common configuration options:
           repo: 'https://github.com/WORSICA/worsica-processing.git'
           branch: master
           dockerhub: worsica/worsica-processing
-          dockertag: $branch
+          dockertag: latest
     
     sqa_criteria:
       qc_style:
@@ -371,9 +371,9 @@ Example:
    ``commands`` requires the presence of the ``container`` setting, which must
    have available all the tools --and dependencies-- used by the list of 
    commands. Also the commands runs relative to the root directory /. As a
-   hacking solution is possible to use an environment variable to define the
-   expected workspace in docker-compose.yml context, as a solution for current
-   release.
+   hacking solution is possible to use Docker Compose's
+   :ref:`docker_compose_env` to define the expected workspace in
+   docker-compose.yml context, as a solution for current release.
 
 environment
 ~~~~~~~~~~~

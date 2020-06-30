@@ -5,7 +5,7 @@ The minimal content for the ``Jenkinsfile`` is as follows:
 
 .. code-block:: 
 
-   @Library(['github.com:indigo-dc/jenkins-pipeline-library@2.0.0']) _
+   @Library(['github.com/indigo-dc/jenkins-pipeline-library@2.1.0']) _
 
    def projectConfig
    
@@ -36,7 +36,7 @@ The pipeline loads the jenkins-pipeline-library in the first place:
 
 .. code-block::
 
-   @Library(['github.com:indigo-dc/jenkins-pipeline-library@2.0.0']) _
+   @Library(['github.com/indigo-dc/jenkins-pipeline-library@2.1.0']) _
 
 and only requires the definition of a **single stage** that will be in charge
 of:

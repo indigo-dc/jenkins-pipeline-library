@@ -8,7 +8,7 @@ In particular, the library provides the functionality to cover as much criteria 
 possible from the Software and Service quality baselines below:
 
  * [A set of Common Software Quality Assurance Baseline Criteria for Research Projects](https://github.com/indigo-dc/sqa-baseline/), [online](https://indigo-dc.github.io/sqa-baseline/) available.
-  * [A set of Common Service Quality Assurance Baseline Criteria for Research Projects](https://github.com/eosc-synergy/service-qa-baseline/), [online](https://eosc-synergy.github.io/service-qa-baseline/) available.
+ * [A set of Common Service Quality Assurance Baseline Criteria for Research Projects](https://github.com/eosc-synergy/service-qa-baseline/), [online](https://eosc-synergy.github.io/service-qa-baseline/) available.
 
 
 ## Short intro
@@ -37,8 +37,12 @@ library supports [Docker Compose](https://docs.docker.com/compose/) as the conta
 orchestration tool to fire up the required set of services. In this example, the 
 ``python-test-tools`` is the identifier of a Docker Compose service. 
 
+_You can check a full working example [here](https://github.com/EOSC-synergy/DEEPaaS)_
+
 __In order to get started with the library, please check our
-[documentation](https://indigo-dc.github.io/sqa-baseline).__
+[documentation](https://indigo-dc.github.io/jenkins-pipeline-library/stable_2.0.0/).__
+
+
 
 ## Contributing
 
