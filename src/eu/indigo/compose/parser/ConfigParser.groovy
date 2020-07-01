@@ -22,6 +22,12 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     Map configToClass = [
         'docker_compose': 'DockerCompose'
     ]
+    List supportedCredentialTypes = [
+        'string', // 'file' and 'zip' are no different
+        'certificate',
+        'username_password',
+        'ssh_user_private_key'
+    ]
     List supportedBuildTools = [
         'tox'
     ]
@@ -75,10 +81,45 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
                     dockertag: 'latest'
                 ]
                 break
-            case 'config_credentials':
+            case 'config_credentials_string':
                 result = [
                     type: 'string',
-                    variable: 'GIT_TOKEN'
+                    variable: 'JPL_SECRET'
+                ]
+                break
+            case 'config_credentials_file':
+                result = [
+                    type: 'file',
+                    variable: 'JPL_SECRET'
+                ]
+                break
+            case 'config_credentials_zip':
+                result = [
+                    type: 'zip',
+                    variable: 'JPL_SECRET'
+                ]
+                break
+            case 'config_credentials_certificate':
+                result = [
+                    type: 'certificate',
+                    keystore_var: 'JPL_KEYSTORE',
+                    alias_var: 'JPL_ALIAS',
+                    password_var: 'JPL_PASSWORD'
+                ]
+                break
+            case 'config_credentials_username_password':
+                result = [
+                    type: 'username_password',
+                    username_var: 'JPL_USERNAME',
+                    password_var: 'JPL_PASSWORD'
+                ]
+                break
+            case 'config_credentials_ssh_user_private_key':
+                result = [
+                    type: 'ssh_user_private_key',
+                    keyfile_var: 'JPL_KEYFILE',
+                    passphrase_var: 'JPL_PASSPHRASE',
+                    username_var: 'JPL_USERNAME'
                 ]
                 break
             case 'tox':
@@ -99,6 +140,25 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         configToClass[(yaml.config.node_agent == null) ? DEFAULT_AGENT : yaml.config.node_agent]
     }
 
+    def getCredentialType(Map creds) {
+        def cred_type = 'string'
+        if (creds.containsKey('type')) {
+            cred_type = creds.type
+        }
+        else {
+            def cred_keys = creds.keySet()
+            cred_keys.removeAll(['id'] as Object[])
+            def cred_type_keys = []
+            supportedCredentialTypes.each { type ->
+                cred_type_keys = getDefaultValue("config_credentials_${type}").keySet()
+                if (cred_type_keys.containsAll(cred_keys)) {
+                    cred_type = type
+                }
+            }
+        }
+        return cred_type
+    }
+
     Map getConfigSetting(Map config) {
         if (_DEBUG_) { steps.echo "** getConfigSetting() **" }
         def configBase = merge(getDefaultValue('config'), config)
@@ -110,7 +170,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         ]
         def configCredentials = [
             credentials: configBase['credentials'].collect { cred ->
-                merge(getDefaultValue('config_credentials'), cred)
+                merge(getDefaultValue("config_credentials_" + getCredentialType(cred)), cred)
             }
         ]
 
