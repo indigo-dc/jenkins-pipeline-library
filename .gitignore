@@ -9,3 +9,6 @@ docs/_build/
 # python-virtualenv
 .venv
 venv
+
+# vscode
+.vscode/
