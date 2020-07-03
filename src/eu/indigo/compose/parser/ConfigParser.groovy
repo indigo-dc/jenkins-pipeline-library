@@ -31,6 +31,52 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     List supportedBuildTools = [
         'tox'
     ]
+    Map defaultValues = [
+        config: [
+            node_agent: DEFAULT_AGENT,
+            deploy_template: '.sqa/docker-compose.yml'
+        ],
+        config_repo: [
+            branch: 'master',
+            dockertag: 'latest'
+        ],
+        config_credentials_string: [
+            type: 'string',
+            variable: 'JPL_SECRET'
+        ],
+        config_credentials_file: [
+            type: 'file',
+            variable: 'JPL_SECRET'
+        ],
+        config_credentials_zip: [
+            type: 'zip',
+            variable: 'JPL_SECRET'
+        ],
+        config_credentials_certificate: [
+            type: 'certificate',
+            keystore_var: 'JPL_KEYSTORE',
+            alias_var: 'JPL_ALIAS',
+            password_var: 'JPL_PASSWORD'
+        ],
+        config_credentials_username_password: [
+            type: 'username_password',
+            username_var: 'JPL_USERNAME',
+            password_var: 'JPL_PASSWORD'
+        ],
+        config_credentials_ssh_user_private_key: [
+            type: 'ssh_user_private_key',
+            keyfile_var: 'JPL_KEYFILE',
+            passphrase_var: 'JPL_PASSPHRASE',
+            username_var: 'JPL_USERNAME'
+        ],
+        tox: [
+            container: 'tox',
+            tox: [
+                tox_file: 'tox.ini',
+                testenv: []
+            ]
+        ]
+    ]
 
     ProjectConfiguration parse(yaml, env) {
         if (_DEBUG_) { steps.echo "** parse(): ${yaml}**" }
@@ -67,72 +113,12 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
 
     Map getDefaultValue(String setting) {
         if (_DEBUG_) { steps.echo "** getDefaultValue(): ${setting}**" }
-        def result = [:]
-        switch (setting) {
-            case 'config':
-                result = [
-                    node_agent: DEFAULT_AGENT,
-                    deploy_template: '.sqa/docker-compose.yml'
-                ]
-                break
-            case 'config_repo':
-                result = [
-                    branch: 'master',
-                    dockertag: 'latest'
-                ]
-                break
-            case 'config_credentials_string':
-                result = [
-                    type: 'string',
-                    variable: 'JPL_SECRET'
-                ]
-                break
-            case 'config_credentials_file':
-                result = [
-                    type: 'file',
-                    variable: 'JPL_SECRET'
-                ]
-                break
-            case 'config_credentials_zip':
-                result = [
-                    type: 'zip',
-                    variable: 'JPL_SECRET'
-                ]
-                break
-            case 'config_credentials_certificate':
-                result = [
-                    type: 'certificate',
-                    keystore_var: 'JPL_KEYSTORE',
-                    alias_var: 'JPL_ALIAS',
-                    password_var: 'JPL_PASSWORD'
-                ]
-                break
-            case 'config_credentials_username_password':
-                result = [
-                    type: 'username_password',
-                    username_var: 'JPL_USERNAME',
-                    password_var: 'JPL_PASSWORD'
-                ]
-                break
-            case 'config_credentials_ssh_user_private_key':
-                result = [
-                    type: 'ssh_user_private_key',
-                    keyfile_var: 'JPL_KEYFILE',
-                    passphrase_var: 'JPL_PASSPHRASE',
-                    username_var: 'JPL_USERNAME'
-                ]
-                break
-            case 'tox':
-                result = [
-                    container: 'tox',
-                    tox: [
-                        tox_file: 'tox.ini',
-                        testenv: []
-                    ]
-                ]
-                break
+
+        defaultValues[setting].collectEntries { k, v -> 
+            v.getClass() == Map ?
+                [ k, [:] << v ]
+                : [ k, v ]
         }
-        return result
     }
 
     def getNodeAgent(yaml) {
