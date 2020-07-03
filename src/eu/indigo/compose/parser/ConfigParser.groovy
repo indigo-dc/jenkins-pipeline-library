@@ -33,49 +33,49 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     ]
     Map defaultValues = [
         config: [
-                    node_agent: DEFAULT_AGENT,
-                    deploy_template: '.sqa/docker-compose.yml'
-                ],
+            node_agent: DEFAULT_AGENT,
+            deploy_template: '.sqa/docker-compose.yml'
+        ],
         config_repo: [
-                    branch: 'master',
-                    dockertag: 'latest'
-                ],
+            branch: 'master',
+            dockertag: 'latest'
+        ],
         config_credentials_string: [
-                    type: 'string',
-                    variable: 'JPL_SECRET'
-                ],
+            type: 'string',
+            variable: 'JPL_SECRET'
+        ],
         config_credentials_file: [
-                    type: 'file',
-                    variable: 'JPL_SECRET'
-                ],
+            type: 'file',
+            variable: 'JPL_SECRET'
+        ],
         config_credentials_zip: [
-                    type: 'zip',
-                    variable: 'JPL_SECRET'
-                ],
+            type: 'zip',
+            variable: 'JPL_SECRET'
+        ],
         config_credentials_certificate: [
-                    type: 'certificate',
-                    keystore_var: 'JPL_KEYSTORE',
-                    alias_var: 'JPL_ALIAS',
-                    password_var: 'JPL_PASSWORD'
-                ],
+            type: 'certificate',
+            keystore_var: 'JPL_KEYSTORE',
+            alias_var: 'JPL_ALIAS',
+            password_var: 'JPL_PASSWORD'
+        ],
         config_credentials_username_password: [
-                    type: 'username_password',
-                    username_var: 'JPL_USERNAME',
-                    password_var: 'JPL_PASSWORD'
-                ],
+            type: 'username_password',
+            username_var: 'JPL_USERNAME',
+            password_var: 'JPL_PASSWORD'
+        ],
         config_credentials_ssh_user_private_key: [
-                    type: 'ssh_user_private_key',
-                    keyfile_var: 'JPL_KEYFILE',
-                    passphrase_var: 'JPL_PASSPHRASE',
-                    username_var: 'JPL_USERNAME'
-                ],
+            type: 'ssh_user_private_key',
+            keyfile_var: 'JPL_KEYFILE',
+            passphrase_var: 'JPL_PASSPHRASE',
+            username_var: 'JPL_USERNAME'
+        ],
         tox: [
-                    container: 'tox',
-                    tox: [
-                        tox_file: 'tox.ini',
-                        testenv: []
-                    ]
-                ]
+            container: 'tox',
+            tox: [
+                tox_file: 'tox.ini',
+                testenv: []
+            ]
+        ]
     ]
 
     ProjectConfiguration parse(yaml, env) {
