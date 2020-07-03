@@ -27,7 +27,7 @@ Compose specification:
        hostname: "processing"
        volumes:
         - type: bind
-          source: worsica_web_products
+          source: ./worsica_web_products
           target: /usr/local/worsica_web_products
 
 The document uses a YAML format and starts by setting the version used. The
@@ -61,7 +61,7 @@ afterwards inside docker-compose. For example, based on previous examples:
        hostname: "processing"
        volumes:
         - type: bind
-          source: worsica_web_products
+          source: ./worsica_web_products
           target: /usr/local/worsica_web_products
        environment:
         - DEBUG=1
