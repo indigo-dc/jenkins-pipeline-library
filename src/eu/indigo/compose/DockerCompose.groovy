@@ -34,6 +34,15 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     }
 
     /**
+    * Escape whitespaces in a path string
+    *
+    * @param path The variable with the path string to escape
+    */
+    def escapeWhitespace(String path) {
+        return path.replaceAll(' ', '\\\\ ')
+    }
+
+    /**
     * Receives two strings with the flag and the value and returns the concatenated by a space string
     *
     * @param first String with the flag
@@ -41,7 +50,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     def parseParam(String first, String second) {
         if(testString(second)) {
-            return first + ' ' + second
+            return first + ' ' + escapeWhitespace(second)
         }
         else {
             return ''
