@@ -314,6 +314,7 @@ take place. If using ``docker_compose``, the value could be any of the services
 defined in the docker-compose.yml.
 
 :Type: ``string``
+:Required: ``true``
 :Location: ``sqa_criteria:<qc_xxx>:repos:<repo>:container``
 
 tox
