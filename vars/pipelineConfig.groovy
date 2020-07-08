@@ -14,7 +14,6 @@ def call(
 
     checkoutRepository(baseRepository, baseBranch)
     def yaml = readYaml file: configFile
-    //def schema = libraryResource('eu/indigo/compose/parser/schema.json')
     def buildNumber = Integer.parseInt(env.BUILD_ID)
     ProjectConfiguration projectConfig = null
 
@@ -43,7 +42,7 @@ def call(
 }
 
 def validate(String configFile) {
-    def validatorDockerImage = 'worsica/jpl-validator:1.1.0'
+    def validatorDockerImage = 'eoscsynergy/jpl-validator:1.1.0'
     def cmd = 'docker pull ' + "$validatorDockerImage &&" +
               'docker run --rm -v "$PWD:/sqa" ' + "$validatorDockerImage /sqa/${configFile}"
     return sh(returnStatus: true, script: cmd)

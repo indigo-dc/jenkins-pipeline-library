@@ -59,7 +59,7 @@ following steps set up the minimum layout:
 
    .. code:: bash
 
-      $ cat <<EOF > .sqa/config.yml
+      $ cat <<EOF > .sqa/docker-compose.yml
       version: "3.6"
       EOF
 
@@ -71,7 +71,7 @@ following steps set up the minimum layout:
    .. code:: bash
 
       $ cat <<EOF > Jenkinsfile
-      @Library(['github.com:indigo-dc/jenkins-pipeline-library@2.0.0']) _
+      @Library(['github.com/indigo-dc/jenkins-pipeline-library@2.1.0']) _
 
       def projectConfig
 
@@ -105,5 +105,5 @@ following steps set up the minimum layout:
 
 
 Now that we have the skeleton with an initial version of the three relevant
-files, let's add our checks through the ``sqa-criteria`` setting. We will see
+files, let's add our checks through the ``sqa_criteria`` setting. We will see
 how to do that in the next section.

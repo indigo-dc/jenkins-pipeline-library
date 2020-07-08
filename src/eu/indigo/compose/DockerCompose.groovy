@@ -92,7 +92,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     *
     * @param text The variable with the string to test
     */
-    String testString(String text) {
+    Boolean testString(String text) {
         text && !text.allWhitespace
     }
 
@@ -107,21 +107,6 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             first + ' ' + second
         }
         else {
-            ''
-        }
-    }
-
-    /**
-    * Parse environment variables into a string for docker-compose
-    *
-    * @param env Map with the variable name as key and the expected value
-    */
-    String envToCompose(Map env) {
-        if (env) {
-            env.collect { e, v ->
-                ' ' + parseParam(_e, e) + "=\"$v\""
-            }.join(',')
-        } else {
             ''
         }
     }
@@ -148,9 +133,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/exec/
     */
     def composeExec(Map args, String service, String command) {
-        String env = envToCompose(args.environment)
         String cmd = parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir) +
-                     ' exec -T ' + envToCompose(args.environment) + " $service \"$command\""
+                     ' exec -T ' + " $service \"$command\""
         steps.sh "docker-compose $cmd"
     }
 
@@ -215,7 +199,6 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @param tox Tox object with implementations for python virtenv orquestration
     * @param args.toxFile Tox configuration file to override the default tox.ini
     * @param args.workdir Path to workdir directory for this command
-    * @param args.environment List with environment variables to be set in container runtime
     * @see https://docs.docker.com/compose/reference/exec/
     */
     def composeToxRun(Map args, String service, String testenv, Tox tox) {
@@ -223,7 +206,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             env += ' ' + parseParam(_e, e) + "=\${$e}"
         }
         String cmd = parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir) + ' exec -T ' +
-                     envToCompose(args.environment) + " $service " + tox.runEnv(testenv, toxFile: args.toxFile)
+                     " $service " + tox.runEnv(testenv, toxFile: args.toxFile)
         steps.sh "docker-compose $cmd"
     }
 
@@ -239,14 +222,13 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             if (stageMap.tox) {
                 stageMap.tox.testenv.each { testenv ->
                     composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox,
-                                  environment: stageMap.environment,
                                   composeFile: projectConfig.config.deploy_template,
                                   toxFile: stageMap.tox.tox_file, workdir: workspace)
                 }
             }
             if (stageMap.commands) {
                 stageMap.commands.each { command ->
-                    composeExec(stageMap.container, command, environment: stageMap.environment,
+                    composeExec(stageMap.container, command,
                                 composeFile: projectConfig.config.deploy_template, workdir: workspace)
                 }
             }
