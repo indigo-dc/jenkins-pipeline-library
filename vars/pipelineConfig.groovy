@@ -10,7 +10,8 @@ import eu.indigo.Tox
 def call(
     String configFile='./.sqa/config.yml',
     String baseRepository=null,
-    String baseBranch=null) {
+    String baseBranch=null,
+    String validatorDockerImage='eoscsynergy/jpl-validator:1.1.0') {
 
     checkoutRepository(baseRepository, baseBranch)
     def yaml = readYaml file: configFile
@@ -18,7 +19,7 @@ def call(
     ProjectConfiguration projectConfig = null
 
     try {
-        invalidMessages = validate(configFile)
+        invalidMessages = validate(configFile, validatorDockerImage)
     } catch (GroovyRuntimeException e) {
         error "ConfigValidation have a runtime exception with status:\n$e"
     }
@@ -41,8 +42,7 @@ def call(
     return projectConfig
 }
 
-def validate(String configFile) {
-    def validatorDockerImage = 'eoscsynergy/jpl-validator:1.1.0'
+def validate(String configFile, String validatorDockerImage) {
     def cmd = 'docker pull ' + "$validatorDockerImage &&" +
               'docker run --rm -v "$PWD:/sqa" ' + "$validatorDockerImage /sqa/${configFile}"
     return sh(returnStatus: true, script: cmd)
