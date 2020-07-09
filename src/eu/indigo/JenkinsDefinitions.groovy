@@ -12,6 +12,7 @@ class JenkinsDefinitions implements Serializable {
 
     protected final boolean _DEBUG_ = true
     protected int logLevel = 0
+    protected final int _LOGLEVELMAX_ = -1
 
     /**
     * Define constructor to import definitions from Jenkins context
@@ -23,13 +24,15 @@ class JenkinsDefinitions implements Serializable {
 
     void setLogLevel(int level) {
         if(_DEBUG_) {
-            logLevel = -1
+            logLevel = _LOGLEVELMAX_
         }
-        else steps.env.JPL_DEBUG ? logLevel = steps.env.JPL_DEBUG
+        else {
+            logLevel = steps.env.JPL_DEBUG ? steps.env.JPL_DEBUG : logLevel
+        }
     }
 
     boolean logTest(int level) {
-        logLevel >= level || logLevel == -1
+        logLevel >= level || logLevel == _LOGLEVELMAX_
     }
 
 }
