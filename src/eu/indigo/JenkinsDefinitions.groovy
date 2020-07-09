@@ -10,7 +10,8 @@ class JenkinsDefinitions implements Serializable {
 
     def steps
 
-    protected final Boolean _DEBUG_ = true
+    protected final boolean _DEBUG_ = true
+    protected int logLevel = 0
 
     /**
     * Define constructor to import definitions from Jenkins context
@@ -18,6 +19,17 @@ class JenkinsDefinitions implements Serializable {
     */
     JenkinsDefinitions(steps) {
         this.steps = steps
+    }
+
+    void setLogLevel(int level) {
+        if(_DEBUG_) {
+            logLevel = -1
+        }
+        else steps.env.JPL_DEBUG ? logLevel = steps.env.JPL_DEBUG
+    }
+
+    boolean logTest(int level) {
+        logLevel >= level || logLevel == -1
     }
 
 }

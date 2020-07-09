@@ -18,7 +18,6 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     String _f = '-f'
     String _w = '--project-directory'
-    String _e = '-e'
 
 
     /**
@@ -28,15 +27,15 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     /**
     * Apply withCredentials step
     *
-    * @param stageMap Stages configurations
+    * @param credentials Credentials to be loaded to the environment as secrets
     * @param block The expected logical block to be executed
     */
-    def withCredentialsClosure(Map stageMap, Closure block) {
+    def withCredentialsClosure(Map credentials, Closure block) {
         if (_DEBUG_) { steps.echo "** withCredentialsClosure() **" }
-        if (stageMap.withCredentials) {
-            if (_DEBUG_) { steps.echo "stageMap.withCredentials:\n${stageMap.withCredentials}" }
-            if (_DEBUG_) { steps.echo 'credentialsToStep: ' + credentialsToStep(stageMap.withCredentials) }
-            steps.withCredentials(credentialsToStep(stageMap.withCredentials)) {
+        if (credentials) {
+            if (_DEBUG_) { steps.echo "credentials:\n${credentials}" }
+            if (_DEBUG_) { steps.echo 'credentialsToStep: ' + credentialsToStep(credentials) }
+            steps.withCredentials(credentialsToStep(credentials)) {
                 block()
             }
         } else {
@@ -51,40 +50,50 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     List credentialsToStep(Map credentials) {
         if (_DEBUG_) { steps.echo "** credentialsToStep() **" }
-        credentials.collect { credType, credConfs ->
-            if (_DEBUG_) { steps.echo "credType: $credType\ncredConfs:\n$credConfs" }
+        credentials.collect { credential ->
+            def credType = credential.type
+            if (_DEBUG_) { steps.echo "credential: $credential\ncredType: $credType" }
             def credValue
             switch (credType) {
                 case 'string':
-                    credValue = steps.string(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                    credValue = steps.string(credentialsId: credential.id, variable: credential.variable)
                     break
                 case 'file':
-                    credValue = steps.file(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                    credValue = steps.file(credentialsId: credential.id, variable: credential.variable)
                     break
                 case 'zip':
-                    credValue = steps.zip(credentialsId: credConfs.credentialsId, variable: credConfs.variable)
+                    credValue = steps.zip(credentialsId: credential.id, variable: credential.variable)
                     break
                 case 'certificate':
-                    credValue = steps.certificate(credentialsId: credConfs.credentialsId,
-                                keystoreVariable: credConfs.variable,
-                                aliasVariable: credConfs.aliasVariable,
-                                passwordVariable: credConfs.passwordVariable)
+                    credValue = steps.certificate(credentialsId: credential.id,
+                                keystoreVariable: credential.keystore_var,
+                                aliasVariable: credential.alias_var,
+                                passwordVariable: credential.password_var)
                     break
-                case 'usernamePassword':
-                    credValue = steps.usernamePassword(credentialsId: credConfs.credentialsId,
-                                     usernameVariable: credConfs.usernameVariable,
-                                     passwordVariable: credConfs.passwordVariable)
+                case 'username_password':
+                    credValue = steps.usernamePassword(credentialsId: credential.id,
+                                     usernameVariable: credential.username_var,
+                                     passwordVariable: credential.password_var)
                     break
-                case 'sshUserPrivateKey':
-                    credValue = steps.sshUserPrivateKey(credentialsId: credConfs.credentialsId,
-                                      keyFileVariable: credConfs.keyFileVariable,
-                                      passphraseVariable: credConfs.passphraseVariable,
-                                      usernameVariable: credConfs.usernameVariable)
+                case 'ssh_user_private_key':
+                    credValue = steps.sshUserPrivateKey(credentialsId: credential.id,
+                                      keyFileVariable: credential.keyfile_var,
+                                      passphraseVariable: credential.passphrase_var,
+                                      usernameVariable: credential.username_var)
                     break
             }
             if (_DEBUG_) { steps.echo "credValue: $credValue" }
             credValue
         }
+    }
+
+    /**
+    * Escape whitespaces in a path string
+    *
+    * @param path The variable with the path string to escape
+    */
+    def escapeWhitespace(String path) {
+        return path.replaceAll(' ', '\\\\ ')
     }
 
     /**
@@ -133,8 +142,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/exec/
     */
     def composeExec(Map args, String service, String command) {
-        String cmd = parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir) +
-                     ' exec -T ' + " $service \"$command\""
+        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) +
+                     ' exec -T ' + " $service $command"
         steps.sh "docker-compose $cmd"
     }
 
@@ -148,7 +157,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/overview/
     */
     def composeUp(Map args, String serviceIds='') {
-        String cmd = parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir) + " up -d $serviceIds"
+        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " up -d $serviceIds"
 
         steps.sh "docker-compose  $cmd"
     }
@@ -163,7 +172,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://vsupalov.com/cleaning-up-after-docker/
     */
     def composeDown(Map args, Boolean purge=false) {
-        String cmd = parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir)
+        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir))
 
         if (purge) {
             steps.sh "docker-compose $cmd down -v --rmi all --remove-orphans"
@@ -186,8 +195,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/ps/
     */
     def composeCP(Map args, String service, String srcPath, String destPath) {
-        steps.sh "docker cp $srcPath \"\$(docker-compose " + \
-            parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir) + " ps -q $service)\":$destPath"
+        steps.sh "docker cp " + escapeWhitespace(srcPath) + " \"\$(docker-compose " +
+            parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) +
+            " ps -q $service)\":" + escapeWhitespace(destPath)
     }
 
     /**
@@ -202,11 +212,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/exec/
     */
     def composeToxRun(Map args, String service, String testenv, Tox tox) {
-        String env = args.environment.each { e ->
-            env += ' ' + parseParam(_e, e) + "=\${$e}"
-        }
-        String cmd = parseParam(_f, args.composeFile) + ' ' + parseParam(_w, args.workdir) + ' exec -T ' +
-                     " $service " + tox.runEnv(testenv, toxFile: args.toxFile)
+        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + ' exec -T ' +
+                     " $service " + tox.runEnv(testenv, toxFile: escapeWhitespace(args.toxFile))
         steps.sh "docker-compose $cmd"
     }
 
@@ -261,8 +268,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
 
         try {
             // Run SQA stages
+            Map credentialsMap = projectConfig.config.credentials
             projectConfig.stagesList.each { stageMap ->
-                withCredentialsClosure(stageMap) {
+                withCredentialsClosure(credentialsMap) {
                     runExecSteps(stageMap, projectConfig, workspace)
                 }
             }

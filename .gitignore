@@ -12,3 +12,4 @@ venv
 
 # vscode
 .vscode/
+local-storage.json
