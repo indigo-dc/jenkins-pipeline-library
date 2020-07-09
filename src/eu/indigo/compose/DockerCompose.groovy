@@ -30,7 +30,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @param credentials Credentials to be loaded to the environment as secrets
     * @param block The expected logical block to be executed
     */
-    def withCredentialsClosure(Map credentials, Closure block) {
+    def withCredentialsClosure(List credentials, Closure block) {
         if (_DEBUG_) { steps.echo "** withCredentialsClosure() **" }
         if (credentials) {
             if (_DEBUG_) { steps.echo "credentials:\n${credentials}" }
@@ -48,7 +48,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     *
     * @param credentials A map with the expected argument names and values
     */
-    List credentialsToStep(Map credentials) {
+    List credentialsToStep(List credentials) {
         if (_DEBUG_) { steps.echo "** credentialsToStep() **" }
         credentials.collect { credential ->
             def credType = credential.type
@@ -268,9 +268,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
 
         try {
             // Run SQA stages
-            Map credentialsMap = projectConfig.config.credentials
+            List credentials = projectConfig.config.credentials
             projectConfig.stagesList.each { stageMap ->
-                withCredentialsClosure(credentialsMap) {
+                withCredentialsClosure(credentials) {
                     runExecSteps(stageMap, projectConfig, workspace)
                 }
             }
