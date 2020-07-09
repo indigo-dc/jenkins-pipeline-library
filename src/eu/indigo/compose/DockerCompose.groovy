@@ -138,7 +138,6 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @param command Command with arguments to run inside container
     * @param args.composeFile Docker compose file to override the default docker-compose.yml
     * @param args.workdir Path to workdir directory for this command
-    * @param args.environment List with environment variables to be set in container runtime
     * @see https://docs.docker.com/compose/reference/exec/
     */
     def composeExec(Map args, String service, String command) {
