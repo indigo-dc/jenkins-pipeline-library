@@ -65,7 +65,7 @@ Python with ``tox``
           services:
             myrepo-testing:
               image: "indigodatacloud/ci-images:python3.6"
-              hostname: "myrepo-testing-host"
+              container_name: "myrepo-testing"
               volumes:
                - type: bind
                  source: ./myrepo
@@ -181,7 +181,7 @@ Python with ``commands``
               services:
                 myrepo-testing-java:
                   image: "indigodatacloud/ci-images:java"
-                  hostname: "myrepo-testing-host"
+                  container_name: "myrepo-testing-java"
                   volumes:
                    - type: bind
                      source: ./myrepo
@@ -222,7 +222,7 @@ Java with ``commands``
               services:
                 myrepo-testing-java:
                   image: "indigodatacloud/ci-images:java"
-                  hostname: "myrepo-testing-host"
+                  container_name: "myrepo-testing-java"
                   volumes:
                    - type: bind
                      source: ./myrepo

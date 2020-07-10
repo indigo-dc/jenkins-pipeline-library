@@ -38,7 +38,14 @@ the ``sqa_criteria`` requirements are defined.
 .. note::
    The identifier used in the service definition --``processing`` in the
    example above-- will be then used in the ``config.yml`` as part of the
-   :ref:`config-container-setting` setting.
+   :ref:`config-container-setting` setting. However, **the use of**
+   ``container_name`` (see example above) **is highly recommended to set the
+   name of the container that will be used later on in the** ``config.yml``. 
+   Otherwise, Docker Compose will append a suffix to the service identifier 
+   (e.g. ``processing_1``) in  the case of finding, in the same server, an
+   existing container matching the same name. This situation is commonplace
+   when previous deployments of the same pipeline have failed to be completely
+   cleaned up.
 
 .. _docker_compose_env:
 
