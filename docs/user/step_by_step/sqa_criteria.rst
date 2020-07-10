@@ -97,9 +97,8 @@ Notes on ``docker-compose.yml`` (DC)
        volume definitions are not correctly supported.
     2. There are 3 main parameters that must be defined in DC file, i.e.:
 
-       * ``hostname``: sets the hostname of the Docker container. This
-         parameter is useful when communicating with other services (Docker
-         containers).
+       * ``container_name``: sets the name of the service.
+
        * ``image``: points to the Docker image that will be used by the
          container.
 
@@ -112,6 +111,10 @@ Notes on ``docker-compose.yml`` (DC)
            deployed in the Docker image**. In this example, the
            *indigodatacloud/ci-images:python3.6* image already contains the
            tools needed to execute the subsequent tox commands.
+         * Last but not least, you should **check whether the image in use is
+           configured to run-and-die (*one-shot*)**. If this is the case,
+           add a ``sleep infinity`` command in the DC's ``command`` parameter,
+           as explained in DC's section :ref:`dc_summary`.
        * ``volumes``: identifies the volume where the repository (*myrepo* in
          this example) content will be accessible. **The** ``type: bind`` **is
          required and only the values for** ``source`` **and** ``target``

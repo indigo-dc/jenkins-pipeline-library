@@ -74,8 +74,10 @@ afterwards inside docker-compose. For example, based on previous examples:
         - GIT_COMMITTER_EMAIL=${GIT_COMMITTER_EMAIL}
         - LANG: ${LANG}
 
-Summary of recommendations to integrate with ``config.yml``
------------------------------------------------------------
+.. _dc_summary:
+
+Summary of recommendations for best use with the library
+--------------------------------------------------------
 
 Use Docker Compose version ``3.6``
   Previous versions are not compatible with the use of bind volumes as expected
@@ -93,3 +95,25 @@ Use ``container_name`` to set the container ID
   connect to the container as it is not aware of the change in the name. 
   Instead, if the ID set under ``container_name`` is already in use, the
   operation will fail as expected.
+
+Try not to use *one-shot* Docker images
+  Bear in mind that the images used for the services are expected to be ran in
+  background, so those images configured to execute a specific task and then be
+  shut down cannot be used unless we made them explicitly keep running. For 
+  instance, this could be accomplished by adding a ``sleep infinity`` in the
+  list of commands passed to the container at runtime, such as:
+
+  .. code-block::
+  
+     version: "3.6"
+  
+     services:
+       processing:
+         image: "worsica/worsica-backend:worsica-processing-dev_latest"
+         container_name: "processing"
+         volumes:
+          - type: bind
+            source: ./worsica_web_products
+            target: /usr/local/worsica_web_products
+         command: sleep infinity
+  
