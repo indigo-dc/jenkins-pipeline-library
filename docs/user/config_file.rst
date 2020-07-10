@@ -2,7 +2,7 @@ The configuration file: config.yml
 ==================================
 
 jenkins-pipeline-library relies on a YAML file in order to compose dinamically
-the stages that tackle the fulfillment of a requirement or good practice as 
+the stages that tackle the fulfillment of a requirement or good practice as
 defined by the SQA baseline.
 
 The configuration file must exist under ``.sqa/config.yml`` path, relative to the
@@ -13,7 +13,7 @@ Below is an example YAML file which shows the most common configuration options:
 .. code:: yaml
 
     # .sqa/config.yml - jenkins-pipeline-library configuration file
-	
+
     # generic configuration: workspace, agents
     config:
       project_repos:
@@ -22,7 +22,7 @@ Below is an example YAML file which shows the most common configuration options:
           branch: master
           dockerhub: worsica/worsica-processing
           dockertag: latest
-    
+
     sqa_criteria:
       qc_style:
         repos:
@@ -31,12 +31,12 @@ Below is an example YAML file which shows the most common configuration options:
             tox:
               testenv:
                 - stylecheck
-    
+
     environment:
       GIT_COMMITTER_NAME: Person1
       GIT_COMMITTER_EMAIL: person1@example.org
       LANG: C.UTF-8
-    
+
     timeout: 600
 
 Supported settings
@@ -93,7 +93,7 @@ Example:
 deploy_template
 ```````````````
 
-Path to the template containing the definition of the services for the 
+Path to the template containing the definition of the services for the
 ``node_agent`` in use.
 
 :Type: ``path``
@@ -172,7 +172,7 @@ Each requirement has a unique identifier and an associated set of mandatory and
 optional attributes.
 
 :Type: ``map``
-:Parameters: ``qc_style``, ``qc_functional``, ``qc_coverage``, ``qc_security``, ``qc_doc`` 
+:Parameters: ``qc_style``, ``qc_functional``, ``qc_coverage``, ``qc_security``, ``qc_doc``
 :Required: ``true``
 
 Example:
@@ -211,14 +211,14 @@ is summarized as follows:
 | qc_doc          | QC.Doc                |
 +-----------------+-----------------------+
 
-The previous table lists the set of criteria that is currently supported by 
+The previous table lists the set of criteria that is currently supported by
 the current version of the jenkins-pipeline-library. The settings described in
-this section are common to all, which are applicable and defined 
-per-repository, and thus, they must be used within the ``repos`` map setting, 
+this section are common to all, which are applicable and defined
+per-repository, and thus, they must be used within the ``repos`` map setting,
 as showed in the following examples.
 
 .. note::
-   The repositories used under ``repos`` must be previously defined in the 
+   The repositories used under ``repos`` must be previously defined in the
    ``config:project_repos`` setting. They are referred by the identifiers
    used there.
 
@@ -228,7 +228,7 @@ as showed in the following examples.
         .. tab:: qc_style
 
            .. code-block:: yaml
-              
+
               sqa_criteria:
                 qc_style:
                   repos:
@@ -300,7 +300,7 @@ as showed in the following examples.
                         - python setup.py build_sphinx
 
 
-Next, we will describe those available settings, some of them used in the 
+Next, we will describe those available settings, some of them used in the
 previous examples, that can be defined for each repository associated with the
 former criteria:
 
@@ -350,7 +350,7 @@ Specifies the path to the tox configuration file.
 commands
 ````````
 
-Allows to include a list of commands. This is helpful whenever there is no 
+Allows to include a list of commands. This is helpful whenever there is no
 built-in support for the tool you use for building purposes.
 
 :Type: ``list``
@@ -370,7 +370,7 @@ Example:
 
 .. note::
    ``commands`` requires the presence of the ``container`` setting, which must
-   have available all the tools --and dependencies-- used by the list of 
+   have available all the tools --and dependencies-- used by the list of
    commands. Also the commands runs relative to the root directory /. As a
    hacking solution is possible to use Docker Compose's
    :ref:`docker_compose_env` to define the expected workspace in
@@ -378,7 +378,7 @@ Example:
 
 environment
 ~~~~~~~~~~~
-Contains the environment variables required to execute the previouos SQA 
+Contains the environment variables required to execute the previouos SQA
 criteria checks.
 
 :Type: ``list``

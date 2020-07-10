@@ -10,5 +10,6 @@ docs/_build/
 .venv
 venv
 
-# visual studio code
-.vscode
+# vscode
+.vscode/
+local-storage.json

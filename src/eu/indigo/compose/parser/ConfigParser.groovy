@@ -114,7 +114,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     Map getDefaultValue(String setting) {
         if (_DEBUG_) { steps.echo "** getDefaultValue(): ${setting}**" }
 
-        defaultValues[setting].collectEntries { k, v -> 
+        defaultValues[setting].collectEntries { k, v ->
             v.getClass() == Map ?
                 [ k, [:] << v ]
                 : [ k, v ]
@@ -193,14 +193,15 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         if (_DEBUG_) { steps.echo "** formatStages() **" }
         List stagesList = []
         criteria.each { criterion, data ->
-            def stageMap = [:]
             data[_repos].each { repo, params ->
+                Map stageMap = [:]
                 stageMap['stage'] = "${criterion} ${repo}"
                 stageMap['repo'] = repo
                 stageMap << params
                 stagesList.add(stageMap)
             }
         }
+        if (_DEBUG_) { steps.echo "stagesList:\n$stagesList" }
         return stagesList
     }
 

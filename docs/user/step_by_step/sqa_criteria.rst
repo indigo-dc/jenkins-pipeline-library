@@ -1,3 +1,5 @@
+In this section we will cover the ``sqa-criteria`` setting, which represents
+=======
 The ``sqa_criteria`` setting
 ============================
 In this section we will cover the ``sqa_criteria`` setting, which represents
@@ -24,7 +26,7 @@ the following table and can be found in the :ref:`sqa_criteria` section.
 Python and Java examples
 ------------------------
 The best way to learn the basics about the library is through examples. In the
-next subsections we will show how to fulfill the ``qc_style`` criterion for 
+next subsections we will show how to fulfill the ``qc_style`` criterion for
 Python and Java applications. Working configurations are provided so you can
 readily test them.
 
@@ -132,7 +134,7 @@ Notes on links between ``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
 Notes on links between ``tox.ini`` (TOX), ``config.yml`` (CONFIG) and ``docker-compose.yml`` (DC)
     1. The value for ``tox_file`` [CONFIG] must be the absolute path to the
        TOX file. **To obtain the full path to the TOX file,** ``target``
-       **[DC file] must be prepended to the relative path of the TOX file 
+       **[DC file] must be prepended to the relative path of the TOX file
        within the code repository**, as it is the folder where the
        repository has been checked out. In the example above, *myrepo* has the
        TOX file available in the root path of the repository, therefore
