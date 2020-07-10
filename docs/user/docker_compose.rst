@@ -49,7 +49,7 @@ the ``sqa_criteria`` requirements are defined.
 
 .. _docker_compose_env:
 
-environment variables
+Environment variables
 ---------------------
 
 Environment variables can be set using the `environment
