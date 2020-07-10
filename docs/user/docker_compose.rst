@@ -24,7 +24,6 @@ Compose specification:
      processing:
        image: "worsica/worsica-backend:worsica-processing-dev_latest"
        container_name: "processing"
-       hostname: "processing"
        volumes:
         - type: bind
           source: ./worsica_web_products
@@ -65,7 +64,6 @@ afterwards inside docker-compose. For example, based on previous examples:
      processing:
        image: "worsica/worsica-backend:worsica-processing-dev_latest"
        container_name: "processing"
-       hostname: "processing"
        volumes:
         - type: bind
           source: ./worsica_web_products
@@ -75,3 +73,23 @@ afterwards inside docker-compose. For example, based on previous examples:
         - GIT_COMMITTER_NAME=${GIT_COMMITTER_NAME}
         - GIT_COMMITTER_EMAIL=${GIT_COMMITTER_EMAIL}
         - LANG: ${LANG}
+
+Summary of recommendations to integrate with ``config.yml``
+-----------------------------------------------------------
+
+Use Docker Compose version ``3.6``
+  Previous versions are not compatible with the use of bind volumes as expected
+  by the library.
+
+Use ``container_name`` to set the container ID
+  It is currently the best choice provided by Docker Compose for ensuring that
+  the required container will be accessible through the expected name. If this
+  parameter is omitted, then Docker Compose will try to use the generic ID
+  provided for the service definition, i.e. ``services:<service_name>`` (in the
+  example above this would correspond to *processing*). The problem in this 
+  latter case is that launching the container will not fail if the system is
+  already running a service with the same ID, but it will append a prefix to it.
+  The result of this behaviour is that the JPL library will not be able to 
+  connect to the container as it is not aware of the change in the name. 
+  Instead, if the ID set under ``container_name`` is already in use, the
+  operation will fail as expected.
