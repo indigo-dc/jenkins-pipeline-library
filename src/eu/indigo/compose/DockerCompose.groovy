@@ -125,8 +125,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     *
     * @param env Map with the variable name as key and the expected value
     */
+    @NonCPS
     List<String> envToStep(Map env) {
-        env.collect { String e, String v ->
+        env.collect { e, v ->
             "$e=\"$v\""
         }
     }
