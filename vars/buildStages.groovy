@@ -13,7 +13,7 @@ def timeoutClosure(ProjectConfiguration projectConfig, Closure block) {
 
 def environmentClosure(ProjectConfiguration projectConfig, Closure block) {
     if (projectConfig.environment) {
-        withEnv(projectConfig.nodeAgent.envToStep(projectConfig.environment)) {
+        withEnv(projectConfig.environment) {
             block()
         }
     } else {
