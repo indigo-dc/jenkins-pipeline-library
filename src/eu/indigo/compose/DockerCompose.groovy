@@ -13,6 +13,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
 
     private static final long serialVersionUID = 0L
 
+    private List<String> credentialVariablesNames = []
+
     /**
     * Parameters static strings for command parser
     */
@@ -56,26 +58,37 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             def credValue
             switch (credType) {
                 case 'string':
+                    credentialVariablesNames << credential.variable
                     credValue = steps.string(credentialsId: credential.id, variable: credential.variable)
                     break
                 case 'file':
+                    credentialVariablesNames << credential.variable
                     credValue = steps.file(credentialsId: credential.id, variable: credential.variable)
                     break
                 case 'zip':
+                    credentialVariablesNames << credential.variable
                     credValue = steps.zip(credentialsId: credential.id, variable: credential.variable)
                     break
                 case 'certificate':
+                    credentialVariablesNames << credential.keystore_var
+                                             << credential.alias_var
+                                             << credential.password_var
                     credValue = steps.certificate(credentialsId: credential.id,
                                 keystoreVariable: credential.keystore_var,
                                 aliasVariable: credential.alias_var,
                                 passwordVariable: credential.password_var)
                     break
                 case 'username_password':
+                    credentialVariablesNames << credential.username_var
+                                             << credential.password_var
                     credValue = steps.usernamePassword(credentialsId: credential.id,
                                      usernameVariable: credential.username_var,
                                      passwordVariable: credential.password_var)
                     break
                 case 'ssh_user_private_key':
+                    credentialVariablesNames << credential.keyfile_var
+                                             << credential.passphrase_var
+                                             << credential.username_var
                     credValue = steps.sshUserPrivateKey(credentialsId: credential.id,
                                       keyFileVariable: credential.keyfile_var,
                                       passphraseVariable: credential.passphrase_var,
@@ -121,6 +134,22 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     }
 
     /**
+    * Returns the environment variables to docker-compose exec
+    *
+    */
+    String getCredsVars() {
+        String res = ''
+
+        if(! credentialVariablesNames?.empty) {
+            credentialVariablesNames.each { v ->
+                res += "-e ${v} "
+            }
+        }
+
+        res
+    }
+
+    /**
     * Run docker compose exec
     *
     * @param service Service name
@@ -131,7 +160,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     def composeExec(Map args, String service, String command) {
         String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) +
-                     ' exec -T ' + " $service $command"
+                     ' exec -T ' + getCredsVars() + " $service $command"
         steps.sh "docker-compose $cmd"
     }
 
@@ -201,7 +230,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     def composeToxRun(Map args, String service, String testenv, Tox tox) {
         String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + ' exec -T ' +
-                     " $service " + tox.runEnv(testenv, toxFile: escapeWhitespace(args.toxFile))
+                     + getCredsVars() + " $service " + tox.runEnv(testenv, toxFile: escapeWhitespace(args.toxFile))
         steps.sh "docker-compose $cmd"
     }
 
