@@ -236,7 +236,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     def processStages(projectConfig) {
         String workspace = steps.env.WORKSPACE + '/'
         if (_DEBUG_) { steps.echo "workspace path: $workspace" }
-        if (_DEBUG_) { steps.sh 'echo "env: $(env)"' }
+        if (_DEBUG_) { steps.sh 'echo "before loading credentials:\n$(env)"' }
 
         // Environment setup
         steps.stage("Environment Setup") {
@@ -260,6 +260,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             List credentials = projectConfig.config.credentials
             projectConfig.stagesList.each { stageMap ->
                 withCredentialsClosure(credentials) {
+                    if (_DEBUG_) { steps.sh 'echo "after loading credentials:\n$(env)"' }
                     runExecSteps(stageMap, projectConfig, workspace)
                 }
             }
