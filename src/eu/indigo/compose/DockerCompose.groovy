@@ -71,8 +71,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                     break
                 case 'certificate':
                     credentialVariablesNames << credential.keystore_var
-                                             << credential.alias_var
-                                             << credential.password_var
+                    credentialVariablesNames << credential.alias_var
+                    credentialVariablesNames << credential.password_var
                     credValue = steps.certificate(credentialsId: credential.id,
                                 keystoreVariable: credential.keystore_var,
                                 aliasVariable: credential.alias_var,
@@ -80,15 +80,15 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                     break
                 case 'username_password':
                     credentialVariablesNames << credential.username_var
-                                             << credential.password_var
+                    credentialVariablesNames << credential.password_var
                     credValue = steps.usernamePassword(credentialsId: credential.id,
                                      usernameVariable: credential.username_var,
                                      passwordVariable: credential.password_var)
                     break
                 case 'ssh_user_private_key':
                     credentialVariablesNames << credential.keyfile_var
-                                             << credential.passphrase_var
-                                             << credential.username_var
+                    credentialVariablesNames << credential.passphrase_var
+                    credentialVariablesNames << credential.username_var
                     credValue = steps.sshUserPrivateKey(credentialsId: credential.id,
                                       keyFileVariable: credential.keyfile_var,
                                       passphraseVariable: credential.passphrase_var,
