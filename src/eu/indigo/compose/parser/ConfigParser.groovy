@@ -145,6 +145,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         return cred_type
     }
 
+    @NonCPS
     Map getConfigSetting(Map config) {
         if (_DEBUG_) { steps.echo "** getConfigSetting() **" }
         def configBase = merge(getDefaultValue('config'), config)
