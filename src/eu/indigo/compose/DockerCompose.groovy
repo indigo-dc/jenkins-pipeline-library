@@ -52,6 +52,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     List credentialsToStep(List credentials) {
         if (_DEBUG_) { steps.echo "** credentialsToStep() **" }
+        if (_DEBUG_) { steps.echo "credentialVariablesNames(start):\n${credentialVariablesNames}" }
+
         credentials.collect { credential ->
             def credType = credential.type
             if (_DEBUG_) { steps.echo "credential: $credential\ncredType: $credType" }
@@ -95,6 +97,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                                       usernameVariable: credential.username_var)
                     break
             }
+
+            if (_DEBUG_) { steps.echo "credentialVariablesNames(end):\n${credentialVariablesNames}" }
             if (_DEBUG_) { steps.echo "credValue: $credValue" }
             credValue
         }
@@ -125,7 +129,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @param second String with the value to test
     */
     String parseParam(String first, String second) {
-        if(testString(second)) {
+        if (testString(second)) {
             first + ' ' + second
         }
         else {
@@ -140,15 +144,13 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     String getCredsVars() {
         String res = ''
 
-        if (_DEBUG_) { steps.echo "credentialVariablesNames(start): ${credentialVariablesNames}" }
+        if (_DEBUG_) { steps.echo "credentialVariablesNames:\n${credentialVariablesNames}" }
 
-        if(! credentialVariablesNames?.empty) {
+        if (! credentialVariablesNames?.empty) {
             credentialVariablesNames.each { v ->
                 res += "-e ${v} "
             }
         }
-
-        if (_DEBUG_) { steps.echo "credentialVariablesNames(end):\n${credentialVariablesNames}" }
 
         res
     }
