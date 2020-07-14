@@ -55,9 +55,11 @@ research software. The latest version of the SQA criteria can be found in
    /user/step_by_step/ending
 
 .. toctree::
+   :glob:
+   :titlesonly:
    :caption: Examples in production
 
-   /user/examples
+   /user/examples/*
 
 .. toctree::
    :caption: Contribution guide
