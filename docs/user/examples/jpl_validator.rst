@@ -42,9 +42,7 @@ Project layout
                    commands:
                        - /jpl-validator/gradlew -p /jpl-validator jib
 
-        Notes
-        '''''
-        
+        **Notes**:
          * The credential *orviz-dockerhub* must be present, as *username_password*
            type, in the Jenkins instance where the pipeline will run.
          * Since gradlew builder is used in `commands`, the project directory must be
