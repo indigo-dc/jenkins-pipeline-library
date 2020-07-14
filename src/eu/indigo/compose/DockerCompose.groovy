@@ -144,6 +144,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     String getCredsVars() {
         String res = ''
 
+        if (_DEBUG_) { steps.echo "** getCredsVars() **" }
         if (_DEBUG_) { steps.echo "credentialVariablesNames:\n${credentialVariablesNames}" }
 
         if (! credentialVariablesNames?.empty) {
@@ -270,6 +271,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
      */
     def processStages(projectConfig) {
         String workspace = steps.env.WORKSPACE + '/'
+        if (_DEBUG_) { steps.echo "** processStages() **" }
         if (_DEBUG_) { steps.echo "workspace path: $workspace" }
         if (_DEBUG_) { steps.sh 'echo "before loading credentials:\n$(env)"' }
 
