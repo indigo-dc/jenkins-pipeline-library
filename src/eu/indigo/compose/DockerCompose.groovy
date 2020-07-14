@@ -36,7 +36,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         if (_DEBUG_) { steps.echo "** withCredentialsClosure() **" }
         if (credentials) {
             if (_DEBUG_) { steps.echo "credentials:\n${credentials}" }
-            if (_DEBUG_) { steps.echo 'credentialsToStep: ' + credentialsToStep(credentials) }
+            //if (_DEBUG_) { steps.echo 'credentialsToStep: ' + credentialsToStep(credentials) }
             steps.withCredentials(credentialsToStep(credentials)) {
                 block()
             }
