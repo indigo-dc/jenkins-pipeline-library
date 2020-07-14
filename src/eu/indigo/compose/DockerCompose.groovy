@@ -144,7 +144,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     String getCredsVars() {
         String res = ''
 
-        if (_DEBUG_) { steps.echo "credentialVariablesNames:\n${credentialVariablesNames}" }
+        if (_DEBUG_) { steps.echo "getCredsVars(): credentialVariablesNames:\n${credentialVariablesNames}" }
 
         if (! credentialVariablesNames?.empty) {
             credentialVariablesNames.each { v ->
