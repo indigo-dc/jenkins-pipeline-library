@@ -36,8 +36,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         if (_DEBUG_) { steps.echo "** withCredentialsClosure() **" }
         if (credentials) {
             if (_DEBUG_) { steps.echo "credentials:\n${credentials}" }
-            //if (_DEBUG_) { steps.echo 'credentialsToStep: ' + credentialsToStep(credentials) }
-            steps.withCredentials(credentialsToStep(credentials)) {
+            List credentialsStatements = credentialsToStep(credentials)
+            if (_DEBUG_) { steps.echo 'credentialsToStep: ' + credentialsStatements }
+            steps.withCredentials(credentialsStatements) {
                 block()
             }
         } else {
@@ -51,6 +52,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @param credentials A map with the expected argument names and values
     */
     List credentialsToStep(List credentials) {
+        credentialVariablesNames = []
         if (_DEBUG_) { steps.echo "** credentialsToStep() **" }
         if (_DEBUG_) { steps.echo "credentialVariablesNames(start):\n${credentialVariablesNames}" }
 
