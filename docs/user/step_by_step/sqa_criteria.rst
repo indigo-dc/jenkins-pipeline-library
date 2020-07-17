@@ -1,5 +1,3 @@
-In this section we will cover the ``sqa-criteria`` setting, which represents
-=======
 The ``sqa_criteria`` setting
 ============================
 In this section we will cover the ``sqa_criteria`` setting, which represents
