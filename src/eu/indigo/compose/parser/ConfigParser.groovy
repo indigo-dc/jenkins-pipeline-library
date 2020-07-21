@@ -150,7 +150,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         def configBase = merge(getDefaultValue('config'), config)
         def configRepos = [
             project_repos: configBase['project_repos']
-                .collectEntries { id, repo ->
+                ?.collectEntries { id, repo ->
                     [id, merge(getDefaultValue('config_repo'), repo)]
                 }
         ]
