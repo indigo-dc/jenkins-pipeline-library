@@ -11,9 +11,10 @@ def call(
     String configFile='./.sqa/config.yml',
     String baseRepository=null,
     String baseBranch=null,
+    String credentialsId=null,
     String validatorDockerImage='eoscsynergy/jpl-validator:1.1.0') {
 
-    checkoutRepository(baseRepository, baseBranch)
+    checkoutRepository(baseRepository, baseBranch, credentialsId)
     def yaml = readYaml file: configFile
     def buildNumber = Integer.parseInt(env.BUILD_ID)
     ProjectConfiguration projectConfig = null
@@ -43,18 +44,18 @@ def call(
 }
 
 def validate(String configFile, String validatorDockerImage) {
-    def cmd = 'docker pull ' + "$validatorDockerImage &&" +
+    def cmd = "docker pull $validatorDockerImage &&" +
               'docker run --rm -v "$PWD:/sqa" ' + "$validatorDockerImage /sqa/${configFile}"
     return sh(returnStatus: true, script: cmd)
 }
 
-def checkoutRepository(String repository, String branch='master') {
+def checkoutRepository(String repository, String branch='master', String credentialsId) {
     if (repository) {
         checkout([
             $class: 'GitSCM',
             branches: [[name: "*/${branch}"]],
             extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '.']],
-            userRemoteConfigs: [[url: repository]]])
+            userRemoteConfigs: [[url: repository, credentialsId: credentialsId]]])
     }
     else {
         checkout scm
