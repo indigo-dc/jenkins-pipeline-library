@@ -193,13 +193,14 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * Run docker compose push
     *
     * @param serviceIds String with list of Service names separated by spaces to start [default]
-    * @param ignoreFailures Will ignore push failures if defined.
+    * @param ignoreFailures Will ignore push failures if a string is defined.
     * @param args.composeFile Docker compose file to override the default docker-compose.yml [default]
     * @param args.workdir Path to workdir directory for this command
     * @see https://docs.docker.com/compose/reference/up/
     */
-    def composePush(Map args, serviceIds='', ignoreFailures='') {
-        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " push " + testString(ignoreFailures) ? _ipf : '' + " $serviceIds"
+    def composePush(Map args, String serviceIds, String ignoreFailures='') {
+        String serviceCmd = serviceIds.equalsIgnoreCase('all') ? '' : serviceIds
+        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " push " + testString(ignoreFailures) ? _ipf : '' + " $serviceCmd"
 
         steps.sh "docker-compose $cmd"
     }
