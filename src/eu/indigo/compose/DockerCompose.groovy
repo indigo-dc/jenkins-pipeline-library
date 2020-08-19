@@ -20,6 +20,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     String _f = '-f'
     String _w = '--project-directory'
+    String _ipf = '--ignore-push-failures'
 
 
     /**
@@ -185,7 +186,22 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     def composeUp(Map args, String serviceIds='') {
         String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " up -d $serviceIds"
 
-        steps.sh "docker-compose  $cmd"
+        steps.sh "docker-compose $cmd"
+    }
+
+    /**
+    * Run docker compose push
+    *
+    * @param serviceIds String with list of Service names separated by spaces to start [default]
+    * @param ignoreFailures Will ignore push failures if defined.
+    * @param args.composeFile Docker compose file to override the default docker-compose.yml [default]
+    * @param args.workdir Path to workdir directory for this command
+    * @see https://docs.docker.com/compose/reference/up/
+    */
+    def composePush(Map args, serviceIds='', ignoreFailures='') {
+        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " push " + testString(ignoreFailures) ? _ipf : '' + " $serviceIds"
+
+        steps.sh "docker-compose $cmd"
     }
 
     /**
@@ -302,6 +318,11 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                     if (_DEBUG_) { steps.sh 'echo "after loading credentials:\n$(env)"' }
                     runExecSteps(stageMap, projectConfig, workspace)
                 }
+            }
+
+            // Push docker images to registry
+            if (steps.env.JPL_DOCKERPUSH) {
+                composePush(composeFile: projectConfig.config.deploy_template, workdir: workspace, steps.env.JPL_DOCKERPUSH, steps.env.JPL_IGNOREFAILURES)
             }
         } finally {
             // Clean docker-compose deployed environment
