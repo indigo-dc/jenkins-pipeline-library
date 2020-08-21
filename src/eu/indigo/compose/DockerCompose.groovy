@@ -319,12 +319,12 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                     if (_DEBUG_) { steps.sh 'echo "after loading credentials:\n$(env)"' }
                     // Run the defined steps
                     runExecSteps(stageMap, projectConfig, workspace)
-                }
-            }
 
-            // Push docker images to registry
-            if (steps.env.JPL_DOCKERPUSH) {
-                composePush(composeFile: projectConfig.config.deploy_template, workdir: workspace, steps.env.JPL_DOCKERPUSH, steps.env.JPL_IGNOREFAILURES)
+                    // Push docker images to registry
+                    if (steps.env.JPL_DOCKERPUSH) {
+                        composePush(composeFile: projectConfig.config.deploy_template, workdir: workspace, steps.env.JPL_DOCKERPUSH, steps.env.JPL_IGNOREFAILURES)
+                    }
+                }
             }
         } finally {
             // Clean docker-compose deployed environment
