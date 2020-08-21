@@ -289,9 +289,6 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                                             [$class: 'ScmName', name: repo_name]] ],
                                changelog: false, poll: false
             }
-
-            // Deploy the environment services using docker-compose
-            composeUp(composeFile: projectConfig.config.deploy_template, workdir: workspace)
         }
 
         try {
@@ -299,6 +296,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             List credentials = projectConfig.config.credentials
             projectConfig.stagesList.each { stageMap ->
                 withCredentialsClosure(credentials) {
+                    // Deploy the environment services using docker-compose
+                    composeUp(composeFile: projectConfig.config.deploy_template, workdir: workspace)
+                    
                     if (_DEBUG_) { steps.sh 'echo "after loading credentials:\n$(env)"' }
                     runExecSteps(stageMap, projectConfig, workspace)
                 }
