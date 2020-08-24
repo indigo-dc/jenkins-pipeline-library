@@ -186,7 +186,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/overview/
     */
     def composeUp(Map args, String serviceIds='') {
-        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " up " + testString(args.forceBuild) ? _b : '' + " -d $serviceIds"
+        String buildFlag = testString(args.forceBuild) ? _b : ''
+        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " up $buildFlag -d $serviceIds"
 
         steps.sh "docker-compose $cmd"
     }
@@ -202,7 +203,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     def composePush(Map args, String serviceIds, String ignoreFailures='') {
         String serviceCmd = serviceIds.equalsIgnoreCase('all') ? '' : serviceIds
-        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " push " + testString(ignoreFailures) ? _ipf : '' + " $serviceCmd"
+        String failuresFlag = testString(ignoreFailures) ? _ipf : ''
+        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " push $failuresFlag $serviceCmd"
 
         steps.sh "docker-compose $cmd"
     }
