@@ -331,7 +331,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
 
                     // Push docker images to registry
                     if (steps.env.JPL_DOCKERPUSH) {
-                        composePush(composeFile: projectConfig.config.deploy_template, workdir: workspace, steps.env.JPL_DOCKERPUSH, steps.env.JPL_IGNOREFAILURES)
+                        steps.stage('Push Images to Docker Registry') {
+                            composePush(composeFile: projectConfig.config.deploy_template, workdir: workspace, steps.env.JPL_DOCKERPUSH, steps.env.JPL_IGNOREFAILURES)
+                        }
                     }
                 }
             }
