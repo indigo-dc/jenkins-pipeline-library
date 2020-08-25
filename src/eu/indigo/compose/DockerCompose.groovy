@@ -265,7 +265,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         if (_DEBUG_) { steps.echo "service: ${service}\ntestenv: ${testenv}\ntoxFile: " + escapeWhitespace(args.toxFile) + "\ncredsVars: $credsVars" }
         if (_DEBUG_) { steps.echo "tox command: " + tox.runEnv(testenv, toxFile: escapeWhitespace(args.toxFile)) }
         String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + ' exec -T ' +
-                     + " $credsVars $service " + tox.runEnv(testenv, toxFile: escapeWhitespace(args.toxFile))
+                     " $credsVars $service " + tox.runEnv(testenv, toxFile: escapeWhitespace(args.toxFile))
         steps.sh "docker-compose $cmd"
     }
 
