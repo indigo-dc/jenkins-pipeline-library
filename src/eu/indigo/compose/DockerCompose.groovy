@@ -336,6 +336,13 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                 }
             }
         } finally {
+            // Review execution before exit if debug mode enabled
+            if (_DEBUG_) {
+                steps.timeout(time: 15, unit: 'MINUTES') {
+                    steps.input message: 'Click finish after reviewing the current job (will automatically finish in 15min).', ok: 'finish'
+                }
+            }
+
             // Clean docker-compose deployed environment
             steps.stage('Docker Compose cleanup') {
                 composeDown(composeFile: projectConfig.config.deploy_template, workdir: workspace)
