@@ -337,9 +337,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             }
         } finally {
             // Review execution before exit if debug mode enabled
-            if (_DEBUG_) {
+            if (_WORKSPACEDEBUG_) {
                 try {
-                    steps.timeout(time: 15, unit: 'MINUTES') {
+                    steps.timeout(time: _WORKSPACEDEBUGTIMEOUT_, unit: _WORKSPACEDEBUGUNIT_) {
                         steps.input message: 'Click finish after reviewing the current job (will automatically finish in 15min).', ok: 'finish'
                     }
                 } catch(org.jenkinsci.plugins.workflow.steps.FlowInterruptedException ex) {
