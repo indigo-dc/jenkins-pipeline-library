@@ -320,20 +320,21 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         try {
             // Run SQA stages
             List credentials = projectConfig.config.credentials
-            projectConfig.stagesList.each { stageMap ->
-                withCredentialsClosure(credentials) {
-                    // Deploy the environment services using docker-compose
-                    composeUp(composeFile: projectConfig.config.deploy_template, workdir: workspace, forceBuild: steps.env.JPL_DOCKERFORCEBUILD)
-                    
-                    if (_DEBUG_) { steps.sh 'echo "after loading credentials:\n$(env)"' }
+            withCredentialsClosure(credentials) {
+                // Deploy the environment services using docker-compose
+                composeUp(composeFile: projectConfig.config.deploy_template, workdir: workspace, forceBuild: steps.env.JPL_DOCKERFORCEBUILD)
+                
+                if (_DEBUG_) { steps.sh 'echo "after loading credentials:\n$(env)"' }
+
+                projectConfig.stagesList.each { stageMap ->
                     // Run the defined steps
                     runExecSteps(stageMap, projectConfig, workspace)
+                }
 
-                    // Push docker images to registry
-                    if (steps.env.JPL_DOCKERPUSH) {
-                        steps.stage('Push Images to Docker Registry') {
-                            composePush(composeFile: projectConfig.config.deploy_template, workdir: workspace, steps.env.JPL_DOCKERPUSH, steps.env.JPL_IGNOREFAILURES)
-                        }
+                // Push docker images to registry
+                if (steps.env.JPL_DOCKERPUSH) {
+                    steps.stage('Push Images to Docker Registry') {
+                        composePush(composeFile: projectConfig.config.deploy_template, workdir: workspace, steps.env.JPL_DOCKERPUSH, steps.env.JPL_IGNOREFAILURES)
                     }
                 }
             }
