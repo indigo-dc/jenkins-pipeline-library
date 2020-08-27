@@ -10,7 +10,7 @@ class JenkinsDefinitions implements Serializable {
 
     def steps
 
-    protected final boolean _DEBUG_ = true
+    protected final boolean _DEBUG_ = false
     protected final boolean _WORKSPACEDEBUG_ = false
     protected final int _WORKSPACEDEBUGTIMEOUT_ = 5
     protected final String _WORKSPACEDEBUGUNIT_ = 'MINUTES'
