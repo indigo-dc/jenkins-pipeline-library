@@ -197,6 +197,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     *
     * @param serviceIds String with list of Service names separated by spaces to start [default]
     * @param ignoreFailures Will ignore push failures if a string is defined.
+    * @param args.registryServer Define the server name and port to connect (example: localhost:8080)
+    * @param args.username Docker registry username
+    * @param args.password Docker registry password
     * @param args.composeFile Docker compose file to override the default docker-compose.yml [default]
     * @param args.workdir Path to workdir directory for this command
     * @see https://docs.docker.com/compose/reference/up/
@@ -206,7 +209,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         String failuresFlag = testString(ignoreFailures) ? _ipf : ''
         String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " push $failuresFlag $serviceCmd"
 
+        steps.sh "docker login -u \"${args.username}\" -p \"${args.password}\" ${args.registryServer}"
         steps.sh "docker-compose $cmd"
+        steps.sh "docker logout ${args.registryServer}"
     }
 
     /**
@@ -334,7 +339,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                 // Push docker images to registry
                 if (steps.env.JPL_DOCKERPUSH) {
                     steps.stage('Push Images to Docker Registry') {
-                        composePush(composeFile: projectConfig.config.deploy_template, workdir: workspace, steps.env.JPL_DOCKERPUSH, steps.env.JPL_IGNOREFAILURES)
+                        composePush(composeFile: projectConfig.config.deploy_template, workdir: workspace, registryServer: steps.env.JPL_DOCKERSERVER, username: steps.env.JPL_DOCKERUSER, password: steps.env.JPL_DOCKERPASS, steps.env.JPL_DOCKERPUSH, steps.env.JPL_IGNOREFAILURES)
                     }
                 }
             }
