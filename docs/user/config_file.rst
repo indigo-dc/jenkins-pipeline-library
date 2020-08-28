@@ -20,8 +20,6 @@ Below is an example YAML file which shows the most common configuration options:
         worsica-processing:
           repo: 'https://github.com/WORSICA/worsica-processing.git'
           branch: master
-          dockerhub: worsica/worsica-processing
-          dockertag: latest
 
     sqa_criteria:
       qc_style:
@@ -67,8 +65,6 @@ Example:
        worsica-processing:
          repo: 'https://github.com/WORSICA/worsica-processing.git'
          branch: master
-         dockerhub: worsica/worsica-processing
-         dockertag: latest
 
 node_agent
 ``````````
@@ -125,8 +121,6 @@ Example:
        worsica-processing:
          repo: 'https://github.com/WORSICA/worsica-processing.git'
          branch: master
-         dockerhub: worsica/worsica-processing
-         dockertag: latest
 
 The set of allowed parameters for the definition of the code repository's
 description within the ``project_repos`` setting are herein described:
@@ -146,23 +140,6 @@ Branch name to be checked out.
 :Type: ``string``
 :Default: ``master``
 :Location: ``config:project_repos:branch``
-
-**dockerhub**
-
-Repository name within the Docker Hub registry where the Docker images
-produced by the pipeline will be pushed.
-
-:Type: ``string``
-:Required: ``true``
-:Location: ``config:project_repos:dockerhub``
-
-**dockertag**
-
-Tag name to be used for labeling the resultant Docker image.
-
-:Type: ``string``
-:Default: ``latest``
-:Location: ``config:project_repos:dockertag``
 
 sqa_criteria
 ~~~~~~~~~~~~
