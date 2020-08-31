@@ -348,7 +348,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             if (_WORKSPACEDEBUG_) {
                 try {
                     steps.timeout(time: _WORKSPACEDEBUGTIMEOUT_, unit: _WORKSPACEDEBUGUNIT_) {
-                        steps.input message: 'Click finish after reviewing the current job (will automatically finish in 15min).', ok: 'finish'
+                        steps.input message: "Click finish after reviewing the current job (will automatically finish in ${_WORKSPACEDEBUGTIMEOUT_} ${_WORKSPACEDEBUGUNIT_}).", ok: 'finish'
                     }
                 } catch(org.jenkinsci.plugins.workflow.steps.FlowInterruptedException ex) {
                     steps.echo "Cleaning workspace after timeout expired..."
