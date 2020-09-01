@@ -376,6 +376,29 @@ Example:
    will not be available inside the containers. For that, you should use for
    example, docker-compose.yml environment definitions instead.
 
+.. note::
+   The following JPL-prefixed environment variables have a special purpose:
+
+   +----------------------+------------------------------------------------------------------+
+   | JPL vars             | Purpose                                                          |
+   +======================+==================================================================+
+   | JPL_DOCKERPUSH       | Space-separated list of services whose referenced images will    |
+   |                      | be pushed to the Docker registry. If ``ALL`` value is used, it   |
+   |                      | will push all locally built images defined in docker-compose.yml |
+   +----------------------+------------------------------------------------------------------+
+   | JPL_IGNOREFAILURES   | If set, by using any random string value (without spaces), it    |
+   |                      | will ignore any push-related failure                             |
+   +----------------------+------------------------------------------------------------------+
+   | JPL_DOCKERFORCEBUILD | Forcedly rebuild all images with build clause in                 |
+   |                      | docker-compose.yml                                               |
+   +----------------------+------------------------------------------------------------------+
+   | JPL_DOCKERSERVER     | Sets Docker registry server. By default it will use Docker Hub   |
+   +----------------------+------------------------------------------------------------------+
+   | JPL_DOCKERUSER       | Sets username of Docker registry credentials                     |
+   +----------------------+------------------------------------------------------------------+
+   | JPL_DOCKERPASS       | Sets password of Docker registry credentials                     |
+   +----------------------+------------------------------------------------------------------+
+
 timeout
 ~~~~~~~
 Sets the timeout for the pipeline execution.
