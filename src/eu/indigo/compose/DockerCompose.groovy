@@ -309,6 +309,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         if (_DEBUG_) { steps.echo "workspace path: $workspace" }
         if (_DEBUG_) { steps.sh 'echo "before loading credentials:\n$(env)"' }
 
+        // Load debug settings defined in JenkinsDefinitions before starting the scripted pipeline
+        debugSettings()
+
         // Environment setup
         steps.stage("Environment Setup") {
             // Checkout repositories to workspace with defined repository name
