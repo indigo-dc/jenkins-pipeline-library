@@ -205,13 +205,14 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/up/
     */
     def composePush(Map args, String serviceIds, String ignoreFailures='') {
+        String registryServer = testString(args.registryServer) ? args.registryServer : ''
         String serviceCmd = serviceIds.equalsIgnoreCase('all') ? '' : serviceIds
         String failuresFlag = testString(ignoreFailures) ? _ipf : ''
         String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " push $failuresFlag $serviceCmd"
 
-        steps.sh "docker login -u \"${args.username}\" -p \"${args.password}\" ${args.registryServer}"
+        steps.sh "docker login -u \"${args?.username}\" -p \"${args?.password}\" ${registryServer}"
         steps.sh "docker-compose $cmd"
-        steps.sh "docker logout ${args.registryServer}"
+        steps.sh "docker logout ${registryServer}"
     }
 
     /**
