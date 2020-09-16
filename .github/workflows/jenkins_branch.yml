@@ -1,0 +1,12 @@
+name: Handle jenkins branch for release validation
+on:
+  push:
+jobs:
+    create_jenkins_branch:
+        name: Creates jenkins/release/* branch if it does not exist
+        runs-on: ubuntu-latest
+        steps:
+            - name: Fetch full history
+              uses: actions/checkout@v2
+              with:
+                fetch-depth: 0
