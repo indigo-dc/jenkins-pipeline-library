@@ -13,4 +13,13 @@ jobs:
             - name: Get release version from branch name
               run: |
                   echo ::set-env name=BRANCH_NAME::$(git rev-parse --abbrev-ref HEAD | cut -d '/' -f2)
-
+            - name: Find out if jenkins/release/${{ env.BRANCH_NAME }} exists
+              run: |
+                  echo ::set-env name=BRANCH_EXISTS::$(git branch -r | grep jenkins/release/${{ env.BRANCH_NAME }})
+            - name: Create jenkins/release/
+              uses: peterjgrainger/action-create-branch@v1.0.0
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  branch: jenkins/release/${{ env.BRANCH_NAME }}
+              if: "!env.BRANCH_EXISTS"
