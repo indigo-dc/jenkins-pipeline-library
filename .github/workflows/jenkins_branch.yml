@@ -23,3 +23,7 @@ jobs:
               with:
                   branch: jenkins/release/${{ env.BRANCH_NAME }}
               if: "!env.BRANCH_EXISTS"
+            - name: Fetch new jenkins/release/${{ env.BRANCH_NAME }}
+              uses: actions/checkout@v2
+              with:
+                ref: jenkins/release/${{ env.BRANCH_NAME }}
