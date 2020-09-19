@@ -399,6 +399,83 @@ Example:
    | JPL_DOCKERPASS       | Sets password of Docker registry credentials                     |
    +----------------------+------------------------------------------------------------------+
 
+Docker Registry: upload images
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+As mentioned in special purpose environment variables note, pushing images to
+docker registry is supported using the following environment variables:
+
++----------------------+------------------------------------------------------------------+
+| JPL vars             | Purpose                                                          |
++======================+==================================================================+
+| JPL_DOCKERPUSH       | Space-separated list of services whose referenced images will    |
+|                      | be pushed to the Docker registry. If ``ALL`` value is used, it   |
+|                      | will push all locally built images defined in docker-compose.yml |
++----------------------+------------------------------------------------------------------+
+| JPL_IGNOREFAILURES   | If set, by using any random string value (without spaces), it    |
+|                      | will ignore any push-related failure                             |
++----------------------+------------------------------------------------------------------+
+| JPL_DOCKERSERVER     | Sets Docker registry server. By default it will use Docker Hub   |
++----------------------+------------------------------------------------------------------+
+| JPL_DOCKERUSER       | Sets username of Docker registry credentials                     |
++----------------------+------------------------------------------------------------------+
+| JPL_DOCKERPASS       | Sets password of Docker registry credentials                     |
++----------------------+------------------------------------------------------------------+
+
+Example1: upload specific service images to dockerhub registry ignoring failures
+
+.. code-block:: yaml
+
+   config:
+     project_repos:
+       docs:
+         repo: 'https://github.com/myOrganization/docs'
+       service1:
+         repo: 'https://github.com/myOrganization/service1'
+       service2:
+         repo: 'https://github.com/myOrganization/service2'
+       service3:
+         repo: 'https://github.com/myOrganization/service3'
+       service4:
+         repo: 'https://github.com/myOrganization/service4'
+     credentials:
+       - id: my-dockerhub-token
+         username_var: JPL_DOCKERUSER
+         password_var: JPL_DOCKERPASS
+
+   environment:
+     JPL_DOCKERPUSH: "docs service1 service4"
+     JPL_IGNOREFAILURES: "defined"
+
+Example2: upload all images to independent registry and fail with push failures
+
+.. code-block:: yaml
+
+   config:
+     project_repos:
+       docs:
+         repo: 'https://github.com/myOrganization/docs'
+       service1:
+         repo: 'https://github.com/myOrganization/service1'
+       service2:
+         repo: 'https://github.com/myOrganization/service2'
+       service3:
+         repo: 'https://github.com/myOrganization/service3'
+       service4:
+         repo: 'https://github.com/myOrganization/service4'
+     credentials:
+       - id: my-dockerhub-token
+         username_var: JPL_DOCKERUSER
+         password_var: JPL_DOCKERPASS
+
+   environment:
+     JPL_DOCKERPUSH: "ALL"
+     JPL_DOCKERSERVER: "mydockerregistry.example.com:8080"
+
+.. note::
+   When using custom docker registry is also expected that docker-compose.yml
+   have the expected configuration for the image references, following the official
+   `documentation <https://docs.docker.com/compose/compose-file/#image>`_.
+
 timeout
 ~~~~~~~
 Sets the timeout for the pipeline execution.
