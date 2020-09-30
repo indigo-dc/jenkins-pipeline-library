@@ -399,8 +399,21 @@ Example:
    | JPL_DOCKERPASS       | Sets password of Docker registry credentials                     |
    +----------------------+------------------------------------------------------------------+
 
+timeout
+~~~~~~~
+Sets the timeout for the pipeline execution.
+
+:Type: ``integer``
+:Default: ``600``
+
+Example:
+
+.. code-block:: yaml
+
+   timeout: 60
+
 Docker Registry: upload images
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 As mentioned in special purpose environment variables note, pushing images to
 docker registry is supported using the following environment variables:
 
@@ -475,16 +488,3 @@ Example2: upload all images to independent registry and fail with push failures
    When using custom docker registry is also expected that docker-compose.yml
    have the expected configuration for the image references, following the official
    `documentation <https://docs.docker.com/compose/compose-file/#image>`_.
-
-timeout
-~~~~~~~
-Sets the timeout for the pipeline execution.
-
-:Type: ``integer``
-:Default: ``600``
-
-Example:
-
-.. code-block:: yaml
-
-   timeout: 60
