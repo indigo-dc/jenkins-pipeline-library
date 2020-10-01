@@ -1,4 +1,4 @@
-name: Handle jenkins branch for release validation
+name: Workflow for release branches
 on:
   push:
     branches:
