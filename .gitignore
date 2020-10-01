@@ -1,0 +1,21 @@
+# Ignore dev stuff
+docs/
+vars/
+src/
+CONTRIBUTING.md
+Dockerfile.build
+LICENSE
+README.md
+
+# vim
+*~
+*.swp
+*.swo
+
+# python-virtualenv
+.venv
+venv
+
+# vscode
+.vscode/
+local-storage.json
