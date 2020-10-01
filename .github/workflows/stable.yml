@@ -1,0 +1,15 @@
+name: Workflow for stable branches
+on:
+  milestone:
+    types: [closed]
+jobs:
+    create_stable_branch:
+        name: Builds stable branch when closing a milestone
+        runs-on: ubuntu-latest
+        steps:
+            - name: Builds stable branch when closing a milestone
+              uses: peterjgrainger/action-create-branch@v1.0.0
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  branch: stable/${{ github.event.milestone.title }}
