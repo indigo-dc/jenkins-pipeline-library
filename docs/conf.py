@@ -31,6 +31,7 @@
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx_multiversion',
     'sphinx_tabs.tabs',
     'sphinx.ext.autosectionlabel'
 ]
@@ -184,7 +185,7 @@ html_static_path = ['_static']
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
 #
-# html_additional_pages = {}
+html_additional_pages = {'index': 'index.html'}
 
 # If false, no module index is generated.
 #
@@ -344,3 +345,6 @@ texinfo_documents = [
 
 # -- Options for sphinx-versioning -------------------------------------------
 scv_whitelist_branches = ('(stable|release){1}/.+',)
+# -- Options for sphinx-multiversion------------------------------------------
+smv_branch_whitelist = r'(stable|release){1}/.+'
+smv_remote_whitelist = r'^.*$'
