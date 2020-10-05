@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  node:
+    image: sphinx
+    container_name: sphinx
+    hostname: "jepl-sphinx"
+    volumes:
+     - type: bind
+       source: ./
+       target: /jenkins-pipeline-library
+    command: sleep infinity

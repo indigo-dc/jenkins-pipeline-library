@@ -1,0 +1,19 @@
+
+config:
+  credentials:
+      - id: orviz-github-basic
+        username_var: GIT_USER
+        password_var: GIT_PASSWORD
+
+sqa_criteria:
+  qc_doc:
+    jenkins-pipeline-library:
+      container: sphinx
+      commands:
+        - pip3 install -r docs/requirements.txt
+        - sphinx-multiversion docs docs/_build/html
+        - cp docs/assets/index.html docs/_build/html/index.html
+        - >
+          git config user.name "Pablo Orviz"
+          git config user.email "orviz@ifca.unican.es"
+          ghp-import -n -p docs/_build/html
