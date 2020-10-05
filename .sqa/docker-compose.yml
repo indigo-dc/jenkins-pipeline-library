@@ -8,5 +8,5 @@ services:
     volumes:
      - type: bind
        source: ./
-       target: /jenkins-pipeline-library
+       target: /jepl
     command: sleep infinity
