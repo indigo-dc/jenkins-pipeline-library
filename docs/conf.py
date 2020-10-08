@@ -346,5 +346,6 @@ texinfo_documents = [
 # -- Options for sphinx-versioning -------------------------------------------
 scv_whitelist_branches = ('(stable|release){1}/.+',)
 # -- Options for sphinx-multiversion------------------------------------------
+smv_tag_whitelist = r'^\d+\.\d+\.\d+$'
 smv_branch_whitelist = r'(stable|release){1}/.+'
 smv_remote_whitelist = r'^.*$'
