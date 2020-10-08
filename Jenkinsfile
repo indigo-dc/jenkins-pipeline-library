@@ -9,7 +9,13 @@ pipeline {
         stage('SQA baseline dynamic stages') {
             steps {
                 script {
-                    projectConfig = pipelineConfig()
+                    projectConfig = pipelineConfig(
+                        './.sqa/config.yml',
+                        null,
+                        null,
+                        null,
+                        'eoscsynergy/jpl-validator:jib-with-jpl'
+                    )
                     buildStages(projectConfig)
                 }
             }
