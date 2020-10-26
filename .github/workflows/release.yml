@@ -36,5 +36,7 @@ jobs:
             git checkout jenkins/release/${{ env.BRANCH_NAME }}
             git reset --hard origin/release/${{ env.BRANCH_NAME }}
             git checkout origin/JePL .sqa/config.yml .sqa/docker-compose.yml Jenkinsfile .git_credential_helper.sh
+            printf "`cat Jenkinsfile`" "${{ env.BRANCH_NAME }}" > Jenkinsfile
+            git add Jenkinsfile
             git status
             git diff-index --quiet HEAD || (git commit -m "Added JePL configuration files" && git push)
