@@ -3,10 +3,6 @@ config:
       - id: orviz-github-basic
         username_var: GIT_USER
         password_var: GIT_PASSWORD
-  project_repos:
-    jenkins-pipeline-library:
-      repo: https://github.com/indigo-dc/jenkins-pipeline-library
-      branch: release/2.1.0
 
 sqa_criteria:
   qc_doc:
@@ -14,12 +10,12 @@ sqa_criteria:
       jenkins-pipeline-library:
         container: sphinx
         commands:
-          - ls -l /jepl
           - pip3 install -r /jepl/jenkins-pipeline-library/docs/requirements.txt
-          - sphinx-multiversion /jepl/jenkins-pipeline-library/docs /jepl/jenkins-pipeline-library/docs/_build/html
-          - cp /jepl/jenkins-pipeline-library/docs/assets/index.html /jepl/jenkins-pipeline-library/docs/_build/html/index.html
+          - git -C /jepl/jenkins-pipeline-library config --global user.name "Pablo Orviz"
+          - git -C /jepl/jenkins-pipeline-library config --global user.email "orviz@ifca.unican.es"
           - >
-            env GIT_ASKPASS=/jepl/jenkins-pipeline-library/.git_credential_helper.sh
-            git -C /jepl/jenkins-pipeline-library config user.name "Pablo Orviz"
-            git -C /jepl/jenkins-pipeline-library config user.email "orviz@ifca.unican.es"
-            ghp-import -n -p /jepl/jenkins-pipeline-library/docs/_build/html
+            bash -c "cd /jepl/jenkins-pipeline-library
+            && sphinx-multiversion docs docs/_build/html
+            && cp docs/assets/index.html docs/_build/html/index.html
+            && env GIT_ASKPASS=/jepl/jenkins-pipeline-library/.git_credential_helper.sh
+            ghp-import -n -p docs/_build/html"
