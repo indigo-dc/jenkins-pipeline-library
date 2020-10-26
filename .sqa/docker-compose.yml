@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  node:
+  sphinx:
     image: sphinxdoc/sphinx
     container_name: sphinx
     hostname: "jepl-sphinx"
