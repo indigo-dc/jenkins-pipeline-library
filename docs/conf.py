@@ -31,6 +31,7 @@
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx_multiversion',
     'sphinx_tabs.tabs',
     'sphinx.ext.autosectionlabel'
 ]
@@ -344,3 +345,7 @@ texinfo_documents = [
 
 # -- Options for sphinx-versioning -------------------------------------------
 scv_whitelist_branches = ('(stable|release){1}/.+',)
+# -- Options for sphinx-multiversion------------------------------------------
+smv_tag_whitelist = r'^\d+\.\d+\.\d+$'
+smv_branch_whitelist = r'(stable|release){1}/.+'
+smv_remote_whitelist = r'^.*$'
