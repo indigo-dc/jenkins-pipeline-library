@@ -10,7 +10,10 @@ class JenkinsDefinitions implements Serializable {
 
     def steps
 
-    protected final boolean _DEBUG_ = true
+    protected final boolean _DEBUG_ = false
+    protected boolean _WORKSPACEDEBUG_ = false
+    protected int _WORKSPACEDEBUGTIMEOUT_ = 5
+    protected final String _WORKSPACEDEBUGUNIT_ = 'MINUTES'
     protected int logLevel = 0
     protected final int _LOGLEVELMAX_ = -1
 
@@ -33,6 +36,11 @@ class JenkinsDefinitions implements Serializable {
 
     boolean logTest(int level) {
         logLevel >= level || logLevel == _LOGLEVELMAX_
+    }
+
+    protected void debugSettings() {
+        _WORKSPACEDEBUG_ = steps.env.JPL_WORKSPACEDEBUG ? (steps.env.JPL_WORKSPACEDEBUG == "true") : _WORKSPACEDEBUG_
+        _WORKSPACEDEBUGTIMEOUT_ = steps.env.JPL_WORKSPACEDEBUGTIMEOUT ? steps.env.JPL_WORKSPACEDEBUGTIMEOUT.toInteger() : _WORKSPACEDEBUGTIMEOUT_
     }
 
 }
