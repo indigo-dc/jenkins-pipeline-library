@@ -1,4 +1,6 @@
-@Library(['github.com/indigo-dc/jenkins-pipeline-library@%s']) _
+// @Library(['github.com/indigo-dc/jenkins-pipeline-library@%s']) _
+// FIXME - temporary hack to fetch all branches
+@Library(['github.com/indigo-dc/jenkins-pipeline-library@fix/refspec_in_multibranch']) _
 
 def projectConfig
 
