@@ -59,12 +59,17 @@ def checkoutRepository(String repository, String branch='master', String credent
     }
     else {
         // Use 'LocalBranch' class to avoid detached HEAD state
-		checkout([
-		     $class: 'GitSCM',
-		     branches: scm.branches,
-		     doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
-		     extensions: scm.extensions + [$class: 'LocalBranch', localBranch: '**'],
-		     userRemoteConfigs: scm.userRemoteConfigs
-		])
+        checkout([
+			$class: 'GitSCM',
+			branches: scm.branches,
+			doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
+			extensions: scm.extensions + [$class: 'LocalBranch', localBranch: '**'],
+        	userRemoteConfigs: [[
+        	    credentialsId: scm.userRemoteConfigs[0].credentialsId,
+        	    name: 'origin',
+        	    refspec: '+refs/heads/*:refs/remotes/origin/*',
+        	    url: scm.userRemoteConfigs[0].url
+        	]],
+        ])
     }
 }
