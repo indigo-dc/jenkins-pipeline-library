@@ -19,6 +19,7 @@ class Git extends JenkinsDefinitions implements Serializable {
     * @see https://www.jenkins.io/doc/book/pipeline/shared-libraries/#accessing-steps
     */
     Git(steps) {
+        super(steps)
         this.config = steps.scm
     }
 

@@ -18,10 +18,10 @@ def call(
     String validatorDockerImage='eoscsynergy/jpl-validator:1.1.0') {
 
     if (args.LocalBranch) {
-        gitscm = new GitLocalBranch()
+        gitscm = new GitLocalBranch(this)
     }
     else {
-        gitscm = new Git()
+        gitscm = new Git(this)
     }
     runScm(gitscm, baseRepository, baseBranch, credentialsId)
 
