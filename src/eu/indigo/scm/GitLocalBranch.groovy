@@ -1,6 +1,6 @@
 package eu.indigo.scm
 
-import eu.indigo.Git
+import eu.indigo.scm.Git
 
 /**
  * Jenkins workflow SCM step
