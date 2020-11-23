@@ -11,7 +11,7 @@ class Git extends JenkinsDefinitions implements Serializable {
 
     private static final long serialVersionUID = 0L
 
-    def config
+    Map config
 
 
     /**
@@ -21,7 +21,6 @@ class Git extends JenkinsDefinitions implements Serializable {
     Git(steps) {
         super(steps)
         this.config = [
-                 $class: 'GitSCM',
                  branches: steps.scm.branches,
                  doGenerateSubmoduleConfigurations: steps.scm.doGenerateSubmoduleConfigurations,
                  extensions: steps.scm.extensions,
@@ -30,12 +29,11 @@ class Git extends JenkinsDefinitions implements Serializable {
     }
 
     def checkoutRepository() {
-        steps.checkout config
+        steps.checkout [ $class: 'GitSCM' ] + config
     }
 
     def checkoutRepository(String repository, String branch='master', String credentialsId) {
         config = [
-                $class: 'GitSCM',
                 branches: [[name: "*/${branch}"]],
                 extensions: steps.scm.extensions + [$class: 'RelativeTargetDirectory', relativeTargetDir: '.'],
                 userRemoteConfigs: steps.scm.userRemoteConfigs + [url: repository, credentialsId: credentialsId]
