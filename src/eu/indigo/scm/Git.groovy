@@ -33,6 +33,7 @@ class Git extends JenkinsDefinitions implements Serializable {
                 extensions: steps.scm.extensions + [$class: 'RelativeTargetDirectory', relativeTargetDir: '.'],
                 userRemoteConfigs: steps.scm.userRemoteConfigs + [url: repository, credentialsId: credentialsId]
             ]
+        checkoutRepository()
     }
 
 }
