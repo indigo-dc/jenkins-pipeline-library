@@ -11,7 +11,7 @@ class Git extends JenkinsDefinitions implements Serializable {
 
     private static final long serialVersionUID = 0L
 
-    def config
+    Map config
 
 
     /**
