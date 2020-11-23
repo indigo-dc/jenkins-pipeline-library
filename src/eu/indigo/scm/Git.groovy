@@ -11,8 +11,6 @@ class Git extends JenkinsDefinitions implements Serializable {
 
     private static final long serialVersionUID = 0L
 
-    Map config
-
 
     /**
     * Define constructor to import definitions from Jenkins context
