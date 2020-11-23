@@ -16,7 +16,7 @@ Please note the following aspects when sending us your contribution.
  * We expect that your contributions:
     * Are done through pull requests.
     * Use the convention `feature/<branch>` name for new features.
-    * Use the convention `bugfix/<branch>` name for bug fixes.
+    * Use the convention `fix/<branch>` name for bug fixes.
     * Use the convention `test/<branch>` name for testing CI code before merging into `jenkins/<branch>`.
     * Use the convention `docs/<branch>` name for documentation.
  * Compliant with [The Apache Groovy programming language - Style
