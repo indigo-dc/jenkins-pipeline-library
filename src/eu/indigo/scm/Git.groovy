@@ -20,21 +20,15 @@ class Git extends JenkinsDefinitions implements Serializable {
     */
     Git(steps) {
         super(steps)
-        this.config = [
-                 $class: 'GitSCM',
-                 branches: steps.scm.branches,
-                 doGenerateSubmoduleConfigurations: steps.scm.doGenerateSubmoduleConfigurations,
-                 extensions: steps.scm.extensions,
-                 userRemoteConfigs: steps.scm.userRemoteConfigs
-            ]
+        this.config = steps.scm
     }
 
     def checkoutRepository() {
-        steps.checkout this.config
+        steps.checkout config
     }
 
     def checkoutRepository(String repository, String branch='master', String credentialsId) {
-        this.config = [
+        config = [
                 $class: 'GitSCM',
                 branches: [[name: "*/${branch}"]],
                 extensions: steps.scm.extensions + [$class: 'RelativeTargetDirectory', relativeTargetDir: '.'],
