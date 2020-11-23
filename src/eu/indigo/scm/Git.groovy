@@ -11,7 +11,7 @@ class Git extends JenkinsDefinitions implements Serializable {
 
     private static final long serialVersionUID = 0L
 
-    Map config
+    def config
 
 
     /**
@@ -28,8 +28,13 @@ class Git extends JenkinsDefinitions implements Serializable {
             ]
     }
 
+    @NonCPS
+    static transformGitSCM(config) {
+        [ $class: 'GitSCM' ] + config
+    }
+
     def checkoutRepository() {
-        steps.checkout [ $class: 'GitSCM' ] + config
+        steps.checkout transformGitSCM(config)
     }
 
     def checkoutRepository(String repository, String branch='master', String credentialsId) {
