@@ -25,7 +25,7 @@ pipeline {
                 }
             }
         }
-        stage('SQA baseline dynamic stages') {
+        stage('Trigger <sqaaas-api-spec> JePL pipeline') {
             steps {
                 build 'eosc-synergy-org/sqaaas-api-spec/prototype%252F1.0'
             }
