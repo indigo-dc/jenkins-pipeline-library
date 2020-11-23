@@ -16,7 +16,9 @@ jobs:
             fetch-depth: 0
         - name: Get current branch name
           run: |
-            echo ::set-env name=BRANCH_NAME::$(git rev-parse --abbrev-ref HEAD | cut -d '/' -f1-2)
+            echo 'BRANCH_NAME<<EOF' >> $GITHUB_ENV
+            git rev-parse --abbrev-ref HEAD | cut -d '/' -f1-2 >> $GITHUB_ENV
+            echo 'EOF' >> $GITHUB_ENV
         - name: Find out if jenkins/${{ env.BRANCH_NAME }} exists
           run: |
             echo ::set-env name=BRANCH_EXISTS::$(git branch -r | grep jenkins/${{ env.BRANCH_NAME }})
