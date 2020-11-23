@@ -27,5 +27,15 @@ pipeline {
                 }
             }
         }
+        stage('SQA baseline dynamic stages') {
+            steps {
+                build 'eosc-synergy-org/sqaaas-api-spec/prototype%252F1.0'
+            }
+            post {
+                cleanup {
+                    cleanWs()
+                }
+            }
+        }
     }
 }
