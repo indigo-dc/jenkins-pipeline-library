@@ -13,25 +13,25 @@ class GitLocalBranch extends Git implements Serializable {
     private static final long serialVersionUID = 0L
 
     @Override
-    def checkoutRepository() {
-        config += [
+    def checkoutRepository(config) {
+        config = transformGitSCM([
                 branches: steps.scm.branches,
                 extensions: steps.scm.extensions + [$class: 'LocalBranch', localBranch: '**'],
                 userRemoteConfigs: steps.scm.userRemoteConfigs
-            ]
-        super.checkoutRepository()
+            ])
+        super.checkoutRepository(config)
     }
 
     @Override
-    def checkoutRepository(String repository, String branch='master', String credentialsId) {
-        config += [
+    def checkoutRepository(config, String repository, String branch='master', String credentialsId) {
+        config = transformGitSCM([
                 branches: [[name: "*/${branch}"]],
                 extensions: steps.scm.extensions +
                             [$class: 'RelativeTargetDirectory', relativeTargetDir: '.'] +
                             [$class: 'LocalBranch', localBranch: '**'],
                 userRemoteConfigs: steps.scm.userRemoteConfigs + [url: repository, credentialsId: credentialsId]
-            ]
-        super.checkoutRepository()
+            ])
+        super.checkoutRepository(config)
     }
 
 }
