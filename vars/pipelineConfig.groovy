@@ -10,7 +10,7 @@ import eu.indigo.scm.Git
 import eu.indigo.scm.GitLocalBranch
 
 def call(
-    Maps args,
+    Map args,
     String configFile='./.sqa/config.yml',
     String baseRepository=null,
     String baseBranch=null,
