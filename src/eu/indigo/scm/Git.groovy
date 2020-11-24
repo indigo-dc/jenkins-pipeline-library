@@ -30,12 +30,13 @@ class Git extends JenkinsDefinitions implements Serializable {
     }
 
     def checkoutRepository(config, String repository, String branch='master', String credentialsId) {
-        config = transformGitSCM([
+        checkoutRepository(
+            config + transformGitSCM([
                 branches: [[name: "*/${branch}"]],
                 extensions: steps.scm.extensions + [$class: 'RelativeTargetDirectory', relativeTargetDir: '.'],
                 userRemoteConfigs: steps.scm.userRemoteConfigs + [url: repository, credentialsId: credentialsId]
             ])
-        checkoutRepository(config)
+        )
     }
 
 }
