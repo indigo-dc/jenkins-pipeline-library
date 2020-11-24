@@ -25,7 +25,14 @@ pipeline {
                 }
             }
         }
-        stage('Trigger <sqaaas-api-spec> JePL pipeline') {
+        stage('Use case validation: <sqaaas-api-spec>') {
+            when {
+                anyOf {
+                    branch 'release/*'
+                    branch 'feature/*'
+                    branch 'fix/*'
+                }
+            }
             steps {
                 build 'eosc-synergy-org/sqaaas-api-spec/prototype%252F1.0'
             }
