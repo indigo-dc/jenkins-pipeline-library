@@ -18,12 +18,6 @@ class Git extends JenkinsDefinitions implements Serializable {
     */
     Git(steps) {
         super(steps)
-        this.config = [
-                 branches: steps.scm.branches,
-                 doGenerateSubmoduleConfigurations: steps.scm.doGenerateSubmoduleConfigurations,
-                 extensions: steps.scm.extensions,
-                 userRemoteConfigs: steps.scm.userRemoteConfigs
-            ]
     }
 
     @NonCPS
