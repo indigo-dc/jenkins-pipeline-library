@@ -149,7 +149,7 @@ Each requirement has a unique identifier and an associated set of mandatory and
 optional attributes.
 
 :Type: ``map``
-:Parameters: ``qc_style``, ``qc_functional``, ``qc_coverage``, ``qc_security``, ``qc_doc``
+:Parameters: ``qc_style``, ``qc_functional``, ``qc_unit``, ``qc_security``, ``qc_doc``
 :Required: ``true``
 
 Example:
@@ -179,7 +179,7 @@ is summarized as follows:
 +=================+=======================+
 | qc_style        | QC.Sty                |
 +-----------------+-----------------------+
-| qc_coverage     | QC.Uni                |
+| qc_unit         | QC.Uni                |
 +-----------------+-----------------------+
 | qc_functional   | QC.Fun                |
 +-----------------+-----------------------+
@@ -215,12 +215,12 @@ as showed in the following examples.
                         testenv:
                             - stylecheck
 
-        .. tab:: qc_coverage
+        .. tab:: qc_unit
 
            .. code-block:: yaml
 
               sqa_criteria:
-                qc_coverage:
+                qc_unit:
                   repos:
                     worsica-processing:
                       container: processing

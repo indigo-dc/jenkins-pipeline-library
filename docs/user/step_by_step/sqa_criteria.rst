@@ -12,7 +12,7 @@ the following table and can be found in the :ref:`sqa_criteria` section.
 +=============================+========================================================================+
 | ``qc_style``                | Make your code compliant with a style standard                         |
 +-----------------------------+------------------------------------------------------------------------+
-| ``qc_coverage``             | Calculate the unit testing coverage of your code                       |
+| ``qc_unit``                 | Calculate the unit testing coverage of your code                       |
 +-----------------------------+------------------------------------------------------------------------+
 | ``qc_functional``           | Test the main features of your software                                |
 +-----------------------------+------------------------------------------------------------------------+
@@ -168,7 +168,7 @@ Python with ``commands``
                  repo: 'https://github.com/myorg/myrepo'
 
             sqa_criteria:
-              qc_coverage:
+              qc_unit:
                 repos:
                   myrepo:
                     container: myrepo-testing
@@ -209,7 +209,7 @@ Java with ``commands``
                  repo: 'https://github.com/myorg/myrepo'
 
             sqa_criteria:
-              qc_coverage:
+              qc_unit:
                 repos:
                   myrepo:
                     container: myrepo-testing-java
