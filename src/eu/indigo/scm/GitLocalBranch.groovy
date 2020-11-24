@@ -14,7 +14,7 @@ class GitLocalBranch extends Git implements Serializable {
 
     @Override
     def checkoutRepository() {
-        config = [
+        config += [
                 branches: steps.scm.branches,
                 extensions: steps.scm.extensions + [$class: 'LocalBranch', localBranch: '**'],
                 userRemoteConfigs: steps.scm.userRemoteConfigs
@@ -24,7 +24,7 @@ class GitLocalBranch extends Git implements Serializable {
 
     @Override
     def checkoutRepository(String repository, String branch='master', String credentialsId) {
-        config = [
+        config += [
                 branches: [[name: "*/${branch}"]],
                 extensions: steps.scm.extensions +
                             [$class: 'RelativeTargetDirectory', relativeTargetDir: '.'] +

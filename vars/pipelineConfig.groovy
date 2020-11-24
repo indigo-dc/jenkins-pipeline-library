@@ -17,9 +17,14 @@ def call(
     String validatorDockerImage='eoscsynergy/jpl-validator:1.1.0',
     String... args) {
 
-    def scmCheckout = {
-            def config = scm
+    def scmCheckout = { config ->
+        if (baseRepository) {
+            checkoutRepository(baseRepository, baseBranch, credentialsId)
         }
+        else {
+            checkoutRepository()
+        }
+    }
     scmCheckout.resolveStrategy = Closure.DELEGATE_FIRST
 
     if (args.length > 0 && args.localBranch) {
@@ -28,7 +33,7 @@ def call(
     else {
         scmCheckout.delegate = new Git(this)
     }
-    runScm(scmCheckout, baseRepository, baseBranch, credentialsId)
+    scmCheckout(scm)
 
     def yaml = readYaml file: configFile
     def buildNumber = Integer.parseInt(env.BUILD_ID)
@@ -62,13 +67,4 @@ def validate(String configFile, String validatorDockerImage) {
     def cmd = "docker pull $validatorDockerImage &&" +
               'docker run --rm -v "$PWD:/sqa" ' + "$validatorDockerImage /sqa/${configFile}"
     return sh(returnStatus: true, script: cmd)
-}
-
-def runScm(scmCheckout, baseRepository, baseBranch, credentialsId) {
-    if (baseRepository) {
-        scmCheckout.checkoutRepository(baseRepository, baseBranch, credentialsId)
-    }
-    else {
-        scmCheckout.checkoutRepository()
-    }
 }
