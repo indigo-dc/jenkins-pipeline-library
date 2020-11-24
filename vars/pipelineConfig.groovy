@@ -19,12 +19,12 @@ def call(
         localBranch: false
     ]) {
 
-    def scmCheckout = { config ->
+    def scmCheckout = { ->
         if (baseRepository) {
-            checkoutRepository(config, baseRepository, baseBranch, credentialsId)
+            checkoutRepository(baseRepository, baseBranch, credentialsId)
         }
         else {
-            checkoutRepository(config)
+            checkoutRepository()
         }
     }
     scmCheckout.resolveStrategy = Closure.DELEGATE_FIRST
