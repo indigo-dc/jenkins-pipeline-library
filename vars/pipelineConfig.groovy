@@ -10,19 +10,19 @@ import eu.indigo.scm.Git
 import eu.indigo.scm.GitLocalBranch
 
 def call(
-    Map args,
     String configFile='./.sqa/config.yml',
     String baseRepository=null,
     String baseBranch=null,
     String credentialsId=null,
-    String validatorDockerImage='eoscsynergy/jpl-validator:1.1.0') {
+    String validatorDockerImage='eoscsynergy/jpl-validator:1.1.0',
+    String... args) {
 
     def scmCheckout = {
             def config = scm
         }
     scmCheckout.resolveStrategy = Closure.DELEGATE_FIRST
 
-    if (args.localBranch) {
+    if (args.length > 0 && args.localBranch) {
         scmCheckout.delegate = new GitLocalBranch(this)
     }
     else {
