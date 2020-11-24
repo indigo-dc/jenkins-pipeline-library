@@ -15,7 +15,9 @@ def call(
     String baseBranch=null,
     String credentialsId=null,
     String validatorDockerImage='eoscsynergy/jpl-validator:1.1.0',
-    String... args) {
+    Map scmConfigs = [
+        localBranch: false
+    ]) {
 
     def scmCheckout = { config ->
         if (baseRepository) {
@@ -27,7 +29,7 @@ def call(
     }
     scmCheckout.resolveStrategy = Closure.DELEGATE_FIRST
 
-    if (args.length > 0 && args.localBranch) {
+    if (scmConfigs.localBranch) {
         scmCheckout.delegate = new GitLocalBranch(this)
     }
     else {
