@@ -40,4 +40,4 @@ jobs:
             printf "`cat Jenkinsfile`" "${{ env.BRANCH_NAME }}" > Jenkinsfile
             git add Jenkinsfile
             git status
-            git diff-index --quiet HEAD || (git commit -m "Added JePL configuration files" && git push)
+            git diff-index --quiet HEAD || (git commit -m "Added JePL configuration files" && git push -f)
