@@ -29,7 +29,7 @@ def call(
     }
     scmCheckout.resolveStrategy = Closure.DELEGATE_FIRST
 
-    if (scmConfigs.localBranch) {
+    if (scmConfigs?.localBranch) {
         scmCheckout.delegate = new GitLocalBranch(this)
     }
     else {
