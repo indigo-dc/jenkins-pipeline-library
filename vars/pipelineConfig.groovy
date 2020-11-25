@@ -6,15 +6,37 @@ import eu.indigo.compose.ComposeFactory
 import eu.indigo.compose.ComposeFactoryBuilder
 import eu.indigo.compose.DockerCompose
 import eu.indigo.Tox
+import eu.indigo.scm.Git
+import eu.indigo.scm.GitLocalBranch
 
 def call(
     String configFile='./.sqa/config.yml',
     String baseRepository=null,
     String baseBranch=null,
     String credentialsId=null,
-    String validatorDockerImage='eoscsynergy/jpl-validator:1.1.0') {
+    String validatorDockerImage='eoscsynergy/jpl-validator:1.1.0',
+    Map scmConfigs = [
+        localBranch: false
+    ]) {
 
-    checkoutRepository(baseRepository, baseBranch, credentialsId)
+    def scmCheckout = { ->
+        if (baseRepository) {
+            checkoutRepository(baseRepository, baseBranch, credentialsId)
+        }
+        else {
+            checkoutRepository()
+        }
+    }
+    scmCheckout.resolveStrategy = Closure.DELEGATE_FIRST
+
+    if (scmConfigs?.localBranch) {
+        scmCheckout.delegate = new GitLocalBranch(this)
+    }
+    else {
+        scmCheckout.delegate = new Git(this)
+    }
+    scmCheckout(scm)
+
     def yaml = readYaml file: configFile
     def buildNumber = Integer.parseInt(env.BUILD_ID)
     ProjectConfiguration projectConfig = null
@@ -47,17 +69,4 @@ def validate(String configFile, String validatorDockerImage) {
     def cmd = "docker pull $validatorDockerImage &&" +
               'docker run --rm -v "$PWD:/sqa" ' + "$validatorDockerImage /sqa/${configFile}"
     return sh(returnStatus: true, script: cmd)
-}
-
-def checkoutRepository(String repository, String branch='master', String credentialsId) {
-    if (repository) {
-        checkout([
-            $class: 'GitSCM',
-            branches: [[name: "*/${branch}"]],
-            extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '.']],
-            userRemoteConfigs: [[url: repository, credentialsId: credentialsId]]])
-    }
-    else {
-        checkout scm
-    }
 }
