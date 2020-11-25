@@ -20,6 +20,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     String _f = '-f'
     String _w = '--project-directory'
+    String _ipf = '--ignore-push-failures'
+    String _b = '--build'
 
 
     /**
@@ -177,15 +179,40 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * Run docker compose up
     *
     * @param serviceIds String with list of Service names separated by spaces to start [default]
+    * @param args.forceBuild If defined will force the build of all images in docker-compose.yml
     * @param args.composeFile Docker compose file to override the default docker-compose.yml [default]
     * @param args.workdir Path to workdir directory for this command
     * @see https://docs.docker.com/compose/reference/up/
     * @see https://docs.docker.com/compose/reference/overview/
     */
     def composeUp(Map args, String serviceIds='') {
-        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " up -d $serviceIds"
+        String buildFlag = testString(args.forceBuild) ? _b : ''
+        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " up $buildFlag -d $serviceIds"
 
-        steps.sh "docker-compose  $cmd"
+        steps.sh "docker-compose $cmd"
+    }
+
+    /**
+    * Run docker compose push
+    *
+    * @param serviceIds String with list of Service names separated by spaces to start [default]
+    * @param ignoreFailures Will ignore push failures if a string is defined.
+    * @param args.registryServer Define the server name and port to connect (example: localhost:8080)
+    * @param args.username Docker registry username
+    * @param args.password Docker registry password
+    * @param args.composeFile Docker compose file to override the default docker-compose.yml [default]
+    * @param args.workdir Path to workdir directory for this command
+    * @see https://docs.docker.com/compose/reference/up/
+    */
+    def composePush(Map args, String serviceIds, String ignoreFailures='') {
+        String registryServer = testString(args.registryServer) ? args.registryServer : ''
+        String serviceCmd = serviceIds.equalsIgnoreCase('all') ? '' : serviceIds
+        String failuresFlag = testString(ignoreFailures) ? _ipf : ''
+        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " push $failuresFlag $serviceCmd"
+
+        steps.sh "docker login -u \"${args?.username}\" -p \"${args?.password}\" ${registryServer}"
+        steps.sh "docker-compose $cmd"
+        steps.sh "docker logout ${registryServer}"
     }
 
     /**
@@ -238,8 +265,13 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/exec/
     */
     def composeToxRun(Map args, String service, String testenv, Tox tox) {
+        if (_DEBUG_) { steps.echo "** composeToxRun() **" }
+
+        String credsVars = getCredsVars()
+        if (_DEBUG_) { steps.echo "service: ${service}\ntestenv: ${testenv}\ntoxFile: " + escapeWhitespace(args.toxFile) + "\ncredsVars: $credsVars" }
+        if (_DEBUG_) { steps.echo "tox command: " + tox.runEnv(testenv, toxFile: escapeWhitespace(args.toxFile)) }
         String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + ' exec -T ' +
-                     + getCredsVars() + " $service " + tox.runEnv(testenv, toxFile: escapeWhitespace(args.toxFile))
+                     " $credsVars $service " + tox.runEnv(testenv, toxFile: escapeWhitespace(args.toxFile))
         steps.sh "docker-compose $cmd"
     }
 
@@ -277,6 +309,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         if (_DEBUG_) { steps.echo "workspace path: $workspace" }
         if (_DEBUG_) { steps.sh 'echo "before loading credentials:\n$(env)"' }
 
+        // Load debug settings defined in JenkinsDefinitions before starting the scripted pipeline
+        debugSettings()
+
         // Environment setup
         steps.stage("Environment Setup") {
             // Checkout repositories to workspace with defined repository name
@@ -294,17 +329,36 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         try {
             // Run SQA stages
             List credentials = projectConfig.config.credentials
-            projectConfig.stagesList.each { stageMap ->
-                withCredentialsClosure(credentials) {
-                    // Deploy the environment services using docker-compose
-                    composeUp(composeFile: projectConfig.config.deploy_template, workdir: workspace)
+            withCredentialsClosure(credentials) {
+                // Deploy the environment services using docker-compose
+                composeUp(composeFile: projectConfig.config.deploy_template, workdir: workspace, forceBuild: steps.env.JPL_DOCKERFORCEBUILD)
+                
+                if (_DEBUG_) { steps.sh 'echo "after loading credentials:\n$(env)"' }
 
-                    if (_DEBUG_) { steps.sh 'echo "after loading credentials:\n$(env)"' }
+                projectConfig.stagesList.each { stageMap ->
                     // Run the defined steps
                     runExecSteps(stageMap, projectConfig, workspace)
                 }
+
+                // Push docker images to registry
+                if (steps.env.JPL_DOCKERPUSH) {
+                    steps.stage('Push Images to Docker Registry') {
+                        composePush(composeFile: projectConfig.config.deploy_template, workdir: workspace, registryServer: steps.env.JPL_DOCKERSERVER, username: steps.env.JPL_DOCKERUSER, password: steps.env.JPL_DOCKERPASS, steps.env.JPL_DOCKERPUSH, steps.env.JPL_IGNOREFAILURES)
+                    }
+                }
             }
         } finally {
+            // Review execution before exit if debug mode enabled
+            if (_WORKSPACEDEBUG_) {
+                try {
+                    steps.timeout(time: _WORKSPACEDEBUGTIMEOUT_, unit: _WORKSPACEDEBUGUNIT_) {
+                        steps.input message: "Click finish after reviewing the current job (will automatically finish in ${_WORKSPACEDEBUGTIMEOUT_} ${_WORKSPACEDEBUGUNIT_}).", ok: 'finish'
+                    }
+                } catch(org.jenkinsci.plugins.workflow.steps.FlowInterruptedException ex) {
+                    steps.echo "Cleaning workspace after timeout expired..."
+                }
+            }
+
             // Clean docker-compose deployed environment
             steps.stage('Docker Compose cleanup') {
                 composeDown(composeFile: projectConfig.config.deploy_template, workdir: workspace)
