@@ -29,9 +29,9 @@ pipeline {
         stage('Use case validation: <sqaaas-api-spec>') {
             when {
                 anyOf {
-                    branch 'release/*'
-                    branch 'feature/*'
-                    branch 'fix/*'
+                    branch 'jenkins/release/*'
+                    branch 'jenkins/feature/*'
+                    branch 'jenkins/fix/*'
                 }
             }
             steps {
