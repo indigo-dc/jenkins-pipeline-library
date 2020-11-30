@@ -35,7 +35,7 @@ def call(
     else {
         scmCheckout.delegate = new Git(this)
     }
-    scmCheckout(scm)
+    scmCheckout()
 
     def yaml = readYaml file: configFile
     def buildNumber = Integer.parseInt(env.BUILD_ID)

@@ -14,6 +14,7 @@ class GitLocalBranch extends Git implements Serializable {
 
     @Override
     def checkoutRepository() {
+        if (_DEBUG_) { steps.echo "** GitLocalBranch.checkoutRepository() **" }
         steps.checkout transformGitSCM([
                 branches: steps.scm.branches,
                 extensions: steps.scm.extensions + [$class: 'LocalBranch', localBranch: '**'],
@@ -23,6 +24,7 @@ class GitLocalBranch extends Git implements Serializable {
 
     @Override
     def checkoutRepository(String repository, String branch='master', String credentialsId) {
+        if (_DEBUG_) { steps.echo "** Git.checkoutRepository($repository, $branch, $credentialsId) **" }
         steps.checkout transformGitSCM([
                 branches: [[name: "*/${branch}"]],
                 extensions: steps.scm.extensions +
