@@ -123,7 +123,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
 
     def getNodeAgent(yaml) {
         if (_DEBUG_) { steps.echo "** getNodeAgent() **" }
-        configToClass[(yaml.config.node_agent == null) ? DEFAULT_AGENT : yaml.config.node_agent]
+        configToClass[(yaml.config?.node_agent == null) ? DEFAULT_AGENT : yaml.config.node_agent]
     }
 
     def getCredentialType(Map creds) {
