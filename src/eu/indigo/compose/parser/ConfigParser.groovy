@@ -93,6 +93,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     }
 
     Map merge(Map[] sources) {
+        if (_DEBUG_) { steps.echo "** merge(): ${sources}**" }
         switch (sources.length) {
             case 0:
                 return [:]
