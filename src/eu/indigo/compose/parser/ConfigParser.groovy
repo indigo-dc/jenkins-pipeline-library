@@ -93,6 +93,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     }
 
     Map merge(Map[] sources) {
+        if (_DEBUG_) { steps.echo "** merge(): ${sources}**" }
         switch (sources.length) {
             case 0:
                 return [:]
@@ -147,7 +148,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
 
     Map getConfigSetting(Map config) {
         if (_DEBUG_) { steps.echo "** getConfigSetting() **" }
-        def configBase = merge(getDefaultValue('config'), config)
+        def configBase = config ? merge(getDefaultValue('config'), config) : merge(getDefaultValue('config'))
         def configRepos = [
             project_repos: configBase['project_repos']
                 ?.collectEntries { id, repo ->
