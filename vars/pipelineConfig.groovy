@@ -38,7 +38,7 @@ def call(
     scmConfigs = scmConfigsDefault + scmConfigs
 
     def scmCheckout = { ->
-        if (baseRepository) {
+        if (configs?.baseRepository) {
             checkoutRepository(configs?.baseRepository, configs?.baseBranch, configs?.credentialsId)
         }
         else {
