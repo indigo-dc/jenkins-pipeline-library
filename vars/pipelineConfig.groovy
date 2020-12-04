@@ -17,8 +17,8 @@ def call(
         credentialsId: null,
         validatorDockerImage: 'eoscsynergy/jpl-validator:1.1.0',
         scmConfigs: [
-            localBranch: false
-            ]
+            localBranch: false,
+            ],
         ]
     ) {
 
