@@ -5,3 +5,4 @@
 !.gitignore
 !.sqa/*
 !Jenkinsfile
+!patch.issue_116
