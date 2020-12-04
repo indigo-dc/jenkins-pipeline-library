@@ -25,7 +25,8 @@ def call(
     Map scmConfigsDefault = [
         localBranch: false
         ]
-    Map scmConfigs = scmConfigsDefault + configs?.scmConfigs
+    Map scmConfigs = configs ? scmConfigsDefault + configs?.scmConfigs :
+                               scmConfigsDefault
 
     Map configsDefault = [
         configFile: './.sqa/config.yml',
@@ -35,7 +36,8 @@ def call(
         validatorDockerImage: 'eoscsynergy/jpl-validator:1.1.0',
         scmConfigs: scmConfigs,
         ]
-    configs = configsDefault + configs
+    configs = configs ? configsDefault + configs :
+                        configsDefault
 
     def scmCheckout = { ->
         if (configs?.baseRepository) {
