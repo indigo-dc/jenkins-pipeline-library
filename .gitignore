@@ -1,0 +1,7 @@
+# Ignore all ..
+*
+
+# but the JePL files ..
+!.gitignore
+!.sqa/*
+!Jenkinsfile
