@@ -10,12 +10,7 @@ pipeline {
             steps {
                 script {
                     projectConfig = pipelineConfig(
-                        './.sqa/config.yml',
-                        null,
-                        null,
-                        null,
-                        'eoscsynergy/jpl-validator:jib-with-jpl',
-			[ localBranch: true ]
+                        [ localBranch: true ]
                     )
                     buildStages(projectConfig)
                 }
