@@ -55,7 +55,7 @@ def call(
     }
     scmCheckout()
 
-    def yaml = readYaml file: configFile
+    def yaml = readYaml file: configs.configFile
     def buildNumber = Integer.parseInt(env.BUILD_ID)
     ProjectConfiguration projectConfig = null
 
