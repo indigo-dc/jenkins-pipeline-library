@@ -15,7 +15,7 @@ class GitLocalBranch extends Git implements Serializable {
     @Override
     def checkoutRepository() {
         if (_DEBUG_) { steps.echo "** GitLocalBranch.checkoutRepository() **" }
-        steps.checkout transformGitSCM(checkout([
+        steps.checkout transformGitSCM([
             branches: steps.scm.branches,
             doGenerateSubmoduleConfigurations: steps.scm.doGenerateSubmoduleConfigurations,
             extensions: steps.scm.extensions + [$class: 'LocalBranch', localBranch: '**'],
@@ -25,7 +25,7 @@ class GitLocalBranch extends Git implements Serializable {
                 refspec: '+refs/heads/*:refs/remotes/origin/*',
                 url: steps.scm.userRemoteConfigs[0].url
             ]],
-        ]))
+        ])
     }
 
     @Override
