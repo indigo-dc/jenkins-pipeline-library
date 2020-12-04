@@ -38,7 +38,7 @@ jobs:
             git reset --hard origin/${{ env.BRANCH_NAME }}
             git cherry-pick 1e0df9a4b7af04efb08e90e6c764c8c11b49bafc # FIXME Work around until https://github.com/indigo-dc/jenkins-pipeline-library/issues/116 is fixed
             git checkout origin/JePL .sqa/config.yml .sqa/docker-compose.yml Jenkinsfile .git_credential_helper.sh
-            printf "`cat Jenkinsfile`" "${{ env.BRANCH_NAME }}" > Jenkinsfile
+            printf "`cat Jenkinsfile`" "jenkins/${{ env.BRANCH_NAME }}" > Jenkinsfile
             git add Jenkinsfile
             git status
             git diff-index --quiet HEAD || (git commit -m "Added JePL configuration files" && git push -f)
