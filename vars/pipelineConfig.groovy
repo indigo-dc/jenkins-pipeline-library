@@ -15,27 +15,27 @@ def call(
         baseRepository: null,
         baseBranch: null,
         credentialsId: null,
-        validatorDockerImage: 'eoscsynergy/jpl-validator:1.1.0'
-        ],
-    Map scmConfigs = [
-        localBranch: false
+        validatorDockerImage: 'eoscsynergy/jpl-validator:1.1.0',
+        scmConfigs: [
+            localBranch: false
+            ]
         ]
     ) {
 
-    configsDefault = [
+    Map scmConfigsDefault = [
+        localBranch: false
+        ]
+    Map scmConfigs = scmConfigsDefault + configs?.scmConfigs
+
+    Map configsDefault = [
         configFile: './.sqa/config.yml',
         baseRepository: null,
         baseBranch: null,
         credentialsId: null,
-        validatorDockerImage: 'eoscsynergy/jpl-validator:1.1.0'
+        validatorDockerImage: 'eoscsynergy/jpl-validator:1.1.0',
+        scmConfigs: scmConfigs,
         ]
-
-    scmConfigsDefault = [
-        localBranch: false
-        ]
-
     configs = configsDefault + configs
-    scmConfigs = scmConfigsDefault + scmConfigs
 
     def scmCheckout = { ->
         if (configs?.baseRepository) {
@@ -47,7 +47,7 @@ def call(
     }
     scmCheckout.resolveStrategy = Closure.DELEGATE_FIRST
 
-    if (scmConfigs?.localBranch) {
+    if (configs?.scmConfigs?.localBranch) {
         scmCheckout.delegate = new GitLocalBranch(this)
     }
     else {
