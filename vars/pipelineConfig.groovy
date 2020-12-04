@@ -10,18 +10,36 @@ import eu.indigo.scm.Git
 import eu.indigo.scm.GitLocalBranch
 
 def call(
-    String configFile='./.sqa/config.yml',
-    String baseRepository=null,
-    String baseBranch=null,
-    String credentialsId=null,
-    String validatorDockerImage='eoscsynergy/jpl-validator:1.1.0',
+    Map configs=[
+        configFile: './.sqa/config.yml',
+        baseRepository: null,
+        baseBranch: null,
+        credentialsId: null,
+        validatorDockerImage: 'eoscsynergy/jpl-validator:1.1.0'
+        ],
     Map scmConfigs = [
         localBranch: false
-    ]) {
+        ]
+    ) {
+
+    configsDefault = [
+        configFile: './.sqa/config.yml',
+        baseRepository: null,
+        baseBranch: null,
+        credentialsId: null,
+        validatorDockerImage: 'eoscsynergy/jpl-validator:1.1.0'
+        ]
+
+    scmConfigsDefault = [
+        localBranch: false
+        ]
+
+    configs = configsDefault + configs
+    scmConfigs = scmConfigsDefault + scmConfigs
 
     def scmCheckout = { ->
-        if (baseRepository) {
-            checkoutRepository(baseRepository, baseBranch, credentialsId)
+        if (configs?.baseRepository) {
+            checkoutRepository(configs?.baseRepository, configs?.baseBranch, configs?.credentialsId)
         }
         else {
             checkoutRepository()
@@ -37,12 +55,12 @@ def call(
     }
     scmCheckout()
 
-    def yaml = readYaml file: configFile
+    def yaml = readYaml file: configs.configFile
     def buildNumber = Integer.parseInt(env.BUILD_ID)
     ProjectConfiguration projectConfig = null
 
     try {
-        invalidMessages = validate(configFile, validatorDockerImage)
+        invalidMessages = validate(configs?.configFile, configs?.validatorDockerImage)
     } catch (GroovyRuntimeException e) {
         error "ConfigValidation have a runtime exception with status:\n$e"
     }
