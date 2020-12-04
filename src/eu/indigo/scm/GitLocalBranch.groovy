@@ -30,7 +30,7 @@ class GitLocalBranch extends Git implements Serializable {
                 extensions: steps.scm.extensions +
                             [$class: 'RelativeTargetDirectory', relativeTargetDir: '.'] +
                             [$class: 'LocalBranch', localBranch: '**'],
-                userRemoteConfigs: steps.scm.userRemoteConfigs + [url: repository, credentialsId: credentialsId]
+                userRemoteConfigs: [[url: repository, credentialsId: credentialsId]]
             ])
     }
 
