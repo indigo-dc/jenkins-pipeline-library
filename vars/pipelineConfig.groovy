@@ -25,8 +25,8 @@ def call(
     Map scmConfigsDefault = [
         localBranch: false
         ]
-    Map scmConfigs = configs ? scmConfigsDefault + configs?.scmConfigs :
-                               scmConfigsDefault
+    Map scmConfigs = configs?.scmConfigs ? scmConfigsDefault + configs?.scmConfigs :
+                                           scmConfigsDefault
 
     Map configsDefault = [
         configFile: './.sqa/config.yml',
