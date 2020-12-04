@@ -38,5 +38,22 @@ pipeline {
                 }
             }
         }
+        stage('Use case validation: <jpl-validator>') {
+            when {
+                anyOf {
+                    branch 'jenkins/release/*'
+                    branch 'jenkins/feature/*'
+                    branch 'jenkins/fix/*'
+                }
+            }
+            steps {
+                build 'eosc-synergy-org/jpl-validator/master'
+            }
+            post {
+                cleanup {
+                    cleanWs()
+                }
+            }
+        }
     }
 }
