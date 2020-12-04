@@ -17,8 +17,8 @@ class GitLocalBranch extends Git implements Serializable {
         if (_DEBUG_) { steps.echo "** GitLocalBranch.checkoutRepository() **" }
         steps.checkout transformGitSCM([
                 branches: steps.scm.branches,
-                extensions: steps.scm.extensions + [$class: 'LocalBranch', localBranch: '**'],
-                userRemoteConfigs: [[credentialsId: steps.scm.userRemoteConfigs[0].credentialsId, url: steps.scm.userRemoteConfigs[0].url, name: 'origin', refspec: '+refs/heads/*:refs/remotes/origin/*']]
+                extensions: steps.scm.extensions + localBranch('**'),
+                userRemoteConfigs: userRemoteConfigs(steps.scm.userRemoteConfigs[0].url, 'origin', '+refs/heads/*:refs/remotes/origin/*', steps.scm.userRemoteConfigs[0].credentialsId)
             ])
     }
 
@@ -26,11 +26,9 @@ class GitLocalBranch extends Git implements Serializable {
     def checkoutRepository(String repository, String branch='master', String credentialsId) {
         if (_DEBUG_) { steps.echo "** Git.checkoutRepository($repository, $branch, $credentialsId) **" }
         steps.checkout transformGitSCM([
-                branches: [[name: "*/${branch}"]],
-                extensions: steps.scm.extensions +
-                            [$class: 'RelativeTargetDirectory', relativeTargetDir: '.'] +
-                            [$class: 'LocalBranch', localBranch: '**'],
-                userRemoteConfigs: [[url: repository, credentialsId: credentialsId, name: 'origin', refspec: '+refs/heads/*:refs/remotes/origin/*']]
+                branches: branches(["*/${branch}"]),
+                extensions: steps.scm.extensions + relativeTargetDirectory('.') + localBranch('**'),
+                userRemoteConfigs: userRemoteConfigs(repository, 'origin', '+refs/heads/*:refs/remotes/origin/*', credentialsId)
             ])
     }
 

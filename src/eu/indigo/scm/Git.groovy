@@ -18,11 +18,34 @@ class Git extends JenkinsDefinitions implements Serializable {
     */
     Git(steps) {
         super(steps)
+        this.remoteConfigs = []
     }
 
     @NonCPS
     protected def transformGitSCM(config) {
         [ $class: 'GitSCM' ] + config
+    }
+
+    @NonCPS
+    protected def userRemoteConfigs(url, name, refspec, credentialsId) {
+        remoteConfigs += [[url: url, name: name, refspec: refspec, credentialsId: credentialsId]]
+    }
+
+    @NonCPS
+    protected def branches(names) {
+        names.collect { name ->
+            [name: name]
+        }
+    }
+
+    @NonCPS
+    protected def relativeTargetDirectory(relativeTargetDir) {
+        [$class: 'RelativeTargetDirectory', relativeTargetDir: relativeTargetDir]
+    }
+
+    @NonCPS
+    protected def localBranch(localBranch) {
+        [$class: 'LocalBranch', localBranch: localBranch]
     }
 
     def checkoutRepository() {
@@ -32,10 +55,11 @@ class Git extends JenkinsDefinitions implements Serializable {
 
     def checkoutRepository(String repository, String branch='master', String credentialsId) {
         if (_DEBUG_) { steps.echo "** Git.checkoutRepository($repository, $branch, $credentialsId) **" }
+        userRemoteConfigs(repository, '', '', credentialsId)
         steps.checkout transformGitSCM([
-                branches: [[name: "*/${branch}"]],
-                extensions: steps.scm.extensions + [$class: 'RelativeTargetDirectory', relativeTargetDir: '.'],
-                userRemoteConfigs: [[url: repository, credentialsId: credentialsId]]
+                branches: branches(["*/${branch}"]),
+                extensions: steps.scm.extensions + relativeTargetDirectory('.'),
+                userRemoteConfigs: remoteConfigs
             ])
     }
 
