@@ -382,7 +382,7 @@ Example:
    +----------------------+------------------------------------------------------------------+
    | JPL vars             | Purpose                                                          |
    +======================+==================================================================+
-   | JPL_DOCKERPUSH       | Space-separated list of services whose referenced images will    |
+   | JPL_DOCKERPUSH       | Space-separated list of defined docker-compose services whose image will  |
    |                      | be pushed to the Docker registry. If ``ALL`` value is used, it   |
    |                      | will push all locally built images defined in docker-compose.yml |
    +----------------------+------------------------------------------------------------------+
@@ -420,7 +420,7 @@ docker registry is supported using the following environment variables:
 +----------------------+------------------------------------------------------------------+
 | JPL vars             | Purpose                                                          |
 +======================+==================================================================+
-| JPL_DOCKERPUSH       | Space-separated list of services whose referenced images will    |
+| JPL_DOCKERPUSH       | Space-separated list of defined docker-compose services whose image will |
 |                      | be pushed to the Docker registry. If ``ALL`` value is used, it   |
 |                      | will push all locally built images defined in docker-compose.yml |
 +----------------------+------------------------------------------------------------------+
@@ -434,22 +434,19 @@ docker registry is supported using the following environment variables:
 | JPL_DOCKERPASS       | Sets password of Docker registry credentials                     |
 +----------------------+------------------------------------------------------------------+
 
-Example1: upload specific service images to dockerhub registry ignoring failures
+.. note::
+  Images are defined in docker-compose.yml file and there is no relation of those with defined service names.
+  Also the docker registry repository needs to be previously created before running the last step of the generated pipeline. Last step will be always the image push to docker registry.
+  In next examples the sqa_criteria property is being omitted to focus only in the required configurations to push images to a docker registry. Also project_repos in config section is being removed since is not mandatory, so it turns the examples more clear.
+  Jenkins environment variable ${GIT_BRANCH} receives the branch or tag from git repository.
+
+Example1: upload specific images to dockerhub registry ignoring failures
+
+config.yml example with minimal required configurations:
 
 .. code-block:: yaml
 
    config:
-     project_repos:
-       docs:
-         repo: 'https://github.com/myOrganization/docs'
-       service1:
-         repo: 'https://github.com/myOrganization/service1'
-       service2:
-         repo: 'https://github.com/myOrganization/service2'
-       service3:
-         repo: 'https://github.com/myOrganization/service3'
-       service4:
-         repo: 'https://github.com/myOrganization/service4'
      credentials:
        - id: my-dockerhub-token
          username_var: JPL_DOCKERUSER
@@ -459,22 +456,46 @@ Example1: upload specific service images to dockerhub registry ignoring failures
      JPL_DOCKERPUSH: "docs service1 service4"
      JPL_IGNOREFAILURES: "defined"
 
+In this example there are three services:
+
+- service1: main service that have is Dockerfile in the service1 directory inside git repository.
+- service2: same as service1 with Dockerfile inside directory service2 and depends on service1 to be built.
+- docs: service to generate the project documentation.
+
+The docker-compose.yml file that would work with previous configuration can be as the following:
+
+.. code-block:: yaml
+
+   version: "3.7"
+
+   services:
+     service1:
+        build:
+           context: "."
+           dockerfile: "./service1/Dockerfile"
+        image: "organization/service1:${GIT_BRANCH}"
+
+     service2:
+        build:
+           context: "."
+           dockerfile: "./service2/Dockerfile"
+           cache_from:
+              - "organization/service1:${GIT_BRANCH}"
+        image: "organization/service2:${GIT_BRANCH}"
+        depends_on:
+           - service1
+
+     docs:
+        build:
+           context: "."
+           dockerfile: "./docs/Dockerfile"
+        image: "organization/docs:${GIT_BRANCH}"
+
 Example2: upload all images to independent registry and fail with push failures
 
 .. code-block:: yaml
 
    config:
-     project_repos:
-       docs:
-         repo: 'https://github.com/myOrganization/docs'
-       service1:
-         repo: 'https://github.com/myOrganization/service1'
-       service2:
-         repo: 'https://github.com/myOrganization/service2'
-       service3:
-         repo: 'https://github.com/myOrganization/service3'
-       service4:
-         repo: 'https://github.com/myOrganization/service4'
      credentials:
        - id: my-dockerhub-token
          username_var: JPL_DOCKERUSER
@@ -488,3 +509,6 @@ Example2: upload all images to independent registry and fail with push failures
    When using custom docker registry is also expected that docker-compose.yml
    have the expected configuration for the image references, following the official
    `documentation <https://docs.docker.com/compose/compose-file/#image>`_.
+
+.. warning::
+   The docker-compose.yml file for this example could be any. With 'ALL' value it will upload all loaded images to the custom registry. This also includes all images pulled from Dockerhub or other docker registry without a build section defined in docker-compose.yml.
