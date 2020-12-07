@@ -54,11 +54,23 @@ of:
 
    buildStages(projectConfig)
 
-.. note::
+3. Customize the configurations for the pipeline job (advanced options)
+
    The library expects by default the presence of the configuration file in
-   ``.sqa/config.yml``. This behaviour can be changed by passing the path of
-   the file using the ``configFile`` optional argument:
+   ``.sqa/config.yml``. Also other parameters that are set by default from triggered job can be overrode. For current version the supported configurations are configFile, baseRepository, baseBranch, credentialsId, validatorDockerImage and scmConfigs. All of this arguments are optional and don't have any dependency.
 
-   .. code-block::
+.. note::
+   scmConfigs corresponds to extensions options for Jenkins SCM step. In current version is only supported LocalBranch extension for GitSCM class.
 
-      projectConfig = pipelineConfig(configFile=<alternative_path>)
+As an example using all available options, the call to pipelineConfig can be changed to the following:
+
+.. code-block::
+
+   projectConfig = pipelineConfig(
+     configFile: '<alternative_path>',
+     baseRepository: '<git repository url>',
+     baseBranch: '<branch or tag name>',
+     credentialsId: '<Jenkins credential id>',
+     validatorDockerImage: '<jpl-validator docker image>',
+     scmConfigs: [ localBranch: <true or false> ]
+     )
