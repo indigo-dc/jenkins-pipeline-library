@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  sphinx:
+    image: sphinxdoc/docker-ci
+    container_name: sphinx
+    hostname: "jepl-sphinx"
+    volumes:
+     - type: bind
+       source: ./
+       target: /jepl
+    command: sleep infinity
