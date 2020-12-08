@@ -15,21 +15,35 @@ class GitLocalBranch extends Git implements Serializable {
     @Override
     def checkoutRepository() {
         if (_DEBUG_) { steps.echo "** GitLocalBranch.checkoutRepository() **" }
-        steps.checkout transformGitSCM([
-                branches: steps.scm.branches,
-                extensions: steps.scm.extensions + localBranch('**'),
-                userRemoteConfigs: userRemoteConfigs(steps.scm.userRemoteConfigs[0].url, 'origin', '+refs/heads/*:refs/remotes/origin/*', steps.scm.userRemoteConfigs[0].credentialsId)
-            ])
+        userRemoteConfigs(steps.scm.userRemoteConfigs[0].url, 'origin', '+refs/heads/*:refs/remotes/origin/*', steps.scm.userRemoteConfigs[0].credentialsId)
+        extensionsLoader(localBranch('**'))
+        checkoutScm()
     }
 
     @Override
-    def checkoutRepository(String repository, String branch='master', String credentialsId) {
-        if (_DEBUG_) { steps.echo "** Git.checkoutRepository($repository, $branch, $credentialsId) **" }
-        steps.checkout transformGitSCM([
-                branches: branches(["*/${branch}"]),
-                extensions: steps.scm.extensions + relativeTargetDirectory('.') + localBranch('**'),
-                userRemoteConfigs: userRemoteConfigs(repository, 'origin', '+refs/heads/*:refs/remotes/origin/*', credentialsId)
-            ])
+    def checkoutRepository(
+            String repository,
+            String credentialsId,
+            String name='',
+            String refspec='',
+            String branch='master',
+            String targetDirectory='.') {
+        if (_DEBUG_) { steps.echo "** GitLocalBranch.checkoutRepository($repository, $credentialsId, $name, $refspec, $branch, $targetDirectory) **" }
+        extensionsLoader(localBranch('**'))
+        checkoutScm(repository, credentialsId, name, refspec, branch, targetDirectory)
+    }
+
+    def checkoutRepository(
+            String repository,
+            String credentialsId,
+            String name='',
+            String refspec='',
+            String branch='master',
+            String targetDirectory='.',
+            String localBranchName='**') {
+        if (_DEBUG_) { steps.echo "** GitLocalBranch.checkoutRepository($repository, $credentialsId, $name, $refspec, $branch, $localBranchName, $targetDirectory) **" }
+        extensionsLoader(localBranch(localBranchName))
+        checkoutScm(repository, credentialsId, name, refspec, branch, targetDirectory)
     }
 
 }

@@ -12,6 +12,9 @@ class Git extends JenkinsDefinitions implements Serializable {
     private static final long serialVersionUID = 0L
 
     def remoteConfigs
+    def extensions
+    def branches
+    protected def gitObject
 
     /**
     * Define constructor to import definitions from Jenkins context
@@ -20,6 +23,32 @@ class Git extends JenkinsDefinitions implements Serializable {
     Git(steps) {
         super(steps)
         this.remoteConfigs = []
+        this.extensions = steps.scm.extensions
+        this.branches = steps.scm.branches
+    }
+
+    Git(steps, gitObject) {
+        this.Git(steps)
+        this.gitObject = gitObject
+    }
+
+    protected def checkoutScm() {
+        gitObject ? gitObject.checkoutRepository() : checkoutRepository()
+    }
+
+    protected def checkoutScm(
+            String repository,
+            String credentialsId,
+            String name,
+            String refspec,
+            String branch,
+            String targetDirectory) {
+        if (gitObject) {
+            gitObject.checkoutRepository(repository, credentialsId, name, refspec, branch, targetDirectory)
+        }
+        else {
+            checkoutRepository(repository, credentialsId, name, refspec, branch, targetDirectory)
+        }
     }
 
     @NonCPS
@@ -34,7 +63,7 @@ class Git extends JenkinsDefinitions implements Serializable {
 
     @NonCPS
     protected def branches(names) {
-        names.collect { name ->
+        branches = names.collect { name ->
             [name: name]
         }
     }
@@ -49,19 +78,33 @@ class Git extends JenkinsDefinitions implements Serializable {
         [$class: 'LocalBranch', localBranch: localBranch]
     }
 
-    def checkoutRepository() {
-        if (_DEBUG_) { steps.echo "** Git.checkoutRepository() **" }
-        steps.checkout steps.scm
+    @NonCPS
+    protected def extensionsLoader(extension) {
+        extensions += extension
     }
 
-    def checkoutRepository(String repository, String branch='master', String credentialsId) {
-        if (_DEBUG_) { steps.echo "** Git.checkoutRepository($repository, $branch, $credentialsId) **" }
-        userRemoteConfigs(repository, '', '', credentialsId)
+    def checkoutRepository() {
+        if (_DEBUG_) { steps.echo "** Git.checkoutRepository() **" }
+        if (remoteConfigs == []) { remoteConfigs = steps.scm.userRemoteConfigs }
         steps.checkout transformGitSCM([
-                branches: branches(["*/${branch}"]),
-                extensions: steps.scm.extensions + relativeTargetDirectory('.'),
-                userRemoteConfigs: remoteConfigs
+                branches: branches,
+                extensions: extensions,
+                userRemoteConfigs: remoteConfigs,
             ])
+    }
+
+    def checkoutRepository(
+            String repository,
+            String credentialsId,
+            String name='',
+            String refspec='',
+            String branch='master',
+            String targetDirectory='.') {
+        if (_DEBUG_) { steps.echo "** Git.checkoutRepository($repository, $credentialsId, $name, $refspec, $branch, $targetDirectory) **" }
+        userRemoteConfigs(repository, name, refspec, credentialsId)
+        branches(["*/${branch}"])
+        extensionsLoader(relativeTargetDirectory(targetDirectory))
+        checkoutRepository()
     }
 
 }
