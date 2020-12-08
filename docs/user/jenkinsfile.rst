@@ -72,5 +72,12 @@ As an example using all available options, the call to pipelineConfig can be cha
      baseBranch: '<branch or tag name>',
      credentialsId: '<Jenkins credential id>',
      validatorDockerImage: '<jpl-validator docker image>',
-     scmConfigs: [ localBranch: <true or false> ]
+     scmConfigs: [ localBranch: '<local branch name>' ]
      )
+
+.. note::
+   If <local branch name> value is an empty string or "**", then the branch name is computed from the remote branch without the origin. Example:
+   - origin/master will be checked out to local branch named master
+   - origin/feature/new the same into local branch named feature/new
+
+   If given a different value from previous ones, it will checkout into a new branch with provided name.
