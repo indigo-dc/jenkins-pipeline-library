@@ -379,25 +379,25 @@ Example:
 .. note::
    The following JPL-prefixed environment variables have a special purpose:
 
-   +----------------------+------------------------------------------------------------------+
-   | JPL vars             | Purpose                                                          |
-   +======================+==================================================================+
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL vars             | Purpose                                                                   |
+   +======================+===========================================================================+
    | JPL_DOCKERPUSH       | Space-separated list of defined docker-compose services whose image will  |
-   |                      | be pushed to the Docker registry. If ``ALL`` value is used, it   |
-   |                      | will push all locally built images defined in docker-compose.yml |
-   +----------------------+------------------------------------------------------------------+
-   | JPL_IGNOREFAILURES   | If set, by using any random string value (without spaces), it    |
-   |                      | will ignore any push-related failure                             |
-   +----------------------+------------------------------------------------------------------+
-   | JPL_DOCKERFORCEBUILD | Forcedly rebuild all images with build clause in                 |
-   |                      | docker-compose.yml                                               |
-   +----------------------+------------------------------------------------------------------+
-   | JPL_DOCKERSERVER     | Sets Docker registry server. By default it will use Docker Hub   |
-   +----------------------+------------------------------------------------------------------+
-   | JPL_DOCKERUSER       | Sets username of Docker registry credentials                     |
-   +----------------------+------------------------------------------------------------------+
-   | JPL_DOCKERPASS       | Sets password of Docker registry credentials                     |
-   +----------------------+------------------------------------------------------------------+
+   |                      | be pushed to the Docker registry. If ``ALL`` value is used, it            |
+   |                      | will push all locally built images defined in docker-compose.yml          |
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL_IGNOREFAILURES   | If set, by using any random string value (without spaces), it             |
+   |                      | will ignore any push-related failure                                      |
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL_DOCKERFORCEBUILD | Forcedly rebuild all images with build clause in                          |
+   |                      | docker-compose.yml                                                        |
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL_DOCKERSERVER     | Sets Docker registry server. By default it will use Docker Hub            |
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL_DOCKERUSER       | Sets username of Docker registry credentials                              |
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL_DOCKERPASS       | Sets password of Docker registry credentials                              |
+   +----------------------+---------------------------------------------------------------------------+
 
 timeout
 ~~~~~~~
@@ -417,22 +417,22 @@ Docker Registry: upload images
 As mentioned in special purpose environment variables note, pushing images to
 docker registry is supported using the following environment variables:
 
-+----------------------+------------------------------------------------------------------+
-| JPL vars             | Purpose                                                          |
-+======================+==================================================================+
++----------------------+--------------------------------------------------------------------------+
+| JPL vars             | Purpose                                                                  |
++======================+==========================================================================+
 | JPL_DOCKERPUSH       | Space-separated list of defined docker-compose services whose image will |
-|                      | be pushed to the Docker registry. If ``ALL`` value is used, it   |
-|                      | will push all locally built images defined in docker-compose.yml |
-+----------------------+------------------------------------------------------------------+
-| JPL_IGNOREFAILURES   | If set, by using any random string value (without spaces), it    |
-|                      | will ignore any push-related failure                             |
-+----------------------+------------------------------------------------------------------+
-| JPL_DOCKERSERVER     | Sets Docker registry server. By default it will use Docker Hub   |
-+----------------------+------------------------------------------------------------------+
-| JPL_DOCKERUSER       | Sets username of Docker registry credentials                     |
-+----------------------+------------------------------------------------------------------+
-| JPL_DOCKERPASS       | Sets password of Docker registry credentials                     |
-+----------------------+------------------------------------------------------------------+
+|                      | be pushed to the Docker registry. If ``ALL`` value is used, it           |
+|                      | will push all locally built images defined in docker-compose.yml         |
++----------------------+--------------------------------------------------------------------------+
+| JPL_IGNOREFAILURES   | If set, by using any random string value (without spaces), it            |
+|                      | will ignore any push-related failure                                     |
++----------------------+--------------------------------------------------------------------------+
+| JPL_DOCKERSERVER     | Sets Docker registry server. By default it will use Docker Hub           |
++----------------------+--------------------------------------------------------------------------+
+| JPL_DOCKERUSER       | Sets username of Docker registry credentials                             |
++----------------------+--------------------------------------------------------------------------+
+| JPL_DOCKERPASS       | Sets password of Docker registry credentials                             |
++----------------------+--------------------------------------------------------------------------+
 
 .. note::
   Images are defined in docker-compose.yml file and there is no relation of those with defined service names.
