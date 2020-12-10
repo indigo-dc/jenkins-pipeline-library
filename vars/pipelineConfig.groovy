@@ -12,7 +12,7 @@ import eu.indigo.scm.GitLocalBranch
 def call(Map configs) {
 
     Map scmConfigsDefault = [
-        localBranch: '',
+        localBranch: null,
         ]
     Map scmConfigs = configs?.scmConfigs ? scmConfigsDefault + configs?.scmConfigs :
                                            scmConfigsDefault
