@@ -3,6 +3,7 @@ package eu.indigo.compose
 import eu.indigo.JenkinsDefinitions
 import eu.indigo.compose.ProjectConfiguration
 import eu.indigo.Tox
+import eu.indigo.scm.*
 
 /**
  * Definitions for Docker Compose integration in Jenkins
@@ -332,7 +333,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             withCredentialsClosure(credentials) {
                 // Deploy the environment services using docker-compose
                 composeUp(composeFile: projectConfig.config.deploy_template, workdir: workspace, forceBuild: steps.env.JPL_DOCKERFORCEBUILD)
-                
+
                 if (_DEBUG_) { steps.sh 'echo "after loading credentials:\n$(env)"' }
 
                 projectConfig.stagesList.each { stageMap ->
