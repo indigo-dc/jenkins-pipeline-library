@@ -79,6 +79,19 @@ class Git extends JenkinsDefinitions implements Serializable {
         properties.extensions += extension
     }
 
+    def setDefaults(settings) {
+        Map defaultSettings = [
+            baseRepository: null,
+            credentialsId: null,
+            baseBranch: 'master',
+            relativeTargetDir: '.',
+            remoteName: '',
+            refspec: '',
+            ]
+        settings ? defaultSettings + settings :
+                   defaultSettings
+    }
+
     def checkoutRepository() {
         if (_DEBUG_) { steps.echo "** Git.checkoutRepository() **" }
         if (properties.remoteConfigs == []) { properties.remoteConfigs = steps.scm.userRemoteConfigs }
@@ -89,17 +102,12 @@ class Git extends JenkinsDefinitions implements Serializable {
             ])
     }
 
-    def checkoutRepository(
-            String repository,
-            String credentialsId,
-            String name='',
-            String refspec='',
-            String branch='master',
-            String targetDirectory='.') {
-        if (_DEBUG_) { steps.echo "** Git.checkoutRepository($repository, $credentialsId, $name, $refspec, $branch, $targetDirectory) **" }
-        userRemoteConfigs(repository, name, refspec, credentialsId)
-        branches(["*/${branch}"])
-        extensionsLoader(relativeTargetDirectory(targetDirectory))
+    def checkoutRepository(Map settings) {
+        settings = setDefaults(settings)
+        if (_DEBUG_) { steps.echo "** Git.checkoutRepository(${settings.baseRepository}, ${settings.credentialsId}, ${settings.baseBranch}, ${settings.remoteName}, ${settings.refspec}, ${settings.relativeTargetDir}) **" }
+        userRemoteConfigs(settings.baseRepository, settings.remoteName, settings.refspec, settings.credentialsId)
+        branches(["*/${settings.baseBranch}"])
+        extensionsLoader(relativeTargetDirectory(settings.relativeTargetDir))
         checkoutRepository()
     }
 

@@ -316,13 +316,13 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         steps.stage("Environment Setup") {
             // Checkout repositories to workspace with defined repository name
             projectConfig.config.project_repos?.each { repo_name, repo_confs ->
-                steps.checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: repo_confs.repo, credentialsId: repo_confs.credentials_id]],
-                               branches: [[name: repo_confs.branch]],
-                               extensions: [[$class: 'CleanCheckout', deleteUntrackedNestedRepositories: true],
-                                            [$class: 'GitLFSPull'],
-                                            [$class: 'RelativeTargetDirectory', relativeTargetDir: repo_name],
-                                            [$class: 'ScmName', name: repo_name]] ],
-                               changelog: false, poll: false
+                props = new GitProperties(steps)
+                gitObj = new Git(steps, props)
+                gitObj = new GitScmName(steps, props, gitObj, repo_name)
+                gitObj = new GitCleanCheckout(steps, props, gitObj, repo_confs.deleteUntrackedNestedRepositories)
+                repo_confs.gitLfsPull ? gitObj = new GitLFSPull(steps, props, gitObj)
+                gitObj = new GeneralOptions(steps, props, gitObj, repo_confs.changelog, repo_confs.poll)
+                gitObj.checkoutRepository(baseRepository: repo_confs.repo, credentialsId: repo_confs.credentials_id, baseBranch: repo_confs.branch, relativeTargetDir: repo_name)
             }
         }
 

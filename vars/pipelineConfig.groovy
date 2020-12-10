@@ -31,7 +31,7 @@ def call(Map configs) {
 
     def scmCheckout = { ->
         if (configs?.baseRepository) {
-            checkoutRepository(configs?.baseRepository, configs?.baseBranch, configs?.credentialsId)
+            checkoutRepository(baseRepository: configs?.baseRepository, credentialsId: configs?.credentialsId, baseBranch: configs?.baseBranch)
         }
         else {
             checkoutRepository()

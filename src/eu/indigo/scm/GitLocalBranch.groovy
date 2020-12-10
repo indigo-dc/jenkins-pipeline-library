@@ -26,16 +26,11 @@ class GitLocalBranch extends Git implements Serializable {
     }
 
     @Override
-    def checkoutRepository(
-            String repository,
-            String credentialsId,
-            String name='',
-            String refspec='',
-            String branch='master',
-            String targetDirectory='.') {
-        if (_DEBUG_) { steps.echo "** GitLocalBranch.checkoutRepository($repository, $credentialsId, $name, $refspec, $branch, $targetDirectory) **" }
+    def checkoutRepository(Map settings) {
+        settings = setDefaults(settings)
+        if (_DEBUG_) { steps.echo "** GitLocalBranch.checkoutRepository(${settings.baseRepository}, ${settings.credentialsId}, ${settings.baseBranch}, ${settings.remoteName}, ${settings.refspec}, ${settings.relativeTargetDir}) **" }
         extensionsLoader(localBranch(properties.localBranch))
-        checkoutScm(repository, credentialsId, name, refspec, branch, targetDirectory)
+        checkoutScm(baseRepository: settings.baseRepository, credentialsId: settings.credentialsId, baseBranch: settings.baseBranch, relativeTargetDir: settings.relativeTargetDir, remoteName: settings.remoteName, refspec: settings.refspec)
     }
 
 }
