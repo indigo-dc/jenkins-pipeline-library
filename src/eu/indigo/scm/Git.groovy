@@ -11,24 +11,20 @@ class Git extends JenkinsDefinitions implements Serializable {
 
     private static final long serialVersionUID = 0L
 
-    def remoteConfigs
-    def extensions
-    def branches
-    protected def gitObject
+    protected GitProperties properties
+    protected Git gitObject
 
     /**
     * Define constructor to import definitions from Jenkins context
     * @see https://www.jenkins.io/doc/book/pipeline/shared-libraries/#accessing-steps
     */
-    Git(steps) {
+    Git(steps, properties) {
         super(steps)
-        this.remoteConfigs = []
-        this.extensions = steps.scm.extensions
-        this.branches = steps.scm.branches
+        this.properties = properties
     }
 
-    Git(steps, gitObject) {
-        this.Git(steps)
+    Git(steps, properties, gitObject) {
+        this.Git(steps, properties)
         this.gitObject = gitObject
     }
 
@@ -58,12 +54,12 @@ class Git extends JenkinsDefinitions implements Serializable {
 
     @NonCPS
     protected def userRemoteConfigs(url, name, refspec, credentialsId) {
-        remoteConfigs += [[url: url, name: name, refspec: refspec, credentialsId: credentialsId]]
+        properties.remoteConfigs += [[url: url, name: name, refspec: refspec, credentialsId: credentialsId]]
     }
 
     @NonCPS
     protected def branches(names) {
-        branches = names.collect { name ->
+        properties.branches = names.collect { name ->
             [name: name]
         }
     }
@@ -80,16 +76,16 @@ class Git extends JenkinsDefinitions implements Serializable {
 
     @NonCPS
     protected def extensionsLoader(extension) {
-        extensions += extension
+        properties.extensions += extension
     }
 
     def checkoutRepository() {
         if (_DEBUG_) { steps.echo "** Git.checkoutRepository() **" }
-        if (remoteConfigs == []) { remoteConfigs = steps.scm.userRemoteConfigs }
+        if (properties.remoteConfigs == []) { properties.remoteConfigs = steps.scm.userRemoteConfigs }
         steps.checkout transformGitSCM([
-                branches: branches,
-                extensions: extensions,
-                userRemoteConfigs: remoteConfigs,
+                branches: properties.branches,
+                extensions: properties.extensions,
+                userRemoteConfigs: properties.remoteConfigs,
             ])
     }
 
