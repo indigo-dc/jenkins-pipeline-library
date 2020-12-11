@@ -57,7 +57,7 @@ of:
 3. Customize the configurations for the pipeline job (advanced options)
 
    The library expects by default the presence of the configuration file in
-   ``.sqa/config.yml``. Also other parameters that are set by default from triggered job can be overrode. For current version the supported configurations are configFile, baseRepository, baseBranch, credentialsId, validatorDockerImage and scmConfigs. All of this arguments are optional and don't have any dependency.
+   ``.sqa/config.yml``. Also other parameters that are set by default from triggered job can be overriden. For current version the supported configurations are configFile, baseRepository, baseBranch, credentialsId, validatorDockerImage and scmConfigs. All of this arguments are optional and don't have any dependency.
 
 .. note::
    scmConfigs corresponds to extensions options for Jenkins SCM step. In current version is only supported LocalBranch extension for GitSCM class.
