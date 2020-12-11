@@ -9,21 +9,10 @@ import eu.indigo.Tox
 import eu.indigo.scm.Git
 import eu.indigo.scm.GitLocalBranch
 
-def call(
-    Map configs=[
-        configFile: './.sqa/config.yml',
-        baseRepository: null,
-        baseBranch: null,
-        credentialsId: null,
-        validatorDockerImage: 'eoscsynergy/jpl-validator:1.1.0',
-        scmConfigs: [
-            localBranch: false,
-            ],
-        ]
-    ) {
+def call(Map configs) {
 
     Map scmConfigsDefault = [
-        localBranch: false
+        localBranch: null,
         ]
     Map scmConfigs = configs?.scmConfigs ? scmConfigsDefault + configs?.scmConfigs :
                                            scmConfigsDefault
