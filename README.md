@@ -17,15 +17,14 @@ complexity of handling directly the Jenkins [Pipeline as Code's](https://www.jen
 features. As a result, the SQA work, as defined in the YAML file `config.yml`, is
 organized according to the criteria code names from the aforementioned baselines.
 
-As an example, ``qc_style`` setting in the YAML is a direct reference to the 
-``QC.Sty`` criteria in the previous software quality baseline, which establishes
-the good practices that the source code shall follow in terms of style. The following
-example runs [flake8](https://pypi.org/project/flake8/) to check style consistency in
+As an example, ``QC.Sty`` criterion establishes the good practices that the
+source code shall follow in terms of style. The following example runs
+[flake8](https://pypi.org/project/flake8/) to check style consistency in
 a Python project:
 
 ```
 sqa_criteria:
-  qc_style:
+  QC.Sty:
     container: python-test-tools
     commands:
       - flake8
@@ -34,8 +33,8 @@ sqa_criteria:
 As it can be seen in the example, the library provides the ``container`` option as a
 way to specify the agent where the check will run. In the current version, the
 library supports [Docker Compose](https://docs.docker.com/compose/) as the container
-orchestration tool to fire up the required set of services. In this example, the 
-``python-test-tools`` is the identifier of a Docker Compose service. 
+orchestration tool to fire up the required set of services. In this example, the
+``python-test-tools`` is the identifier of a Docker Compose service.
 
 _You can check a full working example [here](https://github.com/EOSC-synergy/DEEPaaS)_
 
@@ -63,7 +62,7 @@ indigo-dc/jenkins-shared-library is licensed under [Apache 2.0](LICENSE)
 ## Acknowledgments
 
 The development of the v2 series is taking place under the [EOSC-Synergy's](https://eosc-synergy.eu)
-project that has received funding from the European Union’s Horizon 2020 research 
+project that has received funding from the European Union’s Horizon 2020 research
 and innovation programme under grant agreement number 857647.
 <p align="center">
   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1WF4g5KH3PnQE_Ve10QFRS-gZ0NpCQ7Qr-_km1RqnOCEF1fQt">

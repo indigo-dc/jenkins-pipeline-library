@@ -22,7 +22,7 @@ Below is an example YAML file which shows the most common configuration options:
           branch: master
 
     sqa_criteria:
-      qc_style:
+      QC.Sty:
         repos:
           worsica-processing:
             container: processing
@@ -149,7 +149,7 @@ Each requirement has a unique identifier and an associated set of mandatory and
 optional attributes.
 
 :Type: ``map``
-:Parameters: ``qc_style``, ``qc_functional``, ``qc_coverage``, ``qc_security``, ``qc_doc``
+:Parameters: ``QC.Sty``, ``QC.Fun``, ``QC.Uni``, ``QC.Sec``, ``QC.Doc``
 :Required: ``true``
 
 Example:
@@ -157,7 +157,7 @@ Example:
 .. code-block:: yaml
 
    sqa_criteria:
-     qc_style:
+     QC.Sty:
        repos:
          worsica-processing:
            container: processing
@@ -170,29 +170,9 @@ Example:
    ``.sqa/config.yml`` as it defines the different stages that will be
    dynamically added to the pipeline.
 
-The relationship between the identifiers used in the definition of the
-``sqa_criteria`` (see *Options* above) and the ones used in the SQA criteria
-is summarized as follows:
-
-+-----------------+-----------------------+
-| sqa_criteria ID | SQA baseline category |
-+=================+=======================+
-| qc_style        | QC.Sty                |
-+-----------------+-----------------------+
-| qc_coverage     | QC.Uni                |
-+-----------------+-----------------------+
-| qc_functional   | QC.Fun                |
-+-----------------+-----------------------+
-| qc_security     | QC.Sec                |
-+-----------------+-----------------------+
-| qc_doc          | QC.Doc                |
-+-----------------+-----------------------+
-
-The previous table lists the set of criteria that is currently supported by
-the current version of the jenkins-pipeline-library. The settings described in
-this section are common to all, which are applicable and defined
-per-repository, and thus, they must be used within the ``repos`` map setting,
-as showed in the following examples.
+The settings described in this section are common to all the criteria currently
+supported, which are applicable and defined per-repository, and thus, they must
+be used within the ``repos`` map setting, as showed in the following examples.
 
 .. note::
    The repositories used under ``repos`` must be previously defined in the
@@ -202,12 +182,12 @@ as showed in the following examples.
 *Examples:*
     .. tabs::
 
-        .. tab:: qc_style
+        .. tab:: QC.Sty
 
            .. code-block:: yaml
 
               sqa_criteria:
-                qc_style:
+                QC.Sty:
                   repos:
                     worsica-processing:
                       container: processing
@@ -215,12 +195,12 @@ as showed in the following examples.
                         testenv:
                             - stylecheck
 
-        .. tab:: qc_coverage
+        .. tab:: QC.Uni
 
            .. code-block:: yaml
 
               sqa_criteria:
-                qc_coverage:
+                QC.Uni:
                   repos:
                     worsica-processing:
                       container: processing
@@ -233,12 +213,12 @@ as showed in the following examples.
                         testenv:
                             - coverage
 
-        .. tab:: qc_functional
+        .. tab:: QC.Fun
 
            .. code-block:: yaml
 
               sqa_criteria:
-                qc_functional:
+                QC.Fun:
                   repos:
                     worsica-processing:
                       container: processing
@@ -251,12 +231,12 @@ as showed in the following examples.
                         testenv:
                             - functional
 
-        .. tab:: qc_security
+        .. tab:: QC.Sec
 
            .. code-block:: yaml
 
               sqa_criteria:
-                qc_security:
+                QC.Sec:
                   repos:
                     worsica-processing:
                       container: processing
@@ -264,12 +244,12 @@ as showed in the following examples.
                         testenv:
                             - security
 
-        .. tab:: qc_doc
+        .. tab:: QC.Doc
 
            .. code-block:: yaml
 
               sqa_criteria:
-                qc_doc:
+                QC.Doc:
                   repos:
                     worsica-cicd:
                       container: processing
@@ -292,7 +272,7 @@ defined in the docker-compose.yml.
 
 :Type: ``string``
 :Required: ``true``
-:Location: ``sqa_criteria:<qc_xxx>:repos:<repo>:container``
+:Location: ``sqa_criteria:<QC.xxx>:repos:<repo>:container``
 
 tox
 ```
@@ -302,7 +282,7 @@ environments.
 
 :Type: ``map``
 :Parameters: ``testenv``, ``tox_file``
-:Location: ``sqa_criteria:<qc_xxx>:repos:<repo>:tox``
+:Location: ``sqa_criteria:<QC.xxx>:repos:<repo>:tox``
 
 **testenv**
 
@@ -310,7 +290,7 @@ Identifier of the test environment that tox shall use.
 
 :Type: ``list``
 :Required: ``true``
-:Location: ``sqa_criteria:<qc_xxx>:repos:<repo>:tox:testenv``
+:Location: ``sqa_criteria:<QC.xxx>:repos:<repo>:tox:testenv``
 
 **tox_file**
 
@@ -318,7 +298,7 @@ Specifies the path to the tox configuration file.
 
 :Type: ``path``
 :Default: ``tox.ini``
-:Location: ``sqa_criteria:<qc_xxx>:repos:<repo>:tox:tox_file``
+:Location: ``sqa_criteria:<QC.xxx>:repos:<repo>:tox:tox_file``
 
 .. note::
    If using ``tox`` without ``container``, the jenkins-pipeline-library will
@@ -332,14 +312,14 @@ built-in support for the tool you use for building purposes.
 
 :Type: ``list``
 :Default: ``[]``
-:Location: ``sqa_criteria:<qc_xxx>:repos:<repo>:commands``
+:Location: ``sqa_criteria:<QC.xxx>:repos:<repo>:commands``
 
 Example:
 
 .. code-block:: yaml
 
    sqa_criteria:
-     qc_sec:
+     QC.Sec:
        repos:
         worsica-processing:
           commands:
