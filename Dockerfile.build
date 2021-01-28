@@ -12,8 +12,10 @@ RUN npm i -g @koumoul/gh-pages-multi
 RUN git config --global user.name 'indigobot'
 RUN git config --global user.email '<>'
 
+RUN mkdir -p /home/jenkins-pipeline-library
+
 # Standard SSH port
 EXPOSE 22
 
 # Default command
-CMD ["/usr/sbin/sshd", "-D"]
+ENTRYPOINT ["/usr/sbin/sshd", "-D"]
