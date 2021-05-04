@@ -114,7 +114,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @param path The variable with the path string to escape
     */
     def escapeWhitespace(String path) {
-        return path.replaceAll(' ', '\\\\ ')
+        return path?.replaceAll(' ', '\\\\ ')
     }
 
     /**
