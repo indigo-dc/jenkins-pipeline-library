@@ -435,10 +435,19 @@ docker registry is supported using the following environment variables:
 +----------------------+--------------------------------------------------------------------------+
 
 .. note::
-  Images are defined in docker-compose.yml file and there is no relation of those with defined service names.
-  Also the docker registry repository needs to be previously created before running the last step of the generated pipeline. Last step will be always the image push to docker registry.
-  In next examples the sqa_criteria property is being omitted to focus only in the required configurations to push images to a docker registry. Also project_repos in config section is being removed since is not mandatory, so it turns the examples more clear.
-  Jenkins environment variable ${GIT_BRANCH} receives the branch or tag from git repository.
+  Images are defined in docker-compose.yml file and there is no relation of
+  those with defined service names.
+  Also the docker registry repository needs to be previously created before
+  running the last step of the generated pipeline. Last step will be always the
+  image push to docker registry.
+  Images that can be pushed in the end require the build keyword in service
+  definition at docker-compose configuration.
+  In next examples the sqa_criteria property is being omitted to focus only in
+  the required configurations to push images to a docker registry. Also
+  project_repos in config section is being removed since is not required, so it
+  turns the examples more clear.
+  Jenkins environment variable ${GIT_BRANCH} receives the branch or tag from git
+  repository.
 
 Example1: upload specific images to dockerhub registry ignoring failures
 
@@ -462,7 +471,8 @@ In this example there are three services:
 - service2: same as service1 with Dockerfile inside directory service2 and depends on service1 to be built.
 - docs: service to generate the project documentation.
 
-The docker-compose.yml file that would work with previous configuration can be as the following:
+The docker-compose.yml file that would work with previous configuration can be
+as the following (mandatory the build keyword in service definition):
 
 .. code-block:: yaml
 
