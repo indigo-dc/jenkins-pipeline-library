@@ -16,15 +16,15 @@ Credentials stored in Jenkins can be used:
 
 JePL can use the following type of credentials:
 
-  - **Secret text**: a token such as an API token (e.g. a GitHub personal access token)
+  - ``Secret text``: a token such as an API token (e.g. a GitHub personal access token)
 
-  - **Username and password**: which could be handled as separate components or as a colon separated string in the format username:password (read more about this in Handling credentials)
+  - ``Username and password``: which could be handled as separate components or as a colon separated string in the format username:password (read more about this in Handling credentials)
 
-  - **Secret file**: which is essentially secret content in a file or zipped file
+  - ``Secret file``: which is essentially secret content in a file or zipped file
   
-  - **SSH Username with private key**: an SSH public/private key pair
+  - ``SSH Username with private key``: an SSH public/private key pair
   
-  - **Certificate**: a PKCS#12 certificate file and optional password
+  - ``Certificate``: a PKCS#12 certificate file and optional password
 
 Credentials security
 --------------------
