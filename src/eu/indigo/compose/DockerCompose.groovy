@@ -288,7 +288,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                 stageMap.tox.testenv.each { testenv ->
                     composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox,
                                   composeFile: projectConfig.config.deploy_template,
-                                  toxFile: stageMap.tox.tox_file, workdir: workspace)
+                                  toxFile: stageMap.tox.tox_file, workdir: workspace,
+                                  repo: stageMap.repo)
                 }
             }
             if (stageMap.commands) {
