@@ -30,7 +30,7 @@ class Tox extends JenkinsDefinitions implements Serializable {
      * @param testenv Test environment to run with tox
      */
     def runEnv(Map args, String testenv) {
-        return args.toxFile ? "tox -c \"${args.toxFile}\" -e $testenv" : "tox --workdir ${args.workdir} -e $testenv"
+        return args.toxFile ? "tox -c \"${args.toxFile}\" -e $testenv" : "tox --workdir ${args.workdir}${args?.repo} -e $testenv"
     }
 
 }
