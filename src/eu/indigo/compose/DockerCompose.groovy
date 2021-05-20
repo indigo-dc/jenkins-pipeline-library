@@ -22,6 +22,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     String _w = '--project-directory'
     String _ipf = '--ignore-push-failures'
     String _b = '--build'
+    String _tw = '--workdir'
 
 
     /**
@@ -271,7 +272,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         if (_DEBUG_) { steps.echo "service: ${service}\ntestenv: ${testenv}\ntoxFile: " + escapeWhitespace(args.toxFile ? args.toxFile : '') + "\ncredsVars: $credsVars" }
         if (_DEBUG_) { steps.echo "tox command: " + tox.runEnv(testenv, toxFile: escapeWhitespace(args.toxFile ? args.toxFile : '')) }
         String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + ' exec -T ' +
-                     " $credsVars $service " + tox.runEnv(testenv, toxFile: escapeWhitespace(args.toxFile ? args.toxFile : ''))
+                     " $credsVars $service " + tox.runEnv(testenv, toxFile: escapeWhitespace(args.toxFile ? args.toxFile : '')) +
+                     args.toxFile ? '' : parseParam(_tw, escapeWhitespace(args.workdir))
         steps.sh "docker-compose $cmd"
     }
 
