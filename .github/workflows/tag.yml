@@ -4,7 +4,7 @@ on:
     types: [closed]
 jobs:
     create_tag:
-        name: Creates a tag when the milestone for the stable branche is closed
+        name: Creates a tag when the stable branch milestone is closed
         runs-on: ubuntu-latest
         steps:
           - name: Filter milestone by name
