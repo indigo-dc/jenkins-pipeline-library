@@ -1,0 +1,742 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>The configuration file: config.yml &mdash; jenkins-pipeline-library 2.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/tabs.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The services: docker-compose.yml" href="docker_compose.html" />
+    <link rel="prev" title="Layout" href="layout.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> jenkins-pipeline-library
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout.html">Layout</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Configuration files</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The configuration file: config.yml</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#supported-settings">Supported settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#config">config</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#node-agent">node_agent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deploy-template">deploy_template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#project-repos">project_repos</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sqa-criteria">sqa_criteria</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#container">container</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tox">tox</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#commands">commands</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#environment">environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#timeout">timeout</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docker_compose.html">The services: docker-compose.yml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jenkinsfile.html">The pipeline: Jenkinsfile</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Step-by-step guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="step_by_step/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="step_by_step/min_configuration.html">A minimal configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="step_by_step/sqa_criteria.html">The <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="step_by_step/ending.html">Last steps</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">jenkins-pipeline-library</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>The configuration file: config.yml</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user/config_file.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="the-configuration-file-config-yml">
+<h1>The configuration file: config.yml<a class="headerlink" href="#the-configuration-file-config-yml" title="Permalink to this headline">¶</a></h1>
+<p>jenkins-pipeline-library relies on a YAML file in order to compose dinamically
+the stages that tackle the fulfillment of a requirement or good practice as
+defined by the SQA baseline.</p>
+<p>The configuration file must exist under <code class="docutils literal notranslate"><span class="pre">.sqa/config.yml</span></code> path, relative to the
+root directory of your code repository.</p>
+<p>Below is an example YAML file which shows the most common configuration options:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># .sqa/config.yml - jenkins-pipeline-library configuration file</span>
+
+<span class="c1"># generic configuration: workspace, agents</span>
+<span class="nt">config</span><span class="p">:</span>
+  <span class="nt">project_repos</span><span class="p">:</span>
+    <span class="nt">worsica-processing</span><span class="p">:</span>
+      <span class="nt">repo</span><span class="p">:</span> <span class="s">&#39;https://github.com/WORSICA/worsica-processing.git&#39;</span>
+      <span class="nt">branch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">master</span>
+      <span class="nt">dockerhub</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">worsica/worsica-processing</span>
+      <span class="nt">dockertag</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">latest</span>
+
+<span class="nt">sqa_criteria</span><span class="p">:</span>
+  <span class="nt">qc_style</span><span class="p">:</span>
+    <span class="nt">repos</span><span class="p">:</span>
+      <span class="nt">worsica-processing</span><span class="p">:</span>
+        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">processing</span>
+        <span class="nt">tox</span><span class="p">:</span>
+          <span class="nt">testenv</span><span class="p">:</span>
+            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">stylecheck</span>
+
+<span class="nt">environment</span><span class="p">:</span>
+  <span class="nt">GIT_COMMITTER_NAME</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Person1</span>
+  <span class="nt">GIT_COMMITTER_EMAIL</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">person1@example.org</span>
+  <span class="nt">LANG</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">C.UTF-8</span>
+
+<span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">600</span>
+</pre></div>
+</div>
+<section id="supported-settings">
+<h2>Supported settings<a class="headerlink" href="#supported-settings" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">.sqa/config.yml</span></code> file shall contain the following main settings:</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#config" id="id1">config</a></p></li>
+<li><p><a class="reference internal" href="#sqa-criteria" id="id2">sqa_criteria</a></p></li>
+<li><p><a class="reference internal" href="#environment" id="id3">environment</a></p></li>
+<li><p><a class="reference internal" href="#timeout" id="id4">timeout</a></p></li>
+</ul>
+</div>
+<section id="config">
+<h3><a class="toc-backref" href="#id1">config</a><a class="headerlink" href="#config" title="Permalink to this headline">¶</a></h3>
+<p>Here you can define the generic parameters, such as the workspace and execution
+agents.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">map</span></code></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">node_agent</span></code>, <code class="docutils literal notranslate"><span class="pre">deploy_template</span></code>, <code class="docutils literal notranslate"><span class="pre">project_repos</span></code></p>
+</dd>
+<dt class="field-odd">Required</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span>
+  <span class="nt">project_repos</span><span class="p">:</span>
+    <span class="nt">worsica-processing</span><span class="p">:</span>
+      <span class="nt">repo</span><span class="p">:</span> <span class="s">&#39;https://github.com/WORSICA/worsica-processing.git&#39;</span>
+      <span class="nt">branch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">master</span>
+      <span class="nt">dockerhub</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">worsica/worsica-processing</span>
+      <span class="nt">dockertag</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">latest</span>
+</pre></div>
+</div>
+<section id="node-agent">
+<h4>node_agent<a class="headerlink" href="#node-agent" title="Permalink to this headline">¶</a></h4>
+<p>The type of agent to drive the execution of the dynamic stages. Docker Compose
+is used by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Options</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">docker_compose</span></code></p>
+</dd>
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">docker_compose</span></code></p>
+</dd>
+<dt class="field-even">Location</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">config:node_agent</span></code></p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span>
+  <span class="nt">node_agent</span><span class="p">:</span> <span class="s">&#39;docker_compose&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="deploy-template">
+<span id="config-deploy-template-setting"></span><h4>deploy_template<a class="headerlink" href="#deploy-template" title="Permalink to this headline">¶</a></h4>
+<p>Path to the template containing the definition of the services for the
+<code class="docutils literal notranslate"><span class="pre">node_agent</span></code> in use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">path</span></code></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">.sqa/docker-compose.yml</span></code></p>
+</dd>
+<dt class="field-odd">Location</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">config:deploy_template</span></code></p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span>
+  <span class="nt">deploy_template</span><span class="p">:</span> <span class="s">&#39;.sqa/docker-compose.yml&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="project-repos">
+<h4>project_repos<a class="headerlink" href="#project-repos" title="Permalink to this headline">¶</a></h4>
+<p>Describes the code repositories that the pipeline will deal with.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">map</span></code></p>
+</dd>
+<dt class="field-even">Required</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+</dd>
+<dt class="field-odd">Location</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">config:project_repos</span></code></p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span>
+  <span class="nt">project_repos</span><span class="p">:</span>
+    <span class="nt">worsica-processing</span><span class="p">:</span>
+      <span class="nt">repo</span><span class="p">:</span> <span class="s">&#39;https://github.com/WORSICA/worsica-processing.git&#39;</span>
+      <span class="nt">branch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">master</span>
+      <span class="nt">dockerhub</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">worsica/worsica-processing</span>
+      <span class="nt">dockertag</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">latest</span>
+</pre></div>
+</div>
+<p>The set of allowed parameters for the definition of the code repository’s
+description within the <code class="docutils literal notranslate"><span class="pre">project_repos</span></code> setting are herein described:</p>
+<p><strong>repo</strong></p>
+<p>URL pointing to the root path of the code repository.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">url</span></code></p>
+</dd>
+<dt class="field-even">Required</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+</dd>
+<dt class="field-odd">Location</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">config:project_repos:repo</span></code></p>
+</dd>
+</dl>
+<p><strong>branch</strong></p>
+<p>Branch name to be checked out.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">master</span></code></p>
+</dd>
+<dt class="field-odd">Location</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">config:project_repos:branch</span></code></p>
+</dd>
+</dl>
+<p><strong>dockerhub</strong></p>
+<p>Repository name within the Docker Hub registry where the Docker images
+produced by the pipeline will be pushed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Required</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+</dd>
+<dt class="field-odd">Location</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">config:project_repos:dockerhub</span></code></p>
+</dd>
+</dl>
+<p><strong>dockertag</strong></p>
+<p>Tag name to be used for labeling the resultant Docker image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">latest</span></code></p>
+</dd>
+<dt class="field-odd">Location</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">config:project_repos:dockertag</span></code></p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="sqa-criteria">
+<h3><a class="toc-backref" href="#id2">sqa_criteria</a><a class="headerlink" href="#sqa-criteria" title="Permalink to this headline">¶</a></h3>
+<p>This setting allows to define the criteria from the SQA baseline to be checked.
+Each requirement has a unique identifier and an associated set of mandatory and
+optional attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">map</span></code></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">qc_style</span></code>, <code class="docutils literal notranslate"><span class="pre">qc_functional</span></code>, <code class="docutils literal notranslate"><span class="pre">qc_coverage</span></code>, <code class="docutils literal notranslate"><span class="pre">qc_security</span></code>, <code class="docutils literal notranslate"><span class="pre">qc_doc</span></code></p>
+</dd>
+<dt class="field-odd">Required</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span>
+  <span class="nt">qc_style</span><span class="p">:</span>
+    <span class="nt">repos</span><span class="p">:</span>
+      <span class="nt">worsica-processing</span><span class="p">:</span>
+        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">processing</span>
+        <span class="nt">tox</span><span class="p">:</span>
+          <span class="nt">testenv</span><span class="p">:</span>
+             <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">stylecheck</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting is the most relevant section of the
+<code class="docutils literal notranslate"><span class="pre">.sqa/config.yml</span></code> as it defines the different stages that will be
+dynamically added to the pipeline.</p>
+</div>
+<p>The relationship between the identifiers used in the definition of the
+<code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> (see <em>Options</em> above) and the ones used in the SQA criteria
+is summarized as follows:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 58%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>sqa_criteria ID</p></th>
+<th class="head"><p>SQA baseline category</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>qc_style</p></td>
+<td><p>QC.Sty</p></td>
+</tr>
+<tr class="row-odd"><td><p>qc_coverage</p></td>
+<td><p>QC.Uni</p></td>
+</tr>
+<tr class="row-even"><td><p>qc_functional</p></td>
+<td><p>QC.Fun</p></td>
+</tr>
+<tr class="row-odd"><td><p>qc_security</p></td>
+<td><p>QC.Sec</p></td>
+</tr>
+<tr class="row-even"><td><p>qc_doc</p></td>
+<td><p>QC.Doc</p></td>
+</tr>
+</tbody>
+</table>
+<p>The previous table lists the set of criteria that is currently supported by
+the current version of the jenkins-pipeline-library. The settings described in
+this section are common to all, which are applicable and defined
+per-repository, and thus, they must be used within the <code class="docutils literal notranslate"><span class="pre">repos</span></code> map setting,
+as showed in the following examples.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The repositories used under <code class="docutils literal notranslate"><span class="pre">repos</span></code> must be previously defined in the
+<code class="docutils literal notranslate"><span class="pre">config:project_repos</span></code> setting. They are referred by the identifiers
+used there.</p>
+</div>
+<dl>
+<dt><em>Examples:</em></dt><dd><div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">qc_style</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">qc_coverage</button><button aria-controls="panel-0-0-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-2" name="0-2" role="tab" tabindex="-1">qc_functional</button><button aria-controls="panel-0-0-3" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-3" name="0-3" role="tab" tabindex="-1">qc_security</button><button aria-controls="panel-0-0-4" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-4" name="0-4" role="tab" tabindex="-1">qc_doc</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span>
+  <span class="nt">qc_style</span><span class="p">:</span>
+    <span class="nt">repos</span><span class="p">:</span>
+      <span class="nt">worsica-processing</span><span class="p">:</span>
+        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">processing</span>
+        <span class="nt">tox</span><span class="p">:</span>
+          <span class="nt">testenv</span><span class="p">:</span>
+              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">stylecheck</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span>
+  <span class="nt">qc_coverage</span><span class="p">:</span>
+    <span class="nt">repos</span><span class="p">:</span>
+      <span class="nt">worsica-processing</span><span class="p">:</span>
+        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">processing</span>
+        <span class="nt">tox</span><span class="p">:</span>
+          <span class="nt">testenv</span><span class="p">:</span>
+              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">coverage</span>
+      <span class="nt">worsica-portal</span><span class="p">:</span>
+        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">celery</span>
+        <span class="nt">tox</span><span class="p">:</span>
+          <span class="nt">testenv</span><span class="p">:</span>
+              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">coverage</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-2" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-2" name="0-2" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span>
+  <span class="nt">qc_functional</span><span class="p">:</span>
+    <span class="nt">repos</span><span class="p">:</span>
+      <span class="nt">worsica-processing</span><span class="p">:</span>
+        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">processing</span>
+        <span class="nt">tox</span><span class="p">:</span>
+          <span class="nt">testenv</span><span class="p">:</span>
+              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">unittest</span>
+      <span class="nt">worsica-portal</span><span class="p">:</span>
+        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">celery</span>
+        <span class="nt">tox</span><span class="p">:</span>
+          <span class="nt">testenv</span><span class="p">:</span>
+              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">functional</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-3" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-3" name="0-3" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span>
+  <span class="nt">qc_security</span><span class="p">:</span>
+    <span class="nt">repos</span><span class="p">:</span>
+      <span class="nt">worsica-processing</span><span class="p">:</span>
+        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">processing</span>
+        <span class="nt">tox</span><span class="p">:</span>
+          <span class="nt">testenv</span><span class="p">:</span>
+              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">security</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-4" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-4" name="0-4" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span>
+  <span class="nt">qc_doc</span><span class="p">:</span>
+    <span class="nt">repos</span><span class="p">:</span>
+      <span class="nt">worsica-cicd</span><span class="p">:</span>
+        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">processing</span>
+        <span class="nt">commands</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">python setup.py build_sphinx</span>
+</pre></div>
+</div>
+</div></div>
+</dd>
+</dl>
+<p>Next, we will describe those available settings, some of them used in the
+previous examples, that can be defined for each repository associated with the
+former criteria:</p>
+<section id="container">
+<span id="config-container-setting"></span><h4>container<a class="headerlink" href="#container" title="Permalink to this headline">¶</a></h4>
+<p>Allows to specify the Docker container where the given criteria assessment will
+take place. If using <code class="docutils literal notranslate"><span class="pre">docker_compose</span></code>, the value could be any of the services
+defined in the docker-compose.yml.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Location</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">sqa_criteria:&lt;qc_xxx&gt;:repos:&lt;repo&gt;:container</span></code></p>
+</dd>
+</dl>
+</section>
+<section id="tox">
+<h4>tox<a class="headerlink" href="#tox" title="Permalink to this headline">¶</a></h4>
+<p>Built-in support tox application. It is only applicable for Python
+environments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">map</span></code></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">testenv</span></code>, <code class="docutils literal notranslate"><span class="pre">tox_file</span></code></p>
+</dd>
+<dt class="field-odd">Location</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">sqa_criteria:&lt;qc_xxx&gt;:repos:&lt;repo&gt;:tox</span></code></p>
+</dd>
+</dl>
+<p><strong>testenv</strong></p>
+<p>Identifier of the test environment that tox shall use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">list</span></code></p>
+</dd>
+<dt class="field-even">Required</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+</dd>
+<dt class="field-odd">Location</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">sqa_criteria:&lt;qc_xxx&gt;:repos:&lt;repo&gt;:tox:testenv</span></code></p>
+</dd>
+</dl>
+<p><strong>tox_file</strong></p>
+<p>Specifies the path to the tox configuration file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">path</span></code></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">tox.ini</span></code></p>
+</dd>
+<dt class="field-odd">Location</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">sqa_criteria:&lt;qc_xxx&gt;:repos:&lt;repo&gt;:tox:tox_file</span></code></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If using <code class="docutils literal notranslate"><span class="pre">tox</span></code> without <code class="docutils literal notranslate"><span class="pre">container</span></code>, the jenkins-pipeline-library will
+automatically select an appropriate Docker container for running the tool.</p>
+</div>
+</section>
+<section id="commands">
+<h4>commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h4>
+<p>Allows to include a list of commands. This is helpful whenever there is no
+built-in support for the tool you use for building purposes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">list</span></code></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p>
+</dd>
+<dt class="field-odd">Location</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">sqa_criteria:&lt;qc_xxx&gt;:repos:&lt;repo&gt;:commands</span></code></p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span>
+  <span class="nt">qc_sec</span><span class="p">:</span>
+    <span class="nt">repos</span><span class="p">:</span>
+     <span class="nt">worsica-processing</span><span class="p">:</span>
+       <span class="nt">commands</span><span class="p">:</span>
+         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">bundle exec brakeman --exit-on-error</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">commands</span></code> requires the presence of the <code class="docutils literal notranslate"><span class="pre">container</span></code> setting, which must
+have available all the tools –and dependencies– used by the list of
+commands. Also the commands runs relative to the root directory /. As a
+hacking solution is possible to use Docker Compose’s
+<a class="reference internal" href="docker_compose.html#docker-compose-env"><span class="std std-ref">environment variables</span></a> to define the expected workspace in
+docker-compose.yml context, as a solution for current release.</p>
+</div>
+</section>
+</section>
+<section id="environment">
+<h3><a class="toc-backref" href="#id3">environment</a><a class="headerlink" href="#environment" title="Permalink to this headline">¶</a></h3>
+<p>Contains the environment variables required to execute the previouos SQA
+criteria checks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">list</span></code></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+  <span class="nt">GIT_COMMITTER_NAME</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Person1</span>
+  <span class="nt">GIT_COMMITTER_EMAIL</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">person1@example.org</span>
+  <span class="nt">LANG</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">C.UTF-8</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">environment</span></code> variables are only usable by the deployment (for example
+with docker_compose) or defined features in current version. This environment
+will not be available inside the containers. For that, you should use for
+example, docker-compose.yml environment definitions instead.</p>
+</div>
+</section>
+<section id="timeout">
+<h3><a class="toc-backref" href="#id4">timeout</a><a class="headerlink" href="#timeout" title="Permalink to this headline">¶</a></h3>
+<p>Sets the timeout for the pipeline execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">integer</span></code></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">600</span></code></p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">60</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="docker_compose.html" class="btn btn-neutral float-right" title="The services: docker-compose.yml" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="layout.html" class="btn btn-neutral float-left" title="Layout" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, EOSC-Synergy project.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Other Versions</span>
+    v: 2.0.0
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Tags</dt>
+      <dd><a href="config_file.html">2.0.0</a></dd>
+    </dl>
+  </div>
+</div>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
