@@ -9,10 +9,10 @@ pipeline {
         stage('SQA baseline dynamic stages') {
             when {
                 anyOf {
-                    branch 'jenkins/release/*'
-                    branch 'jenkins/feature/*'
-                    branch 'jenkins/fix/*'
-                    branch 'jenkins/docs/*'
+                    branch 'jenkins/release/**'
+                    branch 'jenkins/feature/**'
+                    branch 'jenkins/fix/**'
+                    branch 'jenkins/docs/**'
                 }
             }
             steps {
@@ -32,9 +32,9 @@ pipeline {
         stage('Use case validation: <sqaaas-api-spec>') {
             when {
                 anyOf {
-                    branch 'jenkins/release/*'
-                    branch 'jenkins/feature/*'
-                    branch 'jenkins/fix/*'
+                    branch 'jenkins/release/**'
+                    branch 'jenkins/feature/**'
+                    branch 'jenkins/fix/**'
                 }
             }
             steps {
@@ -49,9 +49,9 @@ pipeline {
         stage('Use case validation: <jpl-validator>') {
             when {
                 anyOf {
-                    branch 'jenkins/release/*'
-                    branch 'jenkins/feature/*'
-                    branch 'jenkins/fix/*'
+                    branch 'jenkins/release/**'
+                    branch 'jenkins/feature/**'
+                    branch 'jenkins/fix/**'
                 }
             }
             steps {
