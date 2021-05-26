@@ -4,7 +4,7 @@ on:
     types: [closed]
 jobs:
     create_stable_structure:
-        name: Creates the required stable branches when a release milestone is closed
+        name: Creates the required stable branches when a release milestone is closed and create stable milestone
         runs-on: ubuntu-latest
         steps:
           - name: Filter milestone by name
@@ -30,3 +30,10 @@ jobs:
               git checkout -b jenkins/stable/${{ env.RELEASE_MILESTONE }}
               git push origin jenkins/stable/${{ env.RELEASE_MILESTONE }}
             if: "env.RELEASE_MILESTONE"
+          - name: Create stable milestone
+            if: "env.RELEASE_MILESTONE"
+            uses: "WyriHaximus/github-action-create-milestone@v1"
+            with:
+              title: s${{ env.RELEASE_MILESTONE }}
+            env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
