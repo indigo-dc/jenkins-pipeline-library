@@ -15,8 +15,14 @@ jobs:
           uses: actions/checkout@v2
           with:
             fetch-depth: 0
-        - name: Get current branch name
-          run: echo "BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD | cut -d '/' -f1-2)" >> $GITHUB_ENV
+        - name: Get current branch name (merge)
+          if: github.event_name != 'pull_request'
+          shell: bash
+          run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
+        - name: Get current branch name (pull request)
+          if: github.event_name == 'pull_request'
+          shell: bash
+          run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF})" >> $GITHUB_ENV
         - name: Find out if jenkins/${{ env.BRANCH_NAME }} exists
           run: echo "BRANCH_EXISTS=$(git branch -r | grep jenkins/${{ env.BRANCH_NAME }})" >> $GITHUB_ENV
         - name: Create jenkins/${{ env.BRANCH_NAME }}
@@ -36,7 +42,7 @@ jobs:
             git config user.email github-actions@github.com
             git checkout jenkins/${{ env.BRANCH_NAME }}
             git reset --hard origin/${{ env.BRANCH_NAME }}
-            git checkout origin/JePL .sqa/config.yml .sqa/docker-compose.yml Jenkinsfile .git_credential_helper.sh patch.issue_116
+            git checkout origin/JePL -- .sqa/config.yml .sqa/docker-compose.yml Jenkinsfile .git_credential_helper.sh patch.issue_116
             git apply -v patch.issue_116 # FIXME Work around until https://github.com/indigo-dc/jenkins-pipeline-library/issues/116 is fixed
             printf "`cat Jenkinsfile`" "jenkins/${{ env.BRANCH_NAME }}" > Jenkinsfile
             git add .
