@@ -30,7 +30,7 @@ jobs:
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
-            branch: jenkins/${{ env.BRANCH_NAME }}
+            branch: refs/heads/jenkins/${{ env.BRANCH_NAME }}
           if: "!env.BRANCH_EXISTS"
         - name: Fetch new jenkins/${{ env.BRANCH_NAME }}
           uses: actions/checkout@v2
