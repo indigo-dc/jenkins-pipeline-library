@@ -55,6 +55,15 @@ research software. The latest version of the SQA criteria can be found in
    /user/step_by_step/ending
 
 .. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Using credentials
+
+   /credentials/intro
+   /credentials/config_file
+   /credentials/jenkins
+
+.. toctree::
    :glob:
    :titlesonly:
    :caption: Examples in production

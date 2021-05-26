@@ -40,9 +40,28 @@ orchestration tool to fire up the required set of services. In this example, the
 _You can check a full working example [here](https://github.com/EOSC-synergy/DEEPaaS)_
 
 __In order to get started with the library, please check our
-[documentation](https://indigo-dc.github.io/jenkins-pipeline-library/stable_2.1.0/).__
+[documentation](https://indigo-dc.github.io/jenkins-pipeline-library/release/2.1.0/).__
 
+### Building documentation locally
 
+The documentation is written in reStructuredText format using Sphinx and available in 
+the `docs/` folder. Follow the steps below to build the documentation in HTML format:
+1. Assuming that you have already cloned the JePL repository, move to the `docs` 
+folder:
+```console
+$ cd <path-to-the-cloned-repo>/docs
+```
+2. Optionally, create a virtual environment to install the dependencies:
+```console
+$ python3 -m venv .venv
+$ source .venv/bin/activate
+$ pip install -r requirements.txt
+```
+3. Build the documentation (HTML format):
+```console
+$ make html
+```
+4. Access the documentation pointing your browser to `file:///<absolute-path-to-jepl-repo>/docs/_build/html/index.html`
 
 ## Contributing
 

@@ -20,8 +20,6 @@ Below is an example YAML file which shows the most common configuration options:
         worsica-processing:
           repo: 'https://github.com/WORSICA/worsica-processing.git'
           branch: master
-          dockerhub: worsica/worsica-processing
-          dockertag: latest
 
     sqa_criteria:
       qc_style:
@@ -67,8 +65,6 @@ Example:
        worsica-processing:
          repo: 'https://github.com/WORSICA/worsica-processing.git'
          branch: master
-         dockerhub: worsica/worsica-processing
-         dockertag: latest
 
 node_agent
 ``````````
@@ -125,8 +121,6 @@ Example:
        worsica-processing:
          repo: 'https://github.com/WORSICA/worsica-processing.git'
          branch: master
-         dockerhub: worsica/worsica-processing
-         dockertag: latest
 
 The set of allowed parameters for the definition of the code repository's
 description within the ``project_repos`` setting are herein described:
@@ -146,23 +140,6 @@ Branch name to be checked out.
 :Type: ``string``
 :Default: ``master``
 :Location: ``config:project_repos:branch``
-
-**dockerhub**
-
-Repository name within the Docker Hub registry where the Docker images
-produced by the pipeline will be pushed.
-
-:Type: ``string``
-:Required: ``true``
-:Location: ``config:project_repos:dockerhub``
-
-**dockertag**
-
-Tag name to be used for labeling the resultant Docker image.
-
-:Type: ``string``
-:Default: ``latest``
-:Location: ``config:project_repos:dockertag``
 
 sqa_criteria
 ~~~~~~~~~~~~
@@ -399,6 +376,29 @@ Example:
    will not be available inside the containers. For that, you should use for
    example, docker-compose.yml environment definitions instead.
 
+.. note::
+   The following JPL-prefixed environment variables have a special purpose:
+
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL vars             | Purpose                                                                   |
+   +======================+===========================================================================+
+   | JPL_DOCKERPUSH       | Space-separated list of defined docker-compose services whose image will  |
+   |                      | be pushed to the Docker registry. If ``ALL`` value is used, it            |
+   |                      | will push all locally built images defined in docker-compose.yml          |
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL_IGNOREFAILURES   | If set, by using any random string value (without spaces), it             |
+   |                      | will ignore any push-related failure                                      |
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL_DOCKERFORCEBUILD | Forcedly rebuild all images with build clause in                          |
+   |                      | docker-compose.yml                                                        |
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL_DOCKERSERVER     | Sets Docker registry server. By default it will use Docker Hub            |
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL_DOCKERUSER       | Sets username of Docker registry credentials                              |
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL_DOCKERPASS       | Sets password of Docker registry credentials                              |
+   +----------------------+---------------------------------------------------------------------------+
+
 timeout
 ~~~~~~~
 Sets the timeout for the pipeline execution.
@@ -411,3 +411,104 @@ Example:
 .. code-block:: yaml
 
    timeout: 60
+
+Docker Registry: upload images
+------------------------------
+As mentioned in special purpose environment variables note, pushing images to
+docker registry is supported using the following environment variables:
+
++----------------------+--------------------------------------------------------------------------+
+| JPL vars             | Purpose                                                                  |
++======================+==========================================================================+
+| JPL_DOCKERPUSH       | Space-separated list of defined docker-compose services whose image will |
+|                      | be pushed to the Docker registry. If ``ALL`` value is used, it           |
+|                      | will push all locally built images defined in docker-compose.yml         |
++----------------------+--------------------------------------------------------------------------+
+| JPL_IGNOREFAILURES   | If set, by using any random string value (without spaces), it            |
+|                      | will ignore any push-related failure                                     |
++----------------------+--------------------------------------------------------------------------+
+| JPL_DOCKERSERVER     | Sets Docker registry server. By default it will use Docker Hub           |
++----------------------+--------------------------------------------------------------------------+
+| JPL_DOCKERUSER       | Sets username of Docker registry credentials                             |
++----------------------+--------------------------------------------------------------------------+
+| JPL_DOCKERPASS       | Sets password of Docker registry credentials                             |
++----------------------+--------------------------------------------------------------------------+
+
+.. note::
+  Images are defined in docker-compose.yml file and there is no relation of those with defined service names.
+  Also the docker registry repository needs to be previously created before running the last step of the generated pipeline. Last step will be always the image push to docker registry.
+  In next examples the sqa_criteria property is being omitted to focus only in the required configurations to push images to a docker registry. Also project_repos in config section is being removed since is not mandatory, so it turns the examples more clear.
+  Jenkins environment variable ${GIT_BRANCH} receives the branch or tag from git repository.
+
+Example1: upload specific images to dockerhub registry ignoring failures
+
+config.yml example with minimal required configurations:
+
+.. code-block:: yaml
+
+   config:
+     credentials:
+       - id: my-dockerhub-token
+         username_var: JPL_DOCKERUSER
+         password_var: JPL_DOCKERPASS
+
+   environment:
+     JPL_DOCKERPUSH: "docs service1 service4"
+     JPL_IGNOREFAILURES: "defined"
+
+In this example there are three services:
+
+- service1: main service that have is Dockerfile in the service1 directory inside git repository.
+- service2: same as service1 with Dockerfile inside directory service2 and depends on service1 to be built.
+- docs: service to generate the project documentation.
+
+The docker-compose.yml file that would work with previous configuration can be as the following:
+
+.. code-block:: yaml
+
+   version: "3.7"
+
+   services:
+     service1:
+        build:
+           context: "."
+           dockerfile: "./service1/Dockerfile"
+        image: "organization/service1:${GIT_BRANCH}"
+
+     service2:
+        build:
+           context: "."
+           dockerfile: "./service2/Dockerfile"
+           cache_from:
+              - "organization/service1:${GIT_BRANCH}"
+        image: "organization/service2:${GIT_BRANCH}"
+        depends_on:
+           - service1
+
+     docs:
+        build:
+           context: "."
+           dockerfile: "./docs/Dockerfile"
+        image: "organization/docs:${GIT_BRANCH}"
+
+Example2: upload all images to independent registry and fail with push failures
+
+.. code-block:: yaml
+
+   config:
+     credentials:
+       - id: my-dockerhub-token
+         username_var: JPL_DOCKERUSER
+         password_var: JPL_DOCKERPASS
+
+   environment:
+     JPL_DOCKERPUSH: "ALL"
+     JPL_DOCKERSERVER: "mydockerregistry.example.com:8080"
+
+.. note::
+   When using custom docker registry is also expected that docker-compose.yml
+   have the expected configuration for the image references, following the official
+   `documentation <https://docs.docker.com/compose/compose-file/#image>`_.
+
+.. warning::
+   The docker-compose.yml file for this example could be any. With 'ALL' value it will upload all loaded images to the custom registry. This also includes all images pulled from Dockerhub or other docker registry without a build section defined in docker-compose.yml.
