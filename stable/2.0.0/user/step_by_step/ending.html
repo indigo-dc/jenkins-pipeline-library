@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Last steps &mdash; jenkins-pipeline-library 2.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="The sqa_criteria setting" href="sqa_criteria.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> jenkins-pipeline-library
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html">Layout</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Configuration files</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../config_file.html">The configuration file: config.yml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docker_compose.html">The services: docker-compose.yml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../jenkinsfile.html">The pipeline: Jenkinsfile</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Step-by-step guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="min_configuration.html">A minimal configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sqa_criteria.html">The <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Last steps</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">jenkins-pipeline-library</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Last steps</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/user/step_by_step/ending.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="last-steps">
+<h1>Last steps<a class="headerlink" href="#last-steps" title="Permalink to this headline">¶</a></h1>
+<p>After following the previous steps, <em>we have a working example that validates
+the code style of our Python or Java application</em>.</p>
+<p>Throughout the guide we have learnt that:</p>
+<blockquote>
+<div><ul>
+<li><p>There are <em>3 required files</em> (provided with relative paths to the code
+repository)</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.sqa/config.yml</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.sqa/docker-compose.yml</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Jenkinsfile</span></code></p></li>
+</ul>
+<p>Apart from those, in the specific case of using Tox tool with Python, we
+also need to consider both the definition of the environments and the
+location of the Tox configuration file.</p>
+</li>
+<li><p>The checks are defined within the <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting of the
+<code class="docutils literal notranslate"><span class="pre">.sqa/config.yml</span></code> file.</p></li>
+<li><p>The services are provided through Docker containers, using Docker Compose
+solution, and must be previously defined in the <code class="docutils literal notranslate"><span class="pre">.sqa/docker-compose.yml</span></code>
+file.</p></li>
+</ul>
+</div></blockquote>
+<p>Now it is time to push our changes to the remote repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git push origin setup_jenkins-pipeline-library
+</pre></div>
+</div>
+<p>If we have a Jenkins server already scanning our remote repository, the
+previous <em>push</em> command will automatically trigger the execution of the
+code style check we have defined in our example. No need of doing anything
+else. Once the check has been executed by Jenkins, the results will be
+displayed. The <code class="docutils literal notranslate"><span class="pre">setup_jenkins-pipeline-library</span></code> branch will be eventually
+merged into the production branch (usually <code class="docutils literal notranslate"><span class="pre">master</span></code>) after the dealing with
+the style standard complaints (if any).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We provide a <a class="reference external" href="https://github.com/EOSC-synergy/DEEPaaS">working example</a>
+with Jenkins <a class="reference external" href="https://jenkins.eosc-synergy.eu/job/eosc-synergy-org/job/DEEPaaS/job/eosc-synergy/">build logs</a>
+available.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The EOSC-Synergy project provides a Jenkins instance that can be used for
+research software projects using the jenkins-pipeline-library (v2). If you
+need support, please contact &lt;<a class="reference external" href="mailto:wp3&#37;&#52;&#48;eosc-synergy&#46;eu">wp3<span>&#64;</span>eosc-synergy<span>&#46;</span>eu</a>&gt;.</p>
+</div>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="sqa_criteria.html" class="btn btn-neutral float-left" title="The sqa_criteria setting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, EOSC-Synergy project.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Other Versions</span>
+    v: stable/2.0.0
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Tags</dt>
+      <dd><a href="../../../../2.0.0/user/step_by_step/ending.html">2.0.0</a></dd>
+    </dl>
+    <dl>
+      <dt>Branches</dt>
+      <dd><a href="../../../../release/2.1.0/user/step_by_step/ending.html">release/2.1.0</a></dd>
+      <dd><a href="ending.html">stable/2.0.0</a></dd>
+    </dl>
+  </div>
+</div>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
