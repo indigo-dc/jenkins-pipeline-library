@@ -12,6 +12,7 @@ pipeline {
                     branch 'jenkins/release/*'
                     branch 'jenkins/feature/*'
                     branch 'jenkins/fix/*'
+                    branch 'jenkins/docs/*'
                 }
             }
             steps {
