@@ -3,7 +3,7 @@ on:
   milestone:
     types: [closed]
 jobs:
-    create_stable_structure:
+    create_tag:
         name: Creates a tag when the milestone for the stable branche is closed
         runs-on: ubuntu-latest
         steps:
