@@ -1,0 +1,27 @@
+name: Creates a tag when closing the stable milestone
+on:
+  milestone:
+    types: [closed]
+jobs:
+    create_stable_structure:
+        name: Creates a tag when the milestone for the stable branche is closed
+        runs-on: ubuntu-latest
+        steps:
+          - name: Filter milestone by name
+            run: |
+              echo "RELEASE_MILESTONE=$(echo ${{ github.event.milestone.title }} | grep '^s\K[0-9]+\.[0-9]+\.[0-9]+')" >> $GITHUB_ENV
+          - name: Print milestone version
+            run: |
+              echo "stable milestone release: $RELEASE_MILESTONE"
+          - name: Fetch full history and checkout stable branch
+            uses: actions/checkout@v2
+            with:
+              ref: stable/${{ env.RELEASE_MILESTONE }}
+              fetch-depth: 0
+            if: "env.RELEASE_MILESTONE"
+          - name: Creates a tag from stable branch
+            uses: ncipollo/release-action@v1
+            with:
+              tag: ${{ env.RELEASE_MILESTONE }}
+              token: ${{ secrets.GITHUB_TOKEN }}
+            if: "env.RELEASE_MILESTONE"
