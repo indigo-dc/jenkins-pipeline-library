@@ -7,6 +7,13 @@ pipeline {
 
     stages {
         stage('SQA baseline dynamic stages') {
+            when {
+                anyOf {
+                    branch 'jenkins/release/*'
+                    branch 'jenkins/feature/*'
+                    branch 'jenkins/fix/*'
+                }
+            }
             steps {
                 script {
                     projectConfig = pipelineConfig(
