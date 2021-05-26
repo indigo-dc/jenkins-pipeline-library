@@ -36,7 +36,6 @@ jobs:
           uses: actions/checkout@v2
           with:
             ref: jenkins/${{ env.BRANCH_NAME }}
-          if: "env.BRANCH_EXISTS"
         - name: Update JePL branch content in jenkins/${{ env.BRANCH_NAME }}
           run: |
             git config user.name github-actions
