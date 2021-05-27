@@ -20,8 +20,16 @@ jobs:
               fetch-depth: 0
             if: "env.RELEASE_MILESTONE"
           - name: Creates a tag from stable branch
+            id: tag_version
+            uses: mathieudutour/github-tag-action@v5.5
+            with:
+              github_token: ${{ secrets.GITHUB_TOKEN }}
+              custom_tag: ${{ env.RELEASE_MILESTONE }}
+          - name: Create github release for tag
             uses: ncipollo/release-action@v1
             with:
-              tag: ${{ env.RELEASE_MILESTONE }}
+              tag: ${{ steps.tag_version.outputs.new_tag }}
+              name: Release ${{ steps.tag_version.outputs.new_tag }}
+              body: ${{ steps.tag_version.outputs.changelog }}
               token: ${{ secrets.GITHUB_TOKEN }}
             if: "env.RELEASE_MILESTONE"
