@@ -25,6 +25,7 @@ jobs:
             with:
               github_token: ${{ secrets.GITHUB_TOKEN }}
               custom_tag: ${{ env.RELEASE_MILESTONE }}
+            if: "env.RELEASE_MILESTONE"
           - name: Create github release for tag
             uses: ncipollo/release-action@v1
             with:
