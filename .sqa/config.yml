@@ -1,0 +1,23 @@
+config:
+  credentials:
+      - id: orviz-github-basic
+        username_var: GIT_USER
+        password_var: GIT_PASSWORD
+
+sqa_criteria:
+  qc_doc:
+    repos:
+      jenkins-pipeline-library:
+        container: sphinx
+        commands:
+          - pip3 install -r /jepl/docs/requirements.txt
+          - git -C /jepl config --global user.name "Pablo Orviz"
+          - git -C /jepl config --global user.email "orviz@ifca.unican.es"
+          - git -C /jepl fetch -a
+          - >
+            bash -c "cd /jepl
+            && make -C docs dummy
+            && sphinx-multiversion docs docs/_build/html
+            && cp docs/assets/index.html docs/_build/html/index.html
+            && env GIT_ASKPASS=/jepl/.git_credential_helper.sh
+            ghp-import -n -p docs/_build/html -f"

@@ -1,0 +1,21 @@
+commit 1e0df9a4b7af04efb08e90e6c764c8c11b49bafc
+Author: Samuel Bernardo <samuel@lip.pt>
+Date:   Fri Dec 4 14:14:23 2020 +0000
+
+    Need to implement as operator to manage userRemoteConfigs dinamically. Because of that for now is only possible to define the array as new, using default values when required.
+
+    Signed-off-by: Samuel Bernardo <samuel@lip.pt>
+
+diff --git a/src/eu/indigo/scm/GitLocalBranch.groovy b/src/eu/indigo/scm/GitLocalBranch.groovy
+index 30aa50e..1dbaf13 100644
+--- a/src/eu/indigo/scm/GitLocalBranch.groovy
++++ b/src/eu/indigo/scm/GitLocalBranch.groovy
+@@ -18,7 +18,7 @@ class GitLocalBranch extends Git implements Serializable {
+         steps.checkout transformGitSCM([
+                 branches: steps.scm.branches,
+                 extensions: steps.scm.extensions + [$class: 'LocalBranch', localBranch: '**'],
+-                userRemoteConfigs: steps.scm.userRemoteConfigs
++                userRemoteConfigs: [[credentialsId: steps.scm.userRemoteConfigs[0].credentialsId, url: steps.scm.userRemoteConfigs[0].url, name: 'origin', refspec: '+refs/heads/*:refs/remotes/origin/*']]
+             ])
+     }
+
