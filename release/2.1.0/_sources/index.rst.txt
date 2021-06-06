@@ -64,6 +64,13 @@ research software. The latest version of the SQA criteria can be found in
    /credentials/jenkins
 
 .. toctree::
+   :glob:
+   :titlesonly:
+   :caption: Examples in production
+
+   /user/examples/*
+
+.. toctree::
    :caption: Contribution guide
 
    /contrib/documentation
