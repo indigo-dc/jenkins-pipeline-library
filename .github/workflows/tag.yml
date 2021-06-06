@@ -34,3 +34,26 @@ jobs:
               body: ${{ steps.tag_version.outputs.changelog }}
               token: ${{ secrets.GITHUB_TOKEN }}
             if: "env.RELEASE_MILESTONE"
+          - name: Expose git commit data
+            uses: rlespinasse/git-commit-data-action@v1.x
+          - name: Create PR to master based on current version
+            id: cpr
+            uses: peter-evans/create-pull-request@v3
+            with:
+              commit-message: [create-pull-request] Merge release ${{ env.RELEASE_MILESTONE }}
+              committer: ${{ env.GIT_COMMIT_COMMITTER }}
+              signoff: true
+              branch: stable/${{ env.RELEASE_MILESTONE }}
+              delete-branch: true
+              base: master
+              title: Release ${{ steps.tag_version.outputs.new_tag }} merge to master
+              body: ${{ steps.tag_version.outputs.changelog }}
+              labels: release,critical
+              reviewers: orviz,samuelbernardolip,davrodgon
+              token: ${{ secrets.GITHUB_TOKEN }}
+            if: "env.RELEASE_MILESTONE"
+          - name: Check PR details
+            if: "env.RELEASE_MILESTONE"
+            run: |
+              echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+              echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
