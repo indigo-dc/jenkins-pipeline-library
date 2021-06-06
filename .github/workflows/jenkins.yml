@@ -42,8 +42,7 @@ jobs:
             git config user.name github-actions
             git config user.email github-actions@github.com
             git reset --hard origin/${{ env.BRANCH_NAME }}
-            git checkout origin/JePL -- .sqa/config.yml .sqa/docker-compose.yml Jenkinsfile .git_credential_helper.sh patch.issue_116
-            git apply -v patch.issue_116 # FIXME Work around until https://github.com/indigo-dc/jenkins-pipeline-library/issues/116 is fixed
+            git checkout origin/JePL -- .sqa/config.yml .sqa/docker-compose.yml Jenkinsfile .git_credential_helper.sh
             printf "`cat Jenkinsfile`" "jenkins/${{ env.BRANCH_NAME }}" > Jenkinsfile
             git add .
             git status
