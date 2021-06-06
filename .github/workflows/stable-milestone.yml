@@ -9,7 +9,7 @@ jobs:
         steps:
           - name: Filter milestone by name
             run: |
-              echo "RELEASE_MILESTONE=$(echo ${{ github.event.milestone.title }} | grep '^[0-9]+\.[0-9]+\.[0-9]+')" >> $GITHUB_ENV
+              echo "RELEASE_MILESTONE=$(echo ${{ github.event.milestone.title }} | grep -P '^[0-9]+\.[0-9]+\.[0-9]+')" >> $GITHUB_ENV
           - name: Print milestone version
             run: |
               echo $RELEASE_MILESTONE
