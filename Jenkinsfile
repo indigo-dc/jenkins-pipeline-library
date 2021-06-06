@@ -10,6 +10,7 @@ pipeline {
             when {
                 anyOf {
                     branch 'jenkins/release/**'
+                    branch 'jenkins/stable/**'
                     branch 'jenkins/feature/**'
                     branch 'jenkins/fix/**'
                     branch 'jenkins/docs/**'
@@ -33,6 +34,7 @@ pipeline {
             when {
                 anyOf {
                     branch 'jenkins/release/**'
+                    branch 'jenkins/stable/**'
                     branch 'jenkins/feature/**'
                     branch 'jenkins/fix/**'
                 }
@@ -50,6 +52,7 @@ pipeline {
             when {
                 anyOf {
                     branch 'jenkins/release/**'
+                    branch 'jenkins/stable/**'
                     branch 'jenkins/feature/**'
                     branch 'jenkins/fix/**'
                 }
