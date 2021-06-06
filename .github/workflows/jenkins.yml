@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - 'release/**'
+      - 'stable/**'
       - 'feature/**'
       - 'fix/**'
       - 'docs/**'
