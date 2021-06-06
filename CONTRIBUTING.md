@@ -6,8 +6,8 @@ Please note the following aspects when sending us your contribution.
  * We use the [Git Flow](https://nvie.com/posts/a-successful-git-branching-model/)
    convention:
     * The `release/<version>` branch contains the last features being added.
-    * Releases will be done periodically on `stable/<version>` branch.
-    * Production ready releases are defined by tag `<version>` and will be created from `stable/<version>` branch after real use case testing are enough.
+    * Releases will be done periodically from `stable/<version>` branch.
+    * Production ready releases are defined by tag `v<version>` and will be created from `stable/<version>` branch after real use case testing are enough.
     * The `master` branch contains the freezed code from latest tag `<version>`.
     * We expect that your contributions:
       * Are done through pull requests.
@@ -18,7 +18,10 @@ Please note the following aspects when sending us your contribution.
     * `<prefix> ::= <release> | <stable>  | <feature> | <fix> | <docs>`:
       * `<release> ::= "release"` in case of a branch created from `release/<version>`
       * `<stable> ::= "stable"` in case of a branch created from `stable/<version>`, which is created when a corresponding GitHub Milestone is closed
-         * Milestone name MUST match the `<version>`
+         * Milestone name MUST match the `<version>` for `release/<version>`
+         * When release milestone is closed, a new milestone with label `s<version>` is created by github workflow for `stable/<version>` branch
+         * After stable milestone is closed, a tag and release are created for `<version>`
+         * A PR from previous stable branch into master is also added to finish the expected workflow and keep master branch updated with latest release
       * `<feature> | <fix> | <docs>` are generated from the associated branches. The `docs/<version>` branches only trigger the JePL docs re-generation stage.
  * Compliant with [The Apache Groovy programming language - Style
  guide](http://groovy-lang.org/style-guide.html)
