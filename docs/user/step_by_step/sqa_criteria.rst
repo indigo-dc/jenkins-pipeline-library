@@ -7,24 +7,24 @@ the checks that comprise the quality criteria.
 The full set of criteria currently supported in the library is summarized in
 the following table and can be found in the :ref:`sqa_criteria` section.
 
-+-----------------------------+------------------------------------------------------------------------+
-| ``sqa_criteria`` setting    | What does it cover?                                                    |
-+=============================+========================================================================+
-| ``qc_style``                | Make your code compliant with a style standard                         |
-+-----------------------------+------------------------------------------------------------------------+
-| ``qc_coverage``             | Calculate the unit testing coverage of your code                       |
-+-----------------------------+------------------------------------------------------------------------+
-| ``qc_functional``           | Test the main features of your software                                |
-+-----------------------------+------------------------------------------------------------------------+
-| ``qc_security``             | Assess the security (uncover vulnerabilities & bad security practices) |
-+-----------------------------+------------------------------------------------------------------------+
-| ``qc_doc``                  | Generate the documentation                                             |
-+-----------------------------+------------------------------------------------------------------------+
++--------------------------+------------------------------------------------------------------------+
+| ``sqa_criteria`` setting | What does it cover?                                                    |
++==========================+========================================================================+
+| ``QC.Sty``               | Make your code compliant with a style standard                         |
++--------------------------+------------------------------------------------------------------------+
+| ``QC.Uni``               | Calculate the unit testing coverage of your code                       |
++--------------------------+------------------------------------------------------------------------+
+| ``QC.Fun``               | Test the main features of your software                                |
++--------------------------+------------------------------------------------------------------------+
+| ``QC.Sec``               | Assess the security (uncover vulnerabilities & bad security practices) |
++--------------------------+------------------------------------------------------------------------+
+| ``QC.Doc``               | Generate the documentation                                             |
++--------------------------+------------------------------------------------------------------------+
 
 Python and Java examples
 ------------------------
 The best way to learn the basics about the library is through examples. In the
-next subsections we will show how to fulfill the ``qc_style`` criterion for
+next subsections we will show how to fulfill the ``QC.Sty`` criterion for
 Python and Java applications. Working configurations are provided so you can
 readily test them.
 
@@ -48,7 +48,7 @@ Python with ``tox``
                 repo: 'https://github.com/myorg/myrepo'
 
            sqa_criteria:
-             qc_style:
+             QC.Sty:
                repos:
                  myrepo:
                    container: myrepo-testing
@@ -168,7 +168,7 @@ Python with ``commands``
                  repo: 'https://github.com/myorg/myrepo'
 
             sqa_criteria:
-              qc_coverage:
+              QC.Uni:
                 repos:
                   myrepo:
                     container: myrepo-testing
@@ -209,7 +209,7 @@ Java with ``commands``
                  repo: 'https://github.com/myorg/myrepo'
 
             sqa_criteria:
-              qc_coverage:
+              QC.Uni:
                 repos:
                   myrepo:
                     container: myrepo-testing-java
