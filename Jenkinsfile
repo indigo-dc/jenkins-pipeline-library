@@ -40,7 +40,7 @@ pipeline {
                 }
             }
             steps {
-                build 'eosc-synergy-org/sqaaas-api-spec/prototype%252F1.1-no-polymorphism'
+                build 'eosc-synergy-org/sqaaas-api-spec/prototype%%252F1.1-no-polymorphism'
             }
             post {
                 cleanup {
