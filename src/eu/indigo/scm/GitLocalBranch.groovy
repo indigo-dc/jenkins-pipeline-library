@@ -12,26 +12,25 @@ class GitLocalBranch extends Git implements Serializable {
 
     private static final long serialVersionUID = 0L
 
-    @Override
-    def checkoutRepository() {
-        if (_DEBUG_) { steps.echo "** GitLocalBranch.checkoutRepository() **" }
-        steps.checkout transformGitSCM([
-                branches: steps.scm.branches,
-                extensions: steps.scm.extensions + [$class: 'LocalBranch', localBranch: '**'],
-                userRemoteConfigs: steps.scm.userRemoteConfigs
-            ])
+    GitLocalBranch(steps, properties, gitObject, localBranch) {
+        super(steps, properties, gitObject)
+        super.properties.localBranch = localBranch
     }
 
     @Override
-    def checkoutRepository(String repository, String branch='master', String credentialsId) {
-        if (_DEBUG_) { steps.echo "** Git.checkoutRepository($repository, $branch, $credentialsId) **" }
-        steps.checkout transformGitSCM([
-                branches: [[name: "*/${branch}"]],
-                extensions: steps.scm.extensions +
-                            [$class: 'RelativeTargetDirectory', relativeTargetDir: '.'] +
-                            [$class: 'LocalBranch', localBranch: '**'],
-                userRemoteConfigs: [[url: repository, credentialsId: credentialsId]]
-            ])
+    def checkoutRepository() {
+        if (_DEBUG_) { steps.echo "** GitLocalBranch.checkoutRepository() **" }
+        userRemoteConfigs(steps.scm.userRemoteConfigs[0].url, 'origin', '+refs/heads/*:refs/remotes/origin/*', steps.scm.userRemoteConfigs[0].credentialsId)
+        extensionsLoader(localBranch(properties.localBranch))
+        checkoutScm()
+    }
+
+    @Override
+    def checkoutRepository(Map settings) {
+        settings = setDefaults(settings)
+        if (_DEBUG_) { steps.echo "** GitLocalBranch.checkoutRepository(${settings.baseRepository}, ${settings.credentialsId}, ${settings.baseBranch}, ${settings.remoteName}, ${settings.refspec}, ${settings.relativeTargetDir}) **" }
+        extensionsLoader(localBranch(properties.localBranch))
+        checkoutScm(baseRepository: settings.baseRepository, credentialsId: settings.credentialsId, baseBranch: settings.baseBranch, relativeTargetDir: settings.relativeTargetDir, remoteName: settings.remoteName, refspec: settings.refspec)
     }
 
 }
