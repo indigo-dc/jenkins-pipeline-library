@@ -338,7 +338,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                 projectConfig.stagesList.each { stageMap ->
                     if (steps.env.JPL_KEEPGOING) {
                         // Catch error and continue to other steps
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        steps.catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             // Run the defined steps
                             runExecSteps(stageMap, projectConfig, workspace)
                         }
