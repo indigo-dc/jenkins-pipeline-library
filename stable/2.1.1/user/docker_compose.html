@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The services: docker-compose.yml &mdash; jenkins-pipeline-library 2.1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The pipeline: Jenkinsfile" href="jenkinsfile.html" />
+    <link rel="prev" title="The configuration file: config.yml" href="config_file.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> jenkins-pipeline-library
+          </a>
+              <div class="version">
+                2.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout.html">Layout</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Configuration files</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="config_file.html">The configuration file: config.yml</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The services: docker-compose.yml</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary-of-recommendations-for-best-use-with-the-library">Summary of recommendations for best use with the library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jenkinsfile.html">The pipeline: Jenkinsfile</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Step-by-step guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="step_by_step/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="step_by_step/min_configuration.html">A minimal configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="step_by_step/sqa_criteria.html">The <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="step_by_step/ending.html">Last steps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Using credentials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../credentials/intro.html">JePL credentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credentials/config_file.html">Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credentials/jenkins.html">Jenkins: storing secrets</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples in production</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/jpl_validator.html">jpl-validator</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contribution guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contrib/documentation.html">Contributing with docs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">jenkins-pipeline-library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>The services: docker-compose.yml</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user/docker_compose.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="the-services-docker-compose-yml">
+<h1>The services: docker-compose.yml<a class="headerlink" href="#the-services-docker-compose-yml" title="Permalink to this headline"></a></h1>
+<p>Since the jenkins-pipeline-library relies on Docker Compose framework, all the
+services that will be required by the pipeline have to be previously defined.
+The Docker Compose file is expected in the jenkins-pipeline-library’s
+configuration folder, in particular in <code class="docutils literal notranslate"><span class="pre">.sqa/docker-compose.yml</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you opt for using a different location other than the default one for the
+Docker Compose definition, you need to use the
+<a class="reference internal" href="config_file.html#config-deploy-template-setting"><span class="std std-ref">deploy_template</span></a> setting.</p>
+</div>
+<p>The <a class="reference external" href="https://docs.docker.com/compose/">official documentation</a> is the most
+appropriate place for getting familiar with the syntax. The next excerpt
+showcases the definition of a single service in the version 3 of the Docker
+Compose specification:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">version</span><span class="p">:</span> <span class="s2">&quot;3.6&quot;</span>
+
+<span class="n">services</span><span class="p">:</span>
+  <span class="n">processing</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="s2">&quot;worsica/worsica-backend:worsica-processing-dev_latest&quot;</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="s2">&quot;processing&quot;</span>
+    <span class="n">volumes</span><span class="p">:</span>
+     <span class="o">-</span> <span class="nb">type</span><span class="p">:</span> <span class="n">bind</span>
+       <span class="n">source</span><span class="p">:</span> <span class="o">./</span><span class="n">worsica_web_products</span>
+       <span class="n">target</span><span class="p">:</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">worsica_web_products</span>
+</pre></div>
+</div>
+<p>The document uses a YAML format and starts by setting the version used. The
+next section, <code class="docutils literal notranslate"><span class="pre">services</span></code>, is the most relevant for the interests of the
+jenkins-pipeline-library. Here, all the required services needed for tackling
+the <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> requirements are defined.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The identifier used in the service definition –<code class="docutils literal notranslate"><span class="pre">processing</span></code> in the
+example above– will be then used in the <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> as part of the
+<a class="reference internal" href="config_file.html#config-container-setting"><span class="std std-ref">container</span></a> setting. However, <strong>the use of</strong>
+<code class="docutils literal notranslate"><span class="pre">container_name</span></code> (see example above) <strong>is highly recommended to set the
+name of the container that will be used later on in the</strong> <code class="docutils literal notranslate"><span class="pre">config.yml</span></code>.
+Otherwise, Docker Compose will append a suffix to the service identifier
+(e.g. <code class="docutils literal notranslate"><span class="pre">processing_1</span></code>) in  the case of finding, in the same server, an
+existing container matching the same name. This situation is commonplace
+when previous deployments of the same pipeline have failed to be completely
+cleaned up.</p>
+</div>
+<section id="environment-variables">
+<span id="docker-compose-env"></span><h2>Environment variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline"></a></h2>
+<p>Environment variables can be set using the <a class="reference external" href="https://docs.docker.com/compose/environment-variables/">environment</a> label. It is
+possible to bypass variables defined from config.yml environment and set them
+afterwards inside docker-compose. For example, based on previous examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>version: &quot;3.6&quot;
+
+services:
+  processing:
+    image: &quot;worsica/worsica-backend:worsica-processing-dev_latest&quot;
+    container_name: &quot;processing&quot;
+    volumes:
+     - type: bind
+       source: ./worsica_web_products
+       target: /usr/local/worsica_web_products
+    environment:
+     - DEBUG=1
+     - GIT_COMMITTER_NAME=${GIT_COMMITTER_NAME}
+     - GIT_COMMITTER_EMAIL=${GIT_COMMITTER_EMAIL}
+     - LANG: ${LANG}
+</pre></div>
+</div>
+</section>
+<section id="summary-of-recommendations-for-best-use-with-the-library">
+<span id="dc-summary"></span><h2>Summary of recommendations for best use with the library<a class="headerlink" href="#summary-of-recommendations-for-best-use-with-the-library" title="Permalink to this headline"></a></h2>
+<dl>
+<dt>Use Docker Compose version <code class="docutils literal notranslate"><span class="pre">3.6</span></code></dt><dd><p>Previous versions are not compatible with the use of bind volumes as expected
+by the library.</p>
+</dd>
+<dt>Use <code class="docutils literal notranslate"><span class="pre">container_name</span></code> to set the container ID</dt><dd><p>It is currently the best choice provided by Docker Compose for ensuring that
+the required container will be accessible through the expected name. If this
+parameter is omitted, then Docker Compose will try to use the generic ID
+provided for the service definition, i.e. <code class="docutils literal notranslate"><span class="pre">services:&lt;service_name&gt;</span></code> (in the
+example above this would correspond to <em>processing</em>). The problem in this
+latter case is that launching the container will not fail if the system is
+already running a service with the same ID, but it will append a prefix to it.
+The result of this behaviour is that the JPL library will not be able to
+connect to the container as it is not aware of the change in the name.
+Instead, if the ID set under <code class="docutils literal notranslate"><span class="pre">container_name</span></code> is already in use, the
+operation will fail as expected.</p>
+</dd>
+<dt>Try not to use <em>one-shot</em> Docker images</dt><dd><p>Bear in mind that the images used for the services are expected to be ran in
+background, so those images configured to execute a specific task and then be
+shut down cannot be used unless we made them explicitly keep running. For
+instance, this could be accomplished by adding a <code class="docutils literal notranslate"><span class="pre">sleep</span> <span class="pre">infinity</span></code> in the
+list of commands passed to the container at runtime, such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">version</span><span class="p">:</span> <span class="s2">&quot;3.6&quot;</span>
+
+<span class="n">services</span><span class="p">:</span>
+  <span class="n">processing</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="s2">&quot;worsica/worsica-backend:worsica-processing-dev_latest&quot;</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="s2">&quot;processing&quot;</span>
+    <span class="n">volumes</span><span class="p">:</span>
+     <span class="o">-</span> <span class="nb">type</span><span class="p">:</span> <span class="n">bind</span>
+       <span class="n">source</span><span class="p">:</span> <span class="o">./</span><span class="n">worsica_web_products</span>
+       <span class="n">target</span><span class="p">:</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">worsica_web_products</span>
+    <span class="n">command</span><span class="p">:</span> <span class="n">sleep</span> <span class="n">infinity</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="config_file.html" class="btn btn-neutral float-left" title="The configuration file: config.yml" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jenkinsfile.html" class="btn btn-neutral float-right" title="The pipeline: Jenkinsfile" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, EOSC-Synergy project.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Other Versions</span>
+    v: stable/2.1.1
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Tags</dt>
+      <dd><a href="../../../2.0.0/user/docker_compose.html">2.0.0</a></dd>
+    </dl>
+    <dl>
+      <dt>Branches</dt>
+      <dd><a href="../../../release/2.1.0/user/docker_compose.html">release/2.1.0</a></dd>
+      <dd><a href="../../../release/2.1.1/user/docker_compose.html">release/2.1.1</a></dd>
+      <dd><a href="../../2.0.0/user/docker_compose.html">stable/2.0.0</a></dd>
+      <dd><a href="../../2.1.0/user/docker_compose.html">stable/2.1.0</a></dd>
+      <dd><a href="docker_compose.html">stable/2.1.1</a></dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

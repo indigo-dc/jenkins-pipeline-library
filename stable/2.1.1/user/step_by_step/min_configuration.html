@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A minimal configuration &mdash; jenkins-pipeline-library 2.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="The sqa_criteria setting" href="sqa_criteria.html" />
+    <link rel="prev" title="Intro" href="intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> jenkins-pipeline-library
+          </a>
+              <div class="version">
+                2.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html">Layout</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Configuration files</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../config_file.html">The configuration file: config.yml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docker_compose.html">The services: docker-compose.yml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../jenkinsfile.html">The pipeline: Jenkinsfile</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Step-by-step guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Intro</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">A minimal configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sqa_criteria.html">The <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ending.html">Last steps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Using credentials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../credentials/intro.html">JePL credentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../credentials/config_file.html">Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../credentials/jenkins.html">Jenkins: storing secrets</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples in production</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/jpl_validator.html">jpl-validator</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contribution guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contrib/documentation.html">Contributing with docs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">jenkins-pipeline-library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>A minimal configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/user/step_by_step/min_configuration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="a-minimal-configuration">
+<h1>A minimal configuration<a class="headerlink" href="#a-minimal-configuration" title="Permalink to this headline"></a></h1>
+<p>We will use the fictional repository <em>https://github.com/myorg/myrepo</em>. The
+following steps set up the minimum layout:</p>
+<ol class="arabic simple">
+<li><p>Clone the repo</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">MY_REPO</span><span class="o">=</span>https://github.com/myorg/myrepo
+$ git clone <span class="nv">$MY_REPO</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>A <a class="reference external" href="https://indigo-dc.github.io/sqa-baseline/#code-workflow-qc.wor">good practice</a> is to add
+the changes herein described in an individual branch, so not directly in the
+production –usually <code class="docutils literal notranslate"><span class="pre">master</span></code>– branch. In this example we will use
+<code class="docutils literal notranslate"><span class="pre">setup_jenkins-pipeline-library</span></code> as follows:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> <span class="nv">$MY_REPO</span>
+$ git checkout -b setup_jenkins-pipeline-library
+</pre></div>
+</div>
+<ol class="arabic" start="3">
+<li><p>We will now create the following directory structure within the code
+repository, as required by the library (be sure to read <a class="reference internal" href="../layout.html#layout"><span class="std std-ref">Layout</span></a>
+section):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|--</span> <span class="o">.</span><span class="n">sqa</span>
+<span class="o">|</span>    <span class="o">|--</span> <span class="n">config</span><span class="o">.</span><span class="n">yml</span>
+<span class="o">|</span>    <span class="o">|--</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">.</span><span class="n">yml</span>
+<span class="o">|--</span> <span class="n">Jenkinsfile</span>
+</pre></div>
+</div>
+<p>3.1. Create the main <code class="docutils literal notranslate"><span class="pre">.sqa</span></code> folder:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir .sqa
+</pre></div>
+</div>
+<p>3.2. Create the initial content of the main configuration file,
+<code class="docutils literal notranslate"><span class="pre">.sqa/config.yml</span></code>, with the description of your repository (see
+<a class="reference internal" href="../config_file.html#the-configuration-file-config-yml"><span class="std std-ref">The configuration file: config.yml</span></a> section):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cat <span class="s">&lt;&lt;EOF &gt; .sqa/config.yml</span>
+<span class="s">config:</span>
+<span class="s">  project_repos:</span>
+<span class="s">    myrepo:</span>
+<span class="s">      repo: &#39;https://github.com/myorg/myrepo&#39;</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+<p>3.3. Create the <code class="docutils literal notranslate"><span class="pre">.sqa/docker-compose.yml</span></code>. For the time being, we will
+only specify the version required by the library (i.e. <code class="docutils literal notranslate"><span class="pre">3.6</span></code>), later on
+we will add the service definitions (see
+<a class="reference internal" href="../docker_compose.html#the-services-docker-compose-yml"><span class="std std-ref">The services: docker-compose.yml</span></a> section):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cat <span class="s">&lt;&lt;EOF &gt; .sqa/docker-compose.yml</span>
+<span class="s">version: &quot;3.6&quot;</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+<p>3.4. In the <em>root path of the code repository</em>, create the <code class="docutils literal notranslate"><span class="pre">Jenkinsfile</span></code>,
+file required by Jenkins. In order to make it work with the
+jenkins-pipeline-library, at least the following content must be present
+(see <a class="reference internal" href="../jenkinsfile.html#the-pipeline-jenkinsfile"><span class="std std-ref">The pipeline: Jenkinsfile</span></a> section):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cat <span class="s">&lt;&lt;EOF &gt; Jenkinsfile</span>
+<span class="s">@Library([&#39;github.com/indigo-dc/jenkins-pipeline-library@release/2.1.0&#39;]) _</span>
+
+<span class="s">def projectConfig</span>
+
+<span class="s">pipeline {</span>
+<span class="s">    agent any</span>
+
+<span class="s">    stages {</span>
+<span class="s">        stage(&#39;SQA baseline dynamic stages&#39;) {</span>
+<span class="s">            steps {</span>
+<span class="s">                script {</span>
+<span class="s">                    projectConfig = pipelineConfig()</span>
+<span class="s">                    buildStages(projectConfig)</span>
+<span class="s">                }</span>
+<span class="s">            }</span>
+<span class="s">            post {</span>
+<span class="s">                cleanup {</span>
+<span class="s">                    cleanWs()</span>
+<span class="s">                }</span>
+<span class="s">            }</span>
+<span class="s">        }</span>
+<span class="s">    }</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</li>
+<li><p>Commit &amp; push the layout files:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git add .sqa Jenkinsfile
+$ git commit -m <span class="s2">&quot;Initial setup of jenkins-pipeline-library files&quot;</span>
+</pre></div>
+</div>
+<p>Now that we have the skeleton with an initial version of the three relevant
+files, let’s add our checks through the <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting. We will see
+how to do that in the next section.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="intro.html" class="btn btn-neutral float-left" title="Intro" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sqa_criteria.html" class="btn btn-neutral float-right" title="The sqa_criteria setting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, EOSC-Synergy project.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Other Versions</span>
+    v: stable/2.1.1
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Tags</dt>
+      <dd><a href="../../../../2.0.0/user/step_by_step/min_configuration.html">2.0.0</a></dd>
+    </dl>
+    <dl>
+      <dt>Branches</dt>
+      <dd><a href="../../../../release/2.1.0/user/step_by_step/min_configuration.html">release/2.1.0</a></dd>
+      <dd><a href="../../../../release/2.1.1/user/step_by_step/min_configuration.html">release/2.1.1</a></dd>
+      <dd><a href="../../../2.0.0/user/step_by_step/min_configuration.html">stable/2.0.0</a></dd>
+      <dd><a href="../../../2.1.0/user/step_by_step/min_configuration.html">stable/2.1.0</a></dd>
+      <dd><a href="min_configuration.html">stable/2.1.1</a></dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
