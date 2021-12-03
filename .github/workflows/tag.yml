@@ -30,7 +30,7 @@ jobs:
             if: "env.RELEASE_MILESTONE"
           - name: Get diff between main and stable branch
             id: tag_changes
-            run: echo "::set-output name=diff::$(git diff origin/main origin/stable/${{ ENV.RELEASE_MILESTONE }})"
+            run: echo "::set-output name=diff::$(git diff origin/master origin/stable/${{ ENV.RELEASE_MILESTONE }})"
             shell: bash
           - name: Create github release for tag
             uses: ncipollo/release-action@v1
