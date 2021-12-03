@@ -19,6 +19,11 @@ jobs:
               ref: stable/${{ env.RELEASE_MILESTONE }}
               fetch-depth: 0
             if: "env.RELEASE_MILESTONE"
+          - name: Checkout the stable branch
+            run: |
+              git checkout stable/${{ env.RELEASE_MILESTONE }}
+            shell: bash
+            if: "env.RELEASE_MILESTONE"
           - name: Creates a tag from stable branch
             id: tag_version
             uses: anothrNick/github-tag-action@1.36.0
@@ -29,12 +34,12 @@ jobs:
               VERBOSE: false
             if: "env.RELEASE_MILESTONE"
           - name: Get diff between main and stable branch
-            id: tag_changes
             run: |
               echo "__DIFF__<<EOF" >> $GITHUB_ENV
               echo $(git diff --name-only origin/master origin/stable/${{ ENV.RELEASE_MILESTONE }}) >> $GITHUB_ENV
               echo "EOF" >> $GITHUB_ENV
             shell: bash
+            if: "env.RELEASE_MILESTONE"
           - name: Create github release for tag
             uses: ncipollo/release-action@v1
             with:
