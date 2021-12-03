@@ -33,7 +33,7 @@ jobs:
             with:
               tag: ${{ steps.tag_version.outputs.new_tag }}
               name: Release ${{ steps.tag_version.outputs.new_tag }}
-              body: ${{ steps.tag_version.outputs.changelog }}
+              body: ${{ steps.tag_version.outputs.new_tag }}
               token: ${{ secrets.GITHUB_TOKEN }}
             if: "env.RELEASE_MILESTONE"
           - name: Expose git commit data
