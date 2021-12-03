@@ -26,7 +26,7 @@ jobs:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               CUSTOM_TAG: ${{ ENV.RELEASE_MILESTONE }}
               RELEASE_BRANCHES: stable/${{ env.RELEASE_MILESTONE }}
-              VERBOSE: true
+              VERBOSE: false
             if: "env.RELEASE_MILESTONE"
           - name: Get diff between main and stable branch
             id: tag_changes
