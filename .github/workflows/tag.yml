@@ -19,11 +19,6 @@ jobs:
               ref: stable/${{ env.RELEASE_MILESTONE }}
               fetch-depth: 0
             if: "env.RELEASE_MILESTONE"
-          - name: Checkout the stable branch
-            run: |
-              git checkout stable/${{ env.RELEASE_MILESTONE }}
-            shell: bash
-            if: "env.RELEASE_MILESTONE"
           - name: Creates a tag from stable branch
             id: tag_version
             uses: anothrNick/github-tag-action@1.36.0
