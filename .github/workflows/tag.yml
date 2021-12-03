@@ -22,7 +22,7 @@ jobs:
           - name: Creates a tag from stable branch
             id: tag_version
             uses: anothrNick/github-tag-action@1.36.0
-            with:
+            env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               CUSTOM_TAG: ${{ ENV.RELEASE_MILESTONE }}
               RELEASE_BRANCHES: stable/${{ env.RELEASE_MILESTONE }}
