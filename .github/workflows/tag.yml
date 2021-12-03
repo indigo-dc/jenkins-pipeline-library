@@ -21,11 +21,10 @@ jobs:
             if: "env.RELEASE_MILESTONE"
           - name: Creates a tag from stable branch
             id: tag_version
-            uses: mathieudutour/github-tag-action@v5.5
+            uses:  anothrNick/github-tag-action@v1.36.0
             with:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               CUSTOM_TAG: ${{ ENV.RELEASE_MILESTONE }}
-              WITH_V: false
               RELEASE_BRANCHES: stable/${{ env.RELEASE_MILESTONE }}
               VERBOSE: true
             if: "env.RELEASE_MILESTONE"
