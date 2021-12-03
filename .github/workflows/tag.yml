@@ -28,12 +28,21 @@ jobs:
               RELEASE_BRANCHES: stable/${{ env.RELEASE_MILESTONE }}
               VERBOSE: true
             if: "env.RELEASE_MILESTONE"
+          - name: Get diff between main and stable branch
+            id: tag_changes
+            run: echo "::set-output name=diff::$(git diff origin/main origin/stable/${{ ENV.RELEASE_MILESTONE }})"
+            shell: bash
           - name: Create github release for tag
             uses: ncipollo/release-action@v1
             with:
               tag: ${{ steps.tag_version.outputs.new_tag }}
               name: Release ${{ steps.tag_version.outputs.new_tag }}
-              body: ${{ steps.tag_version.outputs.new_tag }}
+              body: |
+                ${{ github.event.milestone.title }}:
+                ${{ github.event.milestone.message }}
+
+                Changes:
+                ${{ steps.tag_changes.diff }}
               token: ${{ secrets.GITHUB_TOKEN }}
             if: "env.RELEASE_MILESTONE"
           - name: Expose git commit data
