@@ -111,32 +111,32 @@ defined by the SQA baseline.</p>
 <p>The configuration file must exist under <code class="docutils literal notranslate"><span class="pre">.sqa/config.yml</span></code> path, relative to the
 root directory of your code repository.</p>
 <p>Below is an example YAML file which shows the most common configuration options:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># .sqa/config.yml - jenkins-pipeline-library configuration file</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># .sqa/config.yml - jenkins-pipeline-library configuration file</span><span class="w"></span>
 
-<span class="c1"># generic configuration: workspace, agents</span>
-<span class="nt">config</span><span class="p">:</span>
-  <span class="nt">project_repos</span><span class="p">:</span>
-    <span class="nt">worsica-processing</span><span class="p">:</span>
-      <span class="nt">repo</span><span class="p">:</span> <span class="s">&#39;https://github.com/WORSICA/worsica-processing.git&#39;</span>
-      <span class="nt">branch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">master</span>
-      <span class="nt">dockerhub</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">worsica/worsica-processing</span>
-      <span class="nt">dockertag</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">latest</span>
+<span class="c1"># generic configuration: workspace, agents</span><span class="w"></span>
+<span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">project_repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">worsica-processing</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;https://github.com/WORSICA/worsica-processing.git&#39;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master</span><span class="w"></span>
+<span class="w">      </span><span class="nt">dockerhub</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">worsica/worsica-processing</span><span class="w"></span>
+<span class="w">      </span><span class="nt">dockertag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest</span><span class="w"></span>
 
-<span class="nt">sqa_criteria</span><span class="p">:</span>
-  <span class="nt">qc_style</span><span class="p">:</span>
-    <span class="nt">repos</span><span class="p">:</span>
-      <span class="nt">worsica-processing</span><span class="p">:</span>
-        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">processing</span>
-        <span class="nt">tox</span><span class="p">:</span>
-          <span class="nt">testenv</span><span class="p">:</span>
-            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">stylecheck</span>
+<span class="nt">sqa_criteria</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">qc_style</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">worsica-processing</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">processing</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tox</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">testenv</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">stylecheck</span><span class="w"></span>
 
-<span class="nt">environment</span><span class="p">:</span>
-  <span class="nt">GIT_COMMITTER_NAME</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Person1</span>
-  <span class="nt">GIT_COMMITTER_EMAIL</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">person1@example.org</span>
-  <span class="nt">LANG</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">C.UTF-8</span>
+<span class="nt">environment</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">GIT_COMMITTER_NAME</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Person1</span><span class="w"></span>
+<span class="w">  </span><span class="nt">GIT_COMMITTER_EMAIL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">person1@example.org</span><span class="w"></span>
+<span class="w">  </span><span class="nt">LANG</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">C.UTF-8</span><span class="w"></span>
 
-<span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">600</span>
+<span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">600</span><span class="w"></span>
 </pre></div>
 </div>
 <section id="supported-settings">
@@ -166,13 +166,13 @@ agents.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span>
-  <span class="nt">project_repos</span><span class="p">:</span>
-    <span class="nt">worsica-processing</span><span class="p">:</span>
-      <span class="nt">repo</span><span class="p">:</span> <span class="s">&#39;https://github.com/WORSICA/worsica-processing.git&#39;</span>
-      <span class="nt">branch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">master</span>
-      <span class="nt">dockerhub</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">worsica/worsica-processing</span>
-      <span class="nt">dockertag</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">latest</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">project_repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">worsica-processing</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;https://github.com/WORSICA/worsica-processing.git&#39;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master</span><span class="w"></span>
+<span class="w">      </span><span class="nt">dockerhub</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">worsica/worsica-processing</span><span class="w"></span>
+<span class="w">      </span><span class="nt">dockertag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest</span><span class="w"></span>
 </pre></div>
 </div>
 <section id="node-agent">
@@ -194,8 +194,8 @@ is used by default.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span>
-  <span class="nt">node_agent</span><span class="p">:</span> <span class="s">&#39;docker_compose&#39;</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">node_agent</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;docker_compose&#39;</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -215,8 +215,8 @@ is used by default.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span>
-  <span class="nt">deploy_template</span><span class="p">:</span> <span class="s">&#39;.sqa/docker-compose.yml&#39;</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">deploy_template</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;.sqa/docker-compose.yml&#39;</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -235,13 +235,13 @@ is used by default.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span>
-  <span class="nt">project_repos</span><span class="p">:</span>
-    <span class="nt">worsica-processing</span><span class="p">:</span>
-      <span class="nt">repo</span><span class="p">:</span> <span class="s">&#39;https://github.com/WORSICA/worsica-processing.git&#39;</span>
-      <span class="nt">branch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">master</span>
-      <span class="nt">dockerhub</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">worsica/worsica-processing</span>
-      <span class="nt">dockertag</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">latest</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">project_repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">worsica-processing</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;https://github.com/WORSICA/worsica-processing.git&#39;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master</span><span class="w"></span>
+<span class="w">      </span><span class="nt">dockerhub</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">worsica/worsica-processing</span><span class="w"></span>
+<span class="w">      </span><span class="nt">dockertag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The set of allowed parameters for the definition of the code repository’s
@@ -318,14 +318,14 @@ optional attributes.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span>
-  <span class="nt">qc_style</span><span class="p">:</span>
-    <span class="nt">repos</span><span class="p">:</span>
-      <span class="nt">worsica-processing</span><span class="p">:</span>
-        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">processing</span>
-        <span class="nt">tox</span><span class="p">:</span>
-          <span class="nt">testenv</span><span class="p">:</span>
-             <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">stylecheck</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">qc_style</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">worsica-processing</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">processing</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tox</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">testenv</span><span class="p">:</span><span class="w"></span>
+<span class="w">             </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">stylecheck</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -378,63 +378,63 @@ used there.</p>
 </div>
 <dl>
 <dt><em>Examples:</em></dt><dd><div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">qc_style</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">qc_coverage</button><button aria-controls="panel-0-0-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-2" name="0-2" role="tab" tabindex="-1">qc_functional</button><button aria-controls="panel-0-0-3" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-3" name="0-3" role="tab" tabindex="-1">qc_security</button><button aria-controls="panel-0-0-4" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-4" name="0-4" role="tab" tabindex="-1">qc_doc</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span>
-  <span class="nt">qc_style</span><span class="p">:</span>
-    <span class="nt">repos</span><span class="p">:</span>
-      <span class="nt">worsica-processing</span><span class="p">:</span>
-        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">processing</span>
-        <span class="nt">tox</span><span class="p">:</span>
-          <span class="nt">testenv</span><span class="p">:</span>
-              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">stylecheck</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">qc_style</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">qc_coverage</button><button aria-controls="panel-0-0-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-2" name="0-2" role="tab" tabindex="-1">qc_functional</button><button aria-controls="panel-0-0-3" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-3" name="0-3" role="tab" tabindex="-1">qc_security</button><button aria-controls="panel-0-0-4" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-4" name="0-4" role="tab" tabindex="-1">qc_doc</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">qc_style</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">worsica-processing</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">processing</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tox</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">testenv</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">stylecheck</span><span class="w"></span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span>
-  <span class="nt">qc_coverage</span><span class="p">:</span>
-    <span class="nt">repos</span><span class="p">:</span>
-      <span class="nt">worsica-processing</span><span class="p">:</span>
-        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">processing</span>
-        <span class="nt">tox</span><span class="p">:</span>
-          <span class="nt">testenv</span><span class="p">:</span>
-              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">coverage</span>
-      <span class="nt">worsica-portal</span><span class="p">:</span>
-        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">celery</span>
-        <span class="nt">tox</span><span class="p">:</span>
-          <span class="nt">testenv</span><span class="p">:</span>
-              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">coverage</span>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">qc_coverage</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">worsica-processing</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">processing</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tox</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">testenv</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">coverage</span><span class="w"></span>
+<span class="w">      </span><span class="nt">worsica-portal</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">celery</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tox</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">testenv</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">coverage</span><span class="w"></span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-2" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-2" name="0-2" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span>
-  <span class="nt">qc_functional</span><span class="p">:</span>
-    <span class="nt">repos</span><span class="p">:</span>
-      <span class="nt">worsica-processing</span><span class="p">:</span>
-        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">processing</span>
-        <span class="nt">tox</span><span class="p">:</span>
-          <span class="nt">testenv</span><span class="p">:</span>
-              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">unittest</span>
-      <span class="nt">worsica-portal</span><span class="p">:</span>
-        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">celery</span>
-        <span class="nt">tox</span><span class="p">:</span>
-          <span class="nt">testenv</span><span class="p">:</span>
-              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">functional</span>
+</div><div aria-labelledby="tab-0-0-2" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-2" name="0-2" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">qc_functional</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">worsica-processing</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">processing</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tox</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">testenv</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unittest</span><span class="w"></span>
+<span class="w">      </span><span class="nt">worsica-portal</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">celery</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tox</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">testenv</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functional</span><span class="w"></span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-3" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-3" name="0-3" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span>
-  <span class="nt">qc_security</span><span class="p">:</span>
-    <span class="nt">repos</span><span class="p">:</span>
-      <span class="nt">worsica-processing</span><span class="p">:</span>
-        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">processing</span>
-        <span class="nt">tox</span><span class="p">:</span>
-          <span class="nt">testenv</span><span class="p">:</span>
-              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">security</span>
+</div><div aria-labelledby="tab-0-0-3" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-3" name="0-3" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">qc_security</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">worsica-processing</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">processing</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tox</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">testenv</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">security</span><span class="w"></span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-4" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-4" name="0-4" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span>
-  <span class="nt">qc_doc</span><span class="p">:</span>
-    <span class="nt">repos</span><span class="p">:</span>
-      <span class="nt">worsica-cicd</span><span class="p">:</span>
-        <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">processing</span>
-        <span class="nt">commands</span><span class="p">:</span>
-          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">python setup.py build_sphinx</span>
+</div><div aria-labelledby="tab-0-0-4" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-4" name="0-4" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">qc_doc</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">worsica-cicd</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">processing</span><span class="w"></span>
+<span class="w">        </span><span class="nt">commands</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python setup.py build_sphinx</span><span class="w"></span>
 </pre></div>
 </div>
 </div></div>
@@ -520,12 +520,12 @@ built-in support for the tool you use for building purposes.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span>
-  <span class="nt">qc_sec</span><span class="p">:</span>
-    <span class="nt">repos</span><span class="p">:</span>
-     <span class="nt">worsica-processing</span><span class="p">:</span>
-       <span class="nt">commands</span><span class="p">:</span>
-         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">bundle exec brakeman --exit-on-error</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sqa_criteria</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">qc_sec</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">worsica-processing</span><span class="p">:</span><span class="w"></span>
+<span class="w">       </span><span class="nt">commands</span><span class="p">:</span><span class="w"></span>
+<span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bundle exec brakeman --exit-on-error</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -552,10 +552,10 @@ criteria checks.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
-  <span class="nt">GIT_COMMITTER_NAME</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Person1</span>
-  <span class="nt">GIT_COMMITTER_EMAIL</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">person1@example.org</span>
-  <span class="nt">LANG</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">C.UTF-8</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">GIT_COMMITTER_NAME</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Person1</span><span class="w"></span>
+<span class="w">  </span><span class="nt">GIT_COMMITTER_EMAIL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">person1@example.org</span><span class="w"></span>
+<span class="w">  </span><span class="nt">LANG</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">C.UTF-8</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -578,7 +578,7 @@ example, docker-compose.yml environment definitions instead.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">60</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -620,6 +620,7 @@ example, docker-compose.yml environment definitions instead.</p>
     <dl>
       <dt>Tags</dt>
       <dd><a href="config_file.html">2.0.0</a></dd>
+      <dd><a href="../../2.1.1/user/config_file.html">2.1.1</a></dd>
     </dl>
     <dl>
       <dt>Branches</dt>

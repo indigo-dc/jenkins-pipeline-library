@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The sqa_criteria setting &mdash; jenkins-pipeline-library 2.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/tabs.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Last steps" href="ending.html" />
+    <link rel="prev" title="A minimal configuration" href="min_configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> jenkins-pipeline-library
+          </a>
+              <div class="version">
+                2.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html">Layout</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Configuration files</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../config_file.html">The configuration file: config.yml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docker_compose.html">The services: docker-compose.yml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../jenkinsfile.html">The pipeline: Jenkinsfile</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Step-by-step guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="min_configuration.html">A minimal configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python-and-java-examples">Python and Java examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python-with-tox">Python with <code class="docutils literal notranslate"><span class="pre">tox</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-with-commands">Python with <code class="docutils literal notranslate"><span class="pre">commands</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#java-with-commands">Java with <code class="docutils literal notranslate"><span class="pre">commands</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#don-t-forget-to-commit">Don’t forget to commit</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ending.html">Last steps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Using credentials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../credentials/intro.html">JePL credentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../credentials/config_file.html">Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../credentials/jenkins.html">Jenkins: storing secrets</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples in production</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/jpl_validator.html">jpl-validator</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contribution guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contrib/documentation.html">Contributing with docs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">jenkins-pipeline-library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>The <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/user/step_by_step/sqa_criteria.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="the-sqa-criteria-setting">
+<h1>The <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting<a class="headerlink" href="#the-sqa-criteria-setting" title="Permalink to this headline"></a></h1>
+<p>In this section we will cover the <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting, which represents
+the fundamental part of the configuration since it contains the definitions of
+the checks that comprise the quality criteria.</p>
+<p>The full set of criteria currently supported in the library is summarized in
+the following table and can be found in the <a class="reference internal" href="../config_file.html#sqa-criteria"><span class="std std-ref">sqa_criteria</span></a> section.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting</p></th>
+<th class="head"><p>What does it cover?</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qc_style</span></code></p></td>
+<td><p>Make your code compliant with a style standard</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qc_coverage</span></code></p></td>
+<td><p>Calculate the unit testing coverage of your code</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qc_functional</span></code></p></td>
+<td><p>Test the main features of your software</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qc_security</span></code></p></td>
+<td><p>Assess the security (uncover vulnerabilities &amp; bad security practices)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qc_doc</span></code></p></td>
+<td><p>Generate the documentation</p></td>
+</tr>
+</tbody>
+</table>
+<section id="python-and-java-examples">
+<h2>Python and Java examples<a class="headerlink" href="#python-and-java-examples" title="Permalink to this headline"></a></h2>
+<p>The best way to learn the basics about the library is through examples. In the
+next subsections we will show how to fulfill the <code class="docutils literal notranslate"><span class="pre">qc_style</span></code> criterion for
+Python and Java applications. Working configurations are provided so you can
+readily test them.</p>
+<p>The current version of the library supports both <code class="docutils literal notranslate"><span class="pre">commands</span></code> and <code class="docutils literal notranslate"><span class="pre">tox</span></code>
+(this last only available for Python-based applications) environments to
+execute the checks, hence the examples below cover the three possible use cases,
+i.e. Python (with and without Tox) and Java (with commands).</p>
+<section id="python-with-tox">
+<h3>Python with <code class="docutils literal notranslate"><span class="pre">tox</span></code><a class="headerlink" href="#python-with-tox" title="Permalink to this headline"></a></h3>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">config.yml</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">docker-compose.yml</button><button aria-controls="panel-0-0-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-2" name="0-2" role="tab" tabindex="-1">tox.ini</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">project_repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">myrepo</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;https://github.com/myorg/myrepo&#39;</span><span class="w"></span>
+
+<span class="w w-Error"> </span><span class="nt">sqa_criteria</span><span class="p">:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">qc_style</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">       </span><span class="nt">myrepo</span><span class="p">:</span><span class="w"></span>
+<span class="w">         </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myrepo-testing</span><span class="w"></span>
+<span class="w">         </span><span class="nt">tox</span><span class="p">:</span><span class="w"></span>
+<span class="w">           </span><span class="nt">tox_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/myrepo-testing/tox.ini</span><span class="w"></span>
+<span class="w">           </span><span class="nt">testenv</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">stylecheck</span><span class="w"></span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.6&quot;</span><span class="w"></span>
+
+<span class="nt">services</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">myrepo-testing</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;indigodatacloud/ci-images:python3.6&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;myrepo-testing&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bind</span><span class="w"></span>
+<span class="w">       </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./myrepo</span><span class="w"></span>
+<span class="w">       </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/myrepo-testing</span><span class="w"></span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-2" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-2" name="0-2" role="tabpanel" tabindex="0"><div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[tox]</span><span class="w"></span>
+<span class="na">minversion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">2.1</span><span class="w"></span>
+<span class="na">envlist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">py{36,37},stylecheck</span><span class="w"></span>
+<span class="na">skipsdist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span><span class="w"></span>
+
+<span class="k">[testenv]</span><span class="w"></span>
+<span class="na">usedevelop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span><span class="w"></span>
+<span class="na">basepython</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">python3</span><span class="w"></span>
+
+<span class="k">[testenv:stylecheck]</span><span class="w"></span>
+<span class="na">envdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">{toxworkdir}/shared</span><span class="w"></span>
+<span class="na">commands</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="na">flake8</span><span class="w"></span>
+</pre></div>
+</div>
+</div></div>
+<p>As it can be seen, the three files are linked together. In order to compose
+them, the following requirements must be considered:</p>
+<dl class="simple">
+<dt>Notes on <code class="docutils literal notranslate"><span class="pre">docker-compose.yml</span></code> (DC)</dt><dd><ol class="arabic simple">
+<li><p>Minimum <code class="docutils literal notranslate"><span class="pre">version:</span> <span class="pre">3.6</span></code> [DC] is required, otherwise bind
+volume definitions are not correctly supported.</p></li>
+<li><p>There are 3 main parameters that must be defined in DC file, i.e.:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">container_name</span></code>: sets the name of the service.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">image</span></code>: points to the Docker image that will be used by the
+container.</p>
+<ul>
+<li><p>When using this parameter, <strong>the image must be previously
+available in Docker Hub registry</strong>. Additionally, DC allows the
+image to be built in runtime by providing a Dockerfile. In this
+case, the <code class="docutils literal notranslate"><span class="pre">build</span></code> parameter must be used (check out
+<a class="reference external" href="https://docs.docker.com/compose/compose-file/#build">DC’s build parameter documentation</a>).</p></li>
+<li><p>Note that <strong>all the tools required to run the tests must be
+deployed in the Docker image</strong>. In this example, the
+<em>indigodatacloud/ci-images:python3.6</em> image already contains the
+tools needed to execute the subsequent tox commands.</p></li>
+<li><p>Last but not least, you should <strong>check whether the image in use is
+configured to run-and-die (*one-shot*)</strong>. If this is the case,
+add a <code class="docutils literal notranslate"><span class="pre">sleep</span> <span class="pre">infinity</span></code> command in the DC’s <code class="docutils literal notranslate"><span class="pre">command</span></code> parameter,
+as explained in DC’s section <a class="reference internal" href="../docker_compose.html#dc-summary"><span class="std std-ref">Summary of recommendations for best use with the library</span></a>.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">volumes</span></code>: identifies the volume where the repository (<em>myrepo</em> in
+this example) content will be accessible. <strong>The</strong> <code class="docutils literal notranslate"><span class="pre">type:</span> <span class="pre">bind</span></code> <strong>is
+required and only the values for</strong> <code class="docutils literal notranslate"><span class="pre">source</span></code> <strong>and</strong> <code class="docutils literal notranslate"><span class="pre">target</span></code>
+<strong>parameters must be provided</strong>.</p></li>
+</ul>
+</li>
+</ol>
+</dd>
+<dt>Notes on links between <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> (CONFIG) and <code class="docutils literal notranslate"><span class="pre">docker-compose.yml</span></code> (DC)</dt><dd><ol class="arabic simple">
+<li><p>The value for the <code class="docutils literal notranslate"><span class="pre">container</span></code> setting [CONFIG] must correspond to a
+service definition in the DC file. In the example above, the service
+<em>myrepo-testing</em> is defined under <em>services</em> inside DC file.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">source</span></code> parameter [DC file] corresponds to the ID/name used to
+identify the current repository, i.e. the ID used in the
+<code class="docutils literal notranslate"><span class="pre">config:project_repos</span></code> definition [CONFIG]. Since we are using a
+relative path in the DC file specification, the <code class="docutils literal notranslate"><span class="pre">source</span></code> <strong>[DC file] value
+must always be prefixed by</strong> <code class="docutils literal notranslate"><span class="pre">./</span></code> (DC always expect a path format).
+In our example, we have set <em>myrepo</em> as the ID so the correct value for
+<code class="docutils literal notranslate"><span class="pre">source</span></code> [DC file] is <em>./myrepo</em>.</p></li>
+</ol>
+</dd>
+<dt>Notes on links between <code class="docutils literal notranslate"><span class="pre">tox.ini</span></code> (TOX), <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> (CONFIG) and <code class="docutils literal notranslate"><span class="pre">docker-compose.yml</span></code> (DC)</dt><dd><ol class="arabic simple">
+<li><p>The value for <code class="docutils literal notranslate"><span class="pre">tox_file</span></code> [CONFIG] must be the absolute path to the
+TOX file. <strong>To obtain the full path to the TOX file,</strong> <code class="docutils literal notranslate"><span class="pre">target</span></code>
+<strong>[DC file] must be prepended to the relative path of the TOX file
+within the code repository</strong>, as it is the folder where the
+repository has been checked out. In the example above, <em>myrepo</em> has the
+TOX file available in the root path of the repository, therefore
+<em>/myrepo-testing/tox.ini</em> is the correct location.</p></li>
+<li><p>The value for <code class="docutils literal notranslate"><span class="pre">testenv</span></code> [CONFIG] must correspond to any of the test
+environments [TOX file]. In our example, <em>stylecheck</em> testenv executes
+the <em>flake8</em> style tool, and thus, it can be used as the value for
+tox’s <code class="docutils literal notranslate"><span class="pre">testenv</span></code> [CONFIG].</p></li>
+</ol>
+</dd>
+</dl>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>We recommend the use of <a class="reference external" href="https://tox.readthedocs.io/en/latest/">Tox tool</a>
+in the case of Python applications, as it is the most accurate way of
+defining and running all your tests. Hence, Tox can execute each test in an
+individual Python virtual environment (virtualenv), so it is isolated from
+the other tests. Note that the use of Tox in this example is extremelly
+simple and does not take advantage of the full capabilities of the tool.</p>
+</div>
+</section>
+<section id="python-with-commands">
+<h3>Python with <code class="docutils literal notranslate"><span class="pre">commands</span></code><a class="headerlink" href="#python-with-commands" title="Permalink to this headline"></a></h3>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">config.yml</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">docker-compose.yml</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">project_repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">myrepo</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;https://github.com/myorg/myrepo&#39;</span><span class="w"></span>
+
+<span class="w w-Error"> </span><span class="nt">sqa_criteria</span><span class="p">:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">qc_coverage</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">       </span><span class="nt">myrepo</span><span class="p">:</span><span class="w"></span>
+<span class="w">         </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myrepo-testing</span><span class="w"></span>
+<span class="w">         </span><span class="nt">commands</span><span class="p">:</span><span class="w"></span>
+<span class="w">           </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flake8</span><span class="w"></span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.6&quot;</span><span class="w"></span>
+
+<span class="w">   </span><span class="nt">services</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">myrepo-testing-java</span><span class="p">:</span><span class="w"></span>
+<span class="w">       </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;indigodatacloud/ci-images:java&quot;</span><span class="w"></span>
+<span class="w">       </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;myrepo-testing-java&quot;</span><span class="w"></span>
+<span class="w">       </span><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bind</span><span class="w"></span>
+<span class="w">          </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./myrepo</span><span class="w"></span>
+<span class="w">          </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/myrepo-testing</span><span class="w"></span>
+</pre></div>
+</div>
+</div></div>
+<p>In this example, the only difference with respect to the previuos example is
+the use of <code class="docutils literal notranslate"><span class="pre">commands</span></code> [CONFIG]. Here, we will obtain the same output as in
+the previous Python-with-tox example since <em>flake8</em> tool is executed.</p>
+</section>
+<section id="java-with-commands">
+<h3>Java with <code class="docutils literal notranslate"><span class="pre">commands</span></code><a class="headerlink" href="#java-with-commands" title="Permalink to this headline"></a></h3>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">config.yml</button><button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">docker-compose.yml</button></div><div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">project_repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">myrepo</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;https://github.com/myorg/myrepo&#39;</span><span class="w"></span>
+
+<span class="w w-Error"> </span><span class="nt">sqa_criteria</span><span class="p">:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">qc_coverage</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">       </span><span class="nt">myrepo</span><span class="p">:</span><span class="w"></span>
+<span class="w">         </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myrepo-testing-java</span><span class="w"></span>
+<span class="w">         </span><span class="nt">commands</span><span class="p">:</span><span class="w"></span>
+<span class="w">           </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mvn -f /myrepo-testing/pom.xml checkstyle:checkstyle</span><span class="w"></span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-2-2-1" class="sphinx-tabs-panel" hidden="true" id="panel-2-2-1" name="2-1" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.6&quot;</span><span class="w"></span>
+
+<span class="w">   </span><span class="nt">services</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">myrepo-testing-java</span><span class="p">:</span><span class="w"></span>
+<span class="w">       </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;indigodatacloud/ci-images:java&quot;</span><span class="w"></span>
+<span class="w">       </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;myrepo-testing-java&quot;</span><span class="w"></span>
+<span class="w">       </span><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bind</span><span class="w"></span>
+<span class="w">          </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./myrepo</span><span class="w"></span>
+<span class="w">          </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/myrepo-testing</span><span class="w"></span>
+</pre></div>
+</div>
+</div></div>
+</section>
+</section>
+<section id="don-t-forget-to-commit">
+<h2>Don’t forget to commit<a class="headerlink" href="#don-t-forget-to-commit" title="Permalink to this headline"></a></h2>
+<p>Once you have added one of the former definitions in the <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code>
+setting, it is time to commit our work. Following up with the example of
+previous section:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git commit -m <span class="s2">&quot;Add sqa_criteria setting &amp; associated docker-compose services&quot;</span>
+</pre></div>
+</div>
+<p>In the next section, we will provide the last steps to make all this work being
+executed in Jenkins.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="min_configuration.html" class="btn btn-neutral float-left" title="A minimal configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ending.html" class="btn btn-neutral float-right" title="Last steps" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, EOSC-Synergy project.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Other Versions</span>
+    v: 2.1.1
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Tags</dt>
+      <dd><a href="../../../2.0.0/user/step_by_step/sqa_criteria.html">2.0.0</a></dd>
+      <dd><a href="sqa_criteria.html">2.1.1</a></dd>
+    </dl>
+    <dl>
+      <dt>Branches</dt>
+      <dd><a href="../../../release/2.1.0/user/step_by_step/sqa_criteria.html">release/2.1.0</a></dd>
+      <dd><a href="../../../release/2.1.1/user/step_by_step/sqa_criteria.html">release/2.1.1</a></dd>
+      <dd><a href="../../../stable/2.0.0/user/step_by_step/sqa_criteria.html">stable/2.0.0</a></dd>
+      <dd><a href="../../../stable/2.1.0/user/step_by_step/sqa_criteria.html">stable/2.1.0</a></dd>
+      <dd><a href="../../../stable/2.1.1/user/step_by_step/sqa_criteria.html">stable/2.1.1</a></dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

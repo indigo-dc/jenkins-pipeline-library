@@ -155,46 +155,46 @@ i.e. Python (with and without Tox) and Java (with commands).</p>
 <section id="python-with-tox">
 <h3>Python with <code class="docutils literal notranslate"><span class="pre">tox</span></code><a class="headerlink" href="#python-with-tox" title="Permalink to this headline"></a></h3>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">config.yml</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">docker-compose.yml</button><button aria-controls="panel-0-0-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-2" name="0-2" role="tab" tabindex="-1">tox.ini</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span>
-  <span class="nt">project_repos</span><span class="p">:</span>
-    <span class="nt">myrepo</span><span class="p">:</span>
-      <span class="nt">repo</span><span class="p">:</span> <span class="s">&#39;https://github.com/myorg/myrepo&#39;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">config.yml</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">docker-compose.yml</button><button aria-controls="panel-0-0-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-2" name="0-2" role="tab" tabindex="-1">tox.ini</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">project_repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">myrepo</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;https://github.com/myorg/myrepo&#39;</span><span class="w"></span>
 
-<span class=" -Error"> </span><span class="nt">sqa_criteria</span><span class="p">:</span>
-   <span class="nt">qc_style</span><span class="p">:</span>
-     <span class="nt">repos</span><span class="p">:</span>
-       <span class="nt">myrepo</span><span class="p">:</span>
-         <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">myrepo-testing</span>
-         <span class="nt">tox</span><span class="p">:</span>
-           <span class="nt">tox_file</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/myrepo-testing/tox.ini</span>
-           <span class="nt">testenv</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stylecheck</span>
+<span class="w w-Error"> </span><span class="nt">sqa_criteria</span><span class="p">:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">qc_style</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">       </span><span class="nt">myrepo</span><span class="p">:</span><span class="w"></span>
+<span class="w">         </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myrepo-testing</span><span class="w"></span>
+<span class="w">         </span><span class="nt">tox</span><span class="p">:</span><span class="w"></span>
+<span class="w">           </span><span class="nt">tox_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/myrepo-testing/tox.ini</span><span class="w"></span>
+<span class="w">           </span><span class="nt">testenv</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">stylecheck</span><span class="w"></span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span> <span class="s">&quot;3.6&quot;</span>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.6&quot;</span><span class="w"></span>
 
-<span class="nt">services</span><span class="p">:</span>
-  <span class="nt">myrepo-testing</span><span class="p">:</span>
-    <span class="nt">image</span><span class="p">:</span> <span class="s">&quot;indigodatacloud/ci-images:python3.6&quot;</span>
-    <span class="nt">container_name</span><span class="p">:</span> <span class="s">&quot;myrepo-testing&quot;</span>
-    <span class="nt">volumes</span><span class="p">:</span>
-     <span class="p p-Indicator">-</span> <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bind</span>
-       <span class="nt">source</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./myrepo</span>
-       <span class="nt">target</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/myrepo-testing</span>
+<span class="nt">services</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">myrepo-testing</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;indigodatacloud/ci-images:python3.6&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;myrepo-testing&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bind</span><span class="w"></span>
+<span class="w">       </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./myrepo</span><span class="w"></span>
+<span class="w">       </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/myrepo-testing</span><span class="w"></span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-2" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-2" name="0-2" role="tabpanel" tabindex="0"><div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[tox]</span>
-<span class="na">minversion</span> <span class="o">=</span> <span class="s">2.1</span>
-<span class="na">envlist</span> <span class="o">=</span> <span class="s">py{36,37},stylecheck</span>
-<span class="na">skipsdist</span> <span class="o">=</span> <span class="s">True</span>
+</div><div aria-labelledby="tab-0-0-2" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-2" name="0-2" role="tabpanel" tabindex="0"><div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[tox]</span><span class="w"></span>
+<span class="na">minversion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">2.1</span><span class="w"></span>
+<span class="na">envlist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">py{36,37},stylecheck</span><span class="w"></span>
+<span class="na">skipsdist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span><span class="w"></span>
 
-<span class="k">[testenv]</span>
-<span class="na">usedevelop</span> <span class="o">=</span> <span class="s">True</span>
-<span class="na">basepython</span> <span class="o">=</span> <span class="s">python3</span>
+<span class="k">[testenv]</span><span class="w"></span>
+<span class="na">usedevelop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span><span class="w"></span>
+<span class="na">basepython</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">python3</span><span class="w"></span>
 
-<span class="k">[testenv:stylecheck]</span>
-<span class="na">envdir</span> <span class="o">=</span> <span class="s">{toxworkdir}/shared</span>
-<span class="na">commands</span> <span class="o">=</span>
-  <span class="na">flake8</span>
+<span class="k">[testenv:stylecheck]</span><span class="w"></span>
+<span class="na">envdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">{toxworkdir}/shared</span><span class="w"></span>
+<span class="na">commands</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="na">flake8</span><span class="w"></span>
 </pre></div>
 </div>
 </div></div>
@@ -274,30 +274,30 @@ simple and does not take advantage of the full capabilities of the tool.</p>
 <section id="python-with-commands">
 <h3>Python with <code class="docutils literal notranslate"><span class="pre">commands</span></code><a class="headerlink" href="#python-with-commands" title="Permalink to this headline"></a></h3>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">config.yml</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">docker-compose.yml</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span>
-  <span class="nt">project_repos</span><span class="p">:</span>
-    <span class="nt">myrepo</span><span class="p">:</span>
-      <span class="nt">repo</span><span class="p">:</span> <span class="s">&#39;https://github.com/myorg/myrepo&#39;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">config.yml</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">docker-compose.yml</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">project_repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">myrepo</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;https://github.com/myorg/myrepo&#39;</span><span class="w"></span>
 
-<span class=" -Error"> </span><span class="nt">sqa_criteria</span><span class="p">:</span>
-   <span class="nt">qc_coverage</span><span class="p">:</span>
-     <span class="nt">repos</span><span class="p">:</span>
-       <span class="nt">myrepo</span><span class="p">:</span>
-         <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">myrepo-testing</span>
-         <span class="nt">commands</span><span class="p">:</span>
-           <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">flake8</span>
+<span class="w w-Error"> </span><span class="nt">sqa_criteria</span><span class="p">:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">qc_coverage</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">       </span><span class="nt">myrepo</span><span class="p">:</span><span class="w"></span>
+<span class="w">         </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myrepo-testing</span><span class="w"></span>
+<span class="w">         </span><span class="nt">commands</span><span class="p">:</span><span class="w"></span>
+<span class="w">           </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flake8</span><span class="w"></span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span> <span class="s">&quot;3.6&quot;</span>
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.6&quot;</span><span class="w"></span>
 
-   <span class="nt">services</span><span class="p">:</span>
-     <span class="nt">myrepo-testing-java</span><span class="p">:</span>
-       <span class="nt">image</span><span class="p">:</span> <span class="s">&quot;indigodatacloud/ci-images:java&quot;</span>
-       <span class="nt">container_name</span><span class="p">:</span> <span class="s">&quot;myrepo-testing-java&quot;</span>
-       <span class="nt">volumes</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bind</span>
-          <span class="nt">source</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./myrepo</span>
-          <span class="nt">target</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/myrepo-testing</span>
+<span class="w">   </span><span class="nt">services</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">myrepo-testing-java</span><span class="p">:</span><span class="w"></span>
+<span class="w">       </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;indigodatacloud/ci-images:java&quot;</span><span class="w"></span>
+<span class="w">       </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;myrepo-testing-java&quot;</span><span class="w"></span>
+<span class="w">       </span><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bind</span><span class="w"></span>
+<span class="w">          </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./myrepo</span><span class="w"></span>
+<span class="w">          </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/myrepo-testing</span><span class="w"></span>
 </pre></div>
 </div>
 </div></div>
@@ -308,30 +308,30 @@ the previous Python-with-tox example since <em>flake8</em> tool is executed.</p>
 <section id="java-with-commands">
 <h3>Java with <code class="docutils literal notranslate"><span class="pre">commands</span></code><a class="headerlink" href="#java-with-commands" title="Permalink to this headline"></a></h3>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">config.yml</button><button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">docker-compose.yml</button></div><div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span>
-  <span class="nt">project_repos</span><span class="p">:</span>
-    <span class="nt">myrepo</span><span class="p">:</span>
-      <span class="nt">repo</span><span class="p">:</span> <span class="s">&#39;https://github.com/myorg/myrepo&#39;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">config.yml</button><button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">docker-compose.yml</button></div><div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">project_repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">myrepo</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;https://github.com/myorg/myrepo&#39;</span><span class="w"></span>
 
-<span class=" -Error"> </span><span class="nt">sqa_criteria</span><span class="p">:</span>
-   <span class="nt">qc_coverage</span><span class="p">:</span>
-     <span class="nt">repos</span><span class="p">:</span>
-       <span class="nt">myrepo</span><span class="p">:</span>
-         <span class="nt">container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">myrepo-testing-java</span>
-         <span class="nt">commands</span><span class="p">:</span>
-           <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">mvn -f /myrepo-testing/pom.xml checkstyle:checkstyle</span>
+<span class="w w-Error"> </span><span class="nt">sqa_criteria</span><span class="p">:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">qc_coverage</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">repos</span><span class="p">:</span><span class="w"></span>
+<span class="w">       </span><span class="nt">myrepo</span><span class="p">:</span><span class="w"></span>
+<span class="w">         </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myrepo-testing-java</span><span class="w"></span>
+<span class="w">         </span><span class="nt">commands</span><span class="p">:</span><span class="w"></span>
+<span class="w">           </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mvn -f /myrepo-testing/pom.xml checkstyle:checkstyle</span><span class="w"></span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-2-2-1" class="sphinx-tabs-panel" hidden="true" id="panel-2-2-1" name="2-1" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span> <span class="s">&quot;3.6&quot;</span>
+</div><div aria-labelledby="tab-2-2-1" class="sphinx-tabs-panel" hidden="true" id="panel-2-2-1" name="2-1" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.6&quot;</span><span class="w"></span>
 
-   <span class="nt">services</span><span class="p">:</span>
-     <span class="nt">myrepo-testing-java</span><span class="p">:</span>
-       <span class="nt">image</span><span class="p">:</span> <span class="s">&quot;indigodatacloud/ci-images:java&quot;</span>
-       <span class="nt">container_name</span><span class="p">:</span> <span class="s">&quot;myrepo-testing-java&quot;</span>
-       <span class="nt">volumes</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bind</span>
-          <span class="nt">source</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./myrepo</span>
-          <span class="nt">target</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/myrepo-testing</span>
+<span class="w">   </span><span class="nt">services</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">myrepo-testing-java</span><span class="p">:</span><span class="w"></span>
+<span class="w">       </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;indigodatacloud/ci-images:java&quot;</span><span class="w"></span>
+<span class="w">       </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;myrepo-testing-java&quot;</span><span class="w"></span>
+<span class="w">       </span><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bind</span><span class="w"></span>
+<span class="w">          </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./myrepo</span><span class="w"></span>
+<span class="w">          </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/myrepo-testing</span><span class="w"></span>
 </pre></div>
 </div>
 </div></div>
@@ -385,6 +385,7 @@ executed in Jenkins.</p>
     <dl>
       <dt>Tags</dt>
       <dd><a href="../../../../2.0.0/user/step_by_step/sqa_criteria.html">2.0.0</a></dd>
+      <dd><a href="../../../../2.1.1/user/step_by_step/sqa_criteria.html">2.1.1</a></dd>
     </dl>
     <dl>
       <dt>Branches</dt>

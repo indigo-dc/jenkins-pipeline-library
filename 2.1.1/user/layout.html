@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Layout &mdash; jenkins-pipeline-library 2.1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The configuration file: config.yml" href="config_file.html" />
+    <link rel="prev" title="jenkins-pipeline-library: automate the SQA task" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> jenkins-pipeline-library
+          </a>
+              <div class="version">
+                2.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Layout</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sqa-config-yml"><code class="docutils literal notranslate"><span class="pre">.sqa/config.yml</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sqa-docker-compose-yml"><code class="docutils literal notranslate"><span class="pre">.sqa/docker-compose.yml</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jenkinsfile"><code class="docutils literal notranslate"><span class="pre">Jenkinsfile</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Configuration files</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="config_file.html">The configuration file: config.yml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker_compose.html">The services: docker-compose.yml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jenkinsfile.html">The pipeline: Jenkinsfile</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Step-by-step guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="step_by_step/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="step_by_step/min_configuration.html">A minimal configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="step_by_step/sqa_criteria.html">The <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="step_by_step/ending.html">Last steps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Using credentials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../credentials/intro.html">JePL credentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credentials/config_file.html">Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../credentials/jenkins.html">Jenkins: storing secrets</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples in production</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/jpl_validator.html">jpl-validator</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contribution guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contrib/documentation.html">Contributing with docs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">jenkins-pipeline-library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Layout</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user/layout.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="layout">
+<h1>Layout<a class="headerlink" href="#layout" title="Permalink to this headline"></a></h1>
+<p>A minimal structure in your code repository is required in order to leverage
+the jenkins-pipeline-library. In addition to the <code class="docutils literal notranslate"><span class="pre">Jenkinsfile</span></code>, the specific
+configuration for the operation of the library is located in the <code class="docutils literal notranslate"><span class="pre">.sqa</span></code>
+folder, as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">project</span><span class="p">)</span>
+<span class="o">|--</span> <span class="o">.</span><span class="n">sqa</span>
+<span class="o">|</span>    <span class="o">|--</span> <span class="n">config</span><span class="o">.</span><span class="n">yml</span>
+<span class="o">|</span>    <span class="o">|--</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">.</span><span class="n">yml</span>
+<span class="o">|--</span> <span class="n">Jenkinsfile</span>
+<span class="o">|--</span> <span class="o">..</span>
+</pre></div>
+</div>
+<p>As shown in the figure above, the following key files are needed:</p>
+<section id="sqa-config-yml">
+<h2><code class="docutils literal notranslate"><span class="pre">.sqa/config.yml</span></code><a class="headerlink" href="#sqa-config-yml" title="Permalink to this headline"></a></h2>
+<p>This is the central piece of configuration used by the jenkins-library-pipeline
+to compose the new stages that implement the requirements from the SQA baseline.</p>
+<p>To start creating your own setup please head over to:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="config_file.html"><span class="doc">The configuration file: config.yml</span></a></p></li>
+</ul>
+</section>
+<section id="sqa-docker-compose-yml">
+<h2><code class="docutils literal notranslate"><span class="pre">.sqa/docker-compose.yml</span></code><a class="headerlink" href="#sqa-docker-compose-yml" title="Permalink to this headline"></a></h2>
+<p>The library relies by default on Docker Compose tool to facilitate the task of
+spawing the services required to carry out the verification and validation (V&amp;V)
+processes.</p>
+<p>Please refer to the <a class="reference external" href="https://docs.docker.com/compose/">Docker Compose</a> official
+documentation to define the services that will be used by the pipeline.
+Additionally, we provide a template for very simple use cases:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="docker_compose.html"><span class="doc">The services: docker-compose.yml</span></a></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>docker-compose is currently the supported technology. Additional frameworks
+that follow the same YAML approach to define the orchestration settings,
+such as Kubernetes, are clear candidates to be supported in the future.</p>
+</div>
+</section>
+<section id="jenkinsfile">
+<h2><code class="docutils literal notranslate"><span class="pre">Jenkinsfile</span></code><a class="headerlink" href="#jenkinsfile" title="Permalink to this headline"></a></h2>
+<p>The presence of a Jenkinsfile in the code repository indicates Jenkins that the
+actual branch must be built according to the stages thereof. The
+jenkins-pipeline-library requires the addition of a specific stage that will
+dinamically load the stages resultant from parsing the previous
+<code class="docutils literal notranslate"><span class="pre">config.yml</span></code> file.</p>
+<p>The minimal content of the Jenkinsfile is described in:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="jenkinsfile.html"><span class="doc">The pipeline: Jenkinsfile</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="jenkins-pipeline-library: automate the SQA task" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="config_file.html" class="btn btn-neutral float-right" title="The configuration file: config.yml" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, EOSC-Synergy project.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Other Versions</span>
+    v: 2.1.1
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Tags</dt>
+      <dd><a href="../../2.0.0/user/layout.html">2.0.0</a></dd>
+      <dd><a href="layout.html">2.1.1</a></dd>
+    </dl>
+    <dl>
+      <dt>Branches</dt>
+      <dd><a href="../../release/2.1.0/user/layout.html">release/2.1.0</a></dd>
+      <dd><a href="../../release/2.1.1/user/layout.html">release/2.1.1</a></dd>
+      <dd><a href="../../stable/2.0.0/user/layout.html">stable/2.0.0</a></dd>
+      <dd><a href="../../stable/2.1.0/user/layout.html">stable/2.1.0</a></dd>
+      <dd><a href="../../stable/2.1.1/user/layout.html">stable/2.1.1</a></dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
