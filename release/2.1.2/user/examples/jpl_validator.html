@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jpl-validator &mdash; jenkins-pipeline-library 2.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/tabs.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Contributing with docs" href="../../contrib/documentation.html" />
+    <link rel="prev" title="Jenkins: storing secrets" href="../../credentials/jenkins.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> jenkins-pipeline-library
+          </a>
+              <div class="version">
+                2.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html">Layout</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Configuration files</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../config_file.html">The configuration file: config.yml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docker_compose.html">The services: docker-compose.yml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../jenkinsfile.html">The pipeline: Jenkinsfile</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Step-by-step guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../step_by_step/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../step_by_step/min_configuration.html">A minimal configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../step_by_step/sqa_criteria.html">The <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../step_by_step/ending.html">Last steps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Using credentials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../credentials/intro.html">JePL credentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../credentials/config_file.html">Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../credentials/jenkins.html">Jenkins: storing secrets</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples in production</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">jpl-validator</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contribution guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contrib/documentation.html">Contributing with docs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">jenkins-pipeline-library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>jpl-validator</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/user/examples/jpl_validator.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="jpl-validator">
+<h1>jpl-validator<a class="headerlink" href="#jpl-validator" title="Permalink to this headline"></a></h1>
+<p>The production repository can be found in
+<a class="reference external" href="https://github.com/eosc-synergy/jpl-validator">GitHub</a>.</p>
+<section id="project-layout">
+<h2>Project layout<a class="headerlink" href="#project-layout" title="Permalink to this headline"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">project</span><span class="p">)</span>
+<span class="o">|--</span> <span class="o">.</span><span class="n">sqa</span>
+<span class="o">|</span>    <span class="o">|--</span> <span class="n">config</span><span class="o">.</span><span class="n">yml</span>
+<span class="o">|</span>    <span class="o">|--</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">.</span><span class="n">yml</span>
+<span class="o">|--</span> <span class="n">Jenkinsfile</span>
+<span class="o">|--</span> <span class="n">build</span><span class="o">.</span><span class="n">gradle</span>
+<span class="o">|--</span> <span class="n">gradlew</span>
+<span class="o">|--</span> <span class="o">..</span>
+</pre></div>
+</div>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">.sqa/config.yml</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">.sqa/docker-compose.yml</button><button aria-controls="panel-0-0-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-2" name="0-2" role="tab" tabindex="-1">Jenkinsfile</button><button aria-controls="panel-0-0-3" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-3" name="0-3" role="tab" tabindex="-1">build.gradle</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="p">:</span>
+  <span class="n">project_repos</span><span class="p">:</span>
+    <span class="n">jpl</span><span class="o">-</span><span class="n">validator</span><span class="p">:</span>
+      <span class="n">repo</span><span class="p">:</span> <span class="s1">&#39;https://github.com/eosc-synergy/jpl-validator&#39;</span>
+      <span class="n">branch</span><span class="p">:</span> <span class="n">master</span>
+  <span class="n">credentials</span><span class="p">:</span>
+      <span class="o">-</span> <span class="nb">type</span><span class="p">:</span> <span class="n">username_password</span>
+        <span class="nb">id</span><span class="p">:</span> <span class="n">orviz</span><span class="o">-</span><span class="n">dockerhub</span>
+
+<span class="n">sqa_criteria</span><span class="p">:</span>
+  <span class="n">qc_doc</span><span class="p">:</span>
+    <span class="n">repos</span><span class="p">:</span>
+      <span class="n">jpl</span><span class="o">-</span><span class="n">validator</span><span class="p">:</span>
+        <span class="n">container</span><span class="p">:</span> <span class="n">gradle</span>
+        <span class="n">commands</span><span class="p">:</span>
+            <span class="o">-</span> <span class="o">/</span><span class="n">jpl</span><span class="o">-</span><span class="n">validator</span><span class="o">/</span><span class="n">gradlew</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">jpl</span><span class="o">-</span><span class="n">validator</span> <span class="n">jib</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Notes</strong>:</dt><dd><ul class="simple">
+<li><p>The credential <em>orviz-dockerhub</em> must be present, as
+<em>username_password</em> type, in the Jenkins instance where the pipeline
+will run.</p></li>
+<li><p>Since gradlew builder is used in <cite>commands</cite>, the project directory
+must be set to the path where this script is available. Otherwise,
+the <em>jib</em> task will not be found.</p></li>
+</ul>
+</dd>
+</dl>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">version</span><span class="p">:</span> <span class="s2">&quot;3.6&quot;</span>
+
+<span class="n">services</span><span class="p">:</span>
+  <span class="n">gradle</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="s2">&quot;gradle&quot;</span>
+    <span class="n">hostname</span><span class="p">:</span> <span class="s2">&quot;jpl-validator&quot;</span>
+    <span class="n">volumes</span><span class="p">:</span>
+      <span class="o">-</span> <span class="nb">type</span><span class="p">:</span> <span class="n">bind</span>
+        <span class="n">source</span><span class="p">:</span> <span class="o">./</span><span class="n">jpl</span><span class="o">-</span><span class="n">validator</span>
+        <span class="n">target</span><span class="p">:</span> <span class="o">/</span><span class="n">jpl</span><span class="o">-</span><span class="n">validator</span>
+    <span class="n">command</span><span class="p">:</span> <span class="n">sleep</span> <span class="n">infinity</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Notes</strong>:</dt><dd><ul class="simple">
+<li><p>The <em>gradle</em> official image from Docker Hub is one-shot so in order
+to stay available in background, we need to add a <em>sleep infinity</em>
+command.</p></li>
+</ul>
+</dd>
+</dl>
+</div><div aria-labelledby="tab-0-0-2" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-2" name="0-2" role="tabpanel" tabindex="0"><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Library</span><span class="p">([</span><span class="s1">&#39;github.com/indigo-dc/jenkins-pipeline-library@2.1.0&#39;</span><span class="p">])</span> <span class="n">_</span>
+
+<span class="k">def</span> <span class="nf">projectConfig</span>
+
+<span class="n">pipeline</span> <span class="p">{</span>
+    <span class="n">agent</span> <span class="nb">any</span>
+
+    <span class="n">stages</span> <span class="p">{</span>
+        <span class="n">stage</span><span class="p">(</span><span class="s1">&#39;SQA baseline dynamic stages&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">steps</span> <span class="p">{</span>
+                <span class="n">script</span> <span class="p">{</span>
+                    <span class="n">projectConfig</span> <span class="o">=</span> <span class="n">pipelineConfig</span><span class="p">(</span><span class="s1">&#39;./.sqa/config.yml&#39;</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="s1">&#39;eoscsynergy/jpl-validator:jib-with-jpl&#39;</span><span class="p">)</span>
+                    <span class="n">buildStages</span><span class="p">(</span><span class="n">projectConfig</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="n">post</span> <span class="p">{</span>
+                <span class="n">cleanup</span> <span class="p">{</span>
+                    <span class="n">cleanWs</span><span class="p">()</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Notes</strong>:</dt><dd><ul class="simple">
+<li><p>Credential support has been available since 2.1.0</p></li>
+</ul>
+</dd>
+</dl>
+</div><div aria-labelledby="tab-0-0-3" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-3" name="0-3" role="tabpanel" tabindex="0"><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="n">mainClassName</span> <span class="o">=</span> <span class="s1">&#39;eu.indigo.jplvalidator.Cli&#39;</span>
+<span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;jib-with-jpl&#39;</span>
+<span class="n">project</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">organization</span> <span class="o">=</span> <span class="s1">&#39;eoscsynergy&#39;</span>
+
+<span class="o">//</span> <span class="n">Google</span><span class="s1">&#39;s jib task</span>
+<span class="n">jib</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">mainClass</span> <span class="o">=</span> <span class="n">mainClassName</span>
+<span class="n">jib</span><span class="o">.</span><span class="n">to</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="s2">&quot;$</span><span class="si">{project.ext.organization}</span><span class="s2">/$</span><span class="si">{project.name}</span><span class="s2">:$</span><span class="si">{version}</span><span class="s2">&quot;</span>
+<span class="n">jib</span><span class="o">.</span><span class="n">to</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;$</span><span class="si">{System.env.JPL_USERNAME}</span><span class="s2">&quot;</span>
+<span class="n">jib</span><span class="o">.</span><span class="n">to</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;$</span><span class="si">{System.env.JPL_PASSWORD}</span><span class="s2">&quot;</span>
+<span class="p">(</span><span class="o">..</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Notes</strong>:</dt><dd><ul class="simple">
+<li><p>An excerpt of <code class="docutils literal notranslate"><span class="pre">build.gradle</span></code> file where the username
+(<em>JPL_USERNAME</em>) and password (<em>JPL_PASSWORD</em>) from the defined
+credentials in <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> (<em>orviz-dockerhub</em>) are used.</p></li>
+</ul>
+</dd>
+</dl>
+</div></div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../credentials/jenkins.html" class="btn btn-neutral float-left" title="Jenkins: storing secrets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../contrib/documentation.html" class="btn btn-neutral float-right" title="Contributing with docs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, EOSC-Synergy project.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Other Versions</span>
+    v: release/2.1.2
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Tags</dt>
+      <dd><a href="../../../../2.0.0/index.html">2.0.0</a></dd>
+      <dd><a href="../../../../2.1.1/user/examples/jpl_validator.html">2.1.1</a></dd>
+    </dl>
+    <dl>
+      <dt>Branches</dt>
+      <dd><a href="../../../2.1.0/user/examples/jpl_validator.html">release/2.1.0</a></dd>
+      <dd><a href="../../../2.1.1/user/examples/jpl_validator.html">release/2.1.1</a></dd>
+      <dd><a href="jpl_validator.html">release/2.1.2</a></dd>
+      <dd><a href="../../../../stable/2.0.0/index.html">stable/2.0.0</a></dd>
+      <dd><a href="../../../../stable/2.1.0/user/examples/jpl_validator.html">stable/2.1.0</a></dd>
+      <dd><a href="../../../../stable/2.1.1/user/examples/jpl_validator.html">stable/2.1.1</a></dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
