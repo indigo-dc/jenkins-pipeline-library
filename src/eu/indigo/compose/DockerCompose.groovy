@@ -187,8 +187,10 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     def composeUp(Map args, String serviceIds='') {
         String buildFlag = testString(args.forceBuild) ? _b : ''
+        String cmdPull = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " pull $serviceIds"
         String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " up $buildFlag -d $serviceIds"
 
+        steps.sh "docker-compose $cmdPull"
         steps.sh "docker-compose $cmd"
     }
 
@@ -332,7 +334,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
             withCredentialsClosure(credentials) {
                 // Deploy the environment services using docker-compose
                 composeUp(composeFile: projectConfig.config.deploy_template, workdir: workspace, forceBuild: steps.env.JPL_DOCKERFORCEBUILD)
-                
+
                 if (_DEBUG_) { steps.sh 'echo "after loading credentials:\n$(env)"' }
 
                 projectConfig.stagesList.each { stageMap ->
