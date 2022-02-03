@@ -276,6 +276,28 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     }
 
     /**
+    * Run docker compose exec
+    *
+    * @param service Service name
+    * @param goal Test environment to run with maven
+    * @param args.composeFile configuration file to override the default docker-compose.yml
+    * @param maven Maven object with implementations for python virtenv orquestration
+    * @param args.mavenFile Maven configuration file to override the default maven.ini
+    * @param args.workdir Path to workdir directory for this command
+    * @see https://docs.docker.com/compose/reference/exec/
+    */
+    def composeMavenRun(Map args, String service, String goal, Maven maven) {
+        if (_DEBUG_) { steps.echo "** composeMavenRun() **" }
+
+        String credsVars = getCredsVars()
+        if (_DEBUG_) { steps.echo "service: ${service}\ngoal: ${goal}\nmavenFile: " + escapeWhitespace(args.mavenFile) + "\ncredsVars: $credsVars" }
+        if (_DEBUG_) { steps.echo "maven command: " + maven.runEnv(goal, mavenFile: escapeWhitespace(args.mavenFile)) }
+        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + ' exec -T ' +
+                     " $credsVars $service " + maven.runEnv(goal, mavenFile: escapeWhitespace(args.mavenFile))
+        steps.sh "docker-compose $cmd"
+    }
+
+    /**
      * Run tools and command within the containers
      *
      * @param stageMap Map with all required stages to be run
@@ -289,6 +311,13 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                     composeToxRun(stageMap.container, testenv, projectConfig.nodeAgent.tox,
                                   composeFile: projectConfig.config.deploy_template,
                                   toxFile: stageMap.tox.tox_file, workdir: workspace)
+                }
+            }
+            if (stageMap.maven) {
+                stageMap.maven.goals.each { goal ->
+                    composeMavenRun(stageMap.container, goal, projectConfig.nodeAgent.maven,
+                                  composeFile: projectConfig.config.deploy_template,
+                                  mavenFile: stageMap.tox.maven_file, workdir: workspace)
                 }
             }
             if (stageMap.commands) {

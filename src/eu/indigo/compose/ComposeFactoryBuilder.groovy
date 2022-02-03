@@ -10,6 +10,7 @@ class ComposeFactoryBuilder implements Serializable {
 
     def factory
     def tox
+    def maven
 
     def setFactory(factory) {
         this.factory = factory
@@ -21,9 +22,15 @@ class ComposeFactoryBuilder implements Serializable {
         return this
     }
 
+    def setMaven(maven) {
+        this.maven = maven
+        return this
+    }
+
     ComposeFactory build() {
         new ComposeFactory(factory: this.factory,
-                           tox: this.tox)
+                           tox: this.tox,
+                           maven: this.maven)
     }
 
 }

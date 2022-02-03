@@ -29,7 +29,8 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         'ssh_user_private_key'
     ]
     List supportedBuildTools = [
-        'tox'
+        'tox',
+        'maven'
     ]
     Map defaultValues = [
         config: [
@@ -74,6 +75,15 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
             tox: [
                 tox_file: 'tox.ini',
                 testenv: []
+            ]
+        ],
+        maven: [
+            container: 'maven',
+            maven: [
+                maven_file: 'pom.xml',
+                goals: [],
+                options: '',
+                phases: ''
             ]
         ]
     ]
