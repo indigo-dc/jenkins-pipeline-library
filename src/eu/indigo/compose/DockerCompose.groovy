@@ -279,21 +279,22 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * Run docker compose exec
     *
     * @param service Service name
-    * @param goal Test environment to run with maven
-    * @param args.composeFile configuration file to override the default docker-compose.yml
+    * @param goals Test environment to run with maven
     * @param maven Maven object with implementations for python virtenv orquestration
-    * @param args.mavenFile Maven configuration file to override the default maven.ini
+    * @param args.composeFile configuration file to override the default docker-compose.yml
+    * @param args.options Options to be passed to mvn command
+    * @param args.mavenFile Maven configuration file to override the default pom.xml
     * @param args.workdir Path to workdir directory for this command
     * @see https://docs.docker.com/compose/reference/exec/
     */
-    def composeMavenRun(Map args, String service, String goal, Maven maven) {
+    def composeMavenRun(Map args, String service, String goals, Maven maven) {
         if (_DEBUG_) { steps.echo "** composeMavenRun() **" }
 
         String credsVars = getCredsVars()
-        if (_DEBUG_) { steps.echo "service: ${service}\ngoal: ${goal}\nmavenFile: " + escapeWhitespace(args.mavenFile) + "\ncredsVars: $credsVars" }
-        if (_DEBUG_) { steps.echo "maven command: " + maven.runEnv(goal, mavenFile: escapeWhitespace(args.mavenFile)) }
+        if (_DEBUG_) { steps.echo "service: ${service}\noptions: ${args.options}\ngoals: ${goals}\nmavenFile: " + escapeWhitespace(args.mavenFile) + "\ncredsVars: $credsVars" }
+        if (_DEBUG_) { steps.echo "maven command: " + maven.runEnv(goals, args.options, mavenFile: escapeWhitespace(args.mavenFile)) }
         String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + ' exec -T ' +
-                     " $credsVars $service " + maven.runEnv(goal, mavenFile: escapeWhitespace(args.mavenFile))
+                     " $credsVars $service " + maven.runEnv(goal, args.options, mavenFile: escapeWhitespace(args.mavenFile))
         steps.sh "docker-compose $cmd"
     }
 
@@ -314,11 +315,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                 }
             }
             if (stageMap.maven) {
-                stageMap.maven.goals.each { goal ->
-                    composeMavenRun(stageMap.container, goal, projectConfig.nodeAgent.maven,
-                                  composeFile: projectConfig.config.deploy_template,
-                                  mavenFile: stageMap.tox.maven_file, workdir: workspace)
-                }
+                composeMavenRun(stageMap.container, stageMap.maven.goals, projectConfig.nodeAgent.maven,
+                                composeFile: projectConfig.config.deploy_template, options: stageMap.maven.options,
+                                mavenFile: stageMap.maven.maven_file, workdir: workspace)
             }
             if (stageMap.commands) {
                 stageMap.commands.each { command ->

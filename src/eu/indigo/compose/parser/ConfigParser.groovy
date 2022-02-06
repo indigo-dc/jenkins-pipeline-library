@@ -81,9 +81,8 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
             container: 'maven',
             maven: [
                 maven_file: 'pom.xml',
-                goals: [],
                 options: '',
-                phases: ''
+                goals: ''
             ]
         ]
     ]
