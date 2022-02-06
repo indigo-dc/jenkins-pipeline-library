@@ -276,6 +276,29 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     }
 
     /**
+    * Run docker compose exec
+    *
+    * @param service Service name
+    * @param goals Test environment to run with maven
+    * @param maven Maven object with implementations for python virtenv orquestration
+    * @param args.composeFile configuration file to override the default docker-compose.yml
+    * @param args.options Options to be passed to mvn command
+    * @param args.mavenFile Maven configuration file to override the default pom.xml
+    * @param args.workdir Path to workdir directory for this command
+    * @see https://docs.docker.com/compose/reference/exec/
+    */
+    def composeMavenRun(Map args, String service, String goals, Maven maven) {
+        if (_DEBUG_) { steps.echo "** composeMavenRun() **" }
+
+        String credsVars = getCredsVars()
+        if (_DEBUG_) { steps.echo "service: ${service}\noptions: ${args.options}\ngoals: ${goals}\nmavenFile: " + escapeWhitespace(args.mavenFile) + "\ncredsVars: $credsVars" }
+        if (_DEBUG_) { steps.echo "maven command: " + maven.runEnv(goals, args.options, mavenFile: escapeWhitespace(args.mavenFile)) }
+        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + ' exec -T ' +
+                     " $credsVars $service " + maven.runEnv(goal, args.options, mavenFile: escapeWhitespace(args.mavenFile))
+        steps.sh "docker-compose $cmd"
+    }
+
+    /**
      * Run tools and command within the containers
      *
      * @param stageMap Map with all required stages to be run
@@ -290,6 +313,11 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                                   composeFile: projectConfig.config.deploy_template,
                                   toxFile: stageMap.tox.tox_file, workdir: workspace)
                 }
+            }
+            if (stageMap.maven) {
+                composeMavenRun(stageMap.container, stageMap.maven.goals, projectConfig.nodeAgent.maven,
+                                composeFile: projectConfig.config.deploy_template, options: stageMap.maven.options,
+                                mavenFile: stageMap.maven.maven_file, workdir: workspace)
             }
             if (stageMap.commands) {
                 stageMap.commands.each { command ->

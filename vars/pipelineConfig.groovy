@@ -65,6 +65,7 @@ def call(Map configs) {
             projectConfig.nodeAgent = new ComposeFactoryBuilder()
                 .setFactory(new DockerCompose(this))
                 .setTox(new Tox(this))
+                .setMaven(new Maven(this))
                 .build()
             break
         default:

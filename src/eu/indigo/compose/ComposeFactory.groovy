@@ -10,6 +10,7 @@ class ComposeFactory implements Serializable {
 
     def static factory
     def static tox
+    def static maven
     def static processStages(projectConfig) { return factory.processStages(projectConfig) }
 
 }
