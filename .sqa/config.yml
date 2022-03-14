@@ -5,7 +5,7 @@ config:
         password_var: GIT_PASSWORD
 
 sqa_criteria:
-  qc_doc:
+  QC.Doc:
     repos:
       jenkins-pipeline-library:
         container: sphinx

@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     projectConfig = pipelineConfig(
-                        [ scmConfigs: [ localBranch: true ] ]
+                        [ validatorDockerImage: '%s', scmConfigs: [ localBranch: true ] ]
                     )
                     buildStages(projectConfig)
                 }

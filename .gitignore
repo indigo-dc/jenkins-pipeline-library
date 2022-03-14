@@ -3,7 +3,7 @@
 
 # but the JePL files ..
 !.gitignore
-!.sqa/*
+!.sqa
 !Jenkinsfile
 !patch.issue_116
 !.git_credential_helper.sh
