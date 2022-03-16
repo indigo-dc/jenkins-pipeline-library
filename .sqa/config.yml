@@ -25,4 +25,4 @@ sqa_criteria:
             && cp docs/assets/index.html docs/_build/html/index.html
             && env GIT_ASKPASS=/jepl/.git_credential_helper.sh
             
-            ghp-import -n -p docs/_build/html -f"
+            ghp-import -n -p docs/_build/html -f
