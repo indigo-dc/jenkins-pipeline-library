@@ -171,8 +171,10 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     def composeExec(Map args, String service, String command) {
         String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) +
-                     ' exec -T ' + getCredsVars() + " $service sh -c \'eval \"\$(cat -)\"\'"
-        steps.sh "echo \"$command\" | docker-compose $cmd"
+                     ' exec -T ' + getCredsVars() + " $service sh -c \\\'eval \"\$(cat -)\"\\\'"
+        steps.sh """
+                  echo \\\"$command\\\" | docker-compose $cmd
+                 """
     }
 
     /**
