@@ -22,6 +22,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     String _w = '--project-directory'
     String _ipf = '--ignore-push-failures'
     String _b = '--build'
+    String _n = '\n'
 
 
     /**
@@ -170,14 +171,24 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/exec/
     */
     def composeExec(Map args, String service, String command) {
-        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) +
-                     ' exec -T ' + getCredsVars() + " $service sh -c \\\'eval \"\$(cat -)\"\\\'"
-        steps.sh script: """
-(
-cat <<EOF
-$command
-EOF
-) | docker-compose $cmd"""
+        String cmd = null
+        String cmd_dc = null
+        if(command.contains(_n)) {
+            cmd_dc = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) +
+                     ' exec -T ' + getCredsVars() + " $service sh -c \\\'cat > __jpl_script__; chmod a+x __jpl_script__; ./__jpl_script__; rm __jpl_script__\\\'"
+            cmd = """
+                    |(
+                    |cat <<EOF
+                    |$command
+                    |EOF
+                    |) | docker-compose $cmd_dc""".stripMargin()
+        } else {
+            cmd_dc = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) +
+                     ' exec -T ' + getCredsVars() + " $service $command"
+            cmd = """docker-compose $cmd_dc"""
+        }
+
+        steps.sh script: cmd
     }
 
     /**
