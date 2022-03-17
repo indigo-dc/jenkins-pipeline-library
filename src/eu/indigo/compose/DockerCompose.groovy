@@ -176,17 +176,17 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         if(command.contains(_n)) {
             cmd_c = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) +
                      ' exec -T ' + getCredsVars() + " $service " +
-                     '''sh -c \\\'cat \\\> __jpl_script__\\\; chmod a+x __jpl_script__\\\; ./__jpl_script__\\\; rm __jpl_script__\\\''''
+                     '''sh -c \'cat > __jpl_script__; chmod a+x __jpl_script__; ./__jpl_script__; rm __jpl_script__\''''
             cmd = """
                     |(
                     |cat <<EOF
                     |$command
                     |EOF
-                    |) | docker-compose $cmd_c""".stripMargin()
+                    |) | docker-compose """.stripMargin() + cmd_c
         } else {
             cmd_c = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) +
                      ' exec -T ' + getCredsVars() + " $service $command"
-            cmd = """docker-compose $cmd_c"""
+            cmd = """docker-compose """ + cmd_c
         }
 
         steps.sh script: cmd
