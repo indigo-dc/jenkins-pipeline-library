@@ -13,3 +13,5 @@ venv
 # vscode
 .vscode/
 local-storage.json
+jcasc-schema.json
+
