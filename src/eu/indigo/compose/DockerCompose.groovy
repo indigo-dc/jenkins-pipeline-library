@@ -179,7 +179,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                      '''sh -c \'cat > __jpl_script__; chmod a+x __jpl_script__; ./__jpl_script__; rm __jpl_script__\''''
             cmd = """
                     |(
-                    |cat <<EOF
+                    |cat <<'EOF'
                     |$command
                     |EOF
                     |) | docker-compose """.stripMargin() + cmd_c
