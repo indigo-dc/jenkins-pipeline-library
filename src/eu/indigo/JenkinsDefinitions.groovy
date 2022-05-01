@@ -41,6 +41,7 @@ class JenkinsDefinitions implements Serializable {
     protected void debugSettings() {
         _WORKSPACEDEBUG_ = steps.env.JPL_WORKSPACEDEBUG ? (steps.env.JPL_WORKSPACEDEBUG == "true") : _WORKSPACEDEBUG_
         _WORKSPACEDEBUGTIMEOUT_ = steps.env.JPL_WORKSPACEDEBUGTIMEOUT ? steps.env.JPL_WORKSPACEDEBUGTIMEOUT.toInteger() : _WORKSPACEDEBUGTIMEOUT_
+        _DEBUG_ = steps.env.JPL_DEBUG ? (steps.env.JPL_DEBUG == "true") : _DEBUG_
     }
 
 }
