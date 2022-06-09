@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Layout &mdash; jenkins-pipeline-library 2.0.0 documentation</title>
@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -89,7 +90,7 @@
            <div itemprop="articleBody">
              
   <section id="layout">
-<h1>Layout<a class="headerlink" href="#layout" title="Permalink to this headline"></a></h1>
+<h1>Layout<a class="headerlink" href="#layout" title="Permalink to this heading"></a></h1>
 <p>A minimal structure in your code repository is required in order to leverage
 the jenkins-pipeline-library. In addition to the <code class="docutils literal notranslate"><span class="pre">Jenkinsfile</span></code>, the specific
 configuration for the operation of the library is located in the <code class="docutils literal notranslate"><span class="pre">.sqa</span></code>
@@ -104,7 +105,7 @@ folder, as follows:</p>
 </div>
 <p>As shown in the figure above, the following key files are needed:</p>
 <section id="sqa-config-yml">
-<h2><code class="docutils literal notranslate"><span class="pre">.sqa/config.yml</span></code><a class="headerlink" href="#sqa-config-yml" title="Permalink to this headline"></a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">.sqa/config.yml</span></code><a class="headerlink" href="#sqa-config-yml" title="Permalink to this heading"></a></h2>
 <p>This is the central piece of configuration used by the jenkins-library-pipeline
 to compose the new stages that implement the requirements from the SQA baseline.</p>
 <p>To start creating your own setup please head over to:</p>
@@ -113,7 +114,7 @@ to compose the new stages that implement the requirements from the SQA baseline.
 </ul>
 </section>
 <section id="sqa-docker-compose-yml">
-<h2><code class="docutils literal notranslate"><span class="pre">.sqa/docker-compose.yml</span></code><a class="headerlink" href="#sqa-docker-compose-yml" title="Permalink to this headline"></a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">.sqa/docker-compose.yml</span></code><a class="headerlink" href="#sqa-docker-compose-yml" title="Permalink to this heading"></a></h2>
 <p>The library relies by default on Docker Compose tool to facilitate the task of
 spawing the services required to carry out the verification and validation (V&amp;V)
 processes.</p>
@@ -131,7 +132,7 @@ such as Kubernetes, are clear candidates to be supported in the future.</p>
 </div>
 </section>
 <section id="jenkinsfile">
-<h2><code class="docutils literal notranslate"><span class="pre">Jenkinsfile</span></code><a class="headerlink" href="#jenkinsfile" title="Permalink to this headline"></a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">Jenkinsfile</span></code><a class="headerlink" href="#jenkinsfile" title="Permalink to this heading"></a></h2>
 <p>The presence of a Jenkinsfile in the code repository indicates Jenkins that the
 actual branch must be built according to the stages thereof. The
 jenkins-pipeline-library requires the addition of a specific stage that will
@@ -187,6 +188,7 @@ dinamically load the stages resultant from parsing the previous
       <dd><a href="../../release/2.1.1/user/layout.html">release/2.1.1</a></dd>
       <dd><a href="../../release/2.1.2/user/layout.html">release/2.1.2</a></dd>
       <dd><a href="../../release/2.2.0/user/layout.html">release/2.2.0</a></dd>
+      <dd><a href="../../release/2.3.0/user/layout.html">release/2.3.0</a></dd>
       <dd><a href="../../stable/2.0.0/user/layout.html">stable/2.0.0</a></dd>
       <dd><a href="../../stable/2.1.0/user/layout.html">stable/2.1.0</a></dd>
       <dd><a href="../../stable/2.1.1/user/layout.html">stable/2.1.1</a></dd>

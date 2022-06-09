@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The configuration file: config.yml &mdash; jenkins-pipeline-library 2.0.0 documentation</title>
@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/tabs.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -104,7 +105,7 @@
            <div itemprop="articleBody">
              
   <section id="the-configuration-file-config-yml">
-<h1>The configuration file: config.yml<a class="headerlink" href="#the-configuration-file-config-yml" title="Permalink to this headline"></a></h1>
+<h1>The configuration file: config.yml<a class="headerlink" href="#the-configuration-file-config-yml" title="Permalink to this heading"></a></h1>
 <p>jenkins-pipeline-library relies on a YAML file in order to compose dinamically
 the stages that tackle the fulfillment of a requirement or good practice as
 defined by the SQA baseline.</p>
@@ -140,28 +141,28 @@ root directory of your code repository.</p>
 </pre></div>
 </div>
 <section id="supported-settings">
-<h2>Supported settings<a class="headerlink" href="#supported-settings" title="Permalink to this headline"></a></h2>
+<h2>Supported settings<a class="headerlink" href="#supported-settings" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">.sqa/config.yml</span></code> file shall contain the following main settings:</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#config" id="id1">config</a></p></li>
 <li><p><a class="reference internal" href="#sqa-criteria" id="id2">sqa_criteria</a></p></li>
 <li><p><a class="reference internal" href="#environment" id="id3">environment</a></p></li>
 <li><p><a class="reference internal" href="#timeout" id="id4">timeout</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="config">
-<h3><a class="toc-backref" href="#id1">config</a><a class="headerlink" href="#config" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id1" role="doc-backlink">config</a><a class="headerlink" href="#config" title="Permalink to this heading"></a></h3>
 <p>Here you can define the generic parameters, such as the workspace and execution
 agents.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">map</span></code></p>
 </dd>
-<dt class="field-even">Parameters</dt>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">node_agent</span></code>, <code class="docutils literal notranslate"><span class="pre">deploy_template</span></code>, <code class="docutils literal notranslate"><span class="pre">project_repos</span></code></p>
 </dd>
-<dt class="field-odd">Required</dt>
+<dt class="field-odd">Required<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p>
 </dd>
 </dl>
@@ -176,20 +177,20 @@ agents.</p>
 </pre></div>
 </div>
 <section id="node-agent">
-<h4>node_agent<a class="headerlink" href="#node-agent" title="Permalink to this headline"></a></h4>
+<h4>node_agent<a class="headerlink" href="#node-agent" title="Permalink to this heading"></a></h4>
 <p>The type of agent to drive the execution of the dynamic stages. Docker Compose
 is used by default.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
 </dd>
-<dt class="field-even">Options</dt>
+<dt class="field-even">Options<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">docker_compose</span></code></p>
 </dd>
-<dt class="field-odd">Default</dt>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">docker_compose</span></code></p>
 </dd>
-<dt class="field-even">Location</dt>
+<dt class="field-even">Location<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">config:node_agent</span></code></p>
 </dd>
 </dl>
@@ -200,17 +201,17 @@ is used by default.</p>
 </div>
 </section>
 <section id="deploy-template">
-<span id="config-deploy-template-setting"></span><h4>deploy_template<a class="headerlink" href="#deploy-template" title="Permalink to this headline"></a></h4>
+<span id="config-deploy-template-setting"></span><h4>deploy_template<a class="headerlink" href="#deploy-template" title="Permalink to this heading"></a></h4>
 <p>Path to the template containing the definition of the services for the
 <code class="docutils literal notranslate"><span class="pre">node_agent</span></code> in use.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">path</span></code></p>
 </dd>
-<dt class="field-even">Default</dt>
+<dt class="field-even">Default<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">.sqa/docker-compose.yml</span></code></p>
 </dd>
-<dt class="field-odd">Location</dt>
+<dt class="field-odd">Location<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">config:deploy_template</span></code></p>
 </dd>
 </dl>
@@ -221,16 +222,16 @@ is used by default.</p>
 </div>
 </section>
 <section id="project-repos">
-<h4>project_repos<a class="headerlink" href="#project-repos" title="Permalink to this headline"></a></h4>
+<h4>project_repos<a class="headerlink" href="#project-repos" title="Permalink to this heading"></a></h4>
 <p>Describes the code repositories that the pipeline will deal with.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">map</span></code></p>
 </dd>
-<dt class="field-even">Required</dt>
+<dt class="field-even">Required<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p>
 </dd>
-<dt class="field-odd">Location</dt>
+<dt class="field-odd">Location<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">config:project_repos</span></code></p>
 </dd>
 </dl>
@@ -249,26 +250,26 @@ description within the <code class="docutils literal notranslate"><span class="p
 <p><strong>repo</strong></p>
 <p>URL pointing to the root path of the code repository.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">url</span></code></p>
 </dd>
-<dt class="field-even">Required</dt>
+<dt class="field-even">Required<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p>
 </dd>
-<dt class="field-odd">Location</dt>
+<dt class="field-odd">Location<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">config:project_repos:repo</span></code></p>
 </dd>
 </dl>
 <p><strong>branch</strong></p>
 <p>Branch name to be checked out.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
 </dd>
-<dt class="field-even">Default</dt>
+<dt class="field-even">Default<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">master</span></code></p>
 </dd>
-<dt class="field-odd">Location</dt>
+<dt class="field-odd">Location<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">config:project_repos:branch</span></code></p>
 </dd>
 </dl>
@@ -276,44 +277,44 @@ description within the <code class="docutils literal notranslate"><span class="p
 <p>Repository name within the Docker Hub registry where the Docker images
 produced by the pipeline will be pushed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
 </dd>
-<dt class="field-even">Required</dt>
+<dt class="field-even">Required<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p>
 </dd>
-<dt class="field-odd">Location</dt>
+<dt class="field-odd">Location<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">config:project_repos:dockerhub</span></code></p>
 </dd>
 </dl>
 <p><strong>dockertag</strong></p>
 <p>Tag name to be used for labeling the resultant Docker image.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
 </dd>
-<dt class="field-even">Default</dt>
+<dt class="field-even">Default<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">latest</span></code></p>
 </dd>
-<dt class="field-odd">Location</dt>
+<dt class="field-odd">Location<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">config:project_repos:dockertag</span></code></p>
 </dd>
 </dl>
 </section>
 </section>
 <section id="sqa-criteria">
-<h3><a class="toc-backref" href="#id2">sqa_criteria</a><a class="headerlink" href="#sqa-criteria" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">sqa_criteria</a><a class="headerlink" href="#sqa-criteria" title="Permalink to this heading"></a></h3>
 <p>This setting allows to define the criteria from the SQA baseline to be checked.
 Each requirement has a unique identifier and an associated set of mandatory and
 optional attributes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">map</span></code></p>
 </dd>
-<dt class="field-even">Parameters</dt>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">qc_style</span></code>, <code class="docutils literal notranslate"><span class="pre">qc_functional</span></code>, <code class="docutils literal notranslate"><span class="pre">qc_coverage</span></code>, <code class="docutils literal notranslate"><span class="pre">qc_security</span></code>, <code class="docutils literal notranslate"><span class="pre">qc_doc</span></code></p>
 </dd>
-<dt class="field-odd">Required</dt>
+<dt class="field-odd">Required<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p>
 </dd>
 </dl>
@@ -338,10 +339,6 @@ dynamically added to the pipeline.</p>
 <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> (see <em>Options</em> above) and the ones used in the SQA criteria
 is summarized as follows:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 43%" />
-<col style="width: 58%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>sqa_criteria ID</p></th>
 <th class="head"><p>SQA baseline category</p></th>
@@ -444,57 +441,57 @@ used there.</p>
 previous examples, that can be defined for each repository associated with the
 former criteria:</p>
 <section id="container">
-<span id="config-container-setting"></span><h4>container<a class="headerlink" href="#container" title="Permalink to this headline"></a></h4>
+<span id="config-container-setting"></span><h4>container<a class="headerlink" href="#container" title="Permalink to this heading"></a></h4>
 <p>Allows to specify the Docker container where the given criteria assessment will
 take place. If using <code class="docutils literal notranslate"><span class="pre">docker_compose</span></code>, the value could be any of the services
 defined in the docker-compose.yml.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
 </dd>
-<dt class="field-even">Location</dt>
+<dt class="field-even">Location<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">sqa_criteria:&lt;qc_xxx&gt;:repos:&lt;repo&gt;:container</span></code></p>
 </dd>
 </dl>
 </section>
 <section id="tox">
-<h4>tox<a class="headerlink" href="#tox" title="Permalink to this headline"></a></h4>
+<h4>tox<a class="headerlink" href="#tox" title="Permalink to this heading"></a></h4>
 <p>Built-in support tox application. It is only applicable for Python
 environments.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">map</span></code></p>
 </dd>
-<dt class="field-even">Parameters</dt>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">testenv</span></code>, <code class="docutils literal notranslate"><span class="pre">tox_file</span></code></p>
 </dd>
-<dt class="field-odd">Location</dt>
+<dt class="field-odd">Location<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">sqa_criteria:&lt;qc_xxx&gt;:repos:&lt;repo&gt;:tox</span></code></p>
 </dd>
 </dl>
 <p><strong>testenv</strong></p>
 <p>Identifier of the test environment that tox shall use.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">list</span></code></p>
 </dd>
-<dt class="field-even">Required</dt>
+<dt class="field-even">Required<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p>
 </dd>
-<dt class="field-odd">Location</dt>
+<dt class="field-odd">Location<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">sqa_criteria:&lt;qc_xxx&gt;:repos:&lt;repo&gt;:tox:testenv</span></code></p>
 </dd>
 </dl>
 <p><strong>tox_file</strong></p>
 <p>Specifies the path to the tox configuration file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">path</span></code></p>
 </dd>
-<dt class="field-even">Default</dt>
+<dt class="field-even">Default<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">tox.ini</span></code></p>
 </dd>
-<dt class="field-odd">Location</dt>
+<dt class="field-odd">Location<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">sqa_criteria:&lt;qc_xxx&gt;:repos:&lt;repo&gt;:tox:tox_file</span></code></p>
 </dd>
 </dl>
@@ -505,17 +502,17 @@ automatically select an appropriate Docker container for running the tool.</p>
 </div>
 </section>
 <section id="commands">
-<h4>commands<a class="headerlink" href="#commands" title="Permalink to this headline"></a></h4>
+<h4>commands<a class="headerlink" href="#commands" title="Permalink to this heading"></a></h4>
 <p>Allows to include a list of commands. This is helpful whenever there is no
 built-in support for the tool you use for building purposes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">list</span></code></p>
 </dd>
-<dt class="field-even">Default</dt>
+<dt class="field-even">Default<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p>
 </dd>
-<dt class="field-odd">Location</dt>
+<dt class="field-odd">Location<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">sqa_criteria:&lt;qc_xxx&gt;:repos:&lt;repo&gt;:commands</span></code></p>
 </dd>
 </dl>
@@ -540,14 +537,14 @@ docker-compose.yml context, as a solution for current release.</p>
 </section>
 </section>
 <section id="environment">
-<h3><a class="toc-backref" href="#id3">environment</a><a class="headerlink" href="#environment" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">environment</a><a class="headerlink" href="#environment" title="Permalink to this heading"></a></h3>
 <p>Contains the environment variables required to execute the previouos SQA
 criteria checks.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">list</span></code></p>
 </dd>
-<dt class="field-even">Default</dt>
+<dt class="field-even">Default<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p>
 </dd>
 </dl>
@@ -567,13 +564,13 @@ example, docker-compose.yml environment definitions instead.</p>
 </div>
 </section>
 <section id="timeout">
-<h3><a class="toc-backref" href="#id4">timeout</a><a class="headerlink" href="#timeout" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">timeout</a><a class="headerlink" href="#timeout" title="Permalink to this heading"></a></h3>
 <p>Sets the timeout for the pipeline execution.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">integer</span></code></p>
 </dd>
-<dt class="field-even">Default</dt>
+<dt class="field-even">Default<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">600</span></code></p>
 </dd>
 </dl>
@@ -628,6 +625,7 @@ example, docker-compose.yml environment definitions instead.</p>
       <dd><a href="../../../release/2.1.1/user/config_file.html">release/2.1.1</a></dd>
       <dd><a href="../../../release/2.1.2/user/config_file.html">release/2.1.2</a></dd>
       <dd><a href="../../../release/2.2.0/user/config_file.html">release/2.2.0</a></dd>
+      <dd><a href="../../../release/2.3.0/user/config_file.html">release/2.3.0</a></dd>
       <dd><a href="config_file.html">stable/2.0.0</a></dd>
       <dd><a href="../../2.1.0/user/config_file.html">stable/2.1.0</a></dd>
       <dd><a href="../../2.1.1/user/config_file.html">stable/2.1.1</a></dd>

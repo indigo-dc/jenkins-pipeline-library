@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The sqa_criteria setting &mdash; jenkins-pipeline-library 2.1.0 documentation</title>
@@ -15,6 +15,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/tabs.js"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -108,17 +109,13 @@
            <div itemprop="articleBody">
              
   <section id="the-sqa-criteria-setting">
-<h1>The <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting<a class="headerlink" href="#the-sqa-criteria-setting" title="Permalink to this headline"></a></h1>
+<h1>The <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting<a class="headerlink" href="#the-sqa-criteria-setting" title="Permalink to this heading"></a></h1>
 <p>In this section we will cover the <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting, which represents
 the fundamental part of the configuration since it contains the definitions of
 the checks that comprise the quality criteria.</p>
 <p>The full set of criteria currently supported in the library is summarized in
 the following table and can be found in the <a class="reference internal" href="../config_file.html#sqa-criteria"><span class="std std-ref">sqa_criteria</span></a> section.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 29%" />
-<col style="width: 71%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code> setting</p></th>
 <th class="head"><p>What does it cover?</p></th>
@@ -143,7 +140,7 @@ the following table and can be found in the <a class="reference internal" href="
 </tbody>
 </table>
 <section id="python-and-java-examples">
-<h2>Python and Java examples<a class="headerlink" href="#python-and-java-examples" title="Permalink to this headline"></a></h2>
+<h2>Python and Java examples<a class="headerlink" href="#python-and-java-examples" title="Permalink to this heading"></a></h2>
 <p>The best way to learn the basics about the library is through examples. In the
 next subsections we will show how to fulfill the <code class="docutils literal notranslate"><span class="pre">qc_style</span></code> criterion for
 Python and Java applications. Working configurations are provided so you can
@@ -153,7 +150,7 @@ readily test them.</p>
 execute the checks, hence the examples below cover the three possible use cases,
 i.e. Python (with and without Tox) and Java (with commands).</p>
 <section id="python-with-tox">
-<h3>Python with <code class="docutils literal notranslate"><span class="pre">tox</span></code><a class="headerlink" href="#python-with-tox" title="Permalink to this headline"></a></h3>
+<h3>Python with <code class="docutils literal notranslate"><span class="pre">tox</span></code><a class="headerlink" href="#python-with-tox" title="Permalink to this heading"></a></h3>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">config.yml</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">docker-compose.yml</button><button aria-controls="panel-0-0-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-2" name="0-2" role="tab" tabindex="-1">tox.ini</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">project_repos</span><span class="p">:</span><span class="w"></span>
@@ -272,7 +269,7 @@ simple and does not take advantage of the full capabilities of the tool.</p>
 </div>
 </section>
 <section id="python-with-commands">
-<h3>Python with <code class="docutils literal notranslate"><span class="pre">commands</span></code><a class="headerlink" href="#python-with-commands" title="Permalink to this headline"></a></h3>
+<h3>Python with <code class="docutils literal notranslate"><span class="pre">commands</span></code><a class="headerlink" href="#python-with-commands" title="Permalink to this heading"></a></h3>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">config.yml</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">docker-compose.yml</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">project_repos</span><span class="p">:</span><span class="w"></span>
@@ -306,7 +303,7 @@ the use of <code class="docutils literal notranslate"><span class="pre">commands
 the previous Python-with-tox example since <em>flake8</em> tool is executed.</p>
 </section>
 <section id="java-with-commands">
-<h3>Java with <code class="docutils literal notranslate"><span class="pre">commands</span></code><a class="headerlink" href="#java-with-commands" title="Permalink to this headline"></a></h3>
+<h3>Java with <code class="docutils literal notranslate"><span class="pre">commands</span></code><a class="headerlink" href="#java-with-commands" title="Permalink to this heading"></a></h3>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">config.yml</button><button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">docker-compose.yml</button></div><div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">project_repos</span><span class="p">:</span><span class="w"></span>
@@ -338,7 +335,7 @@ the previous Python-with-tox example since <em>flake8</em> tool is executed.</p>
 </section>
 </section>
 <section id="don-t-forget-to-commit">
-<h2>Don’t forget to commit<a class="headerlink" href="#don-t-forget-to-commit" title="Permalink to this headline"></a></h2>
+<h2>Don’t forget to commit<a class="headerlink" href="#don-t-forget-to-commit" title="Permalink to this heading"></a></h2>
 <p>Once you have added one of the former definitions in the <code class="docutils literal notranslate"><span class="pre">sqa_criteria</span></code>
 setting, it is time to commit our work. Following up with the example of
 previous section:</p>
@@ -393,6 +390,7 @@ executed in Jenkins.</p>
       <dd><a href="../../../../release/2.1.1/user/step_by_step/sqa_criteria.html">release/2.1.1</a></dd>
       <dd><a href="../../../../release/2.1.2/user/step_by_step/sqa_criteria.html">release/2.1.2</a></dd>
       <dd><a href="../../../../release/2.2.0/user/step_by_step/sqa_criteria.html">release/2.2.0</a></dd>
+      <dd><a href="../../../../release/2.3.0/user/step_by_step/sqa_criteria.html">release/2.3.0</a></dd>
       <dd><a href="../../../2.0.0/user/step_by_step/sqa_criteria.html">stable/2.0.0</a></dd>
       <dd><a href="sqa_criteria.html">stable/2.1.0</a></dd>
       <dd><a href="../../../2.1.1/user/step_by_step/sqa_criteria.html">stable/2.1.1</a></dd>

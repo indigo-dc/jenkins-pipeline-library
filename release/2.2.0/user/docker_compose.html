@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The services: docker-compose.yml &mdash; jenkins-pipeline-library 2.1.0 documentation</title>
@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -102,7 +103,7 @@
            <div itemprop="articleBody">
              
   <section id="the-services-docker-compose-yml">
-<h1>The services: docker-compose.yml<a class="headerlink" href="#the-services-docker-compose-yml" title="Permalink to this headline"></a></h1>
+<h1>The services: docker-compose.yml<a class="headerlink" href="#the-services-docker-compose-yml" title="Permalink to this heading"></a></h1>
 <p>Since the jenkins-pipeline-library relies on Docker Compose framework, all the
 services that will be required by the pipeline have to be previously defined.
 The Docker Compose file is expected in the jenkins-pipeline-library’s
@@ -147,7 +148,7 @@ when previous deployments of the same pipeline have failed to be completely
 cleaned up.</p>
 </div>
 <section id="environment-variables">
-<span id="docker-compose-env"></span><h2>Environment variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline"></a></h2>
+<span id="docker-compose-env"></span><h2>Environment variables<a class="headerlink" href="#environment-variables" title="Permalink to this heading"></a></h2>
 <p>Environment variables can be set using the <a class="reference external" href="https://docs.docker.com/compose/environment-variables/">environment</a> label. It is
 possible to bypass variables defined from config.yml environment and set them
 afterwards inside docker-compose. For example, based on previous examples:</p>
@@ -170,7 +171,7 @@ services:
 </div>
 </section>
 <section id="summary-of-recommendations-for-best-use-with-the-library">
-<span id="dc-summary"></span><h2>Summary of recommendations for best use with the library<a class="headerlink" href="#summary-of-recommendations-for-best-use-with-the-library" title="Permalink to this headline"></a></h2>
+<span id="dc-summary"></span><h2>Summary of recommendations for best use with the library<a class="headerlink" href="#summary-of-recommendations-for-best-use-with-the-library" title="Permalink to this heading"></a></h2>
 <dl>
 <dt>Use Docker Compose version <code class="docutils literal notranslate"><span class="pre">3.6</span></code></dt><dd><p>Previous versions are not compatible with the use of bind volumes as expected
 by the library.</p>
@@ -253,6 +254,7 @@ list of commands passed to the container at runtime, such as:</p>
       <dd><a href="../../2.1.1/user/docker_compose.html">release/2.1.1</a></dd>
       <dd><a href="../../2.1.2/user/docker_compose.html">release/2.1.2</a></dd>
       <dd><a href="docker_compose.html">release/2.2.0</a></dd>
+      <dd><a href="../../2.3.0/user/docker_compose.html">release/2.3.0</a></dd>
       <dd><a href="../../../stable/2.0.0/user/docker_compose.html">stable/2.0.0</a></dd>
       <dd><a href="../../../stable/2.1.0/user/docker_compose.html">stable/2.1.0</a></dd>
       <dd><a href="../../../stable/2.1.1/user/docker_compose.html">stable/2.1.1</a></dd>
