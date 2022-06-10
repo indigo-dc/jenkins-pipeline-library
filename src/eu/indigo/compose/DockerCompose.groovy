@@ -21,7 +21,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     String _f = '-f'
     String _w = '--project-directory'
     String _ipf = '--ignore-push-failures'
-    String _b = '--build'
+    String _b = '--no-cache'
 
 
     /**
@@ -186,11 +186,18 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/overview/
     */
     def composeUp(Map args, String serviceIds='') {
-        String buildFlag = testString(args.forceBuild) ? _b : ''
-        String cmdPull = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " pull $serviceIds"
-        String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + " up $buildFlag -d $serviceIds"
+        cmdCommon = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir))
+        if testString(args.forceBuild) {
+            String buildFlag = _b
+            String cmdRm = "$cmdCommon rm -f -v -s $serviceIds"
+            String cmdPull = "$cmdCommon pull $serviceIds"
+            String cmdBuild = "$cmdCommon build $buildFlag $serviceIds"
+            steps.sh "docker-compose $cmdRm"
+            steps.sh "docker-compose $cmdPull"
+            steps.sh "DOCKER_BUILDKIT=1 docker-compose $cmdBuild"
+        }
+        String cmd = "$cmdCommon up -d $serviceIds"
 
-        steps.sh "docker-compose $cmdPull"
         steps.sh "docker-compose $cmd"
     }
 
