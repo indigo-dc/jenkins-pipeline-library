@@ -18,7 +18,7 @@ class GitLocalBranch extends Git implements Serializable {
         steps.checkout transformGitSCM([
                 branches: steps.scm.branches,
                 extensions: steps.scm.extensions + [$class: 'LocalBranch', localBranch: '**'],
-                userRemoteConfigs: [[credentialsId: steps.scm.userRemoteConfigs[0].credentialsId, url: steps.scm.userRemoteConfigs[0].url, name: steps.scm.userRemoteConfigs[0].name, refspec: steps.scm.userRemoteConfigs[0].refspec]]
+                userRemoteConfigs: [[credentialsId: steps.scm.userRemoteConfigs[0].credentialsId, url: steps.scm.userRemoteConfigs[0].url, name: 'origin', refspec: '+refs/heads/*:refs/remotes/origin/*']]
             ])
     }
 
