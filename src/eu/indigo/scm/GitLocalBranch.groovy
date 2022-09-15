@@ -18,19 +18,19 @@ class GitLocalBranch extends Git implements Serializable {
         steps.checkout transformGitSCM([
                 branches: steps.scm.branches,
                 extensions: steps.scm.extensions + [$class: 'LocalBranch', localBranch: '**'],
-                userRemoteConfigs: steps.scm.userRemoteConfigs
+                userRemoteConfigs: [[credentialsId: steps.scm.userRemoteConfigs[0].credentialsId, url: steps.scm.userRemoteConfigs[0].url, name: steps.scm.userRemoteConfigs[0].name, refspec: steps.scm.userRemoteConfigs[0].refspec]]
             ])
     }
 
     @Override
-    def checkoutRepository(String repository, String branch='master', String credentialsId) {
+    def checkoutRepository(String repository, String name='origin', String refspec='+refs/heads/*:refs/remotes/origin/*', String branch='master', String credentialsId) {
         if (_DEBUG_) { steps.echo "** Git.checkoutRepository($repository, $branch, $credentialsId) **" }
         steps.checkout transformGitSCM([
                 branches: [[name: "*/${branch}"]],
                 extensions: steps.scm.extensions +
                             [$class: 'RelativeTargetDirectory', relativeTargetDir: '.'] +
                             [$class: 'LocalBranch', localBranch: '**'],
-                userRemoteConfigs: [[url: repository, credentialsId: credentialsId]]
+                userRemoteConfigs: [[url: repository, credentialsId: credentialsId, name: name, refspec: refspec]]
             ])
     }
 
