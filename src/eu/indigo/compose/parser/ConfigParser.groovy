@@ -79,7 +79,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     ]
 
     ProjectConfiguration parse(yaml, env) {
-        if (_DEBUG_) { steps.echo "** parse(): ${yaml}**" }
+        if (logTest(1)) { steps.echo "** parse(): ${yaml}**" }
 
         new ProjectConfigurationBuilder()
             .setNodeAgentAux(getNodeAgent(yaml))
@@ -93,7 +93,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     }
 
     Map merge(Map[] sources) {
-        if (_DEBUG_) { steps.echo "** merge(): ${sources}**" }
+        if (logTest(1)) { steps.echo "** merge(): ${sources}**" }
         switch (sources.length) {
             case 0:
                 return [:]
@@ -103,7 +103,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         Map result = [:]
 
         (sources[0].entrySet() + sources[1].entrySet()).each { entry ->
-            if (_DEBUG_) { steps.echo "result = $result\nkey = ${entry.key}\nvalue = ${entry.value}" }
+            if (logTest(1)) { steps.echo "result = $result\nkey = ${entry.key}\nvalue = ${entry.value}" }
             result[entry.key] = result.containsKey(entry.key) && result[entry.key].getClass() == Map ?
                 [:] << result[entry.key] << entry.value
                 : entry.value
@@ -113,7 +113,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     }
 
     Map getDefaultValue(String setting) {
-        if (_DEBUG_) { steps.echo "** getDefaultValue(): ${setting}**" }
+        if (logTest(1)) { steps.echo "** getDefaultValue(): ${setting}**" }
 
         defaultValues[setting].collectEntries { k, v ->
             v.getClass() == Map ?
@@ -123,7 +123,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     }
 
     def getNodeAgent(yaml) {
-        if (_DEBUG_) { steps.echo "** getNodeAgent() **" }
+        if (logTest(1)) { steps.echo "** getNodeAgent() **" }
         configToClass[(yaml.config?.node_agent == null) ? DEFAULT_AGENT : yaml.config.node_agent]
     }
 
@@ -147,7 +147,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
     }
 
     Map getConfigSetting(Map config) {
-        if (_DEBUG_) { steps.echo "** getConfigSetting() **" }
+        if (logTest(1)) { steps.echo "** getConfigSetting() **" }
         def configBase = config ? merge(getDefaultValue('config'), config) : merge(getDefaultValue('config'))
         def configRepos = [
             project_repos: configBase['project_repos']
@@ -164,34 +164,34 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
         def configBaseRepos = merge(configBase, configRepos)
         def configMerged = merge(configBaseRepos, configCredentials)
 
-        if (_DEBUG_) { steps.echo 'configBase:\n' + configBase.toString() }
-        if (_DEBUG_) { steps.echo 'configRepos:\n' + configRepos.toString() }
-        if (_DEBUG_) { steps.echo 'configCredentials:\n' + configCredentials.toString() }
-        if (_DEBUG_) { steps.echo 'configBaseRepos:\n' + configBaseRepos.toString() }
-        if (_DEBUG_) { steps.echo 'configMerged:\n' + configMerged.toString() }
+        if (logTest(1)) { steps.echo 'configBase:\n' + configBase.toString() }
+        if (logTest(1)) { steps.echo 'configRepos:\n' + configRepos.toString() }
+        if (logTest(1)) { steps.echo 'configCredentials:\n' + configCredentials.toString() }
+        if (logTest(1)) { steps.echo 'configBaseRepos:\n' + configBaseRepos.toString() }
+        if (logTest(1)) { steps.echo 'configMerged:\n' + configMerged.toString() }
         return configMerged
     }
 
     Map getSQASetting(Map criteria) {
-        if (_DEBUG_) { steps.echo "** getSQASetting() **" }
-        if (_DEBUG_) { steps.echo "criteria:\n$criteria" }
+        if (logTest(1)) { steps.echo "** getSQASetting() **" }
+        if (logTest(1)) { steps.echo "criteria:\n$criteria" }
         def sqaCriteria = criteria.each { criterion, data ->
             supportedBuildTools.each { tool ->
-                if (_DEBUG_) { steps.echo "tool: $tool" }
-                if (_DEBUG_) { steps.echo "data:\n$data" }
+                if (logTest(1)) { steps.echo "tool: $tool" }
+                if (logTest(1)) { steps.echo "data:\n$data" }
                 def repoData = data[_repos].collectEntries { id, params ->
-                    if (_DEBUG_) { steps.echo "id: $id\nparams:\n$params" }
+                    if (logTest(1)) { steps.echo "id: $id\nparams:\n$params" }
                     params.containsKey(tool) ? [id, merge(getDefaultValue(tool), params)] : [id, params]
                 }
                 data[_repos] = repoData
             }
         }
-        if (_DEBUG_) { steps.echo "sqaCriteria:\n$sqaCriteria" }
+        if (logTest(1)) { steps.echo "sqaCriteria:\n$sqaCriteria" }
         return sqaCriteria
     }
 
     List formatStages(Map criteria) {
-        if (_DEBUG_) { steps.echo "** formatStages() **" }
+        if (logTest(1)) { steps.echo "** formatStages() **" }
         List stagesList = []
         criteria.each { criterion, data ->
             data[_repos].each { repo, params ->
@@ -202,7 +202,7 @@ class ConfigParser extends JenkinsDefinitions implements Serializable {
                 stagesList.add(stageMap)
             }
         }
-        if (_DEBUG_) { steps.echo "stagesList:\n$stagesList" }
+        if (logTest(1)) { steps.echo "stagesList:\n$stagesList" }
         return stagesList
     }
 

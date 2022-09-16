@@ -14,7 +14,7 @@ class GitLocalBranch extends Git implements Serializable {
 
     @Override
     def checkoutRepository() {
-        if (_DEBUG_) { steps.echo "** GitLocalBranch.checkoutRepository() default values: \n credentialsId: $steps.scm.userRemoteConfigs[0].credentialsId \n url: steps.scm.userRemoteConfigs[0].url \n name: steps.scm.userRemoteConfigs[0].name \n refspec: steps.scm.userRemoteConfigs[0].refspec **" }
+        if (logTest(1)) { steps.echo "** GitLocalBranch.checkoutRepository() default values: \n credentialsId: $steps.scm.userRemoteConfigs[0].credentialsId \n url: steps.scm.userRemoteConfigs[0].url \n name: steps.scm.userRemoteConfigs[0].name \n refspec: steps.scm.userRemoteConfigs[0].refspec **" }
         steps.checkout transformGitSCM([
                 branches: steps.scm.branches,
                 extensions: steps.scm.extensions + [$class: 'LocalBranch', localBranch: '**'],
@@ -24,7 +24,7 @@ class GitLocalBranch extends Git implements Serializable {
 
     @Override
     def checkoutRepository(String repository, String credentialsId, String name='origin', String refspec='+refs/heads/*:refs/remotes/origin/*', String branch='master', String relativeTargetDir='.') {
-        if (_DEBUG_) { steps.echo "** GitLocalBranch.checkoutRepository($repository, $branch, $name, $refspec, $relativeTargetDir, $credentialsId) **" }
+        if (logTest(1)) { steps.echo "** GitLocalBranch.checkoutRepository($repository, $branch, $name, $refspec, $relativeTargetDir, $credentialsId) **" }
         steps.checkout transformGitSCM([
                 branches: [[name: "*/${branch}"]],
                 extensions: steps.scm.extensions +

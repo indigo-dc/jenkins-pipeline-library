@@ -23,6 +23,12 @@ class JenkinsDefinitions implements Serializable {
     */
     JenkinsDefinitions(steps) {
         this.steps = steps
+        if(_DEBUG_) {
+            this.logLevel = _LOGLEVELMAX_
+        }
+        else {
+            this.logLevel = steps.env.JPL_DEBUG ? steps.env.JPL_DEBUG : logLevel
+        }
     }
 
     void setLogLevel(int level) {
@@ -30,7 +36,7 @@ class JenkinsDefinitions implements Serializable {
             logLevel = _LOGLEVELMAX_
         }
         else {
-            logLevel = steps.env.JPL_DEBUG ? steps.env.JPL_DEBUG : logLevel
+            logLevel = steps.env.JPL_DEBUG ? steps.env.JPL_DEBUG : level
         }
     }
 
