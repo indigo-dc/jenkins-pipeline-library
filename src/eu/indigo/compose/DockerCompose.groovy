@@ -187,7 +187,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     def composeUp(Map args, String serviceIds='') {
         cmdCommon = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir))
-        if testString(args.forceBuild) {
+        if ( testString(args.forceBuild) ) {
             String buildFlag = _b
             String cmdRm = "$cmdCommon rm -f -v -s $serviceIds"
             String cmdPull = "$cmdCommon pull $serviceIds"
