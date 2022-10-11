@@ -190,7 +190,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
         if ( testString(args.forceBuild) ) {
             String buildFlag = _b
             String cmdRm = "$cmdCommon rm -f -v -s $serviceIds"
-            String cmdPull = "$cmdCommon pull $serviceIds"
+            //String cmdPull = "$cmdCommon pull $serviceIds"
             String cmdBuild = "$cmdCommon build $buildFlag $serviceIds"
             steps.sh "docker-compose $cmdRm"
             steps.sh "docker-compose $cmdPull"
