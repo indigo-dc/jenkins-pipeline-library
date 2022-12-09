@@ -1,5 +1,10 @@
 # A library to implement Software Quality Assurance (SQA) checks in Jenkins environments
 
+[![SQAaaS badge shields.io](https://img.shields.io/badge/sqaaas%20software-silver-lightgrey)](https://api.eu.badgr.io/public/assertions/8swrxF-8TpuYmR6EvXnW2w "SQAaaS silver badge achieved")
+
+#### Achievements 
+[![SQAaaS badge](https://github.com/EOSC-synergy/SQAaaS/raw/master/badges/badges_150x116/badge_software_silver.png)](https://api.eu.badgr.io/public/assertions/8swrxF-8TpuYmR6EvXnW2w "SQAaaS silver badge achieved")
+
 ## Motivation
 The v2 series of the present library provide a straightforward way for software projects
 to be compliant with common SQA practices.
