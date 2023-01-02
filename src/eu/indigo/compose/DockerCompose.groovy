@@ -36,11 +36,11 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @param block The expected logical block to be executed
     */
     def withCredentialsClosure(List credentials, Closure block) {
-        if (_DEBUG_) { steps.echo "** withCredentialsClosure() **" }
+        if (logTest(1)) { steps.echo "** withCredentialsClosure() **" }
         if (credentials) {
-            if (_DEBUG_) { steps.echo "credentials:\n${credentials}" }
+            if (logTest(1)) { steps.echo "credentials:\n${credentials}" }
             List credentialsStatements = credentialsToStep(credentials)
-            if (_DEBUG_) { steps.echo 'credentialsToStep: ' + credentialsStatements }
+            if (logTest(1)) { steps.echo 'credentialsToStep: ' + credentialsStatements }
             steps.withCredentials(credentialsStatements) {
                 block()
             }
@@ -56,12 +56,12 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     */
     List credentialsToStep(List credentials) {
         credentialVariablesNames = []
-        if (_DEBUG_) { steps.echo "** credentialsToStep() **" }
-        if (_DEBUG_) { steps.echo "credentialVariablesNames(start):\n${credentialVariablesNames}" }
+        if (logTest(1)) { steps.echo "** credentialsToStep() **" }
+        if (logTest(1)) { steps.echo "credentialVariablesNames(start):\n${credentialVariablesNames}" }
 
         credentials.collect { credential ->
             def credType = credential.type
-            if (_DEBUG_) { steps.echo "credential: $credential\ncredType: $credType" }
+            if (logTest(1)) { steps.echo "credential: $credential\ncredType: $credType" }
             def credValue
             switch (credType) {
                 case 'string':
@@ -103,8 +103,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                     break
             }
 
-            if (_DEBUG_) { steps.echo "credentialVariablesNames(end):\n${credentialVariablesNames}" }
-            if (_DEBUG_) { steps.echo "credValue: $credValue" }
+            if (logTest(1)) { steps.echo "credentialVariablesNames(end):\n${credentialVariablesNames}" }
+            if (logTest(1)) { steps.echo "credValue: $credValue" }
             credValue
         }
     }
@@ -149,8 +149,8 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     String getCredsVars() {
         String res = ''
 
-        if (_DEBUG_) { steps.echo "** getCredsVars() **" }
-        if (_DEBUG_) { steps.echo "credentialVariablesNames:\n${credentialVariablesNames}" }
+        if (logTest(1)) { steps.echo "** getCredsVars() **" }
+        if (logTest(1)) { steps.echo "credentialVariablesNames:\n${credentialVariablesNames}" }
 
         if (! credentialVariablesNames?.isEmpty()) {
             credentialVariablesNames.each { v ->
@@ -282,11 +282,11 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
     * @see https://docs.docker.com/compose/reference/exec/
     */
     def composeToxRun(Map args, String service, String testenv, Tox tox) {
-        if (_DEBUG_) { steps.echo "** composeToxRun() **" }
+        if (logTest(1)) { steps.echo "** composeToxRun() **" }
 
         String credsVars = getCredsVars()
-        if (_DEBUG_) { steps.echo "service: ${service}\ntestenv: ${testenv}\ntoxFile: " + escapeWhitespace(args.toxFile) + "\ncredsVars: $credsVars" }
-        if (_DEBUG_) { steps.echo "tox command: " + tox.runEnv(testenv, toxFile: escapeWhitespace(args.toxFile)) }
+        if (logTest(1)) { steps.echo "service: ${service}\ntestenv: ${testenv}\ntoxFile: " + escapeWhitespace(args.toxFile) + "\ncredsVars: $credsVars" }
+        if (logTest(1)) { steps.echo "tox command: " + tox.runEnv(testenv, toxFile: escapeWhitespace(args.toxFile)) }
         String cmd = parseParam(_f, escapeWhitespace(args.composeFile)) + ' ' + parseParam(_w, escapeWhitespace(args.workdir)) + ' exec -T ' +
                      " $credsVars $service " + tox.runEnv(testenv, toxFile: escapeWhitespace(args.toxFile))
         steps.sh "docker-compose $cmd"
@@ -322,9 +322,9 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
      */
     def processStages(projectConfig) {
         String workspace = steps.env.WORKSPACE + '/'
-        if (_DEBUG_) { steps.echo "** processStages() **" }
-        if (_DEBUG_) { steps.echo "workspace path: $workspace" }
-        if (_DEBUG_) { steps.sh 'echo "before loading credentials:\n$(env)"' }
+        if (logTest(1)) { steps.echo "** processStages() **" }
+        if (logTest(1)) { steps.echo "workspace path: $workspace" }
+        if (logTest(1)) { steps.sh 'echo "before loading credentials:\n$(env)"' }
 
         // Load debug settings defined in JenkinsDefinitions before starting the scripted pipeline
         debugSettings()
@@ -350,7 +350,7 @@ class DockerCompose extends JenkinsDefinitions implements Serializable {
                 // Deploy the environment services using docker-compose
                 composeUp(composeFile: projectConfig.config.deploy_template, workdir: workspace, forceBuild: steps.env.JPL_DOCKERFORCEBUILD)
                 
-                if (_DEBUG_) { steps.sh 'echo "after loading credentials:\n$(env)"' }
+                if (logTest(1)) { steps.sh 'echo "after loading credentials:\n$(env)"' }
 
                 projectConfig.stagesList.each { stageMap ->
                     if (steps.env.JPL_KEEPGOING) {
