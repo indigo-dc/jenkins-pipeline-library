@@ -22,7 +22,7 @@ def call(Map configs) {
         baseRepository: null,
         baseBranch: null,
         credentialsId: null,
-        validatorDockerImage: 'eoscsynergy/jpl-validator:1.1.0',
+        validatorDockerImage: 'eoscsynergy/jpl-validator:2.2.0',
         scmConfigs: scmConfigs,
         ]
     configs = configs ? configsDefault + configs :
