@@ -1,0 +1,79 @@
+name: Creates a tag when closing the stable milestone
+on:
+  milestone:
+    types: [closed]
+jobs:
+    create_tag:
+        name: Creates a tag when the stable branch milestone is closed
+        runs-on: ubuntu-latest
+        steps:
+          - name: Filter milestone by name
+            run: |
+              echo "RELEASE_MILESTONE=$(echo ${{ github.event.milestone.title }} | grep -P '^s\K[0-9]+\.[0-9]+\.[0-9]+' | sed 's/s//')" >> $GITHUB_ENV
+          - name: Print milestone version
+            run: |
+              echo "stable milestone release: $RELEASE_MILESTONE"
+          - name: Fetch full history and checkout stable branch
+            uses: actions/checkout@v2
+            with:
+              ref: stable/${{ env.RELEASE_MILESTONE }}
+              fetch-depth: 0
+            if: "env.RELEASE_MILESTONE"
+          - name: Creates a tag from stable branch
+            id: tag_version
+            uses: anothrNick/github-tag-action@1.36.0
+            env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              CUSTOM_TAG: ${{ ENV.RELEASE_MILESTONE }}
+              RELEASE_BRANCHES: stable/${{ env.RELEASE_MILESTONE }}
+              VERBOSE: false
+            if: "env.RELEASE_MILESTONE"
+          - name: Get diff between main and stable branch
+            run: |
+              echo "__DIFF__<<EOF" >> $GITHUB_ENV
+              echo $(git diff --name-only origin/master origin/stable/${{ ENV.RELEASE_MILESTONE }}) >> $GITHUB_ENV
+              echo "EOF" >> $GITHUB_ENV
+            shell: bash
+            if: "env.RELEASE_MILESTONE"
+          - name: Create github release for tag
+            uses: ncipollo/release-action@v1
+            with:
+              tag: ${{ steps.tag_version.outputs.new_tag }}
+              name: Release ${{ steps.tag_version.outputs.new_tag }}
+              body: |
+                ${{ github.event.milestone.title }}:
+                ${{ github.event.milestone.description }}
+
+                Changes:
+                ${{ env.__DIFF__ }}
+              token: ${{ secrets.GITHUB_TOKEN }}
+            if: "env.RELEASE_MILESTONE"
+          - name: Expose git commit data
+            uses: rlespinasse/git-commit-data-action@v1.x
+            if: "env.RELEASE_MILESTONE"
+          - name: Create PR to master based on current version
+            id: cpr
+            uses: repo-sync/pull-request@v2
+            with:
+              destination_branch: "master"
+              source_branch: "stable/${{ env.RELEASE_MILESTONE }}"
+              pr_title: "Pulling current release ${{ steps.tag_version.outputs.new_tag }} to master branch"
+              pr_body: |
+                :crown: *An automated PR*
+                Pulling ${{ github.ref }} into master, requested by ${{ env.GIT_COMMIT_COMMITTER }}
+                *Commit message*:
+                Subject: ${{ env.GIT_COMMIT_MESSAGE_SUBJECT }}
+                ${{ env.GIT_COMMIT_MESSAGE_BODY }}
+                ${{ steps.tag_version.outputs.changelog }}
+              pr_reviewer: "orviz,samuelbernardolip,davrodgon"
+              pr_label: "release,critical"
+              pr_draft: false
+              pr_allow_empty: false
+              github_token: ${{ secrets.GITHUB_TOKEN }}
+            if: "env.RELEASE_MILESTONE"
+          - name: Check PR details
+            run: |
+              echo "Pull Request Number - ${{ steps.cpr.outputs.pr_number }}"
+              echo "Pull Request URL - ${{ steps.cpr.outputs.pr_url }}"
+              echo "Pull Request has changed files - ${{ steps.cpr.outputs.has_changed_files }}"
+            if: "env.RELEASE_MILESTONE"

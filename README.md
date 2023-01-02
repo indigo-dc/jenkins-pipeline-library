@@ -1,5 +1,10 @@
 # A library to implement Software Quality Assurance (SQA) checks in Jenkins environments
 
+[![SQAaaS badge shields.io](https://img.shields.io/badge/sqaaas%20software-silver-lightgrey)](https://api.eu.badgr.io/public/assertions/8swrxF-8TpuYmR6EvXnW2w "SQAaaS silver badge achieved")
+
+#### Achievements 
+[![SQAaaS badge](https://github.com/EOSC-synergy/SQAaaS/raw/master/badges/badges_150x116/badge_software_silver.png)](https://api.eu.badgr.io/public/assertions/8swrxF-8TpuYmR6EvXnW2w "SQAaaS silver badge achieved")
+
 ## Motivation
 The v2 series of the present library provide a straightforward way for software projects
 to be compliant with common SQA practices.
@@ -40,7 +45,7 @@ orchestration tool to fire up the required set of services. In this example, the
 _You can check a full working example [here](https://github.com/EOSC-synergy/DEEPaaS)_
 
 __In order to get started with the library, please check our
-[documentation](https://indigo-dc.github.io/jenkins-pipeline-library/release/2.1.0/).__
+[documentation](https://indigo-dc.github.io/jenkins-pipeline-library/stable/2.1.1/).__
 
 ### Building documentation locally
 

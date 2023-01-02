@@ -1,0 +1,19 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: JePL (aka Jenkins Pipeline Library)
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Samuel
+    family-names: Bernardo
+    email: samuel@lip.pt
+    affiliation: Laboratório de Instrumentação e Física Experimental de Partículas (LIP)
+  - given-names: Pablo
+    family-names: Orviz Fernández
+    email: orviz@ifca.unican.es
+    orcid: 'https://orcid.org/0000-0002-2473-6405'
+    affiliation: Spanish National Research Council (CSIC)
