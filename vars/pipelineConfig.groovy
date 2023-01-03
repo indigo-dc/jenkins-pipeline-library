@@ -7,6 +7,7 @@ import eu.indigo.compose.ComposeFactoryBuilder
 import eu.indigo.compose.DockerCompose
 import eu.indigo.Tox
 import eu.indigo.scm.Git
+import eu.indigo.scm.GitProperties
 import eu.indigo.scm.GitLocalBranch
 
 def call(Map configs) {
@@ -30,7 +31,7 @@ def call(Map configs) {
 
     def scmCheckout = { ->
         if (configs?.baseRepository) {
-            checkoutRepository(configs?.baseRepository, configs?.baseBranch, configs?.credentialsId)
+            checkoutRepository(baseRepository: configs?.baseRepository, credentialsId: configs?.credentialsId, baseBranch: configs?.baseBranch)
         }
         else {
             checkoutRepository()
@@ -38,12 +39,12 @@ def call(Map configs) {
     }
     scmCheckout.resolveStrategy = Closure.DELEGATE_FIRST
 
+    props = new GitProperties(this)
+    gitObj = new Git(this, props)
     if (configs?.scmConfigs?.localBranch) {
-        scmCheckout.delegate = new GitLocalBranch(this)
+        scmCheckout.delegate = new GitLocalBranch(this, props, gitObj, configs.scmConfigs.localBranch)
     }
-    else {
-        scmCheckout.delegate = new Git(this)
-    }
+    scmCheckout.delegate = gitObj
     scmCheckout()
 
     def yaml = readYaml file: configs.configFile
