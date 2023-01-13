@@ -5,6 +5,15 @@
 #### Achievements 
 [![SQAaaS badge](https://github.com/EOSC-synergy/SQAaaS/raw/master/badges/badges_150x116/badge_software_silver.png)](https://api.eu.badgr.io/public/assertions/8swrxF-8TpuYmR6EvXnW2w "SQAaaS silver badge achieved")
 
+
+## Founding institutions
+<p float="left">
+    <img src="resources/static/images/logo-csic.png" height="50" hspace="10"/>
+    <img src="resources/static/images/logo-UPV.png" height="50" hspace="10"/>
+    <img src="resources/static/images/logo-LIP.png" height="50" hspace="10"/>
+</p>
+
+
 ## Motivation
 The v2 series of the present library provide a straightforward way for software projects
 to be compliant with common SQA practices.
