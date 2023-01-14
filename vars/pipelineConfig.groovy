@@ -6,20 +6,52 @@ import eu.indigo.compose.ComposeFactory
 import eu.indigo.compose.ComposeFactoryBuilder
 import eu.indigo.compose.DockerCompose
 import eu.indigo.Tox
+import eu.indigo.scm.Git
+import eu.indigo.scm.GitLocalBranch
 
-def call(
-    String configFile='./.sqa/config.yml',
-    String baseRepository=null,
-    String baseBranch=null) {
+def call(Map configs) {
 
-    checkoutRepository(baseRepository, baseBranch)
-    def yaml = readYaml file: configFile
-    //def schema = libraryResource('eu/indigo/compose/parser/schema.json')
+    Map scmConfigsDefault = [
+        localBranch: null,
+        ]
+    Map scmConfigs = configs?.scmConfigs ? scmConfigsDefault + configs?.scmConfigs :
+                                           scmConfigsDefault
+
+    Map configsDefault = [
+        configFile: './.sqa/config.yml',
+        baseRepository: null,
+        baseBranch: null,
+        credentialsId: null,
+        validatorDockerImage: 'eoscsynergy/jpl-validator:1.1.0',
+        scmConfigs: scmConfigs,
+        ]
+    configs = configs ? configsDefault + configs :
+                        configsDefault
+
+    def scmCheckout = { ->
+        if (configs?.baseRepository) {
+            checkoutRepository(configs?.baseRepository, configs?.baseBranch, configs?.credentialsId)
+        }
+        else {
+            checkoutRepository()
+        }
+    }
+    scmCheckout.resolveStrategy = Closure.DELEGATE_FIRST
+
+    if (configs?.scmConfigs?.localBranch) {
+        scmCheckout.delegate = new GitLocalBranch(this)
+    }
+    else {
+        scmCheckout.delegate = new Git(this)
+    }
+    scmCheckout()
+
+    def yaml = readYaml file: configs.configFile
     def buildNumber = Integer.parseInt(env.BUILD_ID)
     ProjectConfiguration projectConfig = null
 
     try {
-        invalidMessages = validate(configFile)
+        invalidMessages = validate(configs?.configFile, configs?.validatorDockerImage)
     } catch (GroovyRuntimeException e) {
         error "ConfigValidation have a runtime exception with status:\n$e"
     }
@@ -42,22 +74,8 @@ def call(
     return projectConfig
 }
 
-def validate(String configFile) {
-    def validatorDockerImage = 'eoscsynergy/jpl-validator:1.0.0'
-    def cmd = 'docker pull ' + "$validatorDockerImage &&" +
+def validate(String configFile, String validatorDockerImage) {
+    def cmd = "docker pull $validatorDockerImage &&" +
               'docker run --rm -v "$PWD:/sqa" ' + "$validatorDockerImage /sqa/${configFile}"
     return sh(returnStatus: true, script: cmd)
-}
-
-def checkoutRepository(String repository, String branch='master') {
-    if (repository) {
-        checkout([
-            $class: 'GitSCM',
-            branches: [[name: "*/${branch}"]],
-            extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '.']],
-            userRemoteConfigs: [[url: repository]]])
-    }
-    else {
-        checkout scm
-    }
 }

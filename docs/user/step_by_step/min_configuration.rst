@@ -63,7 +63,7 @@ following steps set up the minimum layout:
       version: "3.6"
       EOF
 
-   3.4. In the *root path of the code repository*, create the ``Jenkisfile``,
+   3.4. In the *root path of the code repository*, create the ``Jenkinsfile``,
    file required by Jenkins. In order to make it work with the
    jenkins-pipeline-library, at least the following content must be present
    (see :ref:`The pipeline: Jenkinsfile` section):
@@ -71,7 +71,7 @@ following steps set up the minimum layout:
    .. code:: bash
 
       $ cat <<EOF > Jenkinsfile
-      @Library(['github.com/indigo-dc/jenkins-pipeline-library@2.0.0']) _
+      @Library(['github.com/indigo-dc/jenkins-pipeline-library@release/2.1.0']) _
 
       def projectConfig
 

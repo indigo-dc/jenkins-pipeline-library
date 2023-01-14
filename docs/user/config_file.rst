@@ -2,7 +2,7 @@ The configuration file: config.yml
 ==================================
 
 jenkins-pipeline-library relies on a YAML file in order to compose dinamically
-the stages that tackle the fulfillment of a requirement or good practice as 
+the stages that tackle the fulfillment of a requirement or good practice as
 defined by the SQA baseline.
 
 The configuration file must exist under ``.sqa/config.yml`` path, relative to the
@@ -13,16 +13,14 @@ Below is an example YAML file which shows the most common configuration options:
 .. code:: yaml
 
     # .sqa/config.yml - jenkins-pipeline-library configuration file
-	
+
     # generic configuration: workspace, agents
     config:
       project_repos:
         worsica-processing:
           repo: 'https://github.com/WORSICA/worsica-processing.git'
           branch: master
-          dockerhub: worsica/worsica-processing
-          dockertag: latest
-    
+
     sqa_criteria:
       qc_style:
         repos:
@@ -31,12 +29,12 @@ Below is an example YAML file which shows the most common configuration options:
             tox:
               testenv:
                 - stylecheck
-    
+
     environment:
       GIT_COMMITTER_NAME: Person1
       GIT_COMMITTER_EMAIL: person1@example.org
       LANG: C.UTF-8
-    
+
     timeout: 600
 
 Supported settings
@@ -67,8 +65,6 @@ Example:
        worsica-processing:
          repo: 'https://github.com/WORSICA/worsica-processing.git'
          branch: master
-         dockerhub: worsica/worsica-processing
-         dockertag: latest
 
 node_agent
 ``````````
@@ -93,7 +89,7 @@ Example:
 deploy_template
 ```````````````
 
-Path to the template containing the definition of the services for the 
+Path to the template containing the definition of the services for the
 ``node_agent`` in use.
 
 :Type: ``path``
@@ -125,8 +121,6 @@ Example:
        worsica-processing:
          repo: 'https://github.com/WORSICA/worsica-processing.git'
          branch: master
-         dockerhub: worsica/worsica-processing
-         dockertag: latest
 
 The set of allowed parameters for the definition of the code repository's
 description within the ``project_repos`` setting are herein described:
@@ -147,23 +141,6 @@ Branch name to be checked out.
 :Default: ``master``
 :Location: ``config:project_repos:branch``
 
-**dockerhub**
-
-Repository name within the Docker Hub registry where the Docker images
-produced by the pipeline will be pushed.
-
-:Type: ``string``
-:Required: ``true``
-:Location: ``config:project_repos:dockerhub``
-
-**dockertag**
-
-Tag name to be used for labeling the resultant Docker image.
-
-:Type: ``string``
-:Default: ``latest``
-:Location: ``config:project_repos:dockertag``
-
 sqa_criteria
 ~~~~~~~~~~~~
 
@@ -172,7 +149,7 @@ Each requirement has a unique identifier and an associated set of mandatory and
 optional attributes.
 
 :Type: ``map``
-:Parameters: ``qc_style``, ``qc_functional``, ``qc_coverage``, ``qc_security``, ``qc_doc`` 
+:Parameters: ``qc_style``, ``qc_functional``, ``qc_coverage``, ``qc_security``, ``qc_doc``
 :Required: ``true``
 
 Example:
@@ -211,14 +188,14 @@ is summarized as follows:
 | qc_doc          | QC.Doc                |
 +-----------------+-----------------------+
 
-The previous table lists the set of criteria that is currently supported by 
+The previous table lists the set of criteria that is currently supported by
 the current version of the jenkins-pipeline-library. The settings described in
-this section are common to all, which are applicable and defined 
-per-repository, and thus, they must be used within the ``repos`` map setting, 
+this section are common to all, which are applicable and defined
+per-repository, and thus, they must be used within the ``repos`` map setting,
 as showed in the following examples.
 
 .. note::
-   The repositories used under ``repos`` must be previously defined in the 
+   The repositories used under ``repos`` must be previously defined in the
    ``config:project_repos`` setting. They are referred by the identifiers
    used there.
 
@@ -228,7 +205,7 @@ as showed in the following examples.
         .. tab:: qc_style
 
            .. code-block:: yaml
-              
+
               sqa_criteria:
                 qc_style:
                   repos:
@@ -300,7 +277,7 @@ as showed in the following examples.
                         - python setup.py build_sphinx
 
 
-Next, we will describe those available settings, some of them used in the 
+Next, we will describe those available settings, some of them used in the
 previous examples, that can be defined for each repository associated with the
 former criteria:
 
@@ -314,6 +291,7 @@ take place. If using ``docker_compose``, the value could be any of the services
 defined in the docker-compose.yml.
 
 :Type: ``string``
+:Required: ``true``
 :Location: ``sqa_criteria:<qc_xxx>:repos:<repo>:container``
 
 tox
@@ -349,7 +327,7 @@ Specifies the path to the tox configuration file.
 commands
 ````````
 
-Allows to include a list of commands. This is helpful whenever there is no 
+Allows to include a list of commands. This is helpful whenever there is no
 built-in support for the tool you use for building purposes.
 
 :Type: ``list``
@@ -369,7 +347,7 @@ Example:
 
 .. note::
    ``commands`` requires the presence of the ``container`` setting, which must
-   have available all the tools --and dependencies-- used by the list of 
+   have available all the tools --and dependencies-- used by the list of
    commands. Also the commands runs relative to the root directory /. As a
    hacking solution is possible to use Docker Compose's
    :ref:`docker_compose_env` to define the expected workspace in
@@ -377,7 +355,7 @@ Example:
 
 environment
 ~~~~~~~~~~~
-Contains the environment variables required to execute the previouos SQA 
+Contains the environment variables required to execute the previouos SQA
 criteria checks.
 
 :Type: ``list``
@@ -398,6 +376,29 @@ Example:
    will not be available inside the containers. For that, you should use for
    example, docker-compose.yml environment definitions instead.
 
+.. note::
+   The following JPL-prefixed environment variables have a special purpose:
+
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL vars             | Purpose                                                                   |
+   +======================+===========================================================================+
+   | JPL_DOCKERPUSH       | Space-separated list of defined docker-compose services whose image will  |
+   |                      | be pushed to the Docker registry. If ``ALL`` value is used, it            |
+   |                      | will push all locally built images defined in docker-compose.yml          |
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL_IGNOREFAILURES   | If set, by using any random string value (without spaces), it             |
+   |                      | will ignore any push-related failure                                      |
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL_DOCKERFORCEBUILD | Forcedly rebuild all images with build clause in                          |
+   |                      | docker-compose.yml                                                        |
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL_DOCKERSERVER     | Sets Docker registry server. By default it will use Docker Hub            |
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL_DOCKERUSER       | Sets username of Docker registry credentials                              |
+   +----------------------+---------------------------------------------------------------------------+
+   | JPL_DOCKERPASS       | Sets password of Docker registry credentials                              |
+   +----------------------+---------------------------------------------------------------------------+
+
 timeout
 ~~~~~~~
 Sets the timeout for the pipeline execution.
@@ -410,3 +411,117 @@ Example:
 .. code-block:: yaml
 
    timeout: 60
+
+Docker Registry: upload images
+------------------------------
+As mentioned in special purpose environment variables note, pushing images to
+docker registry is supported using the following environment variables:
+
++----------------------+--------------------------------------------------------------------------+
+| JPL vars             | Purpose                                                                  |
++======================+==========================================================================+
+| JPL_DOCKERPUSH       | Space-separated list of defined docker-compose services whose image will |
+|                      | be pushed to the Docker registry. If ``ALL`` value is used, it           |
+|                      | will push all locally built images defined in docker-compose.yml         |
++----------------------+--------------------------------------------------------------------------+
+| JPL_IGNOREFAILURES   | If set, by using any random string value (without spaces), it            |
+|                      | will ignore any push-related failure                                     |
++----------------------+--------------------------------------------------------------------------+
+| JPL_DOCKERSERVER     | Sets Docker registry server. By default it will use Docker Hub           |
++----------------------+--------------------------------------------------------------------------+
+| JPL_DOCKERUSER       | Sets username of Docker registry credentials                             |
++----------------------+--------------------------------------------------------------------------+
+| JPL_DOCKERPASS       | Sets password of Docker registry credentials                             |
++----------------------+--------------------------------------------------------------------------+
+
+**Example 1**: upload specific images to dockerhub registry ignoring failures
+
+config.yml example with minimal required configurations:
+
+.. code-block:: yaml
+
+   config:
+     credentials:
+       - id: my-dockerhub-token
+         username_var: JPL_DOCKERUSER
+         password_var: JPL_DOCKERPASS
+
+   environment:
+     JPL_DOCKERPUSH: "docs service1 service4"
+     JPL_IGNOREFAILURES: "defined"
+
+In this example there are three services:
+
+- service1: main service that have is Dockerfile in the service1 directory inside git repository.
+- service2: same as service1 with Dockerfile inside directory service2 and depends on service1 to be built.
+- docs: service to generate the project documentation.
+
+The docker-compose.yml file that would work with previous configuration can be
+as the following (mandatory the build keyword in service definition):
+
+.. code-block:: yaml
+
+   version: "3.7"
+
+   services:
+     service1:
+        build:
+           context: "."
+           dockerfile: "./service1/Dockerfile"
+        image: "organization/service1:${GIT_BRANCH}"
+
+     service2:
+        build:
+           context: "."
+           dockerfile: "./service2/Dockerfile"
+           cache_from:
+              - "organization/service1:${GIT_BRANCH}"
+        image: "organization/service2:${GIT_BRANCH}"
+        depends_on:
+           - service1
+
+     docs:
+        build:
+           context: "."
+           dockerfile: "./docs/Dockerfile"
+        image: "organization/docs:${GIT_BRANCH}"
+
+**Example 2**: upload all images to independent registry and fail with push failures
+
+.. code-block:: yaml
+
+   config:
+     credentials:
+       - id: my-dockerhub-token
+         username_var: JPL_DOCKERUSER
+         password_var: JPL_DOCKERPASS
+
+   environment:
+     JPL_DOCKERPUSH: "ALL"
+     JPL_DOCKERSERVER: "mydockerregistry.example.com:8080"
+
+.. note::
+   When using custom docker registry is also expected that docker-compose.yml
+   have the expected configuration for the image references, following the official
+   `documentation <https://docs.docker.com/compose/compose-file/#image>`_.
+
+.. warning::
+   The docker-compose.yml file for this example could be any. With 'ALL' value it will upload all loaded images to the custom registry. This also includes all images pulled from Dockerhub or other docker registry without a build section defined in docker-compose.yml.
+
+
+A Note on Docker images and registries
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Images are defined in docker-compose.yml file and there is no relation of
+those with defined service names.
+Also the docker registry repository needs to be previously created before
+running the last step of the generated pipeline. Last step will be always the
+image push to docker registry.
+Images that can be pushed in the end require the build keyword in service
+definition at docker-compose configuration.
+In next examples the sqa_criteria property is being omitted to focus only in
+the required configurations to push images to a docker registry. Also
+project_repos in config section is being removed since is not required, so it
+turns the examples more clear.
+Jenkins environment variable ${GIT_BRANCH} receives the branch or tag from git
+repository.

@@ -1,0 +1,5 @@
+sphinx
+sphinx-rtd-theme
+sphinx-tabs
+sphinx-multiversion
+ghp-import
